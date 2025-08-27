@@ -257,6 +257,8 @@ function fadeOutUIElements() {
         element.style.animation = 'none';
         // Preserve exact positioning by maintaining current transform
         element.style.setProperty('transform', currentTransform, 'important');
+        // Disable pointer events
+        element.style.pointerEvents = 'none';
     });
     
     // Fade out social media buttons
@@ -266,6 +268,10 @@ function fadeOutUIElements() {
         button.style.opacity = '0.3';
         button.style.pointerEvents = 'none';
         button.style.zIndex = '100'; // Keep above other elements but below minigame UI
+        // Disable the link functionality
+        button.style.cursor = 'default';
+        button.setAttribute('data-original-href', button.href);
+        button.removeAttribute('href');
     });
     
     // Fade out mobile link tree buttons
@@ -275,6 +281,10 @@ function fadeOutUIElements() {
         button.style.opacity = '0.3';
         button.style.pointerEvents = 'none';
         button.style.zIndex = '50'; // Keep above other elements but below minigame UI
+        // Disable the link functionality
+        button.style.cursor = 'default';
+        button.setAttribute('data-original-href', button.href);
+        button.removeAttribute('href');
     });
     
     // Lower z-index of Earth sprite during minigame
@@ -334,6 +344,12 @@ function fadeInUIElementsStaggered() {
                 button.style.opacity = '1';
                 button.style.pointerEvents = 'auto';
                 button.style.zIndex = '200'; // Restore original z-index
+                button.style.cursor = 'pointer';
+                // Restore the link functionality
+                if (button.getAttribute('data-original-href')) {
+                    button.href = button.getAttribute('data-original-href');
+                    button.removeAttribute('data-original-href');
+                }
                 // Add a subtle entrance effect
                 button.style.transform = 'scale(1.1)';
                 setTimeout(() => {
@@ -352,6 +368,12 @@ function fadeInUIElementsStaggered() {
                 button.style.opacity = '1';
                 button.style.pointerEvents = 'auto';
                 button.style.zIndex = '10'; // Restore original z-index
+                button.style.cursor = 'pointer';
+                // Restore the link functionality
+                if (button.getAttribute('data-original-href')) {
+                    button.href = button.getAttribute('data-original-href');
+                    button.removeAttribute('data-original-href');
+                }
                 // Add a subtle entrance effect
                 button.style.transform = 'scale(1.1)';
                 setTimeout(() => {
@@ -600,6 +622,7 @@ function resetWebpage() {
         element.style.removeProperty('transition');
         element.style.removeProperty('z-index');
         element.style.removeProperty('animation');
+        element.style.pointerEvents = 'auto';
         // Don't re-apply fadeInUp animation to prevent position changes
     });
     
@@ -609,6 +632,12 @@ function resetWebpage() {
         button.style.pointerEvents = 'auto';
         button.style.zIndex = '200';
         button.style.transition = 'all 0.3s ease';
+        button.style.cursor = 'pointer';
+        // Restore the link functionality
+        if (button.getAttribute('data-original-href')) {
+            button.href = button.getAttribute('data-original-href');
+            button.removeAttribute('data-original-href');
+        }
     });
     
     const mobileButtons = document.querySelectorAll('.mobile-link-item');
@@ -617,6 +646,12 @@ function resetWebpage() {
         button.style.pointerEvents = 'auto';
         button.style.zIndex = '10';
         button.style.transition = 'all 0.3s ease';
+        button.style.cursor = 'pointer';
+        // Restore the link functionality
+        if (button.getAttribute('data-original-href')) {
+            button.href = button.getAttribute('data-original-href');
+            button.removeAttribute('data-original-href');
+        }
     });
     
     // Restore Earth sprite with proper layering
