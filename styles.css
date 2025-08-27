@@ -255,6 +255,19 @@ p {
     user-select: none;
 }
 
+/* Ensure dark background extends when scrolling */
+.hero::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 200vh;
+    background: #000000;
+    z-index: 0;
+    pointer-events: none;
+}
+
 .hero-background {
     position: absolute;
     top: 0;
@@ -270,7 +283,7 @@ p {
     top: 0;
     left: 0;
     width: 200vw;
-    height: 100vh;
+    height: 200vh;
     z-index: 1;
     background-image: 
         radial-gradient(1px 1px at 25px 35px, #fff, transparent),
@@ -293,7 +306,7 @@ p {
     top: 0;
     left: 0;
     width: 200vw;
-    height: 100vh;
+    height: 200vh;
     z-index: 2;
     background-image: url('assets/images/background.png');
     background-repeat: repeat-x;
@@ -647,7 +660,7 @@ p {
     
     /* Adjust hero content for mobile link tree */
     .hero-content {
-        top: 200px;
+        top: 120px;
         max-width: 90%;
         padding: 0 1rem;
         z-index: 15;
@@ -655,16 +668,16 @@ p {
     
     /* Make Earth smaller for mobile */
     .earth-sprite {
-        width: 250px;
-        height: 250px;
-        top: 50px;
+        width: 200px;
+        height: 200px;
+        top: 20px;
         z-index: 10;
     }
     
     /* Mobile link tree container */
     .mobile-link-tree {
         display: block;
-        margin-top: 280px;
+        margin-top: 240px;
         width: 100%;
         max-width: 400px;
         z-index: 5;
