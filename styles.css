@@ -1,15 +1,23 @@
-/* Reset and Base Styles */
+/* ========================================
+   RESET AND BASE STYLES
+   ======================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Performance optimizations */
-.hero-background *,
-.satellite *,
-.shooting-star * {
-    will-change: transform, opacity;
+/* Performance optimizations - only apply to critical animated elements */
+.satellite {
+    will-change: transform;
+}
+
+.satellite-image {
+    will-change: transform;
+}
+
+.shooting-star {
+    will-change: transform;
 }
 
 :root {
@@ -63,7 +71,9 @@ p {
     color: #6c757d;
 }
 
-/* Satellite Navigation System */
+/* ========================================
+   SATELLITE NAVIGATION SYSTEM
+   ======================================== */
 .satellite-nav {
     position: fixed;
     top: 0;
@@ -169,10 +179,35 @@ p {
     100% { transform: translate(-50%, -50%) rotate(630deg) translateX(var(--satellite4-distance, 390px)); }
 }
 
-/* Satellite spinning animation */
+/* Satellite spinning animations - multiple variations for mobile buttons */
 @keyframes satelliteSpin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+@keyframes satelliteSpinReverse {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); }
+}
+
+@keyframes satelliteSpinSlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes satelliteSpinSlowReverse {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); }
+}
+
+@keyframes satelliteSpinMedium {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes satelliteSpinMediumReverse {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); }
 }
 
 /* Counter-rotation animations to keep labels always horizontal */
@@ -196,7 +231,9 @@ p {
     100% { transform: translateX(-50%) rotate(-630deg); }
 }
 
-/* Social Links */
+/* ========================================
+   SOCIAL LINKS
+   ======================================== */
 .social-links {
     position: relative;
     margin-top: -0.625rem;
@@ -209,21 +246,20 @@ p {
     transform: translateY(30px);
 }
 
+
+
 .social-link {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 50px;
     height: 50px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 50%;
     color: white;
     text-decoration: none;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    will-change: transform, opacity;
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -231,10 +267,10 @@ p {
 }
 
 .social-link:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
 
 .social-link i {
     font-size: 1.25rem;
@@ -243,7 +279,11 @@ p {
     -moz-osx-font-smoothing: auto;
 }
 
-/* Hero Section */
+
+
+/* ========================================
+   HERO SECTION
+   ======================================== */
 .hero {
     min-height: 100vh;
     position: relative;
@@ -284,37 +324,46 @@ p {
     left: 0;
     width: 200vw;
     height: 200vh;
-    z-index: 1;
+    z-index: 0; /* Behind background (z-index: 1) and Earth (z-index: 5) */
     background-image: 
-        radial-gradient(1px 1px at 25px 35px, #fff, transparent),
-        radial-gradient(1px 1px at 95px 45px, #fff, transparent),
-        radial-gradient(1px 1px at 135px 85px, rgba(255,255,255,0.7), transparent),
-        radial-gradient(1px 1px at 75px 165px, #fff, transparent),
-        radial-gradient(1px 1px at 145px 145px, rgba(255,255,255,0.6), transparent);
-    background-repeat: repeat, repeat, repeat, repeat, repeat;
-    background-size: 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px;
+        radial-gradient(1px 1px at 47px 23px, #fff, transparent),
+        radial-gradient(1px 1px at 83px 67px, #fff, transparent),
+        radial-gradient(1px 1px at 127px 41px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1px 1px at 59px 143px, #fff, transparent),
+        radial-gradient(1px 1px at 173px 89px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1px 1px at 31px 97px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 157px 157px, #fff, transparent),
+        radial-gradient(1px 1px at 103px 113px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1px 1px at 71px 179px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(1px 1px at 139px 29px, #fff, transparent),
+        radial-gradient(1px 1px at 67px 89px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(1px 1px at 113px 167px, #fff, transparent),
+        radial-gradient(1px 1px at 149px 53px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1px 1px at 27px 129px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1px 1px at 183px 137px, rgba(255,255,255,0.5), transparent);
+    background-repeat: repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat;
+    background-size: 187px 193px, 211px 197px, 203px 191px, 199px 209px, 223px 181px, 179px 223px, 193px 197px, 217px 203px, 191px 211px, 197px 187px, 233px 179px, 167px 227px, 241px 173px, 181px 241px, 229px 167px;
     animation: spaceMove 120s linear infinite !important;
-    will-change: transform;
     transform: translateZ(0);
     backface-visibility: hidden;
     perspective: 1000px;
 }
 
-/* Background Image Layer */
+/* Background Image Layer - Must be behind Earth */
 .background-image {
     position: fixed;
     top: 0;
     left: 0;
     width: 200vw;
     height: 200vh;
-    z-index: 2;
+    z-index: 1; /* Behind Earth (z-index: 5) and above stars (z-index: 0) */
     background-image: url('assets/images/background.png');
     background-repeat: repeat-x;
     background-size: auto 120vh;
     animation: spaceMove 120s linear infinite !important;
 }
 
-/* Earth Sprite */
+/* Earth Sprite - Must be above background and stars */
 .earth-sprite {
     position: absolute;
     top: 50%;
@@ -326,7 +375,7 @@ p {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    z-index: 5;
+    z-index: 5; /* Above background (z-index: 1) and stars (z-index: 0) */
     opacity: 1;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -496,7 +545,9 @@ p {
     }
 }
 
-/* Shooting Star Styles */
+/* ========================================
+   SHOOTING STAR STYLES
+   ======================================== */
 .shooting-star {
     position: absolute;
     background-image: url('assets/images/shootingstar.png');
@@ -526,11 +577,13 @@ p {
     user-select: none;
 }
 
-/* Additional mobile touch optimizations */
+/* ========================================
+   MOBILE TOUCH OPTIMIZATIONS
+   ======================================== */
 @media (max-width: 768px) {
     /* Prevent text selection on mobile */
     * {
-        touch-callout: none;
+        -webkit-touch-callout: none;
         user-select: none;
     }
     
@@ -539,14 +592,14 @@ p {
         min-width: 44px;
         min-height: 44px;
         touch-action: manipulation;
-        tap-highlight-color: transparent;
+        -webkit-tap-highlight-color: transparent;
     }
     
     .social-link {
         min-width: 44px;
         min-height: 44px;
         touch-action: manipulation;
-        tap-highlight-color: transparent;
+        -webkit-tap-highlight-color: transparent;
     }
     
     /* Improve mobile scrolling */
@@ -584,12 +637,7 @@ p {
     }
 }
 
-/* Android Chrome specific fixes */
-@media screen and (-webkit-min-device-pixel-ratio: 0) and (max-width: 768px) {
-    .stars {
-        background-size: 120px 120px, 120px 120px, 120px 120px, 120px 120px, 120px 120px;
-    }
-}
+/* Android Chrome specific fixes - now handled in main mobile query */
 
     /* Ensure proper stacking on mobile */
     @media (max-width: 768px) {
@@ -633,7 +681,30 @@ p {
 /* High DPI mobile displays */
 @media (-webkit-min-device-pixel-ratio: 2) and (max-width: 768px) {
     .stars {
-        background-size: 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px;
+        z-index: 0; /* Ensure high DPI mobile stars are also behind background */
+        background-image: 
+            radial-gradient(1px 1px at 17px 29px, #fff, transparent),
+            radial-gradient(1px 1px at 83px 47px, #fff, transparent),
+            radial-gradient(1px 1px at 151px 73px, rgba(255,255,255,0.7), transparent),
+            radial-gradient(1px 1px at 37px 127px, #fff, transparent),
+            radial-gradient(1px 1px at 113px 91px, rgba(255,255,255,0.6), transparent),
+            radial-gradient(1px 1px at 59px 33px, rgba(255,255,255,0.8), transparent),
+            radial-gradient(1px 1px at 143px 141px, #fff, transparent),
+            radial-gradient(1px 1px at 27px 67px, rgba(255,255,255,0.9), transparent),
+            radial-gradient(1px 1px at 107px 53px, rgba(255,255,255,0.5), transparent),
+            radial-gradient(1px 1px at 71px 153px, #fff, transparent),
+            radial-gradient(1px 1px at 161px 39px, rgba(255,255,255,0.4), transparent),
+            radial-gradient(1px 1px at 47px 89px, #fff, transparent),
+            radial-gradient(1px 1px at 131px 115px, rgba(255,255,255,0.6), transparent),
+            radial-gradient(1px 1px at 91px 61px, rgba(255,255,255,0.7), transparent),
+            radial-gradient(1px 1px at 167px 97px, rgba(255,255,255,0.5), transparent),
+            radial-gradient(1px 1px at 13px 139px, #fff, transparent),
+            radial-gradient(1px 1px at 97px 23px, rgba(255,255,255,0.8), transparent),
+            radial-gradient(1px 1px at 41px 167px, rgba(255,255,255,0.6), transparent),
+            radial-gradient(1px 1px at 133px 79px, #fff, transparent),
+            radial-gradient(1px 1px at 67px 119px, rgba(255,255,255,0.7), transparent),
+            radial-gradient(1px 1px at 157px 43px, rgba(255,255,255,0.4), transparent);
+        background-size: 347px 353px, 369px 359px, 383px 365px, 359px 373px, 377px 349px, 333px 379px, 393px 355px, 367px 363px, 351px 371px, 371px 357px, 387px 351px, 363px 377px, 381px 361px, 357px 369px, 389px 367px, 353px 375px, 365px 359px, 373px 353px, 361px 371px, 379px 365px;
     }
 }
 
@@ -648,8 +719,38 @@ p {
     }
 }
 
-/* Mobile Link Tree Layout */
+/* ========================================
+   MOBILE LINK TREE LAYOUT
+   ======================================== */
 @media (max-width: 768px) {
+    /* Mobile-specific star pattern to avoid tiling */
+    .stars {
+        z-index: 0; /* Ensure mobile stars are also behind background */
+        background-image: 
+            radial-gradient(1px 1px at 17px 29px, #fff, transparent),
+            radial-gradient(1px 1px at 83px 47px, #fff, transparent),
+            radial-gradient(1px 1px at 151px 73px, rgba(255,255,255,0.7), transparent),
+            radial-gradient(1px 1px at 37px 127px, #fff, transparent),
+            radial-gradient(1px 1px at 113px 91px, rgba(255,255,255,0.6), transparent),
+            radial-gradient(1px 1px at 59px 33px, rgba(255,255,255,0.8), transparent),
+            radial-gradient(1px 1px at 143px 141px, #fff, transparent),
+            radial-gradient(1px 1px at 27px 67px, rgba(255,255,255,0.9), transparent),
+            radial-gradient(1px 1px at 107px 53px, rgba(255,255,255,0.5), transparent),
+            radial-gradient(1px 1px at 71px 153px, #fff, transparent),
+            radial-gradient(1px 1px at 161px 39px, rgba(255,255,255,0.4), transparent),
+            radial-gradient(1px 1px at 47px 89px, #fff, transparent),
+            radial-gradient(1px 1px at 131px 115px, rgba(255,255,255,0.6), transparent),
+            radial-gradient(1px 1px at 91px 61px, rgba(255,255,255,0.7), transparent),
+            radial-gradient(1px 1px at 167px 97px, rgba(255,255,255,0.5), transparent),
+            radial-gradient(1px 1px at 13px 139px, #fff, transparent),
+            radial-gradient(1px 1px at 97px 23px, rgba(255,255,255,0.8), transparent),
+            radial-gradient(1px 1px at 41px 167px, rgba(255,255,255,0.6), transparent),
+            radial-gradient(1px 1px at 133px 79px, #fff, transparent),
+            radial-gradient(1px 1px at 67px 119px, rgba(255,255,255,0.7), transparent),
+            radial-gradient(1px 1px at 157px 43px, rgba(255,255,255,0.4), transparent);
+        background-size: 387px 393px, 409px 399px, 423px 405px, 399px 413px, 417px 389px, 373px 419px, 433px 395px, 407px 403px, 391px 411px, 411px 397px, 427px 391px, 403px 417px, 421px 401px, 397px 409px, 429px 407px, 393px 415px, 405px 399px, 413px 393px, 401px 411px, 419px 405px;
+    }
+    
     /* Hide satellite navigation on mobile */
     .satellite-nav {
         display: none;
@@ -657,7 +758,7 @@ p {
     
     /* Adjust hero content for mobile link tree */
     .hero-content {
-        top: 50px !important;
+        top: 85px !important;
         left: 50% !important;
         transform: translateX(-50%) !important;
         max-width: 90%;
@@ -675,27 +776,30 @@ p {
     }
     
     .title-line {
-        display: block !important;
+        display: inline !important;
         font-size: 2.5rem !important;
         font-weight: 600 !important;
         color: white !important;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        transform: none !important; /* Prevent any transform changes on mobile */
+        margin-right: 0.5rem !important;
     }
     
     .title-subtitle {
-        display: block !important;
+        display: inline !important;
         font-size: 1.2rem !important;
         font-weight: 500 !important;
         color: white !important;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
         text-transform: uppercase;
         letter-spacing: 0.1em;
+        transform: none !important; /* Prevent any transform changes on mobile */
     }
     
     /* Ensure social links are visible on mobile */
     .social-links {
         position: absolute !important;
-        top: 200px !important;
+        top: 250px !important;
         left: 50% !important;
         transform: translateX(-50%) !important;
         z-index: 45;
@@ -704,18 +808,20 @@ p {
         justify-content: center;
     }
     
+
+    
     /* Make Earth bigger for mobile */
     .earth-sprite {
-        width: 250px !important;
-        height: 250px !important;
-        top: 130px !important;
+        width: 300px !important;
+        height: 300px !important;
+        top: 165px !important;
         z-index: 15;
     }
     
     /* Mobile link tree container */
     .mobile-link-tree {
         display: block;
-        margin-top: 120px;
+        margin-top: 170px;
         width: 100%;
         max-width: 400px;
         z-index: 10;
@@ -725,43 +831,86 @@ p {
     .mobile-link-item {
         display: flex;
         align-items: center;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.5);
         border-radius: 12px;
         padding: 1rem 1.5rem;
         margin-bottom: 1rem;
         text-decoration: none;
         color: white;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        transition: all 0.3s ease;
-        -webkit-transition: all 0.3s ease;
-        -moz-transition: all 0.3s ease;
-        -o-transition: all 0.3s ease;
-        tap-highlight-color: transparent;
+        transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        -webkit-transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        -moz-transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        -o-transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        -webkit-tap-highlight-color: transparent;
         touch-action: manipulation;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 1.5s ease-out forwards;
     }
     
     .mobile-link-item:hover,
     .mobile-link-item:active {
-        background: rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.45);
         transform: translateY(-2px);
         -webkit-transform: translateY(-2px);
         -moz-transform: translateY(-2px);
         -ms-transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     }
     
-    /* Spinning satellite emojis */
+    /* Spinning satellite emojis - different animations for variety */
     .mobile-link-icon {
         width: 32px;
         height: 24px;
         margin-right: 1rem;
         flex-shrink: 0;
+    }
+    
+    /* Individual icon animations for variety */
+    .mobile-link-item:nth-child(1) .mobile-link-icon {
         animation: satelliteSpin 8s linear infinite;
         -webkit-animation: satelliteSpin 8s linear infinite;
         -moz-animation: satelliteSpin 8s linear infinite;
         -o-animation: satelliteSpin 8s linear infinite;
+    }
+    
+    .mobile-link-item:nth-child(2) .mobile-link-icon {
+        animation: satelliteSpinReverse 10s linear infinite;
+        -webkit-animation: satelliteSpinReverse 10s linear infinite;
+        -moz-animation: satelliteSpinReverse 10s linear infinite;
+        -o-animation: satelliteSpinReverse 10s linear infinite;
+    }
+    
+    .mobile-link-item:nth-child(3) .mobile-link-icon {
+        animation: satelliteSpinSlow 12s linear infinite;
+        -webkit-animation: satelliteSpinSlow 12s linear infinite;
+        -moz-animation: satelliteSpinSlow 12s linear infinite;
+        -o-animation: satelliteSpinSlow 12s linear infinite;
+    }
+    
+    .mobile-link-item:nth-child(4) .mobile-link-icon {
+        animation: satelliteSpinSlowReverse 9s linear infinite;
+        -webkit-animation: satelliteSpinSlowReverse 9s linear infinite;
+        -moz-animation: satelliteSpinSlowReverse 9s linear infinite;
+        -o-animation: satelliteSpinSlowReverse 9s linear infinite;
+    }
+    
+    /* Staggered entrance animations for mobile link items */
+    .mobile-link-item:nth-child(1) {
+        animation-delay: 0.8s;
+    }
+    
+    .mobile-link-item:nth-child(2) {
+        animation-delay: 1.0s;
+    }
+    
+    .mobile-link-item:nth-child(3) {
+        animation-delay: 1.2s;
+    }
+    
+    .mobile-link-item:nth-child(4) {
+        animation-delay: 1.4s;
     }
     
     /* Link text */
@@ -772,32 +921,7 @@ p {
         text-align: left;
     }
     
-    /* Minigame button special styling */
-    .mobile-link-item.minigame {
-        background: linear-gradient(135deg, rgba(255, 165, 0, 0.2), rgba(255, 69, 0, 0.2));
-        border-color: rgba(255, 165, 0, 0.4);
-    }
-    
-    .mobile-link-item.minigame:hover,
-    .mobile-link-item.minigame:active {
-        background: linear-gradient(135deg, rgba(255, 165, 0, 0.3), rgba(255, 69, 0, 0.3));
-        border-color: rgba(255, 165, 0, 0.6);
-    }
-    
-    .mobile-link-item.minigame .mobile-link-icon {
-        width: 28px;
-        height: 28px;
-        animation: shootingStarFloat 3s ease-in-out infinite;
-        -webkit-animation: shootingStarFloat 3s ease-in-out infinite;
-        -moz-animation: shootingStarFloat 3s ease-in-out infinite;
-        -o-animation: shootingStarFloat 3s ease-in-out infinite;
-    }
-    
-    /* Shooting star floating animation for minigame button */
-    @keyframes shootingStarFloat {
-        0%, 100% { transform: translateY(0px) rotate(0deg); }
-        50% { transform: translateY(-5px) rotate(180deg); }
-    }
+
     
     /* Adjust social links for mobile */
     .social-links {
@@ -808,7 +932,24 @@ p {
     .social-link {
         width: 45px;
         height: 45px;
+        background: rgba(255, 255, 255, 0.25);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 50%;
+        color: white;
+        text-decoration: none;
+        transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
+    
+    .social-link:hover {
+        background: rgba(255, 255, 255, 0.4);
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    }
+    
+
 }
 
 /* Hide mobile link tree on desktop */
@@ -817,3 +958,17 @@ p {
         display: none;
     }
 }
+
+/* Stack title vertically on smaller viewport heights */
+@media (max-height: 600px) and (max-width: 768px) {
+    .title-line {
+        display: block !important;
+        margin-right: 0 !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    .title-subtitle {
+        display: block !important;
+    }
+}
+
