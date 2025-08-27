@@ -49,6 +49,9 @@ function initializeWebsite() {
     // Initialize shooting stars
     initShootingStars();
     
+    // Initialize mobile minigame button
+    initMobileMinigame();
+    
     // Add loading animation
     document.body.classList.add('loaded');
     
@@ -60,6 +63,19 @@ function initializeWebsite() {
     // Add Edge-specific fixes
     if (isEdge) {
         applyEdgeFixes();
+    }
+}
+
+// Initialize mobile minigame button
+function initMobileMinigame() {
+    const mobileMinigameButton = document.querySelector('.mobile-link-item.minigame');
+    if (mobileMinigameButton) {
+        mobileMinigameButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (!minigameActive && !gameCooldown) {
+                startMinigame();
+            }
+        });
     }
 }
 
@@ -459,8 +475,16 @@ function initShootingStars() {
             z-index: 16;
         `;
         
-        // Add click event for minigame
+        // Add click and touch events for minigame (mobile support)
         shootingStar.addEventListener('click', handleShootingStarClick);
+        shootingStar.addEventListener('touchstart', handleShootingStarClick, { passive: false });
+        
+        // Mobile-specific styling
+        if (window.innerWidth <= 768) {
+            shootingStar.style.cursor = 'pointer';
+            shootingStar.style.touchAction = 'manipulation';
+            shootingStar.style.webkitTapHighlightColor = 'transparent';
+        }
         
         shootingStarContainer.appendChild(shootingStar);
         
@@ -537,20 +561,27 @@ function initShootingStars() {
         
         const scoreDisplay = document.createElement('div');
         scoreDisplay.className = 'minigame-score';
+        // Mobile-specific styling
+        const isMobileDevice = window.innerWidth <= 768;
+        const fontSize = isMobileDevice ? '1rem' : '1.25rem';
+        const topPosition = isMobileDevice ? '25%' : '35%';
+        
         scoreDisplay.style.cssText = `
             position: fixed;
-            top: 35%;
+            top: ${topPosition};
             left: 50%;
             transform: translateX(-50%);
             color: white;
             font-family: 'Inter', sans-serif;
-            font-size: 1.25rem;
+            font-size: ${fontSize};
             font-weight: 500;
             text-align: center;
             z-index: 1000;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
             opacity: 0;
             transition: opacity 0.5s ease;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         `;
         scoreDisplay.textContent = 'Score: 0';
         
@@ -574,20 +605,28 @@ function initShootingStars() {
     function startCountdown() {
         const countdownDisplay = document.createElement('div');
         countdownDisplay.className = 'minigame-countdown';
+        
+        // Mobile-specific styling
+        const isMobileDevice = window.innerWidth <= 768;
+        const countdownFontSize = isMobileDevice ? '3rem' : '4rem';
+        const countdownTop = isMobileDevice ? '40%' : '50%';
+        
         countdownDisplay.style.cssText = `
             position: fixed;
-            top: 50%;
+            top: ${countdownTop};
             left: 50%;
             transform: translate(-50%, -50%);
             color: white;
             font-family: 'Inter', sans-serif;
-            font-size: 4rem;
+            font-size: ${countdownFontSize};
             font-weight: 700;
             text-align: center;
             z-index: 1001;
             text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
             opacity: 0;
             transition: opacity 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         `;
         
         document.body.appendChild(countdownDisplay);
@@ -595,22 +634,30 @@ function initShootingStars() {
         // Create instructions display
         const instructionsDisplay = document.createElement('div');
         instructionsDisplay.className = 'minigame-instructions';
+        
+        // Mobile-specific styling for instructions
+        const instructionsFontSize = isMobileDevice ? '1.2rem' : '1.5rem';
+        const instructionsTop = isMobileDevice ? '25%' : '30%';
+        const instructionsText = isMobileDevice ? 'Tap as many shooting stars as you can!' : 'Click as many shooting stars as you can!';
+        
         instructionsDisplay.style.cssText = `
             position: fixed;
-            top: 30%;
+            top: ${instructionsTop};
             left: 50%;
             transform: translateX(-50%);
             color: #ffa500;
             font-family: 'Inter', sans-serif;
-            font-size: 1.5rem;
+            font-size: ${instructionsFontSize};
             font-weight: 400;
             text-align: center;
             z-index: 1001;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 165, 0, 0.6), 0 0 40px rgba(255, 165, 0, 0.4);
             opacity: 0;
             transition: opacity 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         `;
-        instructionsDisplay.textContent = 'Click as many shooting stars as you can!';
+        instructionsDisplay.textContent = instructionsText;
         document.body.appendChild(instructionsDisplay);
         
         let countdown = 3;
