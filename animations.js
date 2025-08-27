@@ -25,7 +25,7 @@ class ShootingStarSystem {
             left: 0;
             width: 100vw;
             height: 100vh;
-            pointer-events: auto;
+            pointer-events: none;
             z-index: 150;
             overflow: visible;
         `;
