@@ -578,20 +578,28 @@ p {
     }
 }
 
-/* Ensure proper stacking on mobile */
-@media (max-width: 768px) {
-    .satellite-nav {
-        z-index: 30;
+    /* Ensure proper stacking on mobile */
+    @media (max-width: 768px) {
+        .satellite-nav {
+            z-index: 30;
+        }
+        
+        .hero-content {
+            z-index: 15;
+        }
+        
+        .social-links {
+            z-index: 20;
+        }
+        
+        .earth-sprite {
+            z-index: 10;
+        }
+        
+        .mobile-link-tree {
+            z-index: 5;
+        }
     }
-    
-    .hero-content {
-        z-index: 25;
-    }
-    
-    .social-links {
-        z-index: 35;
-    }
-}
 
 /* Landscape mobile optimizations */
 @media (max-width: 768px) and (orientation: landscape) {
@@ -636,24 +644,27 @@ p {
     
     /* Adjust hero content for mobile link tree */
     .hero-content {
-        top: 35%;
+        top: 200px;
         max-width: 90%;
         padding: 0 1rem;
+        z-index: 15;
     }
     
     /* Make Earth smaller for mobile */
     .earth-sprite {
         width: 250px;
         height: 250px;
-        top: 15%;
+        top: 50px;
+        z-index: 10;
     }
     
     /* Mobile link tree container */
     .mobile-link-tree {
         display: block;
-        margin-top: 1rem;
+        margin-top: 280px;
         width: 100%;
         max-width: 400px;
+        z-index: 5;
     }
     
     /* Individual link items */
