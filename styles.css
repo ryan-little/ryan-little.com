@@ -517,11 +517,7 @@ p {
 @media (max-width: 768px) {
     /* Prevent text selection on mobile */
     * {
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
+        touch-callout: none;
         user-select: none;
     }
     
@@ -530,20 +526,19 @@ p {
         min-width: 44px;
         min-height: 44px;
         touch-action: manipulation;
-        -webkit-tap-highlight-color: transparent;
+        tap-highlight-color: transparent;
     }
     
     .social-link {
         min-width: 44px;
         min-height: 44px;
         touch-action: manipulation;
-        -webkit-tap-highlight-color: transparent;
+        tap-highlight-color: transparent;
     }
     
     /* Improve mobile scrolling */
     .hero {
         -webkit-overflow-scrolling: touch;
-        overflow-scrolling: touch;
     }
     
     /* Optimize animations for mobile */
@@ -641,7 +636,7 @@ p {
     
     /* Adjust hero content for mobile link tree */
     .hero-content {
-        top: 40%;
+        top: 35%;
         max-width: 90%;
         padding: 0 1rem;
     }
@@ -650,13 +645,13 @@ p {
     .earth-sprite {
         width: 250px;
         height: 250px;
-        top: 25%;
+        top: 15%;
     }
     
     /* Mobile link tree container */
     .mobile-link-tree {
         display: block;
-        margin-top: 2rem;
+        margin-top: 1rem;
         width: 100%;
         max-width: 400px;
     }
@@ -678,7 +673,7 @@ p {
         -webkit-transition: all 0.3s ease;
         -moz-transition: all 0.3s ease;
         -o-transition: all 0.3s ease;
-        -webkit-tap-highlight-color: transparent;
+        tap-highlight-color: transparent;
         touch-action: manipulation;
     }
     
