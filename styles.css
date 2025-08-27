@@ -238,6 +238,9 @@ p {
 
 .social-link i {
     font-size: 1.25rem;
+    font-smooth: never;
+    -webkit-font-smoothing: auto;
+    -moz-osx-font-smoothing: auto;
 }
 
 /* Hero Section */
