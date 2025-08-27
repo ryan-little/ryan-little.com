@@ -26,7 +26,7 @@ class ShootingStarSystem {
             width: 100vw;
             height: 100vh;
             pointer-events: auto;
-            z-index: 1000;
+            z-index: 150;
             overflow: visible;
         `;
         document.body.appendChild(this.container);
@@ -141,7 +141,7 @@ class ShootingStarSystem {
             filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
             cursor: pointer;
             pointer-events: auto;
-            z-index: ${type === 'minigame' ? '1001' : '1000'};
+            z-index: ${type === 'minigame' ? '160' : '155'};
             touch-action: manipulation;
             -webkit-tap-highlight-color: transparent;
         `;
