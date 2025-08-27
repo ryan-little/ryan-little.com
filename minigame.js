@@ -264,6 +264,12 @@ function fadeOutUIElements() {
     // Fade out social media buttons
     const socialButtons = document.querySelectorAll('.social-links a');
     socialButtons.forEach(button => {
+        // Disable CSS animations first
+        button.style.animation = 'none';
+        button.style.webkitAnimation = 'none';
+        button.style.mozAnimation = 'none';
+        button.style.oAnimation = 'none';
+        
         button.style.transition = 'opacity 0.5s ease';
         button.style.opacity = '0.3';
         button.style.pointerEvents = 'none';
@@ -277,6 +283,12 @@ function fadeOutUIElements() {
     // Fade out mobile link tree buttons
     const mobileButtons = document.querySelectorAll('.mobile-link-item');
     mobileButtons.forEach(button => {
+        // Disable CSS animations first
+        button.style.animation = 'none';
+        button.style.webkitAnimation = 'none';
+        button.style.mozAnimation = 'none';
+        button.style.oAnimation = 'none';
+        
         button.style.transition = 'opacity 0.5s ease';
         button.style.opacity = '0.3';
         button.style.pointerEvents = 'none';
@@ -374,6 +386,11 @@ function fadeInUIElementsStaggered() {
                     button.href = button.getAttribute('data-original-href');
                     button.removeAttribute('data-original-href');
                 }
+                // Re-enable CSS animations
+                button.style.animation = '';
+                button.style.webkitAnimation = '';
+                button.style.mozAnimation = '';
+                button.style.oAnimation = '';
                 // Add a subtle entrance effect
                 button.style.transform = 'scale(1.1)';
                 setTimeout(() => {
