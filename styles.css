@@ -241,7 +241,7 @@ p {
     display: flex;
     gap: 2rem;
     align-items: center;
-    animation: fadeInUp 1.5s ease-out 0.6s forwards;
+    animation: fadeInUp 1.5s ease-out forwards;
     opacity: 1;
     transform: translateY(0);
 }

@@ -442,7 +442,7 @@ function showLargeCountdown() {
     document.body.appendChild(countdownDisplay);
     
     // Mobile-specific game duration
-    let timeLeft = isMobileDevice ? 15 : 20; // 15 seconds on mobile, 20 on desktop
+    let timeLeft = 20; // 20 seconds on both mobile and desktop
     
     function updateCountdown() {
         if (timeLeft > 0) {
@@ -527,6 +527,18 @@ function startCooldownTimer() {
             // End cooldown
             gameCooldown = false;
             window.gameCooldown = false;
+            
+            // Reset shooting star system to allow new background stars
+            if (typeof window.clearAllShootingStars === 'function') {
+                window.clearAllShootingStars();
+            }
+            
+            // Restart background star creation after cooldown
+            if (window.shootingStarSystem && typeof window.shootingStarSystem.startBackgroundStars === 'function') {
+                setTimeout(() => {
+                    window.shootingStarSystem.startBackgroundStars();
+                }, 1000);
+            }
             
             // Start fade out sequence after 3 seconds
             setTimeout(() => {

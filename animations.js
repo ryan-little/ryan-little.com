@@ -322,3 +322,4 @@ window.createMinigameShootingStar = () => shootingStarSystem?.createShootingStar
 window.startMinigameStars = () => shootingStarSystem?.startMinigameStars();
 window.stopMinigameStars = () => shootingStarSystem?.stopMinigameStars();
 window.clearAllShootingStars = () => shootingStarSystem?.clearAllStars();
+window.shootingStarSystem = shootingStarSystem;
