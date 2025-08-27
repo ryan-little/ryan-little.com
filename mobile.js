@@ -96,6 +96,27 @@ function optimizeTouchFeedback() {
             this.style.transform = 'scale(1)';
         }, { passive: true });
     });
+    
+    // Debug social link touch events
+    const socialLinks = document.querySelectorAll('.social-link');
+    socialLinks.forEach((link, index) => {
+        console.log(`🔗 Social link ${index + 1}:`, {
+            element: link,
+            zIndex: window.getComputedStyle(link).zIndex,
+            pointerEvents: window.getComputedStyle(link).pointerEvents,
+            position: window.getComputedStyle(link).position
+        });
+        
+        // Add click event listener for debugging
+        link.addEventListener('click', function(e) {
+            console.log('✅ Social link clicked!', e.target);
+        });
+        
+        // Add touch event listener for debugging
+        link.addEventListener('touchstart', function(e) {
+            console.log('👆 Social link touch start!', e.target);
+        }, { passive: false });
+    });
 }
 
 // Mobile scroll optimizations

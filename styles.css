@@ -264,6 +264,10 @@ p {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    /* Mobile touch optimizations */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
 }
 
 .social-link:hover {
