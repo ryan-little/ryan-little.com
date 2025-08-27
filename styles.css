@@ -1,0 +1,514 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Performance optimizations */
+.hero-background *,
+.satellite *,
+.shooting-star * {
+    will-change: transform, opacity;
+}
+
+:root {
+    /* Typography */
+    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+    
+    /* Spacing */
+    --section-padding: 6rem 0;
+    --container-padding: 0 2rem;
+    --border-radius: 8px;
+    --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-primary);
+    line-height: 1.6;
+    color: #1a1a1a;
+    background-color: transparent;
+    overflow-x: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--container-padding);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+h1 { font-size: 3.5rem; }
+h2 { font-size: 2.5rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.25rem; }
+
+p {
+    margin-bottom: 1rem;
+    color: #6c757d;
+}
+
+/* Satellite Navigation System */
+.satellite-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 20;
+}
+
+.satellite {
+    position: absolute;
+    width: 120px;
+    height: 90px;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: transform 0.3s ease;
+    transform-origin: center;
+    top: 50%;
+    left: 50%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.satellite:nth-child(1) { 
+    animation: orbit1 20s linear infinite !important;
+}
+.satellite:nth-child(2) { 
+    animation: orbit2 20s linear infinite !important;
+}
+.satellite:nth-child(3) { 
+    animation: orbit3 20s linear infinite !important;
+}
+.satellite:nth-child(4) { 
+    animation: orbit4 20s linear infinite !important;
+}
+
+.satellite:hover {
+    transform: scale(1.1);
+    z-index: 200;
+}
+
+.satellite-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    animation: satelliteSpin 8s linear infinite;
+}
+
+.satellite-label {
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+    white-space: nowrap;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Counter-rotate labels to keep them always horizontal */
+.satellite:nth-child(1) .satellite-label {
+    animation: counterRotate1 20s linear infinite;
+}
+
+.satellite:nth-child(2) .satellite-label {
+    animation: counterRotate2 20s linear infinite;
+}
+
+.satellite:nth-child(3) .satellite-label {
+    animation: counterRotate3 20s linear infinite;
+}
+
+.satellite:nth-child(4) .satellite-label {
+    animation: counterRotate4 20s linear infinite;
+}
+
+/* Orbital animations for satellites around the center */
+@keyframes orbit1 {
+    0% { transform: translate(-50%, -50%) rotate(0deg) translateX(var(--satellite1-distance, 300px)); }
+    100% { transform: translate(-50%, -50%) rotate(360deg) translateX(var(--satellite1-distance, 300px)); }
+}
+
+@keyframes orbit2 {
+    0% { transform: translate(-50%, -50%) rotate(90deg) translateX(var(--satellite2-distance, 330px)); }
+    100% { transform: translate(-50%, -50%) rotate(450deg) translateX(var(--satellite2-distance, 330px)); }
+}
+
+@keyframes orbit3 {
+    0% { transform: translate(-50%, -50%) rotate(180deg) translateX(var(--satellite3-distance, 360px)); }
+    100% { transform: translate(-50%, -50%) rotate(540deg) translateX(var(--satellite3-distance, 360px)); }
+}
+
+@keyframes orbit4 {
+    0% { transform: translate(-50%, -50%) rotate(270deg) translateX(var(--satellite4-distance, 390px)); }
+    100% { transform: translate(-50%, -50%) rotate(630deg) translateX(var(--satellite4-distance, 390px)); }
+}
+
+/* Satellite spinning animation */
+@keyframes satelliteSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Counter-rotation animations to keep labels always horizontal */
+@keyframes counterRotate1 {
+    0% { transform: translateX(-50%) rotate(0deg); }
+    100% { transform: translateX(-50%) rotate(-360deg); }
+}
+
+@keyframes counterRotate2 {
+    0% { transform: translateX(-50%) rotate(-90deg); }
+    100% { transform: translateX(-50%) rotate(-450deg); }
+}
+
+@keyframes counterRotate3 {
+    0% { transform: translateX(-50%) rotate(-180deg); }
+    100% { transform: translateX(-50%) rotate(-540deg); }
+}
+
+@keyframes counterRotate4 {
+    0% { transform: translateX(-50%) rotate(-270deg); }
+    100% { transform: translateX(-50%) rotate(-630deg); }
+}
+
+/* Social Links */
+.social-links {
+    position: relative;
+    margin-top: -0.625rem;
+    z-index: 200;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    animation: fadeInUp 1.5s ease-out 0.6s forwards;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    will-change: transform, opacity;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.social-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.social-link i {
+    font-size: 1.25rem;
+}
+
+/* Hero Section */
+.hero {
+    min-height: 100vh;
+    position: relative;
+    overflow: visible;
+    background: #000000;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* Space Background */
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 100vh;
+    z-index: 1;
+    background-image: 
+        radial-gradient(1px 1px at 25px 35px, #fff, transparent),
+        radial-gradient(1px 1px at 95px 45px, #fff, transparent),
+        radial-gradient(1px 1px at 135px 85px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1px 1px at 75px 165px, #fff, transparent),
+        radial-gradient(1px 1px at 145px 145px, rgba(255,255,255,0.6), transparent);
+    background-repeat: repeat, repeat, repeat, repeat, repeat;
+    background-size: 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px;
+    animation: spaceMove 120s linear infinite !important;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Background Image Layer */
+.background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 100vh;
+    z-index: 2;
+    background-image: url('assets/images/background.png');
+    background-repeat: repeat-x;
+    background-size: auto 120vh;
+    animation: spaceMove 120s linear infinite !important;
+}
+
+/* Earth Sprite */
+.earth-sprite {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    background-image: url('assets/images/earthsprite.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 5;
+    opacity: 1;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+@keyframes spaceMove {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100vw); }
+}
+
+.hero-content {
+    position: absolute;
+    top: 51%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 25;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 800px;
+    padding: var(--container-padding);
+    margin-top: 0;
+}
+
+.hero-text {
+    color: white;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.hero-title {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.title-line {
+    display: block;
+    font-size: 4.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    animation: fadeInUp 1.5s ease-out forwards;
+    letter-spacing: -0.02em;
+    opacity: 0;
+    transform: translateY(30px);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.title-subtitle {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 500;
+    opacity: 0;
+    animation: fadeInUp 1.5s ease-out 0.3s forwards;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transform: translateY(30px);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .title-line {
+        font-size: 3rem;
+    }
+    
+    .earth-sprite {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .satellite {
+        width: 72px;
+        height: 54px;
+    }
+    
+    .satellite-label {
+        font-size: 0.8rem;
+        bottom: -25px;
+    }
+    
+    /* Mobile orbital adjustments */
+    .satellite:nth-child(1) { 
+        animation: orbit1 20s linear infinite !important;
+        transform: scale(0.6) !important;
+    }
+    .satellite:nth-child(2) { 
+        animation: orbit2 20s linear infinite !important;
+        transform: scale(0.6) !important;
+    }
+    .satellite:nth-child(3) { 
+        animation: orbit3 20s linear infinite !important;
+        transform: scale(0.6) !important;
+    }
+    .satellite:nth-child(4) { 
+        animation: orbit4 20s linear infinite !important;
+        transform: scale(0.6) !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
+    .satellite {
+        width: 60px;
+        height: 45px;
+    }
+    
+    .satellite-label {
+        font-size: 0.7rem;
+        bottom: -22px;
+    }
+    
+    /* Small screen orbital adjustments */
+    .satellite:nth-child(1) { 
+        animation: orbit1 20s linear infinite !important;
+        transform: scale(0.5) !important;
+    }
+    .satellite:nth-child(2) { 
+        animation: orbit2 20s linear infinite !important;
+        transform: scale(0.5) !important;
+    }
+    .satellite:nth-child(3) { 
+        animation: orbit3 20s linear infinite !important;
+        transform: scale(0.5) !important;
+    }
+    .satellite:nth-child(4) { 
+        animation: orbit4 20s linear infinite !important;
+        transform: scale(0.5) !important;
+    }
+    
+    .title-line {
+        font-size: 2rem;
+    }
+}
+
+/* Medium screens - maintain animations longer */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .satellite {
+        width: 80px;
+        height: 60px;
+    }
+    
+    .satellite-label {
+        font-size: 0.8rem;
+        bottom: -25px;
+    }
+}
+
+/* Shooting Star Styles */
+.shooting-star {
+    position: absolute;
+    background-image: url('assets/images/shootingstar.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    z-index: 15;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Ensure clickable shooting stars remain interactive */
+.shooting-star.clickable {
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+/* Minigame elements - prevent text selection */
+.minigame-score,
+.minigame-countdown {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
