@@ -512,3 +512,122 @@ p {
     -ms-user-select: none;
     user-select: none;
 }
+
+/* Additional mobile touch optimizations */
+@media (max-width: 768px) {
+    /* Prevent text selection on mobile */
+    * {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    
+    /* Optimize touch targets */
+    .satellite {
+        min-width: 44px;
+        min-height: 44px;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    .social-link {
+        min-width: 44px;
+        min-height: 44px;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* Improve mobile scrolling */
+    .hero {
+        -webkit-overflow-scrolling: touch;
+        overflow-scrolling: touch;
+    }
+    
+    /* Optimize animations for mobile */
+    .stars,
+    .background-image {
+        animation-duration: 60s !important;
+        -webkit-animation-duration: 60s !important;
+        -moz-animation-duration: 60s !important;
+        -o-animation-duration: 60s !important;
+    }
+    
+    /* Reduce motion on mobile for better performance */
+    .satellite {
+        animation-duration: 15s !important;
+        -webkit-animation-duration: 15s !important;
+        -moz-animation-duration: 15s !important;
+        -o-animation-duration: 15s !important;
+    }
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+    .hero {
+        min-height: -webkit-fill-available;
+    }
+    
+    .satellite {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+/* Android Chrome specific fixes */
+@media screen and (-webkit-min-device-pixel-ratio: 0) and (max-width: 768px) {
+    .stars {
+        background-size: 120px 120px, 120px 120px, 120px 120px, 120px 120px, 120px 120px;
+    }
+}
+
+/* Ensure proper stacking on mobile */
+@media (max-width: 768px) {
+    .satellite-nav {
+        z-index: 30;
+    }
+    
+    .hero-content {
+        z-index: 25;
+    }
+    
+    .social-links {
+        z-index: 35;
+    }
+}
+
+/* Landscape mobile optimizations */
+@media (max-width: 768px) and (orientation: landscape) {
+    .hero-title {
+        margin-bottom: 0.5rem;
+    }
+    
+    .social-links {
+        margin-top: 0.5rem;
+    }
+    
+    .satellite {
+        width: 70px !important;
+        height: 52.5px !important;
+    }
+}
+
+/* High DPI mobile displays */
+@media (-webkit-min-device-pixel-ratio: 2) and (max-width: 768px) {
+    .stars {
+        background-size: 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px;
+    }
+}
+
+/* Ensure proper touch feedback */
+@media (hover: none) and (pointer: coarse) {
+    .satellite:active,
+    .social-link:active {
+        transform: scale(0.95);
+        -webkit-transform: scale(0.95);
+        -moz-transform: scale(0.95);
+        -ms-transform: scale(0.95);
+    }
+}

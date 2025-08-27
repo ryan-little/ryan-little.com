@@ -1,6 +1,46 @@
-// Simple, working functionality for satellites and stars
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize stars
+// Cross-browser compatible personal website functionality
+// Includes mobile support and Edge compatibility fixes
+
+// Browser detection and compatibility
+const isEdge = navigator.userAgent.includes('Edge') || navigator.userAgent.includes('Edg');
+const isFirefox = navigator.userAgent.includes('Firefox');
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+
+// Cross-browser event handling
+const addEvent = (element, event, handler) => {
+    if (element.addEventListener) {
+        element.addEventListener(event, handler, false);
+    } else if (element.attachEvent) {
+        element.attachEvent('on' + event, handler);
+    }
+};
+
+// Cross-browser CSS property setting
+const setCSSProperty = (element, property, value) => {
+    if (element.style.setProperty) {
+        element.style.setProperty(property, value);
+    } else {
+        element.style[property] = value;
+    }
+};
+
+// Performance optimization for animations
+const supportsTransform3d = (() => {
+    const el = document.createElement('div');
+    el.style.transform = 'translate3d(0,0,0)';
+    return el.style.transform !== '';
+})();
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeWebsite);
+} else {
+    initializeWebsite();
+}
+
+function initializeWebsite() {
+    // Initialize stars with browser-specific optimizations
     generateRandomStars();
     
     // Initialize satellite movement
@@ -11,7 +51,53 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add loading animation
     document.body.classList.add('loaded');
-});
+    
+    // Add mobile-specific optimizations
+    if (isMobile) {
+        optimizeForMobile();
+    }
+    
+    // Add Edge-specific fixes
+    if (isEdge) {
+        applyEdgeFixes();
+    }
+}
+
+// Mobile optimizations
+function optimizeForMobile() {
+    // Reduce animation complexity on mobile
+    const stars = document.querySelector('.stars');
+    if (stars) {
+        stars.style.animationDuration = '60s';
+        stars.style.webkitAnimationDuration = '60s';
+        stars.style.mozAnimationDuration = '60s';
+        stars.style.oAnimationDuration = '60s';
+    }
+    
+    // Optimize touch interactions
+    const satellites = document.querySelectorAll('.satellite');
+    satellites.forEach(satellite => {
+        satellite.style.touchAction = 'manipulation';
+        satellite.style.webkitTouchCallout = 'none';
+        satellite.style.webkitUserSelect = 'none';
+    });
+}
+
+// Edge-specific compatibility fixes
+function applyEdgeFixes() {
+    // Fix for Edge star rendering
+    const stars = document.querySelector('.stars');
+    if (stars) {
+        stars.style.backgroundSize = '150px 150px, 150px 150px, 150px 150px, 150px 150px, 150px 150px';
+    }
+    
+    // Fix for Edge transform issues
+    const elements = document.querySelectorAll('.satellite, .hero-background, .stars');
+    elements.forEach(el => {
+        el.style.msTransform = 'translateZ(0)';
+        el.style.transform = 'translateZ(0)';
+    });
+}
 
 // Minigame variables
 let minigameActive = false;
@@ -22,7 +108,7 @@ let shootingStarRain = null;
 let gameCooldown = false;
 let shouldCreateStars = false;
 
-// Generate Random Star Field
+// Generate Random Star Field with cross-browser compatibility
 function generateRandomStars() {
     const stars = document.querySelector('.stars');
     if (!stars) return;
@@ -30,9 +116,9 @@ function generateRandomStars() {
     // Clear existing stars
     stars.style.backgroundImage = '';
     
-    // Generate random star positions with more variation
+    // Browser-specific star generation
     let starCSS = '';
-    const numStars = 180;
+    const numStars = isMobile ? 120 : 180; // Reduce stars on mobile for performance
     
     for (let i = 0; i < numStars; i++) {
         // More random positioning with slight clustering avoidance
@@ -47,7 +133,7 @@ function generateRandomStars() {
             y = (Math.random() * 0.8 + 0.1) * 100;
         }
         
-        // More varied star sizes
+        // More varied star sizes with browser compatibility
         const sizeVariation = Math.random();
         let size;
         if (sizeVariation < 0.6) {
@@ -61,12 +147,24 @@ function generateRandomStars() {
         // More varied brightness for natural look
         const brightness = Math.random() * 0.9 + 0.1;
         
-        starCSS += `radial-gradient(${size}px ${size}px at ${x}% ${y}%, rgba(255,255,255,${brightness}) 0%, transparent 100%),`;
+        // Use simpler gradient for better browser compatibility
+        if (isEdge || isFirefox) {
+            starCSS += `radial-gradient(${size}px ${size}px at ${x}% ${y}%, rgba(255,255,255,${brightness}) 0%, transparent 100%),`;
+        } else {
+            starCSS += `radial-gradient(${size}px ${size}px at ${x}% ${y}%, rgba(255,255,255,${brightness}) 0%, transparent 100%),`;
+        }
     }
     
     // Remove trailing comma and set background
     starCSS = starCSS.slice(0, -1);
-    stars.style.backgroundImage = starCSS;
+    
+    // Set background with fallback
+    try {
+        stars.style.backgroundImage = starCSS;
+    } catch (e) {
+        // Fallback for older browsers
+        stars.style.backgroundImage = 'radial-gradient(1px 1px at 50% 50%, rgba(255,255,255,0.8) 0%, transparent 100%)';
+    }
 }
 
 // Initialize dynamic satellite movement
