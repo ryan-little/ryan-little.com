@@ -25,7 +25,7 @@ class ShootingStarSystem {
             left: 0;
             width: 100vw;
             height: 100vh;
-            pointer-events: none;
+            pointer-events: auto;
             z-index: 9998;
             overflow: visible;
         `;
@@ -139,8 +139,8 @@ class ShootingStarSystem {
             transform: rotate(${angle}deg);
             opacity: 0;
             filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
-            cursor: ${type === 'minigame' ? 'pointer' : 'default'};
-            pointer-events: ${type === 'minigame' ? 'auto' : 'none'};
+            cursor: pointer;
+            pointer-events: auto;
             z-index: ${type === 'minigame' ? '9999' : '9997'};
             touch-action: manipulation;
             -webkit-tap-highlight-color: transparent;
@@ -152,6 +152,7 @@ class ShootingStarSystem {
             shootingStar.addEventListener('touchstart', this.handleMinigameStarClick.bind(this), { passive: false });
         } else if (type === 'background') {
             shootingStar.addEventListener('click', this.handleBackgroundStarClick.bind(this));
+            shootingStar.addEventListener('touchstart', this.handleBackgroundStarClick.bind(this), { passive: false });
         }
         
         // Add to container
@@ -195,10 +196,26 @@ class ShootingStarSystem {
     
     handleBackgroundStarClick(e) {
         e.preventDefault();
+        e.stopPropagation();
+        
+        console.log('🎯 Background star clicked!', {
+            type: e.type,
+            target: e.target,
+            minigameActive: window.minigameActive,
+            gameCooldown: window.gameCooldown,
+            hasStartMinigame: typeof startMinigame === 'function'
+        });
         
         // Start minigame if not active and not in cooldown
         if (typeof startMinigame === 'function' && !window.minigameActive && !window.gameCooldown) {
+            console.log('🎮 Starting minigame from background star click');
             startMinigame();
+        } else {
+            console.log('❌ Cannot start minigame:', {
+                startMinigameExists: typeof startMinigame === 'function',
+                minigameActive: window.minigameActive,
+                gameCooldown: window.gameCooldown
+            });
         }
         
         // Remove the clicked star
