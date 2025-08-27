@@ -408,15 +408,16 @@ p {
     }
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
+/* Desktop responsive design */
+@media (min-width: 769px) {
     .title-line {
         font-size: 3rem;
     }
     
+    /* Keep desktop Earth at original size */
     .earth-sprite {
-        width: 300px;
-        height: 300px;
+        width: 500px;
+        height: 500px;
     }
     
     .satellite {
@@ -429,22 +430,18 @@ p {
         bottom: -25px;
     }
     
-    /* Mobile orbital adjustments */
+    /* Desktop satellite animations - RESTORE THESE */
     .satellite:nth-child(1) { 
         animation: orbit1 20s linear infinite !important;
-        transform: scale(0.6) !important;
     }
     .satellite:nth-child(2) { 
         animation: orbit2 20s linear infinite !important;
-        transform: scale(0.6) !important;
     }
     .satellite:nth-child(3) { 
         animation: orbit3 20s linear infinite !important;
-        transform: scale(0.6) !important;
     }
     .satellite:nth-child(4) { 
         animation: orbit4 20s linear infinite !important;
-        transform: scale(0.6) !important;
     }
 }
 
@@ -601,19 +598,19 @@ p {
         }
         
         .hero-content {
-            z-index: 15;
+            z-index: 50;
         }
         
         .social-links {
-            z-index: 20;
+            z-index: 45;
         }
         
         .earth-sprite {
-            z-index: 10;
+            z-index: 40;
         }
         
         .mobile-link-tree {
-            z-index: 5;
+            z-index: 10;
         }
     }
 
@@ -660,27 +657,68 @@ p {
     
     /* Adjust hero content for mobile link tree */
     .hero-content {
-        top: 120px;
+        top: 50px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
         max-width: 90%;
         padding: 0 1rem;
-        z-index: 15;
+        z-index: 50;
+        position: absolute;
+        text-align: center;
     }
     
-    /* Make Earth smaller for mobile */
+    /* Ensure title and subtitle are visible on mobile */
+    .hero-title {
+        color: white !important;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        margin-bottom: 0.5rem;
+    }
+    
+    .title-line {
+        display: block !important;
+        font-size: 2.5rem !important;
+        font-weight: 600 !important;
+        color: white !important;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    }
+    
+    .title-subtitle {
+        display: block !important;
+        font-size: 1.2rem !important;
+        font-weight: 500 !important;
+        color: white !important;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+    
+    /* Ensure social links are visible on mobile */
+    .social-links {
+        position: absolute !important;
+        top: 200px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        z-index: 45;
+        display: flex !important;
+        gap: 1.5rem;
+        justify-content: center;
+    }
+    
+    /* Make Earth bigger for mobile */
     .earth-sprite {
-        width: 200px;
-        height: 200px;
-        top: 20px;
-        z-index: 10;
+        width: 250px !important;
+        height: 250px !important;
+        top: 130px !important;
+        z-index: 15;
     }
     
     /* Mobile link tree container */
     .mobile-link-tree {
         display: block;
-        margin-top: 240px;
+        margin-top: 120px;
         width: 100%;
         max-width: 400px;
-        z-index: 5;
+        z-index: 10;
     }
     
     /* Individual link items */
