@@ -631,3 +631,129 @@ p {
         -ms-transform: scale(0.95);
     }
 }
+
+/* Mobile Link Tree Layout */
+@media (max-width: 768px) {
+    /* Hide satellite navigation on mobile */
+    .satellite-nav {
+        display: none;
+    }
+    
+    /* Adjust hero content for mobile link tree */
+    .hero-content {
+        top: 40%;
+        max-width: 90%;
+        padding: 0 1rem;
+    }
+    
+    /* Make Earth smaller for mobile */
+    .earth-sprite {
+        width: 250px;
+        height: 250px;
+        top: 25%;
+    }
+    
+    /* Mobile link tree container */
+    .mobile-link-tree {
+        display: block;
+        margin-top: 2rem;
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    /* Individual link items */
+    .mobile-link-item {
+        display: flex;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        padding: 1rem 1.5rem;
+        margin-bottom: 1rem;
+        text-decoration: none;
+        color: white;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        -webkit-transition: all 0.3s ease;
+        -moz-transition: all 0.3s ease;
+        -o-transition: all 0.3s ease;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+    
+    .mobile-link-item:hover,
+    .mobile-link-item:active {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+        -webkit-transform: translateY(-2px);
+        -moz-transform: translateY(-2px);
+        -ms-transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Spinning satellite emojis */
+    .mobile-link-icon {
+        width: 32px;
+        height: 24px;
+        margin-right: 1rem;
+        flex-shrink: 0;
+        animation: satelliteSpin 8s linear infinite;
+        -webkit-animation: satelliteSpin 8s linear infinite;
+        -moz-animation: satelliteSpin 8s linear infinite;
+        -o-animation: satelliteSpin 8s linear infinite;
+    }
+    
+    /* Link text */
+    .mobile-link-text {
+        font-size: 1.1rem;
+        font-weight: 500;
+        flex-grow: 1;
+        text-align: left;
+    }
+    
+    /* Minigame button special styling */
+    .mobile-link-item.minigame {
+        background: linear-gradient(135deg, rgba(255, 165, 0, 0.2), rgba(255, 69, 0, 0.2));
+        border-color: rgba(255, 165, 0, 0.4);
+    }
+    
+    .mobile-link-item.minigame:hover,
+    .mobile-link-item.minigame:active {
+        background: linear-gradient(135deg, rgba(255, 165, 0, 0.3), rgba(255, 69, 0, 0.3));
+        border-color: rgba(255, 165, 0, 0.6);
+    }
+    
+    .mobile-link-item.minigame .mobile-link-icon {
+        width: 28px;
+        height: 28px;
+        animation: shootingStarFloat 3s ease-in-out infinite;
+        -webkit-animation: shootingStarFloat 3s ease-in-out infinite;
+        -moz-animation: shootingStarFloat 3s ease-in-out infinite;
+        -o-animation: shootingStarFloat 3s ease-in-out infinite;
+    }
+    
+    /* Shooting star floating animation for minigame button */
+    @keyframes shootingStarFloat {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-5px) rotate(180deg); }
+    }
+    
+    /* Adjust social links for mobile */
+    .social-links {
+        margin-top: 1rem;
+        gap: 1.5rem;
+    }
+    
+    .social-link {
+        width: 45px;
+        height: 45px;
+    }
+}
+
+/* Hide mobile link tree on desktop */
+@media (min-width: 769px) {
+    .mobile-link-tree {
+        display: none;
+    }
+}
