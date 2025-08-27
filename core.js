@@ -41,7 +41,11 @@ const BrowserUtils = {
 // Performance optimizations
 const PerformanceOptimizer = {
     optimizeForDevice: () => {
+        console.log('🚀 PerformanceOptimizer.optimizeForDevice called, isMobile:', DeviceInfo.isMobile);
+        
         if (DeviceInfo.isMobile) {
+            console.log('📱 Applying mobile optimizations...');
+            
             // Reduce animation complexity on mobile
             const stars = document.querySelector('.stars');
             if (stars) {
@@ -49,6 +53,7 @@ const PerformanceOptimizer = {
                 ['webkit', 'moz', 'o'].forEach(prefix => {
                     stars.style[`${prefix}AnimationDuration`] = '60s';
                 });
+                console.log('⭐ Stars animation optimized for mobile');
             }
             
             // Optimize touch interactions
@@ -58,6 +63,9 @@ const PerformanceOptimizer = {
                 satellite.style.webkitTouchCallout = 'none';
                 satellite.style.webkitUserSelect = 'none';
             });
+            console.log('🛰️ Satellites optimized for mobile touch');
+        } else {
+            console.log('💻 Desktop optimizations applied');
         }
     },
     

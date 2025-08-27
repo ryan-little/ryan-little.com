@@ -1,10 +1,14 @@
-// Mobile-specific functionality for Ryan Little's personal website
-// Handles touch interactions, mobile optimizations, and responsive behavior
+// Mobile-specific optimizations and touch handling
+console.log('📱 Mobile.js loaded, DeviceInfo.isMobile:', typeof DeviceInfo !== 'undefined' ? DeviceInfo.isMobile : 'undefined');
 
 // Mobile touch optimizations
 function optimizeMobileTouch() {
-    if (!DeviceInfo.isMobile) return;
+    if (!DeviceInfo.isMobile) {
+        console.log('❌ Mobile touch optimization skipped - not mobile device');
+        return;
+    }
     
+    console.log('📱 Applying mobile touch optimizations...');
     // Optimize touch targets
     const touchElements = document.querySelectorAll('.satellite, .social-link, .mobile-link-item');
     touchElements.forEach(element => {
