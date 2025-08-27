@@ -3,7 +3,11 @@
 
 // Unified device and browser detection
 const DeviceInfo = {
-    isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768,
+    // Check for mobile user agent first, then check for mobile-like characteristics
+    isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+              (window.innerWidth <= 1024) || 
+              (navigator.userAgent.includes('Mobile') || navigator.userAgent.includes('mobile')) ||
+              (window.innerWidth <= 1024 && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)),
     isEdge: navigator.userAgent.includes('Edge') || navigator.userAgent.includes('Edg'),
     isFirefox: navigator.userAgent.includes('Firefox'),
     isSafari: /^((?!chrome|android).)*safari/i.test(navigator.userAgent),

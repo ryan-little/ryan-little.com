@@ -594,7 +594,7 @@ p {
 /* ========================================
    MOBILE TOUCH OPTIMIZATIONS
    ======================================== */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     /* Prevent text selection on mobile */
     * {
         -webkit-touch-callout: none;
@@ -654,7 +654,7 @@ p {
 /* Android Chrome specific fixes - now handled in main mobile query */
 
     /* Ensure proper stacking on mobile */
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
         .satellite-nav {
             z-index: 30;
         }
@@ -736,7 +736,7 @@ p {
 /* ========================================
    MOBILE LINK TREE LAYOUT
    ======================================== */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     /* Mobile-specific star pattern to avoid tiling */
     .stars {
         z-index: 0; /* Ensure mobile stars are also behind background */
