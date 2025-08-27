@@ -125,6 +125,9 @@ function initializeWebsite() {
     // Apply device-specific optimizations
     PerformanceOptimizer.optimizeForDevice();
     PerformanceOptimizer.applyBrowserFixes();
+    
+    // Debug social links
+    debugSocialLinks();
 }
 
 // Generate Random Star Field with cross-browser compatibility
@@ -243,4 +246,60 @@ function initSatelliteMovement() {
     
     // Start the animation
     animateSatellites();
+}
+
+// Debug function to check social links
+function debugSocialLinks() {
+    setTimeout(() => {
+        const socialLinks = document.querySelectorAll('.social-link');
+        const socialLinksContainer = document.querySelector('.social-links');
+        
+        console.log('🔗 Social Links Debug:', {
+            container: socialLinksContainer,
+            containerZIndex: socialLinksContainer ? window.getComputedStyle(socialLinksContainer).zIndex : 'N/A',
+            containerPosition: socialLinksContainer ? window.getComputedStyle(socialLinksContainer).position : 'N/A',
+            linksCount: socialLinks.length,
+            links: Array.from(socialLinks).map((link, index) => ({
+                index,
+                element: link,
+                href: link.href,
+                zIndex: window.getComputedStyle(link).zIndex,
+                position: window.getComputedStyle(link).position,
+                pointerEvents: window.getComputedStyle(link).pointerEvents,
+                display: window.getComputedStyle(link).display,
+                opacity: window.getComputedStyle(link).opacity,
+                transform: window.getComputedStyle(link).transform
+            }))
+        });
+        
+        // Test click events
+        socialLinks.forEach((link, index) => {
+            link.addEventListener('click', function(e) {
+                console.log(`✅ Social link ${index + 1} clicked!`, e.target.href);
+            });
+            
+            link.addEventListener('mouseenter', function(e) {
+                console.log(`🖱️ Social link ${index + 1} mouse enter`);
+            });
+        });
+        
+        // Check if shooting star container is covering social links
+        const shootingStarContainer = document.querySelector('.shooting-star-container');
+        if (shootingStarContainer) {
+            console.log('⭐ Shooting Star Container:', {
+                element: shootingStarContainer,
+                zIndex: window.getComputedStyle(shootingStarContainer).zIndex,
+                position: window.getComputedStyle(shootingStarContainer).position,
+                pointerEvents: window.getComputedStyle(shootingStarContainer).pointerEvents
+            });
+        }
+        
+        // Fallback: ensure social links are visible after 3 seconds
+        setTimeout(() => {
+            if (socialLinksContainer && window.getComputedStyle(socialLinksContainer).opacity === '0') {
+                console.log('⚠️ Social links animation may have failed, applying fallback');
+                socialLinksContainer.classList.add('loaded');
+            }
+        }, 3000);
+    }, 1000);
 }

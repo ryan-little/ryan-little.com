@@ -268,6 +268,10 @@ p {
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
     cursor: pointer;
+    /* Ensure social links are always clickable */
+    pointer-events: auto;
+    position: relative;
+    z-index: 200;
 }
 
 .social-link:hover {
@@ -281,6 +285,12 @@ p {
     font-smooth: never;
     -webkit-font-smoothing: auto;
     -moz-osx-font-smoothing: auto;
+}
+
+/* Fallback for social links if animation fails */
+.social-links.loaded {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 
