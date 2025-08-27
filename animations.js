@@ -229,11 +229,14 @@ class ShootingStarSystem {
         
         if (window.minigameActive) {
             // Increment score if minigame is active
-            if (typeof window.gameScore !== 'undefined') {
+            if (typeof window.gameScore === 'number') {
                 window.gameScore++;
+                console.log('🎯 Minigame star clicked! Score:', window.gameScore);
                 if (typeof updateScoreDisplay === 'function') {
                     updateScoreDisplay();
                 }
+            } else {
+                console.warn('❌ gameScore is not a number:', window.gameScore);
             }
         } else if (!window.gameCooldown) {
             // Start minigame if not active and not in cooldown

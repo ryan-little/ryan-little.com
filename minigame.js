@@ -22,6 +22,8 @@ function startMinigame() {
     window.minigameActive = minigameActive;
     window.gameScore = gameScore;
     
+    console.log('🎮 Minigame started! Global score:', window.gameScore, 'Local score:', gameScore);
+    
     // Hide any existing score display from previous game
     const existingScore = document.querySelector('.minigame-score');
     if (existingScore) {
@@ -88,7 +90,9 @@ function showScoreDisplay() {
 function updateScoreDisplay() {
     const scoreDisplay = document.querySelector('.minigame-score');
     if (scoreDisplay) {
-        scoreDisplay.textContent = `Score: ${gameScore}`;
+        // Use the global gameScore to ensure consistency
+        const currentScore = window.gameScore || gameScore;
+        scoreDisplay.textContent = `Score: ${currentScore}`;
     }
 }
 
@@ -261,7 +265,7 @@ function fadeOutUIElements() {
         button.style.transition = 'opacity 0.5s ease';
         button.style.opacity = '0.3';
         button.style.pointerEvents = 'none';
-        button.style.zIndex = '1'; // Lower z-index during minigame
+        button.style.zIndex = '100'; // Keep above other elements but below minigame UI
     });
     
     // Fade out mobile link tree buttons
@@ -270,7 +274,7 @@ function fadeOutUIElements() {
         button.style.transition = 'opacity 0.5s ease';
         button.style.opacity = '0.3';
         button.style.pointerEvents = 'none';
-        button.style.zIndex = '1'; // Lower z-index during minigame
+        button.style.zIndex = '50'; // Keep above other elements but below minigame UI
     });
     
     // Lower z-index of Earth sprite during minigame
@@ -329,6 +333,7 @@ function fadeInUIElementsStaggered() {
                 button.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
                 button.style.opacity = '1';
                 button.style.pointerEvents = 'auto';
+                button.style.zIndex = '200'; // Restore original z-index
                 // Add a subtle entrance effect
                 button.style.transform = 'scale(1.1)';
                 setTimeout(() => {
