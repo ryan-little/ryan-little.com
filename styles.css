@@ -772,7 +772,7 @@ p {
     
     /* Adjust hero content for mobile link tree */
     .hero-content {
-        top: 40px !important;
+        top: 35px !important;
         left: 50% !important;
         transform: translateX(-50%) !important;
         max-width: 90%;
@@ -796,7 +796,7 @@ p {
         color: white !important;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
         transform: none !important; /* Prevent any transform changes on mobile */
-        margin-right: 0.1rem !important;
+        margin-right: 0 !important;
     }
     
     .title-subtitle {
@@ -806,14 +806,14 @@ p {
         color: white !important;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
         text-transform: uppercase;
-        letter-spacing: 0.05em;
+        letter-spacing: 0.01em;
         transform: none !important; /* Prevent any transform changes on mobile */
     }
     
     /* Ensure social links are visible on mobile */
     .social-links {
         position: absolute !important;
-        top: 160px !important;
+        top: 220px !important;
         left: 50% !important;
         transform: translateX(-50%) !important;
         z-index: 45;
@@ -835,7 +835,7 @@ p {
     /* Mobile link tree container */
     .mobile-link-tree {
         display: block;
-        margin-top: 80px;
+        margin-top: 60px;
         width: 100%;
         max-width: 400px;
         z-index: 10;
