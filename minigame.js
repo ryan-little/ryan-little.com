@@ -226,7 +226,7 @@ function endMinigame() {
         gameTimer = null;
     }
     
-    // Start cooldown timer (15 seconds)
+    // Start cooldown timer (10 seconds)
     startCooldownTimer();
     
     // Add animated transition effect
@@ -441,7 +441,7 @@ function showLargeCountdown() {
     
     document.body.appendChild(countdownDisplay);
     
-    // Mobile-specific game duration
+    // Game duration - 20 seconds on both mobile and desktop
     let timeLeft = 20; // 20 seconds on both mobile and desktop
     
     function updateCountdown() {
@@ -488,7 +488,7 @@ function startCooldownTimer() {
     
     // Mobile-specific positioning for cooldown
     const isMobileDevice = DeviceInfo.isMobile;
-    const cooldownTop = isMobileDevice ? '30%' : '38%';
+    const cooldownTop = isMobileDevice ? '35%' : '38%';
     
     cooldownDisplay.style.cssText = `
         position: fixed;
@@ -510,7 +510,7 @@ function startCooldownTimer() {
     // Insert cooldown display after the score
     scoreDisplay.parentNode.insertBefore(cooldownDisplay, scoreDisplay.nextSibling);
     
-    let timeLeft = 15;
+    let timeLeft = 10;
     
     function updateCooldown() {
         if (timeLeft > 0) {
