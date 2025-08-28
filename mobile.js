@@ -134,7 +134,7 @@ function optimizeHighDPIDisplays() {
     if (!DeviceInfo.isMobile) return;
     
     if (DeviceInfo.pixelRatio >= 2) {
-        // Optimize star background size for high DPI displays
+        // Optimize star background size for high DPI displays - use smaller size for desktop
         const stars = document.querySelector('.stars');
         if (stars) {
             stars.style.backgroundSize = '80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px';

@@ -462,7 +462,7 @@ p {
     background-size: auto 100vh;
     /* Background position set dynamically by JavaScript for randomization */
     /* Fallback position in case JavaScript fails */
-    background-position: 0 0, 100vw 0;
+    background-position: 0 10vh, 100vw 10vh;
     animation: spaceMove 180s linear infinite !important;
 }
 
@@ -479,7 +479,7 @@ p {
     background-size: auto 100vh;
     /* Background position set dynamically by JavaScript for randomization */
     /* Fallback position in case JavaScript fails */
-    background-position: 50vw 0, 150vw 0;
+    background-position: 50vw -10vh, 150vw -10vh;
     animation: spaceMove 240s linear infinite !important;
     opacity: 0.7;
 }

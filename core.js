@@ -160,7 +160,7 @@ const PerformanceOptimizer = {
     
     applyBrowserFixes: () => {
         if (DeviceInfo.isEdge) {
-            // Fix for Edge star rendering
+            // Fix for Edge star rendering - use smaller size for desktop
             const stars = document.querySelector('.stars');
             if (stars) {
                 stars.style.backgroundSize = '150px 150px, 150px 150px, 150px 150px, 150px 150px, 150px 150px';
@@ -190,7 +190,7 @@ const PerformanceOptimizer = {
         }
         
         if (DeviceInfo.isAndroid && DeviceInfo.isChrome) {
-            // Optimize star background size for Android
+            // Optimize star background size for Android - use smaller size for desktop
             const stars = document.querySelector('.stars');
             if (stars) {
                 stars.style.backgroundSize = '120px 120px, 120px 120px, 120px 120px, 120px 120px, 120px 120px';
