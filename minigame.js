@@ -671,10 +671,13 @@ function resetWebpage() {
     
     const mobileButtons = document.querySelectorAll('.mobile-link-item');
     mobileButtons.forEach(button => {
-        button.style.opacity = '1';
+        // Only restore if not already visible to prevent double animation
+        if (button.style.opacity !== '1') {
+            button.style.opacity = '1';
+            button.style.transition = 'opacity 0.3s ease';
+        }
         button.style.pointerEvents = 'auto';
         button.style.zIndex = '10';
-        button.style.transition = 'all 0.3s ease';
         button.style.cursor = 'pointer';
         // Restore the link functionality
         if (button.getAttribute('data-original-href')) {

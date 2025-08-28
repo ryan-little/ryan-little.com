@@ -949,8 +949,8 @@ p {
     .mobile-link-tree {
         display: block !important;
         width: 100% !important;
-        max-width: min(250px, 65vw) !important;
-        width: min(250px, 65vw) !important;
+        max-width: min(130px, 35vw) !important;
+        width: min(130px, 35vw) !important;
         z-index: 10 !important;
         margin-top: clamp(2rem, 8vh, 4rem) !important;
         margin-left: auto !important;
@@ -980,8 +980,8 @@ p {
         will-change: transform, opacity !important;
         -webkit-backface-visibility: hidden !important;
         backface-visibility: hidden !important;
-        max-width: min(220px, 55vw) !important;
-        width: min(220px, 55vw) !important;
+        max-width: min(110px, 27.5vw) !important;
+        width: min(110px, 27.5vw) !important;
         margin-left: auto !important;
         margin-right: auto !important;
     }
@@ -996,9 +996,9 @@ p {
     
     /* Enhanced satellite icons */
     .mobile-link-icon {
-        width: clamp(20px, 5vw, 28px) !important;
-        height: clamp(15px, 3.75vw, 21px) !important;
-        margin-right: clamp(0.5rem, 2vw, 0.7rem) !important;
+        width: clamp(28px, 7vw, 36px) !important;
+        height: clamp(21px, 5.25vw, 27px) !important;
+        margin-right: clamp(0.4rem, 1.5vw, 0.6rem) !important;
         flex-shrink: 0 !important;
         filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3)) !important;
     }
@@ -1114,6 +1114,8 @@ p {
         text-align: center !important;
         float: none !important;
         clear: both !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
     }
     
     .hero-title .title-line {
@@ -1211,13 +1213,13 @@ p {
     }
     
     .mobile-link-tree {
-        max-width: 75vw;
+        max-width: 40vw;
     }
     
     .mobile-link-item {
         padding: 0.6rem 0.8rem;
         margin-bottom: 0.5rem;
-        max-width: min(220px, 55vw);
+        max-width: min(110px, 27.5vw);
     }
     
     .mobile-link-icon {
@@ -1267,18 +1269,18 @@ p {
     }
     
     .mobile-link-tree {
-        max-width: 70vw;
+        max-width: 35vw;
     }
     
     .mobile-link-item {
-        max-width: min(200px, 50vw);
+        max-width: min(100px, 25vw);
         padding: 0.5rem 0.7rem;
     }
     
     .mobile-link-icon {
-        width: 20px;
-        height: 15px;
-        margin-right: 0.5rem;
+        width: 26px;
+        height: 19px;
+        margin-right: 0.4rem;
     }
     
     .mobile-link-text {
@@ -1312,24 +1314,24 @@ p {
 /* CRITICAL: Force mobile button sizing - override everything */
 @media (max-width: 768px) {
     .mobile-link-tree {
-        max-width: 250px !important;
-        width: 250px !important;
+        max-width: 130px !important;
+        width: 130px !important;
         margin-left: auto !important;
         margin-right: auto !important;
     }
     
     .mobile-link-item {
-        max-width: 220px !important;
-        width: 220px !important;
+        max-width: 110px !important;
+        width: 110px !important;
         padding: 0.6rem 0.8rem !important;
         margin-left: auto !important;
         margin-right: auto !important;
     }
     
     .mobile-link-icon {
-        width: 20px !important;
-        height: 15px !important;
-        margin-right: 0.5rem !important;
+        width: 28px !important;
+        height: 21px !important;
+        margin-right: 0.4rem !important;
     }
     
     .mobile-link-text {
