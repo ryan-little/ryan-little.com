@@ -400,11 +400,12 @@ p {
     top: 0;
     left: 0;
     width: 200vw;
-    height: 200vh;
+    height: 100vh;
     z-index: 1; /* Behind Earth (z-index: 5) and above stars (z-index: 0) */
     background-image: url('assets/images/background.png');
     background-repeat: repeat-x;
-    background-size: auto 120vh;
+    background-size: 100vw 100vh;
+    background-position: 0 0, 100vw 0;
     animation: spaceMove 180s linear infinite !important;
 }
 
@@ -414,11 +415,12 @@ p {
     top: 0;
     left: 0;
     width: 200vw;
-    height: 200vh;
+    height: 100vh;
     z-index: 0.5; /* Between stars (z-index: 0) and background (z-index: 1) */
     background-image: url('assets/images/background2.png');
     background-repeat: repeat-x;
-    background-size: auto 200vh;
+    background-size: 100vw 100vh;
+    background-position: 0 0, 100vw 0;
     animation: spaceMove 240s linear infinite !important;
     opacity: 0.7;
 }
@@ -705,11 +707,24 @@ p {
     
     /* Optimize animations for mobile */
     .stars,
-    .background-image {
+    .background-image,
+    .background2 {
         animation-duration: 60s !important;
         -webkit-animation-duration: 60s !important;
         -moz-animation-duration: 60s !important;
         -o-animation-duration: 60s !important;
+    }
+    
+    /* Ensure proper background tiling on mobile */
+    .background-image,
+    .background2 {
+        background-size: 100vw 100vh !important;
+        width: 200vw !important;
+        height: 100vh !important;
+        background-position: 0 0, 100vw 0 !important;
+        /* Ensure backgrounds always cover the viewport */
+        min-width: 100vw !important;
+        min-height: 100vh !important;
     }
     
     /* Reduce motion on mobile for better performance */
@@ -836,32 +851,11 @@ p {
    MOBILE LINK TREE LAYOUT
    ======================================== */
 @media (max-width: 1024px) {
-    /* Mobile-specific star pattern to avoid tiling */
+    /* Remove generated stars on mobile - they don't work well */
     .stars {
-        z-index: 0; /* Ensure mobile stars are also behind background */
-        background-image: 
-            radial-gradient(1px 1px at 17px 29px, #fff, transparent),
-            radial-gradient(1px 1px at 83px 47px, #fff, transparent),
-            radial-gradient(1px 1px at 151px 73px, rgba(255,255,255,0.7), transparent),
-            radial-gradient(1px 1px at 37px 127px, #fff, transparent),
-            radial-gradient(1px 1px at 113px 91px, rgba(255,255,255,0.6), transparent),
-            radial-gradient(1px 1px at 59px 33px, rgba(255,255,255,0.8), transparent),
-            radial-gradient(1px 1px at 143px 141px, #fff, transparent),
-            radial-gradient(1px 1px at 27px 67px, rgba(255,255,255,0.9), transparent),
-            radial-gradient(1px 1px at 107px 53px, rgba(255,255,255,0.5), transparent),
-            radial-gradient(1px 1px at 71px 153px, #fff, transparent),
-            radial-gradient(1px 1px at 161px 39px, rgba(255,255,255,0.4), transparent),
-            radial-gradient(1px 1px at 47px 89px, #fff, transparent),
-            radial-gradient(1px 1px at 131px 115px, rgba(255,255,255,0.6), transparent),
-            radial-gradient(1px 1px at 91px 61px, rgba(255,255,255,0.7), transparent),
-            radial-gradient(1px 1px at 167px 97px, rgba(255,255,255,0.5), transparent),
-            radial-gradient(1px 1px at 13px 139px, #fff, transparent),
-            radial-gradient(1px 1px at 97px 23px, rgba(255,255,255,0.8), transparent),
-            radial-gradient(1px 1px at 41px 167px, rgba(255,255,255,0.6), transparent),
-            radial-gradient(1px 1px at 133px 79px, #fff, transparent),
-            radial-gradient(1px 1px at 67px 119px, rgba(255,255,255,0.7), transparent),
-            radial-gradient(1px 1px at 157px 43px, rgba(255,255,255,0.4), transparent);
-        background-size: 387px 393px, 409px 399px, 423px 405px, 399px 413px, 417px 389px, 373px 419px, 433px 395px, 407px 403px, 391px 411px, 411px 397px, 427px 391px, 403px 417px, 421px 401px, 397px 409px, 429px 407px, 393px 415px, 405px 399px, 413px 393px, 401px 411px, 419px 405px;
+        z-index: 0;
+        background-image: none;
+        background: transparent;
     }
     
     /* Hide satellite navigation on mobile */
