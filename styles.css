@@ -115,13 +115,14 @@
 
 html {
     scroll-behavior: smooth;
+    background-color: #000000;
 }
 
 body {
     font-family: var(--font-primary);
     line-height: 1.6;
     color: #1a1a1a;
-    background-color: transparent;
+    background-color: #000000;
     overflow-x: hidden;
     -webkit-user-select: none;
     -moz-user-select: none;
