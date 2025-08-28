@@ -1,7 +1,7 @@
 # 🚀 Ryan Little - Personal Website
 
 <div align="center">
-  <img src="assets/images/earthsprite.png" alt="Earth Sprite" width="120" height="120">
+  <img src="assets/images_webp/earthsprite.webp" alt="Earth Sprite" width="120" height="120">
   
   ## 🌍 Geospatial Analyst & Developer
   
@@ -12,9 +12,9 @@
   ### 🛰️ Interactive Space-Themed Portfolio
   
   <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0;">
-    <img src="assets/images/satellite1.png" alt="Satellite 1" width="60" height="45">
-    <img src="assets/images/satellite2.png" alt="Satellite 2" width="60" height="45">
-    <img src="assets/images/satellite3.png" alt="Satellite 3" width="60" height="45">
+    <img src="assets/images_webp/satellite1.webp" alt="Satellite 1" width="60" height="45">
+    <img src="assets/images_webp/satellite2.webp" alt="Satellite 2" width="60" height="45">
+    <img src="assets/images_webp/satellite3.webp" alt="Satellite 3" width="60" height="45">
   </div>
   
   **✨ Features:**
@@ -26,7 +26,7 @@
   
   ### 🎯 **Visit the Live Site: [ryan-little.com](https://ryan-little.com)**
   
-  <img src="assets/images/shootingstar.png" alt="Shooting Star" width="80" height="40">
+  <img src="assets/images_webp/shootingstar.webp" alt="Shooting Star" width="80" height="40">
   
   ---
   

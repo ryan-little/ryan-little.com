@@ -1,4 +1,59 @@
 /* ========================================
+   CSS CUSTOM PROPERTIES FOR IMAGES
+   ======================================== */
+:root {
+    /* WebP images (preferred) */
+    --bg-image-webp: url('assets/images_webp/background.webp');
+    --bg2-image-webp: url('assets/images_webp/background2.webp');
+    --earth-sprite-webp: url('assets/images_webp/earthsprite.webp');
+    --shooting-star-webp: url('assets/images_webp/shootingstar.webp');
+    
+    /* PNG fallbacks */
+    --bg-image-png: url('assets/images/background.png');
+    --bg2-image-png: url('assets/images/background2.png');
+    --earth-sprite-png: url('assets/images/earthsprite.png');
+    --shooting-star-png: url('assets/images/shootingstar.png');
+}
+
+/* WebP support detection and fallback */
+@supports (background-image: var(--bg-image-webp)) {
+    .background-image {
+        background-image: var(--bg-image-webp);
+    }
+    
+    .background2 {
+        background-image: var(--bg2-image-webp);
+    }
+    
+    .earth-sprite {
+        background-image: var(--earth-sprite-webp);
+    }
+    
+    .shooting-star {
+        background-image: var(--shooting-star-webp);
+    }
+}
+
+/* PNG fallback for browsers without WebP support */
+@supports not (background-image: var(--bg-image-webp)) {
+    .background-image {
+        background-image: var(--bg-image-png);
+    }
+    
+    .background2 {
+        background-image: var(--bg2-image-png);
+    }
+    
+    .earth-sprite {
+        background-image: var(--earth-sprite-png);
+    }
+    
+    .shooting-star {
+        background-image: var(--shooting-star-png);
+    }
+}
+
+/* ========================================
    RESET AND BASE STYLES
    ======================================== */
 * {
@@ -402,9 +457,11 @@ p {
     width: 200vw;
     height: 100vh;
     z-index: 1; /* Behind Earth (z-index: 5) and above stars (z-index: 0) */
-    background-image: url('assets/images/background.png');
-    background-repeat: repeat-x;
-    background-size: 100vw 100vh;
+    /* Background image set via CSS custom properties for WebP/PNG fallback */
+    background-repeat: repeat;
+    background-size: auto 100vh;
+    /* Background position set dynamically by JavaScript for randomization */
+    /* Fallback position in case JavaScript fails */
     background-position: 0 0, 100vw 0;
     animation: spaceMove 180s linear infinite !important;
 }
@@ -417,10 +474,12 @@ p {
     width: 200vw;
     height: 100vh;
     z-index: 0.5; /* Between stars (z-index: 0) and background (z-index: 1) */
-    background-image: url('assets/images/background2.png');
-    background-repeat: repeat-x;
-    background-size: 100vw 100vh;
-    background-position: 0 0, 100vw 0;
+    /* Background image set via CSS custom properties for WebP/PNG fallback */
+    background-repeat: repeat;
+    background-size: auto 100vh;
+    /* Background position set dynamically by JavaScript for randomization */
+    /* Fallback position in case JavaScript fails */
+    background-position: 50vw 0, 150vw 0;
     animation: spaceMove 240s linear infinite !important;
     opacity: 0.7;
 }
@@ -718,13 +777,19 @@ p {
     /* Ensure proper background tiling on mobile */
     .background-image,
     .background2 {
-        background-size: 100vw 100vh !important;
+        background-size: auto 100vh !important;
         width: 200vw !important;
         height: 100vh !important;
-        background-position: 0 0, 100vw 0 !important;
         /* Ensure backgrounds always cover the viewport */
         min-width: 100vw !important;
         min-height: 100vh !important;
+    }
+    
+    /* Background positions set dynamically by JavaScript for randomization */
+    /* Ensure backgrounds tile vertically to cover full viewport height */
+    .background-image,
+    .background2 {
+        background-repeat: repeat !important; /* Tile both horizontally and vertically */
     }
     
     /* Reduce motion on mobile for better performance */

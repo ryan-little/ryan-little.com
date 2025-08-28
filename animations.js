@@ -1,6 +1,19 @@
 // Animation functionality for Ryan Little's personal website
 // Handles shooting stars and other visual effects
 
+// WebP support detection for JavaScript-generated elements
+function getImageUrl(filename, extension = 'webp') {
+    // Check if WebP is supported
+    const canvas = document.createElement('canvas');
+    const isWebPSupported = canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0;
+    
+    if (isWebPSupported && extension === 'webp') {
+        return `assets/images_webp/${filename}.webp`;
+    } else {
+        return `assets/images/${filename}.png`;
+    }
+}
+
 // Unified Shooting Star System
 class ShootingStarSystem {
     constructor() {
@@ -132,7 +145,7 @@ class ShootingStarSystem {
             top: ${startY}px;
             width: ${width}px;
             height: ${height}px;
-            background-image: url('assets/images/shootingstar.png');
+            background-image: url('${getImageUrl('shootingstar')}');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
