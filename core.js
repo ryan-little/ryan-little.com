@@ -1,8 +1,10 @@
 // Core functionality for Ryan Little's personal website
 // Handles initialization, browser detection, and core utilities
 
-// Unified device and browser detection
-const DeviceInfo = {
+// Wait for DOM to be ready before defining DeviceInfo
+document.addEventListener('DOMContentLoaded', function() {
+    // Unified device and browser detection
+    window.DeviceInfo = {
     // Check for mobile user agent first, then check for mobile-like characteristics
     isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
               (window.innerWidth <= 1024) || 
@@ -16,6 +18,13 @@ const DeviceInfo = {
     isChrome: /Chrome/.test(navigator.userAgent),
     pixelRatio: window.devicePixelRatio || 1
 };
+
+    // Make DeviceInfo available globally
+    window.DeviceInfo = DeviceInfo;
+    
+    // Make EarthNightSystem available globally
+    window.EarthNightSystem = EarthNightSystem;
+});
 
 // Cross-browser utilities
 const BrowserUtils = {
@@ -40,6 +49,117 @@ const BrowserUtils = {
         el.style.transform = 'translate3d(0,0,0)';
         return el.style.transform !== '';
     })()
+};
+
+// Simple Earth Night Dimming System (Desktop Only)
+const EarthNightSystem = {
+    earthElement: null,
+    updateInterval: null,
+    
+    init() {
+        // Only initialize on desktop (screen width > 1024px)
+        if (window.innerWidth <= 1024) {
+            console.log('🌍 Earth Night System disabled on mobile devices');
+            return;
+        }
+        
+        console.log('🌍 Initializing Earth Night System...');
+        this.earthElement = document.querySelector('.earth-sprite');
+
+        this.startUpdates();
+    },
+    
+
+    
+    getTimeBasedBrightness() {
+        const now = new Date();
+        const hour = now.getHours();
+        const minute = now.getMinutes();
+        
+        // Convert to decimal time for smoother transitions
+        const time = hour + (minute / 60);
+        
+        // Define brightness levels throughout the day
+        let brightness, contrast;
+        
+        if (time >= 6 && time < 12) {
+            // Morning: 6 AM - 12 PM (gradually brightening)
+            const morningProgress = (time - 6) / 6; // 0 to 1
+            brightness = 0.6 + (morningProgress * 0.5); // 0.6 to 1.1
+            contrast = 1.3 - (morningProgress * 0.2); // 1.3 to 1.1
+        } else if (time >= 12 && time < 18) {
+            // Afternoon: 12 PM - 6 PM (peak brightness)
+            brightness = 1.1;
+            contrast = 1.1;
+        } else if (time >= 18 && time < 24) {
+            // Evening: 6 PM - 12 AM (gradually dimming)
+            const eveningProgress = (time - 18) / 6; // 0 to 1
+            brightness = 1.1 - (eveningProgress * 0.7); // 1.1 to 0.4
+            contrast = 1.1 + (eveningProgress * 0.1); // 1.1 to 1.2
+        } else {
+            // Late night: 12 AM - 6 AM (darkest)
+            const nightProgress = time / 6; // 0 to 1
+            brightness = 0.4 - (nightProgress * 0.2); // 0.4 to 0.2
+            contrast = 1.2 + (nightProgress * 0.1); // 1.2 to 1.3
+        }
+        
+        return { brightness, contrast };
+    },
+    
+    updateEarthBrightness() {
+        if (!this.earthElement) return;
+        
+        const { brightness, contrast } = this.getTimeBasedBrightness();
+        
+        // Apply smooth transition with CSS transition
+        this.earthElement.style.transition = 'filter 2s ease-in-out';
+        this.earthElement.style.filter = `brightness(${brightness}) contrast(${contrast})`;
+    },
+    
+    updateEarthBrightness() {
+        if (!this.earthElement) return;
+        
+        const { brightness, contrast } = this.getTimeBasedBrightness();
+        
+        // Apply smooth transition with CSS transition
+        this.earthElement.style.transition = 'filter 2s ease-in-out';
+        this.earthElement.style.filter = `brightness(${brightness}) contrast(${contrast})`;
+    },
+    
+    startUpdates() {
+        // Update immediately
+        this.updateEarthBrightness();
+        
+        // Update every 5 minutes for smooth transitions throughout the day
+        this.updateInterval = setInterval(() => {
+            this.updateEarthBrightness();
+        }, 5 * 60 * 1000);
+        
+        // Handle window resize to show/hide effect
+        window.addEventListener('resize', () => {
+            if (window.innerWidth <= 1024) {
+                // Reset to normal brightness on mobile
+                if (this.earthElement) {
+                    this.earthElement.style.filter = 'brightness(1.1) contrast(1.1)';
+                    this.earthElement.style.transition = 'none';
+                }
+            } else {
+                // Apply appropriate brightness on desktop
+                this.updateEarthBrightness();
+            }
+        });
+        
+        console.log('🌍 Earth Night System updates started');
+    },
+    
+    stopUpdates() {
+        if (this.updateInterval) {
+            clearInterval(this.updateInterval);
+            this.updateInterval = null;
+        }
+    },
+    
+
 };
 
 // Performance optimizations

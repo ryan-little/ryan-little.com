@@ -43,7 +43,6 @@
     /* Smooth mobile scrolling */
     .hero {
         -webkit-overflow-scrolling: touch;
-        overflow-scrolling: touch;
     }
 }
 
@@ -367,24 +366,29 @@ p {
     height: 200vh;
     z-index: 0; /* Behind background (z-index: 1) and Earth (z-index: 5) */
     background-image: 
-        radial-gradient(1px 1px at 47px 23px, #fff, transparent),
-        radial-gradient(1px 1px at 83px 67px, #fff, transparent),
-        radial-gradient(1px 1px at 127px 41px, rgba(255,255,255,0.7), transparent),
-        radial-gradient(1px 1px at 59px 143px, #fff, transparent),
-        radial-gradient(1px 1px at 173px 89px, rgba(255,255,255,0.6), transparent),
-        radial-gradient(1px 1px at 31px 97px, rgba(255,255,255,0.8), transparent),
-        radial-gradient(1px 1px at 157px 157px, #fff, transparent),
-        radial-gradient(1px 1px at 103px 113px, rgba(255,255,255,0.9), transparent),
-        radial-gradient(1px 1px at 71px 179px, rgba(255,255,255,0.5), transparent),
-        radial-gradient(1px 1px at 139px 29px, #fff, transparent),
-        radial-gradient(1px 1px at 67px 89px, rgba(255,255,255,0.4), transparent),
-        radial-gradient(1px 1px at 113px 167px, #fff, transparent),
-        radial-gradient(1px 1px at 149px 53px, rgba(255,255,255,0.6), transparent),
-        radial-gradient(1px 1px at 27px 129px, rgba(255,255,255,0.7), transparent),
-        radial-gradient(1px 1px at 183px 137px, rgba(255,255,255,0.5), transparent);
-    background-repeat: repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat;
-    background-size: 187px 193px, 211px 197px, 203px 191px, 199px 209px, 223px 181px, 179px 223px, 193px 197px, 217px 203px, 191px 211px, 197px 187px, 233px 179px, 167px 227px, 241px 173px, 181px 241px, 229px 167px;
-    animation: spaceMove 120s linear infinite !important;
+        radial-gradient(0.2px 0.2px at 100px 100px, #fff, transparent),
+        radial-gradient(0.2px 0.2px at 300px 200px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.2px 0.2px at 200px 300px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(0.2px 0.2px at 450px 150px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(0.2px 0.2px at 150px 450px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(0.2px 0.2px at 400px 350px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.2px 0.2px at 250px 500px, rgba(255,255,255,0.3), transparent),
+        radial-gradient(0.2px 0.2px at 500px 250px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(0.2px 0.2px at 75px 350px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.2px 0.2px at 350px 75px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(0.2px 0.2px at 175px 125px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.2px 0.2px at 425px 275px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(0.2px 0.2px at 125px 375px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(0.2px 0.2px at 375px 125px, rgba(255,255,255,0.3), transparent),
+        radial-gradient(0.2px 0.2px at 275px 425px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.2px 0.2px at 225px 175px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(0.2px 0.2px at 475px 325px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(0.2px 0.2px at 325px 475px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.2px 0.2px at 50px 250px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(0.2px 0.2px at 250px 50px, rgba(255,255,255,0.8), transparent);
+    background-repeat: repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat;
+    background-size: 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px;
+    animation: spaceMove 90s linear infinite !important;
     transform: translateZ(0);
     backface-visibility: hidden;
     perspective: 1000px;
@@ -401,7 +405,22 @@ p {
     background-image: url('assets/images/background.png');
     background-repeat: repeat-x;
     background-size: auto 120vh;
-    animation: spaceMove 120s linear infinite !important;
+    animation: spaceMove 180s linear infinite !important;
+}
+
+/* Background2 Layer - Additional space background */
+.background2 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 200vh;
+    z-index: 0.5; /* Between stars (z-index: 0) and background (z-index: 1) */
+    background-image: url('assets/images/background2.png');
+    background-repeat: repeat-x;
+    background-size: auto 200vh;
+    animation: spaceMove 240s linear infinite !important;
+    opacity: 0.7;
 }
 
 /* Earth Sprite - Must be above background and stars */
@@ -417,12 +436,26 @@ p {
     background-repeat: no-repeat;
     background-position: center;
     z-index: 5; /* Above background (z-index: 1) and stars (z-index: 0) */
-    opacity: 1;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    filter: brightness(1.1) contrast(1.1);
+    transition: filter 2s ease-in-out;
 }
+
+/* Earth Night System - Desktop Only */
+/* The Earth sprite will be dimmed at night using JavaScript filters */
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Night mode adjustments - REMOVED */
 
 @keyframes spaceMove {
     0% { transform: translateX(0); }
@@ -945,6 +978,8 @@ p {
         transform: translateX(-50%);
     }
     
+
+    
     /* Enhanced mobile link tree */
     .mobile-link-tree {
         display: block !important;
@@ -1075,14 +1110,21 @@ p {
     
     /* Enhanced mobile animations - performance optimized */
     .stars {
-        animation-duration: 90s !important;
+        animation-duration: 67.5s !important;
         will-change: transform;
         transform: translateZ(0);
         -webkit-transform: translateZ(0);
     }
     
     .background-image {
-        animation-duration: 90s !important;
+        animation-duration: 135s !important;
+        will-change: transform;
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+    }
+    
+    .background2 {
+        animation-duration: 180s !important;
         will-change: transform;
         transform: translateZ(0);
         -webkit-transform: translateZ(0);
@@ -1268,6 +1310,8 @@ p {
         height: 220px !important;
     }
     
+
+    
     .mobile-link-tree {
         max-width: 35vw;
     }
@@ -1305,6 +1349,8 @@ p {
         height: 200px !important;
         top: 50px !important;
     }
+    
+
     
     .social-links {
         margin: 1rem 0;

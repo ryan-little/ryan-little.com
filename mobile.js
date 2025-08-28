@@ -219,7 +219,7 @@ function optimizeMobilePerformance() {
     console.log('🚀 Applying mobile performance optimizations...');
     
     // Reduce animation complexity for better performance
-    const animatedElements = document.querySelectorAll('.stars, .background-image, .satellite');
+    const animatedElements = document.querySelectorAll('.stars, .background-image, .background2, .satellite');
     animatedElements.forEach(element => {
         // Use transform3d for hardware acceleration
         element.style.transform = 'translateZ(0)';
@@ -230,9 +230,11 @@ function optimizeMobilePerformance() {
         
         // Reduce animation duration for smoother performance
         if (element.classList.contains('stars')) {
-            element.style.animationDuration = '90s';
+            element.style.animationDuration = '67.5s';
         } else if (element.classList.contains('background-image')) {
-            element.style.animationDuration = '90s';
+            element.style.animationDuration = '135s';
+        } else if (element.classList.contains('background2')) {
+            element.style.animationDuration = '180s';
         } else if (element.classList.contains('satellite')) {
             element.style.animationDuration = '20s';
         }

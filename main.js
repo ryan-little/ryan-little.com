@@ -29,6 +29,14 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('❌ Mobile module failed to load');
     }
     
+    // Initialize Earth Night System if available
+    if (typeof EarthNightSystem !== 'undefined') {
+        console.log('✅ Earth Night System loaded successfully');
+        EarthNightSystem.init();
+    } else {
+        console.log('❌ Earth Night System failed to load');
+    }
+    
     // Log device information for debugging
     if (typeof DeviceInfo !== 'undefined') {
         console.log('📱 Device Info:', {
@@ -64,4 +72,9 @@ window.addEventListener('load', function() {
             firstPaint: performance.getEntriesByType('paint')[0]?.startTime
         });
     }
+    
+    // Initialize night mode detection - REMOVED
+    // initNightMode();
 });
+
+// Night mode detection and management - REMOVED
