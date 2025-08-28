@@ -14,7 +14,7 @@ function optimizeMobileTouch() {
     console.log('📱 Applying redesigned mobile touch optimizations...');
     
     // Optimize touch targets for all interactive elements
-    const touchElements = document.querySelectorAll('.satellite, .social-link, .mobile-link-item, .minigame-score, .minigame-timer');
+    const touchElements = document.querySelectorAll('.satellite, .social-link, .mobile-link-item, .minigame-score');
     touchElements.forEach(element => {
         element.style.minWidth = '44px';
         element.style.minHeight = '44px';
@@ -163,7 +163,7 @@ function optimizeTouchFeedback() {
     });
     
     // Enhanced touch feedback for minigame elements
-    const minigameElements = document.querySelectorAll('.minigame-score, .minigame-timer');
+    const minigameElements = document.querySelectorAll('.minigame-score');
     minigameElements.forEach(element => {
         element.addEventListener('touchstart', function() {
             this.style.transform = 'scale(0.98)';
@@ -190,27 +190,7 @@ function optimizeMobileScrolling() {
     document.documentElement.style.overscrollBehavior = 'none';
 }
 
-// Mobile-specific minigame optimizations
-function optimizeMobileMinigame() {
-    if (!DeviceInfo.isMobile) return;
-    
-    // Ensure minigame elements are properly sized for mobile
-    const minigameScore = document.querySelector('.minigame-score');
-    if (minigameScore) {
-        minigameScore.style.fontSize = '1rem';
-        minigameScore.style.top = '50%';
-        minigameScore.style.left = '50%';
-        minigameScore.style.transform = 'translateX(-50%)';
-    }
-    
-    const minigameTimer = document.querySelector('.minigame-timer');
-    if (minigameTimer) {
-        minigameTimer.style.fontSize = '1.2rem';
-        minigameTimer.style.top = '40%';
-        minigameTimer.style.left = '50%';
-        minigameTimer.style.transform = 'translateX(-50%)';
-    }
-}
+
 
 // Comprehensive mobile performance optimizations
 function optimizeMobilePerformance() {
@@ -299,7 +279,7 @@ function optimizeMobileTypography() {
     
     // Adjust hero title size based on viewport width
     const heroTitle = document.querySelector('.hero-title .title-line');
-    if (heroTitle) {
+    if (heroTitle && !heroTitle.dataset.restored && !heroTitle.dataset.protected) {
         if (viewportWidth <= 375) {
             heroTitle.style.fontSize = '2.5rem';
         } else if (viewportWidth <= 414) {
@@ -318,7 +298,7 @@ function optimizeMobileTypography() {
     
     // Adjust subtitle size and ensure it's below the title
     const subtitle = document.querySelector('.hero-title .title-subtitle');
-    if (subtitle) {
+    if (subtitle && !subtitle.dataset.restored && !subtitle.dataset.protected) {
         if (viewportWidth <= 375) {
             subtitle.style.fontSize = '1rem';
         } else if (viewportWidth <= 414) {
@@ -349,7 +329,6 @@ function initMobileOptimizations() {
     optimizeHighDPIDisplays();
     optimizeTouchFeedback();
     optimizeMobileScrolling();
-    optimizeMobileMinigame();
     optimizeMobileTypography();
     optimizeMobilePerformance();
     
@@ -359,7 +338,6 @@ function initMobileOptimizations() {
             optimizeMobileLayout();
             optimizeLandscapeMobile();
             optimizeMobileTypography();
-            optimizeMobileMinigame();
             optimizeMobilePerformance();
         }, 100);
     });
@@ -370,7 +348,6 @@ function initMobileOptimizations() {
             optimizeMobileLayout();
             optimizeLandscapeMobile();
             optimizeMobileTypography();
-            optimizeMobileMinigame();
             optimizeMobilePerformance();
         }, 100);
     });
@@ -400,7 +377,7 @@ function forceTitleStacking() {
         const titleLine = document.querySelector('.hero-title .title-line');
         const titleSubtitle = document.querySelector('.hero-title .title-subtitle');
         
-        if (heroTitle && titleLine && titleSubtitle) {
+        if (heroTitle && titleLine && titleSubtitle && !heroTitle.dataset.restored && !heroTitle.dataset.protected) {
             // Force flexbox layout
             heroTitle.style.display = 'flex';
             heroTitle.style.flexDirection = 'column';
@@ -408,21 +385,25 @@ function forceTitleStacking() {
             heroTitle.style.justifyContent = 'center';
             heroTitle.style.width = '100%';
             
-            // Force block display for title elements
-            titleLine.style.display = 'block';
-            titleLine.style.width = '100%';
-            titleLine.style.textAlign = 'center';
-            titleLine.style.marginBottom = '0.5rem';
-            titleLine.style.float = 'none';
-            titleLine.style.clear = 'both';
+            // Force block display for title elements (only if not restored or protected)
+            if (!titleLine.dataset.restored && !titleLine.dataset.protected) {
+                titleLine.style.display = 'block';
+                titleLine.style.width = '100%';
+                titleLine.style.textAlign = 'center';
+                titleLine.style.marginBottom = '0.5rem';
+                titleLine.style.float = 'none';
+                titleLine.style.clear = 'both';
+            }
             
-            titleSubtitle.style.display = 'block';
-            titleSubtitle.style.width = '100%';
-            titleSubtitle.style.textAlign = 'center';
-            titleSubtitle.style.marginBottom = '1.5rem';
-            titleSubtitle.style.marginTop = '0';
-            titleSubtitle.style.float = 'none';
-            titleSubtitle.style.clear = 'both';
+            if (!titleSubtitle.dataset.restored && !titleSubtitle.dataset.protected) {
+                titleSubtitle.style.display = 'block';
+                titleSubtitle.style.width = '100%';
+                titleSubtitle.style.textAlign = 'center';
+                titleSubtitle.style.marginBottom = '1.5rem';
+                titleSubtitle.style.marginTop = '0';
+                titleSubtitle.style.float = 'none';
+                titleSubtitle.style.clear = 'both';
+            }
             
             console.log('🎯 Forced title stacking on mobile');
         }

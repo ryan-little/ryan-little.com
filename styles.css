@@ -455,7 +455,7 @@ p {
 
 
 
-/* Night mode adjustments - REMOVED */
+
 
 @keyframes spaceMove {
     0% { transform: translateX(0); }
@@ -1072,7 +1072,6 @@ p {
     
     /* Mobile minigame optimizations */
     .minigame-score,
-    .minigame-timer,
     .minigame-countdown,
     .minigame-instructions {
         font-size: clamp(0.9rem, 4vw, 1.1rem) !important;
@@ -1095,7 +1094,6 @@ p {
         font-size: clamp(1rem, 5vw, 1.3rem) !important;
     }
     
-    .minigame-timer,
     .minigame-countdown {
         top: 40%;
         font-size: clamp(1.2rem, 6vw, 1.5rem) !important;

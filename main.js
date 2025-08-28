@@ -73,8 +73,7 @@ window.addEventListener('load', function() {
         });
     }
     
-    // Initialize night mode detection - REMOVED
-    // initNightMode();
+
 });
 
-// Night mode detection and management - REMOVED
+

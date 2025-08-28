@@ -5,11 +5,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Unified device and browser detection
     window.DeviceInfo = {
-    // Check for mobile user agent first, then check for mobile-like characteristics
+    // Check for mobile user agent and viewport size
     isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
-              (window.innerWidth <= 1024) || 
-              (navigator.userAgent.includes('Mobile') || navigator.userAgent.includes('mobile')) ||
-              (window.innerWidth <= 1024 && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)),
+              (window.innerWidth <= 1024),
     isEdge: navigator.userAgent.includes('Edge') || navigator.userAgent.includes('Edg'),
     isFirefox: navigator.userAgent.includes('Firefox'),
     isSafari: /^((?!chrome|android).)*safari/i.test(navigator.userAgent),
@@ -26,30 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.EarthNightSystem = EarthNightSystem;
 });
 
-// Cross-browser utilities
-const BrowserUtils = {
-    addEvent: (element, event, handler) => {
-        if (element.addEventListener) {
-            element.addEventListener(event, handler, false);
-        } else if (element.attachEvent) {
-            element.attachEvent('on' + event, handler);
-        }
-    },
-    
-    setCSSProperty: (element, property, value) => {
-        if (element.style.setProperty) {
-            element.style.setProperty(property, value);
-        } else {
-            element.style[property] = value;
-        }
-    },
-    
-    supportsTransform3d: (() => {
-        const el = document.createElement('div');
-        el.style.transform = 'translate3d(0,0,0)';
-        return el.style.transform !== '';
-    })()
-};
+
 
 // Simple Earth Night Dimming System (Desktop Only)
 const EarthNightSystem = {
@@ -104,16 +79,6 @@ const EarthNightSystem = {
         }
         
         return { brightness, contrast };
-    },
-    
-    updateEarthBrightness() {
-        if (!this.earthElement) return;
-        
-        const { brightness, contrast } = this.getTimeBasedBrightness();
-        
-        // Apply smooth transition with CSS transition
-        this.earthElement.style.transition = 'filter 2s ease-in-out';
-        this.earthElement.style.filter = `brightness(${brightness}) contrast(${contrast})`;
     },
     
     updateEarthBrightness() {
@@ -242,9 +207,6 @@ if (document.readyState === 'loading') {
 }
 
 function initializeWebsite() {
-    // Initialize stars with browser-specific optimizations
-    generateRandomStars();
-    
     // Initialize satellite movement
     initSatelliteMovement();
     
@@ -259,64 +221,7 @@ function initializeWebsite() {
     PerformanceOptimizer.applyBrowserFixes();
 }
 
-// Generate Random Star Field with cross-browser compatibility
-function generateRandomStars() {
-    const stars = document.querySelector('.stars');
-    if (!stars) return;
-    
-    // Clear existing stars
-    stars.style.backgroundImage = '';
-    
-    // Browser-specific star generation
-    let starCSS = '';
-    const numStars = DeviceInfo.isMobile ? 120 : 180; // Reduce stars on mobile for performance
-    
-    for (let i = 0; i < numStars; i++) {
-        // More random positioning with slight clustering avoidance
-        let x, y;
-        if (Math.random() < 0.7) {
-            // 70% of stars use standard random distribution
-            x = Math.random() * 100;
-            y = Math.random() * 100;
-        } else {
-            // 30% of stars use more varied distribution for randomness
-            x = (Math.random() * 0.8 + 0.1) * 100;
-            y = (Math.random() * 0.8 + 0.1) * 100;
-        }
-        
-        // More varied star sizes with browser compatibility
-        const sizeVariation = Math.random();
-        let size;
-        if (sizeVariation < 0.6) {
-            size = Math.random() * 1.5 + 0.3;
-        } else if (sizeVariation < 0.85) {
-            size = Math.random() * 1.5 + 1.8;
-        } else {
-            size = Math.random() * 2 + 3.3;
-        }
-        
-        // More varied brightness for natural look
-        const brightness = Math.random() * 0.9 + 0.1;
-        
-        // Use simpler gradient for better browser compatibility
-        if (DeviceInfo.isEdge || DeviceInfo.isFirefox) {
-            starCSS += `radial-gradient(${size}px ${size}px at ${x}% ${y}%, rgba(255,255,255,${brightness}) 0%, transparent 100%),`;
-        } else {
-            starCSS += `radial-gradient(${size}px ${size}px at ${x}% ${y}%, rgba(255,255,255,${brightness}) 0%, transparent 100%),`;
-        }
-    }
-    
-    // Remove trailing comma and set background
-    starCSS = starCSS.slice(0, -1);
-    
-    // Set background with fallback
-    try {
-        stars.style.backgroundImage = starCSS;
-    } catch (e) {
-        // Fallback for older browsers
-        stars.style.backgroundImage = 'radial-gradient(1px 1px at 50% 50%, rgba(255,255,255,0.8) 0%, transparent 100%)';
-    }
-}
+
 
 // Initialize dynamic satellite movement
 function initSatelliteMovement() {

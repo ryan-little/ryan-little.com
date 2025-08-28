@@ -58,7 +58,7 @@ function showScoreDisplay() {
     // Mobile-specific styling
     const isMobileDevice = DeviceInfo.isMobile;
     const fontSize = isMobileDevice ? '1rem' : '1.25rem';
-    const topPosition = isMobileDevice ? '50%' : '65%'; // Move score below timer on mobile
+    const topPosition = isMobileDevice ? '50%' : '65%';
     
     scoreDisplay.style.cssText = `
         position: fixed;
@@ -246,17 +246,23 @@ function fadeOutUIElements() {
     // Fade out your name and subtitle
     const nameElements = document.querySelectorAll('.title-line, .title-subtitle');
     nameElements.forEach(element => {
-        // Store the current transform to preserve exact positioning
+        // Mark as protected immediately to prevent mobile optimizations from moving them
+        element.dataset.protected = 'true';
+        
+        // Store current transform to preserve positioning
         const currentTransform = window.getComputedStyle(element).transform;
         element.dataset.originalTransform = currentTransform;
         
         // Use !important to override CSS animations
         element.style.setProperty('opacity', '0.3', 'important');
         element.style.setProperty('transition', 'opacity 0.5s ease', 'important');
+        // Preserve current positioning by maintaining transform
+        element.style.setProperty('transform', currentTransform, 'important');
         // Temporarily disable CSS animations
         element.style.animation = 'none';
-        // Preserve exact positioning by maintaining current transform
-        element.style.setProperty('transform', currentTransform, 'important');
+        element.style.webkitAnimation = 'none';
+        element.style.mozAnimation = 'none';
+        element.style.oAnimation = 'none';
         // Disable pointer events
         element.style.pointerEvents = 'none';
     });
@@ -325,24 +331,43 @@ function fadeInUIElementsStaggered() {
     });
     
     // Fade in name and subtitle with slight delay (300ms)
-    // Preserve original positioning during minigame
+    // Restore them to their final state and mark them as restored
     setTimeout(() => {
         const nameElements = document.querySelectorAll('.title-line, .title-subtitle');
         nameElements.forEach((element, index) => {
             setTimeout(() => {
-                // Remove inline styles to let CSS take over
+                // Remove all inline styles
                 element.style.removeProperty('opacity');
                 element.style.removeProperty('transition');
-                // Restore the exact original positioning without animation
+                element.style.removeProperty('animation');
+                element.style.removeProperty('webkitAnimation');
+                element.style.removeProperty('mozAnimation');
+                element.style.removeProperty('oAnimation');
+                
+                // Restore the original transform to maintain positioning
                 if (element.dataset.originalTransform) {
-                    element.style.setProperty('transform', element.dataset.originalTransform, 'important');
+                    element.style.transform = element.dataset.originalTransform;
                 }
-                // Force the final state immediately
-                element.style.setProperty('opacity', '1', 'important');
-                // Don't re-enable CSS animations that could affect positioning
-                // element.style.animation = 'fadeInUp 1.5s ease-out forwards';
-                // Add a subtle entrance effect for opacity only
-                element.style.transition = 'opacity 0.8s ease';
+                
+                // Add smooth transition for opacity
+                element.style.transition = 'opacity 0.6s ease';
+                
+                // Fade in smoothly
+                element.style.opacity = '1';
+                
+                // Ensure pointer events are restored
+                element.style.pointerEvents = 'auto';
+                
+                // Mark this element as restored to prevent further interference
+                element.dataset.restored = 'true';
+                
+                // Also mark the parent hero-title to prevent mobile optimizations from interfering
+                const heroTitle = element.closest('.hero-title');
+                if (heroTitle) {
+                    heroTitle.dataset.restored = 'true';
+                }
+                
+                // This prevents the CSS animations from running again and causing visual jumps
             }, index * 150);
         });
     }, 300);
@@ -504,6 +529,10 @@ function startCooldownTimer() {
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
         opacity: 0;
         transition: opacity 0.5s ease;
+        max-width: 90vw;
+        width: max-content;
+        word-wrap: break-word;
+        white-space: normal;
     `;
     document.body.appendChild(cooldownDisplay);
     
@@ -520,7 +549,9 @@ function startCooldownTimer() {
             setTimeout(updateCooldown, 1000);
         } else {
             // Cooldown finished - show play again message
-            cooldownDisplay.textContent = 'Click another to play again!';
+            const isMobile = DeviceInfo.isMobile;
+            const actionText = isMobile ? 'Tap' : 'Click';
+            cooldownDisplay.innerHTML = `${actionText} another <span style="color: #ffa500;">shooting star</span> to play again!`;
             cooldownDisplay.style.color = 'rgba(255, 255, 255, 1)';
             cooldownDisplay.style.fontWeight = '500';
             
@@ -645,14 +676,19 @@ function resetWebpage() {
         satellite.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
     });
     
+    // Title elements are already restored in fadeInUIElementsStaggered, don't touch them again
+    // This prevents visual interruption of the title/subtitle
+    // Only touch title elements that haven't been restored yet
     const nameElements = document.querySelectorAll('.title-line, .title-subtitle');
     nameElements.forEach(element => {
-        element.style.removeProperty('opacity');
-        element.style.removeProperty('transition');
-        element.style.removeProperty('z-index');
-        element.style.removeProperty('animation');
-        element.style.pointerEvents = 'auto';
-        // Don't re-apply fadeInUp animation to prevent position changes
+        if (!element.dataset.restored) {
+            // Only restore elements that haven't been restored yet
+            element.style.removeProperty('opacity');
+            element.style.removeProperty('transition');
+            element.style.removeProperty('z-index');
+            element.style.removeProperty('animation');
+            element.style.pointerEvents = 'auto';
+        }
     });
     
     const socialButtons = document.querySelectorAll('.social-links a');
