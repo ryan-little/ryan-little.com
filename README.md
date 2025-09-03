@@ -18,11 +18,10 @@
   </div>
   
   **✨ Features:**
-  - 🌟 Dynamic shooting star animations
-  - 🎮 Interactive hidden minigame
-  - 📱 Mobile-optimized experience
-  - 🌙 Time-based Earth lighting system
-  - 🛰️ Animated satellite navigation
+  🌟 Dynamic shooting star animations
+  📱 Mobile-optimized experience
+  🌙 Time-based Earth lighting system
+  🛰️ Animated satellite navigation
   
   ### 🎯 **Visit the Live Site: [ryan-little.com](https://ryan-little.com)**
   
