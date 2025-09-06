@@ -8,9 +8,9 @@ function getImageUrl(filename, extension = 'webp') {
     const isWebPSupported = canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0;
     
     if (isWebPSupported && extension === 'webp') {
-        return `assets/images_webp/${filename}.webp`;
+        return `../assets/images_webp/${filename}.webp`;
     } else {
-        return `assets/images/${filename}.png`;
+        return `../assets/images/${filename}.png`;
     }
 }
 

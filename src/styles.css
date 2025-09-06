@@ -3,16 +3,16 @@
    ======================================== */
 :root {
     /* WebP images (preferred) */
-    --bg-image-webp: url('assets/images_webp/background.webp');
-    --bg2-image-webp: url('assets/images_webp/background2.webp');
-    --earth-sprite-webp: url('assets/images_webp/earthsprite.webp');
-    --shooting-star-webp: url('assets/images_webp/shootingstar.webp');
+    --bg-image-webp: url('../assets/images_webp/background.webp');
+    --bg2-image-webp: url('../assets/images_webp/background2.webp');
+    --earth-sprite-webp: url('../assets/images_webp/earthsprite.webp');
+    --shooting-star-webp: url('../assets/images_webp/shootingstar.webp');
     
     /* PNG fallbacks */
-    --bg-image-png: url('assets/images/background.png');
-    --bg2-image-png: url('assets/images/background2.png');
-    --earth-sprite-png: url('assets/images/earthsprite.png');
-    --shooting-star-png: url('assets/images/shootingstar.png');
+    --bg-image-png: url('../assets/images/background.png');
+    --bg2-image-png: url('../assets/images/background2.png');
+    --earth-sprite-png: url('../assets/images/earthsprite.png');
+    --shooting-star-png: url('../assets/images/shootingstar.png');
 }
 
 /* WebP support detection and fallback */
@@ -510,7 +510,7 @@ p {
     transform: translate(-50%, -50%);
     width: 500px;
     height: 500px;
-    background-image: url('assets/images/earthsprite.png');
+    background-image: url('../assets/images/earthsprite.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -725,7 +725,7 @@ p {
    ======================================== */
 .shooting-star {
     position: absolute;
-    background-image: url('assets/images/shootingstar.png');
+    background-image: url('../assets/images/shootingstar.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

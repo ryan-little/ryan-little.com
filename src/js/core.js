@@ -280,6 +280,35 @@ function initSatelliteMovement() {
     
     // Start the animation
     animateSatellites();
+    
+    // Add hover functionality to pause all satellite animations
+    let isHovering = false;
+    
+    satellites.forEach(satellite => {
+        satellite.addEventListener('mouseenter', () => {
+            if (!isHovering) {
+                isHovering = true;
+                console.log('🛰️ Satellite hovered - pausing all satellite animations');
+                
+                // Pause all satellite orbital animations
+                satellites.forEach(sat => {
+                    sat.style.animationPlayState = 'paused';
+                });
+            }
+        });
+        
+        satellite.addEventListener('mouseleave', () => {
+            if (isHovering) {
+                isHovering = false;
+                console.log('🛰️ Satellite hover ended - resuming all satellite animations');
+                
+                // Resume all satellite orbital animations
+                satellites.forEach(sat => {
+                    sat.style.animationPlayState = 'running';
+                });
+            }
+        });
+    });
 }
 
 
