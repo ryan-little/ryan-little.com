@@ -85,6 +85,11 @@
     --container-padding: 0 2rem;
     --border-radius: 8px;
     --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Animation durations - can be overridden dynamically */
+    --space-move-duration: 90s;
+    --background-move-duration: 180s;
+    --background2-move-duration: 240s;
 }
 
 html {
@@ -97,7 +102,7 @@ body {
     line-height: 1.6;
     color: #1a1a1a;
     background-color: #000000;
-    overflow-x: hidden;
+    overflow: hidden;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -146,7 +151,7 @@ p {
     height: 135px;
     cursor: pointer;
     pointer-events: auto;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, opacity 0.6s ease;
     transform-origin: center;
     top: 50%;
     left: 50%;
@@ -157,17 +162,22 @@ p {
     opacity: 0;
 }
 
+/* Apply reusable animation classes to satellites with individual distance variables */
 .satellite:nth-child(1) { 
-    animation: orbit1 20s linear infinite, satelliteFadeIn 1.2s ease-out 4.5s forwards;
+    /* Uses .satellite-orbit-standard class with dynamic distance */
+    --orbit-distance: var(--satellite1-distance, 300px);
 }
 .satellite:nth-child(2) { 
-    animation: orbit2 20s linear infinite, satelliteFadeIn 1.2s ease-out 5.0s forwards;
+    /* Uses .satellite-orbit-offset class with dynamic distance */
+    --orbit-distance: var(--satellite2-distance, 330px);
 }
 .satellite:nth-child(3) { 
-    animation: orbit3 20s linear infinite, satelliteFadeIn 1.2s ease-out 5.5s forwards;
+    /* Uses .satellite-orbit-wide class with dynamic distance */
+    --orbit-distance: var(--satellite3-distance, 360px);
 }
 .satellite:nth-child(4) { 
-    animation: orbit4 20s linear infinite, satelliteFadeIn 1.2s ease-out 6.0s forwards;
+    /* Uses .satellite-orbit-extended class with dynamic distance */
+    --orbit-distance: var(--satellite4-distance, 390px);
 }
 
 .satellite:hover {
@@ -185,20 +195,8 @@ p {
     animation-play-state: running;
 }
 
-/* Paused orbital animations - use more specific selectors */
-.satellite-nav .satellite.orbital-paused:nth-child(1) {
-    animation-play-state: paused;
-}
-
-.satellite-nav .satellite.orbital-paused:nth-child(2) {
-    animation-play-state: paused;
-}
-
-.satellite-nav .satellite.orbital-paused:nth-child(3) {
-    animation-play-state: paused;
-}
-
-.satellite-nav .satellite.orbital-paused:nth-child(4) {
+/* Paused orbital animations - works with all animation classes */
+.satellite-nav .satellite.orbital-paused {
     animation-play-state: paused;
 }
 
@@ -229,44 +227,25 @@ p {
     /* Ensure labels pause their counter-rotation when orbital animation is paused */
     animation-play-state: inherit;
     opacity: 0;
+    transition: opacity 0.6s ease;
 }
 
-/* Counter-rotate labels to keep them always horizontal */
-.satellite:nth-child(1) .satellite-label {
-    animation: counterRotate1 20s linear infinite, labelFadeIn 1.2s ease-out 4.5s forwards;
+/* Counter-rotation is now handled by the reusable animation classes */
+
+/* ========================================
+   REUSABLE SATELLITE ANIMATION SYSTEM
+   ======================================== */
+
+/* Base orbital animation - can be customized with CSS variables */
+@keyframes satelliteOrbit {
+    0% { transform: translate(-50%, -50%) rotate(var(--orbit-start-angle, 0deg)) translateX(var(--orbit-distance, 300px)); }
+    100% { transform: translate(-50%, -50%) rotate(calc(var(--orbit-start-angle, 0deg) + 360deg)) translateX(var(--orbit-distance, 300px)); }
 }
 
-.satellite:nth-child(2) .satellite-label {
-    animation: counterRotate2 20s linear infinite, labelFadeIn 1.2s ease-out 5.0s forwards;
-}
-
-.satellite:nth-child(3) .satellite-label {
-    animation: counterRotate3 20s linear infinite, labelFadeIn 1.2s ease-out 5.5s forwards;
-}
-
-.satellite:nth-child(4) .satellite-label {
-    animation: counterRotate4 20s linear infinite, labelFadeIn 1.2s ease-out 6.0s forwards;
-}
-
-/* Orbital animations for satellites around the center */
-@keyframes orbit1 {
-    0% { transform: translate(-50%, -50%) rotate(0deg) translateX(var(--satellite1-distance, 300px)); }
-    100% { transform: translate(-50%, -50%) rotate(360deg) translateX(var(--satellite1-distance, 300px)); }
-}
-
-@keyframes orbit2 {
-    0% { transform: translate(-50%, -50%) rotate(90deg) translateX(var(--satellite2-distance, 330px)); }
-    100% { transform: translate(-50%, -50%) rotate(450deg) translateX(var(--satellite2-distance, 330px)); }
-}
-
-@keyframes orbit3 {
-    0% { transform: translate(-50%, -50%) rotate(180deg) translateX(var(--satellite3-distance, 360px)); }
-    100% { transform: translate(-50%, -50%) rotate(540deg) translateX(var(--satellite3-distance, 360px)); }
-}
-
-@keyframes orbit4 {
-    0% { transform: translate(-50%, -50%) rotate(270deg) translateX(var(--satellite4-distance, 390px)); }
-    100% { transform: translate(-50%, -50%) rotate(630deg) translateX(var(--satellite4-distance, 390px)); }
+/* Base counter-rotation animation for labels */
+@keyframes satelliteCounterRotate {
+    0% { transform: translateX(-50%) rotate(var(--counter-start-angle, 0deg)); }
+    100% { transform: translateX(-50%) rotate(calc(var(--counter-start-angle, 0deg) - 360deg)); }
 }
 
 /* Satellite spinning animations */
@@ -275,25 +254,61 @@ p {
     100% { transform: rotate(360deg); }
 }
 
-/* Counter-rotation animations to keep labels always horizontal */
-@keyframes counterRotate1 {
-    0% { transform: translateX(-50%) rotate(0deg); }
-    100% { transform: translateX(-50%) rotate(-360deg); }
+@keyframes satelliteSpinReverse {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); }
 }
 
-@keyframes counterRotate2 {
-    0% { transform: translateX(-50%) rotate(-90deg); }
-    100% { transform: translateX(-50%) rotate(-450deg); }
+/* ========================================
+   REUSABLE ANIMATION CLASSES
+   ======================================== */
+
+/* Animation Class 1: Standard Orbit */
+.satellite-orbit-standard {
+    --orbit-start-angle: 0deg;
+    --orbit-distance: 300px;
+    --counter-start-angle: 0deg;
+    animation: satelliteOrbit 20s linear infinite;
 }
 
-@keyframes counterRotate3 {
-    0% { transform: translateX(-50%) rotate(-180deg); }
-    100% { transform: translateX(-50%) rotate(-540deg); }
+.satellite-orbit-standard .satellite-label {
+    animation: satelliteCounterRotate 20s linear infinite;
 }
 
-@keyframes counterRotate4 {
-    0% { transform: translateX(-50%) rotate(-270deg); }
-    100% { transform: translateX(-50%) rotate(-630deg); }
+/* Animation Class 2: Offset Orbit */
+.satellite-orbit-offset {
+    --orbit-start-angle: 90deg;
+    --orbit-distance: 330px;
+    --counter-start-angle: -90deg;
+    animation: satelliteOrbit 20s linear infinite;
+}
+
+.satellite-orbit-offset .satellite-label {
+    animation: satelliteCounterRotate 20s linear infinite;
+}
+
+/* Animation Class 3: Wide Orbit */
+.satellite-orbit-wide {
+    --orbit-start-angle: 180deg;
+    --orbit-distance: 360px;
+    --counter-start-angle: -180deg;
+    animation: satelliteOrbit 20s linear infinite;
+}
+
+.satellite-orbit-wide .satellite-label {
+    animation: satelliteCounterRotate 20s linear infinite;
+}
+
+/* Animation Class 4: Extended Orbit */
+.satellite-orbit-extended {
+    --orbit-start-angle: 270deg;
+    --orbit-distance: 390px;
+    --counter-start-angle: -270deg;
+    animation: satelliteOrbit 20s linear infinite;
+}
+
+.satellite-orbit-extended .satellite-label {
+    animation: satelliteCounterRotate 20s linear infinite;
 }
 
 /* ========================================
@@ -306,9 +321,9 @@ p {
     display: flex;
     gap: 2rem;
     align-items: center;
-    animation: fadeInUp 1.5s ease-out 2.3s forwards;
+    animation: fadeInOnly 1.5s ease-out 2.3s forwards;
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(0);
 }
 
 .social-link {
@@ -437,7 +452,7 @@ p {
         radial-gradient(0.2px 0.2px at 250px 50px, rgba(255,255,255,0.8), transparent);
     background-repeat: repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat;
     background-size: 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px;
-    animation: spaceMove 90s linear infinite !important;
+    animation: spaceMove var(--space-move-duration) linear infinite;
     transform: translateZ(0);
     backface-visibility: hidden;
     perspective: 1000px;
@@ -457,7 +472,7 @@ p {
     /* Background position set dynamically by JavaScript for randomization */
     /* Fallback position in case JavaScript fails */
     background-position: 0 10vh, 100vw 10vh;
-    animation: spaceMove 180s linear infinite !important;
+    animation: spaceMove var(--background-move-duration) linear infinite;
 }
 
 /* Background2 Layer - Additional space background */
@@ -474,7 +489,7 @@ p {
     /* Background position set dynamically by JavaScript for randomization */
     /* Fallback position in case JavaScript fails */
     background-position: 50vw -10vh, 150vw -10vh;
-    animation: spaceMove 240s linear infinite !important;
+    animation: spaceMove var(--background2-move-duration) linear infinite;
     opacity: 0.7;
 }
 
@@ -534,10 +549,10 @@ p {
     font-size: 4.5rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
-    animation: fadeInUp 1.5s ease-out 2.3s forwards;
+    animation: fadeInOnly 1.5s ease-out 2.3s forwards;
     letter-spacing: -0.02em;
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(0);
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -549,10 +564,10 @@ p {
     font-size: 1.25rem;
     font-weight: 500;
     opacity: 0;
-    animation: fadeInUp 1.5s ease-out 2.6s forwards;
+    animation: fadeInOnly 1.5s ease-out 2.6s forwards;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    transform: translateY(30px);
+    transform: translateY(0);
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -567,6 +582,15 @@ p {
     100% {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@keyframes fadeInOnly {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
     }
 }
 
@@ -592,24 +616,6 @@ p {
     }
 }
 
-@keyframes satelliteFadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
-
-@keyframes labelFadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
 
 /* Desktop responsive design */
 @media (min-width: 769px) {
@@ -633,19 +639,7 @@ p {
         bottom: -25px;
     }
     
-    /* Desktop satellite animations */
-    .satellite:nth-child(1) { 
-        animation: orbit1 20s linear infinite, satelliteFadeIn 1.2s ease-out 4.5s forwards;
-    }
-    .satellite:nth-child(2) { 
-        animation: orbit2 20s linear infinite, satelliteFadeIn 1.2s ease-out 5.0s forwards;
-    }
-    .satellite:nth-child(3) { 
-        animation: orbit3 20s linear infinite, satelliteFadeIn 1.2s ease-out 5.5s forwards;
-    }
-    .satellite:nth-child(4) { 
-        animation: orbit4 20s linear infinite, satelliteFadeIn 1.2s ease-out 6.0s forwards;
-    }
+    /* Desktop satellite animations use reusable classes */
 }
 
 /* ========================================

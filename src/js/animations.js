@@ -8,9 +8,9 @@ function getImageUrl(filename, extension = 'webp') {
     const isWebPSupported = canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0;
     
     if (isWebPSupported && extension === 'webp') {
-        return `../assets/images_webp/${filename}.webp`;
+        return `assets/images_webp/${filename}.webp`;
     } else {
-        return `../assets/images/${filename}.png`;
+        return `assets/images/${filename}.png`;
     }
 }
 
@@ -216,13 +216,18 @@ class ShootingStarSystem {
             target: e.target,
             minigameActive: window.minigameActive,
             gameCooldown: window.gameCooldown,
-            hasStartMinigame: typeof startMinigame === 'function'
+            hasStartMinigame: typeof startMinigame === 'function',
+            DeviceInfo: typeof DeviceInfo !== 'undefined' ? DeviceInfo : 'undefined'
         });
         
         // Start minigame if not active and not in cooldown
         if (typeof startMinigame === 'function' && !window.minigameActive && !window.gameCooldown) {
             console.log('🎮 Starting minigame from background star click');
-            startMinigame();
+            try {
+                startMinigame();
+            } catch (error) {
+                console.error('❌ Error starting minigame:', error);
+            }
         } else {
             console.log('❌ Cannot start minigame:', {
                 startMinigameExists: typeof startMinigame === 'function',
@@ -327,12 +332,23 @@ let shootingStarSystem;
 
 // Initialize shooting stars
 function initShootingStars() {
-    shootingStarSystem = new ShootingStarSystem();
+    if (!shootingStarSystem) {
+        shootingStarSystem = new ShootingStarSystem();
+        console.log('⭐ Shooting star system initialized');
+    }
 }
 
 // Export functions for minigame use
 window.createMinigameShootingStar = () => shootingStarSystem?.createShootingStar('minigame');
-window.startMinigameStars = () => shootingStarSystem?.startMinigameStars();
+window.startMinigameStars = () => {
+    if (!shootingStarSystem) {
+        initShootingStars();
+    }
+    shootingStarSystem?.startMinigameStars();
+};
 window.stopMinigameStars = () => shootingStarSystem?.stopMinigameStars();
 window.clearAllShootingStars = () => shootingStarSystem?.clearAllStars();
 window.shootingStarSystem = shootingStarSystem;
+
+// Initialize shooting stars when this module loads
+initShootingStars();

@@ -5,16 +5,22 @@
 console.log('📱 Mobile-new.js loaded - Performance optimized for mobile');
 
 // Mobile-specific device info (always mobile)
-window.DeviceInfo = {
-    isMobile: true,
-    isEdge: navigator.userAgent.includes('Edge') || navigator.userAgent.includes('Edg'),
-    isFirefox: navigator.userAgent.includes('Firefox'),
-    isSafari: /^((?!chrome|android).)*safari/i.test(navigator.userAgent),
-    isIOS: /iPad|iPhone|iPod/.test(navigator.userAgent),
-    isAndroid: /Android/.test(navigator.userAgent),
-    isChrome: /Chrome/.test(navigator.userAgent),
-    pixelRatio: window.devicePixelRatio || 1
-};
+// Override the default DeviceInfo with mobile-specific values
+if (typeof window.DeviceInfo !== 'undefined') {
+    window.DeviceInfo.isMobile = true;
+} else {
+    // Fallback if core.js hasn't loaded yet
+    window.DeviceInfo = {
+        isMobile: true,
+        isEdge: navigator.userAgent.includes('Edge') || navigator.userAgent.includes('Edg'),
+        isFirefox: navigator.userAgent.includes('Firefox'),
+        isSafari: /^((?!chrome|android).)*safari/i.test(navigator.userAgent),
+        isIOS: /iPad|iPhone|iPod/.test(navigator.userAgent),
+        isAndroid: /Android/.test(navigator.userAgent),
+        isChrome: /Chrome/.test(navigator.userAgent),
+        pixelRatio: window.devicePixelRatio || 1
+    };
+}
 
 // Mobile-specific optimizations and touch handling
 function optimizeMobileTouch() {
@@ -49,31 +55,33 @@ function optimizeMobileLayout() {
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
     
-    // Adjust hero content positioning based on viewport
+    // Adjust hero content positioning based on viewport - use CSS default
     const heroContent = document.querySelector('.hero-content');
     if (heroContent) {
-        // Center content vertically with dynamic positioning
-        const contentHeight = heroContent.offsetHeight;
-        const topPosition = Math.max(20, (viewportHeight - contentHeight) / 2);
-        heroContent.style.paddingTop = `${topPosition}px`;
+        // Use CSS default positioning (top: 20px) but allow some adjustment for very small screens
+        const topPosition = Math.max(20, Math.min(60, viewportHeight * 0.05));
+        heroContent.style.top = `${topPosition}px`;
+        heroContent.style.paddingTop = '0';
     }
     
-    // Adjust Earth sprite size based on viewport - make it larger on mobile
+    // Adjust Earth sprite size based on viewport - work with CSS defaults
     const earthSprite = document.querySelector('.earth-sprite');
     if (earthSprite) {
-        const earthSize = Math.min(400, Math.max(280, viewportWidth * 0.5));
+        // Use CSS default of 300px for mobile, but allow some adjustment for very small screens
+        const earthSize = Math.min(300, Math.max(250, viewportWidth * 0.4));
         earthSprite.style.width = `${earthSize}px`;
         earthSprite.style.height = `${earthSize}px`;
         
-        // Position Earth sprite dynamically
-        const earthTop = Math.max(60, viewportHeight * 0.12);
-        earthSprite.style.top = `${earthTop}px`;
+        // Let CSS handle positioning - don't override
+        // earthSprite.style.top = '50%';
+        // earthSprite.style.left = '50%';
+        // earthSprite.style.transform = 'translate(-50%, -50%)';
     }
     
-    // Adjust mobile link tree positioning
+    // Adjust mobile link tree positioning - move way up
     const mobileLinkTree = document.querySelector('.mobile-link-tree');
     if (mobileLinkTree) {
-        const treeTop = Math.max(60, viewportHeight * 0.6);
+        const treeTop = Math.max(10, viewportHeight * 0.08);
         mobileLinkTree.style.marginTop = `${treeTop}px`;
     }
     
@@ -248,11 +256,16 @@ function optimizeMobilePerformance() {
         link.style.transform = 'translateZ(0)';
         link.style.webkitTransform = 'translateZ(0)';
         
-        // Optimize transitions
-        link.style.transition = 'all 0.2s ease';
+        // Optimize transitions with smoother easing
+        link.style.transition = 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
         
         // Reduce box-shadow complexity
         link.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+        
+        // Ensure smooth animation performance
+        link.style.willChange = 'transform, opacity';
+        link.style.webkitBackfaceVisibility = 'hidden';
+        link.style.backfaceVisibility = 'hidden';
     });
     
     // Optimize Earth sprite performance
@@ -268,8 +281,18 @@ function optimizeMobilePerformance() {
     socialLinks.forEach(link => {
         link.style.transform = 'translateZ(0)';
         link.style.webkitTransform = 'translateZ(0)';
-        link.style.transition = 'all 0.2s ease';
+        link.style.transition = 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
     });
+    
+    // Optimize mobile link tree container
+    const mobileLinkTree = document.querySelector('.mobile-link-tree');
+    if (mobileLinkTree) {
+        mobileLinkTree.style.transform = 'translateZ(0)';
+        mobileLinkTree.style.webkitTransform = 'translateZ(0)';
+        mobileLinkTree.style.willChange = 'transform';
+        mobileLinkTree.style.webkitBackfaceVisibility = 'hidden';
+        mobileLinkTree.style.backfaceVisibility = 'hidden';
+    }
     
     // Reduce backdrop-filter usage on lower-end devices
     if (DeviceInfo.pixelRatio < 2) {
@@ -379,6 +402,9 @@ function forceTitleStacking() {
 // Initialize all mobile optimizations
 function initMobileOptimizations() {
     console.log('📱 Initializing redesigned mobile optimizations...');
+    
+    // Add mobile class to body to enable mobile-specific CSS selectors
+    document.body.classList.add('mobile');
     
     optimizeMobileTouch();
     optimizeMobileLayout();

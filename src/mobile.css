@@ -96,6 +96,18 @@
     --container-padding: 0 2rem;
     --border-radius: 8px;
     --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Animation durations - can be overridden dynamically */
+    --space-move-duration: 90s;
+    --background-move-duration: 180s;
+    --background2-move-duration: 240s;
+    --mobile-animation-duration: 60s;
+    
+    /* Mobile layout variables */
+    --mobile-link-width: clamp(160px, 32vw, 190px);
+    --mobile-link-height: clamp(60px, 14vw, 70px);
+    --mobile-link-gap: clamp(0.9rem, 3vw, 1.2rem);
+    --mobile-link-padding: clamp(0.7rem, 2.5vw, 0.9rem);
 }
 
 html {
@@ -145,7 +157,7 @@ p {
     position: relative;
     margin-top: 1rem;
     margin-bottom: 1rem;
-    z-index: 1000 !important;
+    z-index: 1000;
     display: flex;
     gap: 1.5rem;
     align-items: center;
@@ -285,7 +297,7 @@ p {
         radial-gradient(0.2px 0.2px at 250px 50px, rgba(255,255,255,0.8), transparent);
     background-repeat: repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat;
     background-size: 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px;
-    animation: spaceMove 90s linear infinite !important;
+    animation: spaceMove var(--space-move-duration) linear infinite;
     transform: translateZ(0);
     backface-visibility: hidden;
     perspective: 1000px;
@@ -305,7 +317,7 @@ p {
     /* Background position set dynamically by JavaScript for randomization */
     /* Fallback position in case JavaScript fails */
     background-position: 0 10vh, 100vw 10vh;
-    animation: spaceMove 180s linear infinite !important;
+    animation: spaceMove var(--background-move-duration) linear infinite;
 }
 
 /* Background2 Layer - Additional space background */
@@ -322,7 +334,7 @@ p {
     /* Background position set dynamically by JavaScript for randomization */
     /* Fallback position in case JavaScript fails */
     background-position: 50vw -10vh, 150vw -10vh;
-    animation: spaceMove 240s linear infinite !important;
+    animation: spaceMove var(--background2-move-duration) linear infinite;
     opacity: 0.7;
 }
 
@@ -343,6 +355,7 @@ p {
     transition: filter 2s ease-in-out;
 }
 
+/* spaceMove animation for mobile background elements */
 @keyframes spaceMove {
     0% { transform: translateX(0); }
     100% { transform: translateX(-100vw); }
@@ -424,6 +437,7 @@ p {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
+/* Essential animations for mobile */
 @keyframes fadeInUp {
     0% {
         opacity: 0;
@@ -432,6 +446,17 @@ p {
     100% {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUpSmooth {
+    0% {
+        opacity: 0;
+        transform: translateY(15px) translateZ(0);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) translateZ(0);
     }
 }
 
@@ -449,11 +474,11 @@ p {
 @keyframes fadeInScale {
     0% {
         opacity: 0;
-        transform: translateX(-50%) scale(0.8);
+        transform: scale(0.8);
     }
     100% {
         opacity: 1;
-        transform: translateX(-50%) scale(1);
+        transform: scale(1);
     }
 }
 
@@ -511,32 +536,24 @@ p {
     -webkit-overflow-scrolling: touch;
 }
 
-/* Optimize animations for mobile */
-.stars,
-.background-image,
-.background2 {
-    animation-duration: 60s !important;
-    -webkit-animation-duration: 60s !important;
-    -moz-animation-duration: 60s !important;
-    -o-animation-duration: 60s !important;
-}
+/* Optimize animations for mobile - use individual durations defined below */
 
 /* Ensure proper background tiling on mobile */
-.background-image,
-.background2 {
-    background-size: auto 100vh !important;
-    width: 200vw !important;
-    height: 100vh !important;
+.mobile .background-image,
+.mobile .background2 {
+    background-size: auto 100vh;
+    width: 200vw;
+    height: 100vh;
     /* Ensure backgrounds always cover the viewport */
-    min-width: 100vw !important;
-    min-height: 100vh !important;
+    min-width: 100vw;
+    min-height: 100vh;
 }
 
 /* Background positions set dynamically by JavaScript for randomization */
 /* Ensure backgrounds tile vertically to cover full viewport height */
-.background-image,
-.background2 {
-    background-repeat: repeat !important; /* Tile both horizontally and vertically */
+.mobile .background-image,
+.mobile .background2 {
+    background-repeat: repeat; /* Tile both horizontally and vertically */
 }
 
 /* iOS Safari specific fixes */
@@ -625,20 +642,19 @@ p {
         overflow: hidden;
     }
     
-    .mobile-link-item:active {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.15)) !important;
-        transform: scale(0.96) translateY(-1px) !important;
+    .mobile .mobile-link-item:active {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.15));
+        transform: scale(0.98) translateY(-1px);
         box-shadow: 
-            0 6px 20px rgba(0, 0, 0, 0.2),
-            0 2px 8px rgba(0, 0, 0, 0.15),
-            inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
-        animation: buttonPulse 0.3s ease-out !important;
+            0 4px 15px rgba(0, 0, 0, 0.2),
+            0 2px 6px rgba(0, 0, 0, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
     }
     
-    .social-link:active {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.2)) !important;
-        transform: scale(0.92) translateY(-1px) !important;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+    .mobile .social-link:active {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.2));
+        transform: scale(0.92) translateY(-1px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
     
     /* Ripple effect for mobile buttons */
@@ -665,117 +681,128 @@ p {
 /* ========================================
    MOBILE LINK TREE LAYOUT
    ======================================== */
-/* Remove generated stars on mobile - they don't work well */
+/* Mobile stars optimization - keep stars but optimize for performance */
 .stars {
     z-index: 0;
-    background-image: none;
-    background: transparent;
+    /* Keep the star background but optimize for mobile performance */
+    background-image: 
+        radial-gradient(0.2px 0.2px at 100px 100px, #fff, transparent),
+        radial-gradient(0.2px 0.2px at 300px 200px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.2px 0.2px at 200px 300px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(0.2px 0.2px at 450px 150px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(0.2px 0.2px at 150px 450px, rgba(255,255,255,0.5), transparent);
+    background-repeat: repeat, repeat, repeat, repeat, repeat;
+    background-size: 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px;
+    animation: spaceMove var(--space-move-duration) linear infinite;
 }
 
 /* Enhanced mobile link tree with sleek spacing */
 .mobile-link-tree {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    width: 100% !important;
-    max-width: min(220px, 38vw) !important;
-    width: min(220px, 38vw) !important;
-    z-index: 1 !important;
-    margin-top: 1.5rem !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    gap: clamp(0.9rem, 3vw, 1.2rem) !important;
+    display: grid;
+    grid-template-columns: 1fr;
+    place-items: center;
+    width: 100%;
+    max-width: min(220px, 38vw);
+    z-index: 1;
+    margin: 0.2rem auto 0;
+    gap: var(--mobile-link-gap);
     position: relative;
-    padding: 0.5rem !important;
+    padding: 0.5rem;
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 /* Individual link items with sleek modern design - performance optimized */
 .mobile-link-item {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05)) !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    border-radius: 16px !important;
-    padding: clamp(0.7rem, 2.5vw, 0.9rem) !important;
-    margin-bottom: 0 !important;
-    text-decoration: none !important;
-    color: white !important;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    -webkit-tap-highlight-color: transparent !important;
-    touch-action: manipulation !important;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: var(--mobile-link-padding);
+    margin: 0 auto;
+    text-decoration: none;
+    color: white;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
     opacity: 0;
-    transform: translateY(30px) translateZ(0) !important;
-    animation: buttonSlideIn 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    backdrop-filter: blur(20px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+    transform: translateY(20px) translateZ(0) scale(0.96);
+    animation: buttonSlideInSmooth 1.0s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
     box-shadow: 
         0 4px 16px rgba(0, 0, 0, 0.1),
         0 1px 3px rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
-    will-change: transform, opacity !important;
-    -webkit-backface-visibility: hidden !important;
-    backface-visibility: hidden !important;
-    width: clamp(160px, 32vw, 190px) !important;
-    height: clamp(60px, 14vw, 70px) !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    min-width: 130px !important;
-    gap: 0.6rem !important;
-    position: relative !important;
-    overflow: hidden !important;
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    will-change: transform, opacity;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateY(20px) translateZ(0) scale(0.96);
+    width: var(--mobile-link-width);
+    height: var(--mobile-link-height);
+    min-width: 130px;
+    gap: 0.6rem;
+    position: relative;
+    overflow: hidden;
 }
 
 /* Subtle inner glow effect */
 .mobile-link-item::before {
-    content: '' !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent) !important;
-    border-radius: 16px !important;
-    opacity: 0 !important;
-    transition: opacity 0.3s ease !important;
-    pointer-events: none !important;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+    border-radius: 16px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
 .mobile-link-item:hover,
 .mobile-link-item:active {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.1)) !important;
-    transform: translateY(-4px) scale(1.02) !important;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.1));
+    transform: translateY(-2px) translateZ(0) scale(1.01);
+    -webkit-transform: translateY(-2px) translateZ(0) scale(1.01);
     box-shadow: 
-        0 8px 25px rgba(0, 0, 0, 0.15),
-        0 3px 10px rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
-    border-color: rgba(255, 255, 255, 0.3) !important;
+        0 6px 20px rgba(0, 0, 0, 0.15),
+        0 2px 8px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
 }
 
 .mobile-link-item:hover::before,
 .mobile-link-item:active::before {
-    opacity: 1 !important;
+    opacity: 1;
 }
 
 .mobile-link-item:active {
-    transform: translateY(-2px) scale(0.98) !important;
-    transition: all 0.1s ease !important;
+    transform: translateY(-1px) translateZ(0) scale(0.99);
+    -webkit-transform: translateY(-1px) translateZ(0) scale(0.99);
+    transition: all 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* Enhanced satellite icons with sleek effects */
 .mobile-link-icon {
-    width: clamp(26px, 6.5vw, 32px) !important;
-    height: clamp(20px, 5vw, 24px) !important;
-    margin-right: 0 !important;
-    flex-shrink: 0 !important;
+    width: clamp(26px, 6.5vw, 32px);
+    height: clamp(20px, 5vw, 24px);
+    margin-right: 0;
+    flex-shrink: 0;
     filter: 
         drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2))
         drop-shadow(0 1px 3px rgba(0, 0, 0, 0.1))
         brightness(1.1) 
-        contrast(1.05) !important;
-    object-fit: contain !important;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        contrast(1.05);
+    object-fit: contain;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .mobile-link-item:hover .mobile-link-icon {
@@ -783,64 +810,49 @@ p {
         drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25))
         drop-shadow(0 2px 6px rgba(0, 0, 0, 0.15))
         brightness(1.2) 
-        contrast(1.1) !important;
+        contrast(1.1);
     /* Remove transform to allow animation to work */
 }
 
-/* Individual icon animations - clean spinning */
-.mobile-link-item:nth-child(1) .mobile-link-icon {
-    animation: satelliteSpin 8s linear infinite;
-}
+/* Individual icon animations - now handled by reusable classes in HTML */
 
-.mobile-link-item:nth-child(2) .mobile-link-icon {
-    animation: satelliteSpinReverse 10s linear infinite;
-}
-
-.mobile-link-item:nth-child(3) .mobile-link-icon {
-    animation: satelliteSpinSlow 12s linear infinite;
-}
-
-.mobile-link-item:nth-child(4) .mobile-link-icon {
-    animation: satelliteSpinSlowReverse 9s linear infinite;
-}
-
-/* Staggered entrance animations */
-.mobile-link-item:nth-child(1) { animation-delay: 0.8s; }
-.mobile-link-item:nth-child(2) { animation-delay: 1.0s; }
-.mobile-link-item:nth-child(3) { animation-delay: 1.2s; }
-.mobile-link-item:nth-child(4) { animation-delay: 1.4s; }
+/* Staggered entrance animations - fluid timing */
+.mobile-link-item:nth-child(1) { animation-delay: 0.5s; }
+.mobile-link-item:nth-child(2) { animation-delay: 0.6s; }
+.mobile-link-item:nth-child(3) { animation-delay: 0.7s; }
+.mobile-link-item:nth-child(4) { animation-delay: 0.8s; }
 
 /* Enhanced link text with sleek typography */
 .mobile-link-text {
-    display: block !important;
-    font-size: 0.85rem !important;
-    font-weight: 600 !important;
-    color: white !important;
-    text-align: left !important;
-    margin-top: 0 !important;
-    margin-left: 0.3rem !important;
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: white;
+    text-align: left;
+    margin: 0 0 0 0.3rem;
     text-shadow: 
         0 1px 3px rgba(0, 0, 0, 0.4),
-        0 0 8px rgba(255, 255, 255, 0.1) !important;
-    line-height: 1.3 !important;
-    white-space: nowrap !important;
-    letter-spacing: 0.02em !important;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    transform: translateZ(0) !important;
+        0 0 8px rgba(255, 255, 255, 0.1);
+    line-height: 1.3;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateZ(0);
 }
 
 .mobile-link-item:hover .mobile-link-text {
     text-shadow: 
         0 2px 4px rgba(0, 0, 0, 0.5),
-        0 0 12px rgba(255, 255, 255, 0.15) !important;
-    transform: translateX(2px) translateZ(0) !important;
+        0 0 12px rgba(255, 255, 255, 0.15);
+    transform: translateX(2px) translateZ(0);
+    -webkit-transform: translateX(2px) translateZ(0);
 }
 
 /* Mobile minigame optimizations */
 .minigame-score,
 .minigame-countdown,
 .minigame-instructions {
-    font-size: clamp(0.9rem, 4vw, 1.1rem) !important;
+    font-size: clamp(0.9rem, 4vw, 1.1rem);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
     z-index: 1000;
     position: fixed;
@@ -857,38 +869,38 @@ p {
 
 .minigame-score {
     top: 50%;
-    font-size: clamp(1rem, 5vw, 1.3rem) !important;
+    font-size: clamp(1rem, 5vw, 1.3rem);
 }
 
 .minigame-countdown {
     top: 40%;
-    font-size: clamp(1.2rem, 6vw, 1.5rem) !important;
+    font-size: clamp(1.2rem, 6vw, 1.5rem);
 }
 
 .minigame-instructions {
     top: 60%;
-    font-size: clamp(0.8rem, 4vw, 1rem) !important;
+    font-size: clamp(0.8rem, 4vw, 1rem);
     max-width: 90vw;
     padding: 0 1rem;
 }
 
 /* Enhanced mobile animations - performance optimized */
-.stars {
-    animation-duration: 67.5s !important;
+.mobile .stars {
+    animation-duration: 67.5s;
     will-change: transform;
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
 }
 
-.background-image {
-    animation-duration: 135s !important;
+.mobile .background-image {
+    animation-duration: 135s;
     will-change: transform;
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
 }
 
-.background2 {
-    animation-duration: 180s !important;
+.mobile .background2 {
+    animation-duration: 180s;
     will-change: transform;
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
@@ -907,43 +919,40 @@ p {
     animation: fadeInScale 2s ease-out 0.5s both;
 }
 
-/* Mobile link tree entrance */
+/* Mobile link tree entrance - smoother timing */
 .mobile-link-tree {
-    animation: fadeInUp 1.8s ease-out 0.8s both;
+    animation: fadeInUpSmooth 1.0s cubic-bezier(0.23, 1, 0.32, 1) 0.4s both;
 }
 
 /* Ensure proper title stacking on mobile - FORCE STACKING */
-.hero-title .title-line,
-.hero-title .title-subtitle {
-    display: block !important;
-    width: 100% !important;
-    text-align: center !important;
-    float: none !important;
-    clear: both !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+.mobile .hero-title .title-line,
+.mobile .hero-title .title-subtitle {
+    display: block;
+    width: 100%;
+    text-align: center;
+    float: none;
+    clear: both;
+    margin: 0 auto;
 }
 
-.hero-title .title-line {
-    margin-bottom: 0.5rem !important;
-    margin-right: 0 !important;
-    clear: both !important;
+.mobile .hero-title .title-line {
+    margin: 0 0 0.5rem 0;
+    clear: both;
 }
 
-.hero-title .title-subtitle {
-    margin-bottom: 1.5rem !important;
-    margin-top: 0 !important;
-    clear: both !important;
-    float: none !important;
+.mobile .hero-title .title-subtitle {
+    margin: 0 0 1.5rem 0;
+    clear: both;
+    float: none;
 }
 
 /* Force mobile title container to stack */
-.hero-title {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 100% !important;
+.mobile .hero-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 /* Mobile-specific background adjustments */
@@ -963,44 +972,54 @@ p {
 }
 
 /* CRITICAL: Force title stacking on mobile - override everything */
-.hero-title {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 100% !important;
+.mobile .hero-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
-.hero-title .title-line,
-.hero-title .title-subtitle {
-    display: block !important;
-    width: 100% !important;
-    text-align: center !important;
-    float: none !important;
-    clear: both !important;
-    position: static !important;
+/* Mobile earth sprite sizing - make it appropriately sized for mobile */
+.mobile .earth-sprite {
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    top: 7%;
+    left: 170px;
+    transform: translate(-50%, -50%);
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
-.hero-title .title-line {
-    margin-bottom: 0.5rem !important;
-    margin-right: 0 !important;
+.mobile .hero-title .title-line,
+.mobile .hero-title .title-subtitle {
+    display: block;
+    width: 100%;
+    text-align: center;
+    float: none;
+    clear: both;
+    position: static;
 }
 
-.hero-title .title-subtitle {
-    margin-bottom: 1.5rem !important;
-    margin-top: 0 !important;
+.mobile .hero-title .title-line {
+    margin: 0 0 0.5rem 0;
+}
+
+.mobile .hero-title .title-subtitle {
+    margin: 0 0 1.5rem 0;
 }
 
 /* Stack title vertically on smaller viewport heights */
 @media (max-height: 600px) {
-    .title-line {
-        display: block !important;
-        margin-right: 0 !important;
-        margin-bottom: 0.5rem !important;
+    .mobile .title-line {
+        display: block;
+        margin: 0 0 0.5rem 0;
     }
     
-    .title-subtitle {
-        display: block !important;
+    .mobile .title-subtitle {
+        display: block;
     }
 }
 
@@ -1029,66 +1048,66 @@ p {
     }
     
     .mobile-link-text {
-        display: block !important;
-        font-size: 0.7rem !important;
+        display: block;
+        font-size: 0.7rem;
     }
 }
 
 /* Performance optimizations for lower-end devices */
 @media (max-width: 480px) and (max-resolution: 1.5dppx) {
-    .mobile-link-item,
-    .social-link {
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
-        background: rgba(255, 255, 255, 0.2) !important;
+    .mobile .mobile-link-item,
+    .mobile .social-link {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: rgba(255, 255, 255, 0.2);
     }
     
-    .stars,
-    .background-image {
-        animation-duration: 120s !important;
+    .mobile .stars,
+    .mobile .background-image {
+        animation-duration: 120s;
     }
 }
 
 @media (max-width: 375px) {
-    .title-line {
-        font-size: 2.2rem !important;
+    .mobile .title-line {
+        font-size: 2.2rem;
     }
     
-    .title-subtitle {
-        font-size: 0.9rem !important;
+    .mobile .title-subtitle {
+        font-size: 0.9rem;
     }
     
-    .social-link {
+    .mobile .social-link {
         width: 38px;
         height: 38px;
         font-size: 0.9rem;
     }
     
-    .earth-sprite {
-        width: 220px !important;
-        height: 220px !important;
+    .mobile .earth-sprite {
+        width: 220px;
+        height: 220px;
     }
     
-    .mobile-link-tree {
+    .mobile .mobile-link-tree {
         max-width: 160px;
         width: 160px;
     }
     
-    .mobile-link-item {
+    .mobile .mobile-link-item {
         width: 140px;
         height: 50px;
         padding: 0.5rem;
     }
     
-    .mobile-link-icon {
+    .mobile .mobile-link-icon {
         width: 20px;
         height: 15px;
         margin-right: 0;
     }
     
-    .mobile-link-text {
-        display: block !important;
-        font-size: 0.65rem !important;
+    .mobile .mobile-link-text {
+        display: block;
+        font-size: 0.65rem;
     }
 }
 
@@ -1104,10 +1123,16 @@ p {
         margin-top: 0.5rem;
     }
     
-    .earth-sprite {
-        width: 200px !important;
-        height: 200px !important;
-        top: 50px !important;
+    .mobile .earth-sprite {
+        width: 200px;
+        height: 200px;
+        position: absolute;
+        top: 6%;
+        left: 100px;
+        transform: translate(-50%, -50%);
+        background-position: center center;
+        background-size: contain;
+        background-repeat: no-repeat;
     }
     
     .social-links {
@@ -1116,36 +1141,38 @@ p {
 }
 
 /* CRITICAL: Force mobile button sizing - override everything with sleek design */
-.mobile-link-tree {
-    max-width: 220px !important;
-    width: 220px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    gap: 1rem !important;
+.mobile .mobile-link-tree {
+    max-width: 220px;
+    width: 220px;
+    margin: 0 auto;
+    gap: 1rem;
 }
 
-.mobile-link-item {
-    width: 200px !important;
-    height: 70px !important;
-    padding: 0.9rem !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    border-radius: 16px !important;
+.mobile .mobile-link-item {
+    width: 200px;
+    height: 70px;
+    padding: 0.9rem;
+    margin: 0 auto;
+    border-radius: 16px;
 }
 
-.mobile-link-icon {
-    width: 32px !important;
-    height: 24px !important;
-    margin-right: 0 !important;
+.mobile .mobile-link-icon {
+    width: 32px;
+    height: 24px;
+    margin-right: 0;
 }
 
-.mobile-link-text {
-    display: block !important;
-    font-size: 0.85rem !important;
-    font-weight: 600 !important;
+.mobile .mobile-link-text {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
 }
 
-/* Satellite spinning animations - clean rotation only */
+/* ========================================
+   REUSABLE MOBILE SATELLITE ANIMATION SYSTEM
+   ======================================== */
+
+/* Base spinning animations */
 @keyframes satelliteSpin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -1156,39 +1183,39 @@ p {
     100% { transform: rotate(-360deg); }
 }
 
-@keyframes satelliteSpinSlow {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+/* ========================================
+   REUSABLE MOBILE ANIMATION CLASSES
+   ======================================== */
+
+/* Animation Class 1: Standard Spin */
+.mobile-spin-standard {
+    animation: satelliteSpin 8s linear infinite;
 }
 
-@keyframes satelliteSpinSlowReverse {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(-360deg); }
+/* Animation Class 2: Reverse Spin */
+.mobile-spin-reverse {
+    animation: satelliteSpinReverse 10s linear infinite;
 }
 
-@keyframes satelliteSpinMedium {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+/* Animation Class 3: Slow Spin */
+.mobile-spin-slow {
+    animation: satelliteSpin 12s linear infinite;
 }
 
-@keyframes satelliteSpinMediumReverse {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(-360deg); }
+/* Animation Class 4: Fast Reverse Spin */
+.mobile-spin-fast-reverse {
+    animation: satelliteSpinReverse 9s linear infinite;
 }
 
-/* Sleek button entrance animation */
-@keyframes buttonSlideIn {
+/* Sleek button entrance animation - fluid version */
+@keyframes buttonSlideInSmooth {
     0% {
         opacity: 0;
-        transform: translateY(40px) scale(0.9);
-    }
-    50% {
-        opacity: 0.8;
-        transform: translateY(20px) scale(0.95);
+        transform: translateY(20px) translateZ(0) scale(0.96);
     }
     100% {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translateY(0) translateZ(0) scale(1);
     }
 }
 

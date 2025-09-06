@@ -1,22 +1,23 @@
 // Core functionality for Ryan Little's personal website
 // Handles initialization, browser detection, and core utilities
 
-// Wait for DOM to be ready before defining DeviceInfo
-document.addEventListener('DOMContentLoaded', function() {
-    // Browser detection (device detection is handled by specific mobile/desktop modules)
-    window.DeviceInfo = {
-        isEdge: navigator.userAgent.includes('Edge') || navigator.userAgent.includes('Edg'),
-        isFirefox: navigator.userAgent.includes('Firefox'),
-        isSafari: /^((?!chrome|android).)*safari/i.test(navigator.userAgent),
-        isIOS: /iPad|iPhone|iPod/.test(navigator.userAgent),
-        isAndroid: /Android/.test(navigator.userAgent),
-        isChrome: /Chrome/.test(navigator.userAgent),
-        pixelRatio: window.devicePixelRatio || 1
-    };
+// Shared browser detection utility
+const BrowserDetection = {
+    isEdge: navigator.userAgent.includes('Edge') || navigator.userAgent.includes('Edg'),
+    isFirefox: navigator.userAgent.includes('Firefox'),
+    isSafari: /^((?!chrome|android).)*safari/i.test(navigator.userAgent),
+    isIOS: /iPad|iPhone|iPod/.test(navigator.userAgent),
+    isAndroid: /Android/.test(navigator.userAgent),
+    isChrome: /Chrome/.test(navigator.userAgent),
+    pixelRatio: window.devicePixelRatio || 1
+};
 
-    // Make DeviceInfo available globally
-    window.DeviceInfo = DeviceInfo;
-});
+// Define DeviceInfo immediately for global access
+// This will be overridden by mobile.js or desktop.js with device-specific values
+window.DeviceInfo = {
+    isMobile: false, // Default, will be overridden
+    ...BrowserDetection
+};
 
 
 
@@ -62,6 +63,23 @@ const PerformanceOptimizer = {
                 stars.style.backgroundSize = '120px 120px, 120px 120px, 120px 120px, 120px 120px, 120px 120px';
             }
         }
+        
+        if (DeviceInfo.isFirefox) {
+            // Firefox-specific optimizations
+            const animatedElements = document.querySelectorAll('.satellite, .hero-background, .stars');
+            animatedElements.forEach(el => {
+                el.style.transform = 'translateZ(0)';
+            });
+        }
+        
+        if (DeviceInfo.isSafari) {
+            // Safari-specific optimizations
+            const transformElements = document.querySelectorAll('.satellite, .hero-background, .stars');
+            transformElements.forEach(el => {
+                el.style.webkitTransform = 'translate3d(0, 0, 0)';
+                el.style.transform = 'translate3d(0, 0, 0)';
+            });
+        }
     }
 };
 
@@ -72,10 +90,9 @@ if (document.readyState === 'loading') {
     initializeWebsite();
 }
 
+// initShootingStars is now handled by animations.js
+
 function initializeWebsite() {
-    // Initialize shooting stars
-    initShootingStars();
-    
     // Add loading animation
     document.body.classList.add('loaded');
     

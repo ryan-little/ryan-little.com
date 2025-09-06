@@ -4,16 +4,24 @@
 console.log('💻 Desktop.js loaded - Desktop optimizations active');
 
 // Desktop-specific device info (always desktop)
-window.DeviceInfo = {
-    isMobile: false,
-    isEdge: navigator.userAgent.includes('Edge') || navigator.userAgent.includes('Edg'),
-    isFirefox: navigator.userAgent.includes('Firefox'),
-    isSafari: /^((?!chrome|android).)*safari/i.test(navigator.userAgent),
-    isIOS: false, // Desktop only
-    isAndroid: false, // Desktop only
-    isChrome: /Chrome/.test(navigator.userAgent),
-    pixelRatio: window.devicePixelRatio || 1
-};
+// Override the default DeviceInfo with desktop-specific values
+if (typeof window.DeviceInfo !== 'undefined') {
+    window.DeviceInfo.isMobile = false;
+    window.DeviceInfo.isIOS = false; // Desktop only
+    window.DeviceInfo.isAndroid = false; // Desktop only
+} else {
+    // Fallback if core.js hasn't loaded yet
+    window.DeviceInfo = {
+        isMobile: false,
+        isEdge: navigator.userAgent.includes('Edge') || navigator.userAgent.includes('Edg'),
+        isFirefox: navigator.userAgent.includes('Firefox'),
+        isSafari: /^((?!chrome|android).)*safari/i.test(navigator.userAgent),
+        isIOS: false, // Desktop only
+        isAndroid: false, // Desktop only
+        isChrome: /Chrome/.test(navigator.userAgent),
+        pixelRatio: window.devicePixelRatio || 1
+    };
+}
 
 // Simple Earth Night Dimming System (Desktop Only)
 const EarthNightSystem = {
@@ -115,38 +123,25 @@ const DesktopPerformanceOptimizer = {
     },
     
     applyBrowserFixes: () => {
-        if (DeviceInfo.isEdge) {
-            // Fix for Edge star rendering
-            const stars = document.querySelector('.stars');
-            if (stars) {
-                stars.style.backgroundSize = '150px 150px, 150px 150px, 150px 150px, 150px 150px, 150px 150px';
-            }
-            
-            // Fix for Edge transform issues
-            const elements = document.querySelectorAll('.satellite, .hero-background, .stars');
-            elements.forEach(el => {
-                el.style.msTransform = 'translateZ(0)';
-                el.style.transform = 'translateZ(0)';
-            });
-        }
-        
-        if (DeviceInfo.isFirefox) {
-            // Firefox-specific optimizations
-            const animatedElements = document.querySelectorAll('.satellite, .hero-background, .stars');
-            animatedElements.forEach(el => {
-                el.style.transform = 'translateZ(0)';
-            });
-        }
-        
-        if (DeviceInfo.isSafari) {
-            // Safari-specific optimizations
-            const transformElements = document.querySelectorAll('.satellite, .hero-background, .stars');
-            transformElements.forEach(el => {
-                el.style.webkitTransform = 'translate3d(0, 0, 0)';
-                el.style.transform = 'translate3d(0, 0, 0)';
-            });
+        // Use shared browser fixes from core.js
+        if (typeof PerformanceOptimizer !== 'undefined') {
+            PerformanceOptimizer.applyBrowserFixes();
         }
     }
+};
+
+// Global satellite movement state - accessible from anywhere
+window.SatelliteMovementState = {
+    isHovering: false,
+    isPageVisible: true,
+    isPageActive: false,
+    animationId: null,
+    distanceRanges: [
+        { min: 280, max: 410, current: 345, speed: 0.3 },
+        { min: 280, max: 410, current: 345, speed: 0.4 },
+        { min: 280, max: 410, current: 345, speed: 0.5 },
+        { min: 280, max: 400, current: 345, speed: 0.6 }
+    ]
 };
 
 // Initialize dynamic satellite movement (Desktop Only)
@@ -155,19 +150,12 @@ function initSatelliteMovement() {
     
     const satellites = document.querySelectorAll('.satellite');
     
-    // Define distance ranges for each satellite (largest possible spread, different speeds)
-    const distanceRanges = [
-        { min: 280, max: 410, current: 345, speed: 0.3 },
-        { min: 280, max: 410, current: 345, speed: 0.4 },
-        { min: 280, max: 410, current: 345, speed: 0.5 },
-        { min: 280, max: 400, current: 345, speed: 0.6 }
-    ];
+    // Initialize satellite fade-in with staggered timing
+    initSatelliteFadeIn();
     
-    // Add hover functionality to pause all satellite orbital animations while keeping spinning
-    let isHovering = false;
-    let isPageVisible = true;
-    let isPageActive = false; // Track if we're actively in a page
-    let animationId = null; // Track the animation frame ID
+    // Use global state
+    const { isHovering, isPageVisible, isPageActive, animationId } = window.SatelliteMovementState;
+    const distanceRanges = window.SatelliteMovementState.distanceRanges;
     
     // Set initial random distances
     satellites.forEach((satellite, index) => {
@@ -189,9 +177,9 @@ function initSatelliteMovement() {
     // Animate satellite distances
     function animateSatellites() {
         // Only animate if not paused
-        if (!isHovering && !isPageActive) {
+        if (!window.SatelliteMovementState.isHovering && !window.SatelliteMovementState.isPageActive) {
             satellites.forEach((satellite, index) => {
-                const range = distanceRanges[index];
+                const range = window.SatelliteMovementState.distanceRanges[index];
                 
                 range.current += range.direction * range.speed;
                 
@@ -212,7 +200,7 @@ function initSatelliteMovement() {
             });
         }
         
-        animationId = requestAnimationFrame(animateSatellites);
+        window.SatelliteMovementState.animationId = requestAnimationFrame(animateSatellites);
     }
     
     // Start the animation
@@ -220,11 +208,11 @@ function initSatelliteMovement() {
     
     // Page visibility API to maintain pause state when switching tabs
     document.addEventListener('visibilitychange', () => {
-        isPageVisible = !document.hidden;
-        if (!isPageVisible && (isHovering || isPageActive)) {
+        window.SatelliteMovementState.isPageVisible = !document.hidden;
+        if (!window.SatelliteMovementState.isPageVisible && (window.SatelliteMovementState.isHovering || window.SatelliteMovementState.isPageActive)) {
             // Keep paused when page is not visible and was hovering or in a page
             console.log('🛰️ Page hidden - maintaining satellite pause state');
-        } else if (isPageVisible && (isHovering || isPageActive)) {
+        } else if (window.SatelliteMovementState.isPageVisible && (window.SatelliteMovementState.isHovering || window.SatelliteMovementState.isPageActive)) {
             // Resume paused state when page becomes visible again
             console.log('🛰️ Page visible - maintaining satellite pause state');
         }
@@ -248,15 +236,15 @@ function initSatelliteMovement() {
     
     // Function to pause for page navigation (will be called when pages are added)
     window.pauseSatellitesForPage = function() {
-        isPageActive = true;
+        window.SatelliteMovementState.isPageActive = true;
         pauseAllOrbitalAnimations();
         console.log('🛰️ Satellites paused for page navigation');
     };
     
     // Function to resume after page navigation (will be called by back button)
     window.resumeSatellitesAfterPage = function() {
-        isPageActive = false;
-        if (!isHovering) {
+        window.SatelliteMovementState.isPageActive = false;
+        if (!window.SatelliteMovementState.isHovering) {
             resumeAllOrbitalAnimations();
             console.log('🛰️ Satellites resumed after page navigation');
         }
@@ -265,18 +253,18 @@ function initSatelliteMovement() {
     satellites.forEach((satellite, index) => {
         // Mouse events for desktop
         satellite.addEventListener('mouseenter', () => {
-            if (!isHovering) {
-                isHovering = true;
+            if (!window.SatelliteMovementState.isHovering) {
+                window.SatelliteMovementState.isHovering = true;
                 console.log('🛰️ Satellite hovered - pausing orbital animations, keeping spinning');
                 pauseAllOrbitalAnimations();
             }
         });
         
         satellite.addEventListener('mouseleave', () => {
-            if (isHovering) {
-                isHovering = false;
+            if (window.SatelliteMovementState.isHovering) {
+                window.SatelliteMovementState.isHovering = false;
                 console.log('🛰️ Satellite hover ended - resuming orbital animations');
-                if (!isPageActive) {
+                if (!window.SatelliteMovementState.isPageActive) {
                     resumeAllOrbitalAnimations();
                 }
             }
@@ -292,6 +280,100 @@ function initSatelliteMovement() {
                 // For now, just log the target
             }
         });
+    });
+}
+
+// Initialize satellite fade-in with staggered timing
+function initSatelliteFadeIn() {
+    console.log('🛰️ Initializing satellite fade-in...');
+    
+    const satellites = document.querySelectorAll('.satellite');
+    const labels = document.querySelectorAll('.satellite-label');
+    
+    // Fade in satellites with staggered timing
+    satellites.forEach((satellite, index) => {
+        const delay = 4500 + (index * 500); // 4.5s, 5.0s, 5.5s, 6.0s
+        
+        setTimeout(() => {
+            satellite.style.opacity = '1';
+            satellite.style.pointerEvents = 'auto'; // Restore clickability
+            satellite.style.cursor = 'pointer'; // Ensure cursor shows it's clickable
+            console.log(`🛰️ Satellite ${index + 1} faded in and made clickable`);
+        }, delay);
+    });
+    
+    // Fade in labels with the same timing
+    labels.forEach((label, index) => {
+        const delay = 4500 + (index * 500); // 4.5s, 5.0s, 5.5s, 6.0s
+        
+        setTimeout(() => {
+            label.style.opacity = '1';
+            console.log(`🏷️ Label ${index + 1} faded in`);
+        }, delay);
+    });
+}
+
+// Fast satellite restoration for post-minigame (much quicker than initial page load)
+function initSatelliteFadeInFast() {
+    console.log('🛰️ Initializing fast satellite fade-in for post-minigame...');
+    
+    const satellites = document.querySelectorAll('.satellite');
+    const labels = document.querySelectorAll('.satellite-label');
+    
+    // Fade in satellites with much faster staggered timing
+    satellites.forEach((satellite, index) => {
+        const delay = 200 + (index * 150); // 0.2s, 0.35s, 0.5s, 0.65s (much faster!)
+        
+        setTimeout(() => {
+            satellite.style.transition = 'opacity 0.4s ease';
+            satellite.style.opacity = '1';
+            satellite.style.pointerEvents = 'auto'; // Restore clickability
+            satellite.style.cursor = 'pointer'; // Ensure cursor shows it's clickable
+            satellite.style.zIndex = '20'; // Restore original z-index
+            console.log(`🛰️ Satellite ${index + 1} quickly faded in and made clickable`);
+        }, delay);
+    });
+    
+    // Fade in labels with the same fast timing
+    labels.forEach((label, index) => {
+        const delay = 200 + (index * 150); // 0.2s, 0.35s, 0.5s, 0.65s
+        
+        setTimeout(() => {
+            label.style.transition = 'opacity 0.4s ease';
+            label.style.opacity = '1';
+            console.log(`🏷️ Label ${index + 1} quickly faded in`);
+        }, delay);
+    });
+}
+
+// Reverse satellite initialization - fade out satellites (opposite of initSatelliteFadeIn)
+function reverseSatelliteFadeIn() {
+    console.log('🛰️ Reversing satellite fade-in (fading out)...');
+    
+    const satellites = document.querySelectorAll('.satellite');
+    const labels = document.querySelectorAll('.satellite-label');
+    
+    // Fade out satellites with staggered timing (reverse order)
+    satellites.forEach((satellite, index) => {
+        const delay = (satellites.length - 1 - index) * 200; // 0ms, 200ms, 400ms, 600ms
+        
+        setTimeout(() => {
+            satellite.style.transition = 'opacity 0.5s ease';
+            satellite.style.opacity = '0.3'; // Ghost-like appearance during minigame
+            satellite.style.pointerEvents = 'none';
+            console.log(`🛰️ Satellite ${index + 1} faded out for minigame`);
+        }, delay);
+    });
+    
+    // Fade out labels with the same timing
+    labels.forEach((label, index) => {
+        const delay = (labels.length - 1 - index) * 200; // 0ms, 200ms, 400ms, 600ms
+        
+        setTimeout(() => {
+            label.style.transition = 'opacity 0.5s ease';
+            label.style.opacity = '0.3';
+            console.log(`🏷️ Label ${index + 1} faded out for minigame`);
+        }, delay);
     });
 }
 
@@ -321,6 +403,69 @@ if (document.readyState === 'loading') {
     initDesktopOptimizations();
 }
 
+// Function to restart desktop optimizations like page initialization
+window.restartDesktopOptimizations = function() {
+    console.log('🛰️ Restarting desktop optimizations like page initialization...');
+    
+    // Get current satellite positions to maintain visual continuity
+    const satellites = document.querySelectorAll('.satellite');
+    const currentPositions = [];
+    satellites.forEach((satellite, index) => {
+        const computedStyle = window.getComputedStyle(satellite);
+        const transform = computedStyle.transform;
+        currentPositions[index] = transform;
+    });
+    
+    // Stop any existing animations
+    if (window.SatelliteMovementState.animationId) {
+        cancelAnimationFrame(window.SatelliteMovementState.animationId);
+        window.SatelliteMovementState.animationId = null;
+    }
+    
+    // Reset all state variables to initial values
+    window.SatelliteMovementState.isHovering = false;
+    window.SatelliteMovementState.isPageActive = false;
+    window.SatelliteMovementState.isPageVisible = true;
+    
+    // Reset distance ranges to initial values
+    window.SatelliteMovementState.distanceRanges.forEach((range, index) => {
+        range.current = Math.random() * (range.max - range.min) + range.min;
+        range.direction = Math.random() > 0.5 ? 1 : -1;
+        
+        // Reset CSS variables
+        document.documentElement.style.setProperty(
+            `--satellite${index + 1}-distance`, 
+            `${range.current}px`
+        );
+    });
+    
+    // Remove all orbital-paused classes
+    satellites.forEach(sat => {
+        sat.classList.remove('orbital-paused');
+    });
+    
+    // Maintain current visual positions during reset
+    satellites.forEach((satellite, index) => {
+        if (currentPositions[index]) {
+            satellite.style.transform = currentPositions[index];
+        }
+    });
+    
+    // Call the full desktop initialization like a fresh page load
+    setTimeout(() => {
+        // Remove the temporary transform styles to let CSS animations take over
+        satellites.forEach(satellite => {
+            satellite.style.removeProperty('transform');
+        });
+        
+        initDesktopOptimizations();
+        console.log('✅ Desktop optimizations restarted - hover functionality restored');
+    }, 50); // Reduced delay for smoother transition
+};
+
 // Export for global access
 window.initDesktopOptimizations = initDesktopOptimizations;
 window.EarthNightSystem = EarthNightSystem;
+window.initSatelliteFadeIn = initSatelliteFadeIn;
+window.initSatelliteFadeInFast = initSatelliteFadeInFast;
+window.reverseSatelliteFadeIn = reverseSatelliteFadeIn;

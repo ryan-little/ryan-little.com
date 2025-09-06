@@ -15,6 +15,12 @@ window.gameCooldown = gameCooldown;
 
 // Minigame Functions
 function startMinigame() {
+    // Check if DeviceInfo is available
+    if (typeof DeviceInfo === 'undefined') {
+        console.error('❌ DeviceInfo not available, cannot start minigame');
+        return;
+    }
+    
     minigameActive = true;
     gameScore = 0;
     
@@ -36,8 +42,8 @@ function startMinigame() {
         existingCooldown.remove();
     }
     
-    // Fade out UI elements during minigame
-    fadeOutUIElements();
+    // Fade out UI elements during minigame - use simplified reverse satellite animation
+    fadeOutUIElementsSimplified();
     
     // Show score display
     showScoreDisplay();
@@ -233,17 +239,137 @@ function endMinigame() {
     showGameEndAnimation();
 }
 
-function fadeOutUIElements() {
-    // Fade out satellites
-    const satellites = document.querySelectorAll('.satellite');
-    satellites.forEach(satellite => {
-        satellite.style.transition = 'opacity 0.5s ease';
-        satellite.style.opacity = '0.3';
-        satellite.style.pointerEvents = 'none';
-        satellite.style.zIndex = '1'; // Lower z-index during minigame
+// Simplified fade out function that uses reverse satellite animation
+function fadeOutUIElementsSimplified() {
+    console.log('🎮 Starting simplified minigame fade out...');
+    console.log('🎮 DeviceInfo.isMobile:', typeof DeviceInfo !== 'undefined' ? DeviceInfo.isMobile : 'undefined');
+    
+    // Use the reverse satellite animation from desktop.js
+    if (typeof reverseSatelliteFadeIn === 'function') {
+        reverseSatelliteFadeIn();
+    } else {
+        console.warn('⚠️ reverseSatelliteFadeIn function not available, falling back to basic fade');
+        // Fallback: basic satellite fade
+        const satellites = document.querySelectorAll('.satellite');
+        satellites.forEach(satellite => {
+            satellite.style.transition = 'opacity 0.5s ease';
+            satellite.style.opacity = '0.3';
+            satellite.style.pointerEvents = 'none';
+        });
+    }
+    
+    // Dim your name and subtitle during minigame
+    const nameElements = document.querySelectorAll('.title-line, .title-subtitle');
+    nameElements.forEach(element => {
+        element.style.setProperty('opacity', '0.3', 'important');
+        element.style.setProperty('transition', 'opacity 0.5s ease', 'important');
+        element.style.pointerEvents = 'none';
+        console.log('🎮 Title/subtitle faded out for minigame:', element.textContent);
     });
     
-    // Fade out your name and subtitle
+    // Fade out social media buttons
+    const socialButtons = document.querySelectorAll('.social-links a');
+    socialButtons.forEach(button => {
+        button.style.transition = 'opacity 0.5s ease';
+        button.style.opacity = '0.3';
+        button.style.pointerEvents = 'none';
+        button.style.cursor = 'default';
+        button.setAttribute('data-original-href', button.href);
+        button.removeAttribute('href');
+    });
+    
+    // Fade out mobile link tree buttons with staggered timing (like satellites)
+    const mobileButtons = document.querySelectorAll('.mobile-link-item');
+    console.log(`📱 Found ${mobileButtons.length} mobile buttons to fade out`);
+    
+    if (mobileButtons.length > 0) {
+        mobileButtons.forEach((button, index) => {
+            const delay = (mobileButtons.length - 1 - index) * 200; // 0ms, 200ms, 400ms, 600ms (reverse order)
+            
+            setTimeout(() => {
+                // Disable CSS animations that might override opacity
+                button.style.animation = 'none';
+                button.style.webkitAnimation = 'none';
+                button.style.mozAnimation = 'none';
+                button.style.oAnimation = 'none';
+                
+                button.style.transition = 'opacity 0.5s ease';
+                button.style.opacity = '0.3'; // Ghost-like appearance during minigame (like satellites)
+                button.style.pointerEvents = 'none';
+                button.style.cursor = 'default';
+                button.setAttribute('data-original-href', button.href);
+                button.removeAttribute('href');
+                console.log(`📱 Mobile button ${index + 1} faded out for minigame (opacity: ${button.style.opacity})`);
+            }, delay);
+        });
+    } else {
+        console.warn('⚠️ No mobile buttons found to fade out');
+    }
+    
+    // Store original Earth sprite positioning and lower z-index during minigame
+    const earthSprite = document.querySelector('.earth-sprite');
+    if (earthSprite) {
+        // Store original positioning for exact restoration
+        const computedStyle = window.getComputedStyle(earthSprite);
+        earthSprite.dataset.originalTop = computedStyle.top;
+        earthSprite.dataset.originalLeft = computedStyle.left;
+        earthSprite.dataset.originalTransform = computedStyle.transform;
+        earthSprite.dataset.originalPosition = computedStyle.position;
+        earthSprite.dataset.originalWidth = computedStyle.width;
+        earthSprite.dataset.originalHeight = computedStyle.height;
+        
+        earthSprite.style.zIndex = '1';
+        earthSprite.style.pointerEvents = 'none';
+        console.log('🌍 Stored original Earth sprite positioning for restoration');
+    }
+}
+
+function fadeOutUIElements() {
+    // Make satellites ghost-like during minigame - keep them spinning in orbit
+    const satellites = document.querySelectorAll('.satellite');
+    satellites.forEach(satellite => {
+        // Keep orbital animations running - don't disable them
+        const computedStyle = window.getComputedStyle(satellite);
+        const currentAnimation = computedStyle.animation;
+        
+        // If there's an orbital animation, keep it running
+        if (currentAnimation && currentAnimation.includes('orbit')) {
+            satellite.style.animation = currentAnimation;
+        } else {
+            // Re-enable the orbital animation if it was disabled
+            satellite.style.animation = '';
+        }
+        
+        // Keep satellite image spinning
+        const satelliteImage = satellite.querySelector('.satellite-image');
+        if (satelliteImage) {
+            satelliteImage.style.animation = 'satelliteSpin 8s linear infinite';
+        }
+        
+        // Keep labels counter-rotating - restore proper counter-rotation animations
+        const label = satellite.querySelector('.satellite-label');
+        if (label) {
+            // Remove any inline animation styles to let CSS take over
+            label.style.removeProperty('animation');
+            label.style.removeProperty('webkitAnimation');
+            label.style.removeProperty('mozAnimation');
+            label.style.removeProperty('oAnimation');
+        }
+        
+        // Make them ghost-like (semi-transparent) instead of invisible
+        satellite.style.transition = 'opacity 0.5s ease';
+        satellite.style.opacity = '0.3'; // Ghost-like appearance
+        satellite.style.pointerEvents = 'none';
+        satellite.style.zIndex = '1'; // Lower z-index during minigame
+        
+        // Also fade out labels
+        if (label) {
+            label.style.transition = 'opacity 0.5s ease';
+            label.style.opacity = '0.3';
+        }
+    });
+    
+    // Dim your name and subtitle during minigame - preserve animations for later restoration
     const nameElements = document.querySelectorAll('.title-line, .title-subtitle');
     nameElements.forEach(element => {
         // Mark as protected immediately to prevent mobile optimizations from moving them
@@ -253,9 +379,16 @@ function fadeOutUIElements() {
         const currentTransform = window.getComputedStyle(element).transform;
         element.dataset.originalTransform = currentTransform;
         
-        // Use !important to override CSS animations
+        // Store original animation values for restoration
+        const computedStyle = window.getComputedStyle(element);
+        element.dataset.originalAnimation = computedStyle.animation;
+        element.dataset.originalWebkitAnimation = computedStyle.webkitAnimation;
+        element.dataset.originalMozAnimation = computedStyle.mozAnimation;
+        element.dataset.originalOAnimation = computedStyle.oAnimation;
+        
+        // Simple opacity change only - no transitions during minigame
         element.style.setProperty('opacity', '0.3', 'important');
-        element.style.setProperty('transition', 'opacity 0.5s ease', 'important');
+        element.style.setProperty('transition', 'none', 'important'); // No transitions
         // Preserve current positioning by maintaining transform
         element.style.setProperty('transform', currentTransform, 'important');
         // Temporarily disable CSS animations
@@ -286,74 +419,212 @@ function fadeOutUIElements() {
         button.removeAttribute('href');
     });
     
-    // Fade out mobile link tree buttons
+    // Fade out mobile link tree buttons with staggered timing (like satellites)
     const mobileButtons = document.querySelectorAll('.mobile-link-item');
-    mobileButtons.forEach(button => {
-        // Disable CSS animations first
-        button.style.animation = 'none';
-        button.style.webkitAnimation = 'none';
-        button.style.mozAnimation = 'none';
-        button.style.oAnimation = 'none';
+    mobileButtons.forEach((button, index) => {
+        const delay = (mobileButtons.length - 1 - index) * 200; // 0ms, 200ms, 400ms, 600ms (reverse order)
         
-        button.style.transition = 'opacity 0.5s ease';
-        button.style.opacity = '0.3';
-        button.style.pointerEvents = 'none';
-        button.style.zIndex = '50'; // Keep above other elements but below minigame UI
-        // Disable the link functionality
-        button.style.cursor = 'default';
-        button.setAttribute('data-original-href', button.href);
-        button.removeAttribute('href');
+        setTimeout(() => {
+            // Disable CSS animations first
+            button.style.animation = 'none';
+            button.style.webkitAnimation = 'none';
+            button.style.mozAnimation = 'none';
+            button.style.oAnimation = 'none';
+            
+            button.style.transition = 'opacity 0.5s ease';
+            button.style.opacity = '0.3'; // Ghost-like appearance during minigame (like satellites)
+            button.style.pointerEvents = 'none';
+            button.style.zIndex = '50'; // Keep above other elements but below minigame UI
+            // Disable the link functionality
+            button.style.cursor = 'default';
+            button.setAttribute('data-original-href', button.href);
+            button.removeAttribute('href');
+            console.log(`📱 Mobile button ${index + 1} faded out for minigame (staggered)`);
+        }, delay);
     });
     
-    // Lower z-index of Earth sprite during minigame
+    // Store original Earth sprite positioning and lower z-index during minigame
     const earthSprite = document.querySelector('.earth-sprite');
     if (earthSprite) {
+        // Store original positioning for exact restoration (only if not already stored)
+        if (!earthSprite.dataset.originalTop) {
+            const computedStyle = window.getComputedStyle(earthSprite);
+            earthSprite.dataset.originalTop = computedStyle.top;
+            earthSprite.dataset.originalLeft = computedStyle.left;
+            earthSprite.dataset.originalTransform = computedStyle.transform;
+            earthSprite.dataset.originalPosition = computedStyle.position;
+            earthSprite.dataset.originalWidth = computedStyle.width;
+            earthSprite.dataset.originalHeight = computedStyle.height;
+            console.log('🌍 Stored original Earth sprite positioning for restoration (fadeOutUIElements)');
+        }
+        
         earthSprite.style.zIndex = '1';
         earthSprite.style.pointerEvents = 'none';
     }
 }
 
+// Simplified fade in function that uses satellite initialization
+function fadeInUIElementsSimplified() {
+    console.log('🎮 Starting simplified minigame fade in...');
+    
+    // Use the fast satellite initialization from desktop.js for quicker restoration
+    if (typeof initSatelliteFadeInFast === 'function') {
+        initSatelliteFadeInFast();
+    } else if (typeof initSatelliteFadeIn === 'function') {
+        initSatelliteFadeIn();
+    } else {
+        console.warn('⚠️ initSatelliteFadeInFast function not available, falling back to basic fade');
+        // Fallback: basic satellite fade
+        const satellites = document.querySelectorAll('.satellite');
+        satellites.forEach(satellite => {
+            satellite.style.transition = 'opacity 0.6s ease';
+            satellite.style.opacity = '1';
+            satellite.style.pointerEvents = 'auto';
+        });
+    }
+    
+    // Restore other UI elements
+    const nameElements = document.querySelectorAll('.title-line, .title-subtitle');
+    nameElements.forEach(element => {
+        element.style.setProperty('opacity', '1', 'important');
+        element.style.setProperty('transition', 'opacity 0.6s ease', 'important');
+        element.style.pointerEvents = 'auto';
+        console.log('🎮 Title/subtitle restored after minigame:', element.textContent);
+    });
+    
+    // Restore social media buttons
+    const socialButtons = document.querySelectorAll('.social-links a');
+    socialButtons.forEach(button => {
+        button.style.transition = 'opacity 0.6s ease';
+        button.style.opacity = '1';
+        button.style.pointerEvents = 'auto';
+        button.style.cursor = 'pointer';
+        if (button.getAttribute('data-original-href')) {
+            button.href = button.getAttribute('data-original-href');
+            button.removeAttribute('data-original-href');
+        }
+    });
+    
+    // Restore mobile link tree buttons with faster staggered timing
+    const mobileButtons = document.querySelectorAll('.mobile-link-item');
+    mobileButtons.forEach((button, index) => {
+        const delay = 1000 + (index * 200); // 1.0s, 1.2s, 1.4s, 1.6s (much faster than satellites)
+        
+        setTimeout(() => {
+            button.style.transition = 'opacity 0.6s ease';
+            button.style.opacity = '1';
+            button.style.pointerEvents = 'auto';
+            button.style.cursor = 'pointer';
+            if (button.getAttribute('data-original-href')) {
+                button.href = button.getAttribute('data-original-href');
+                button.removeAttribute('data-original-href');
+            }
+            // Re-enable CSS animations after fade-in
+            button.style.animation = '';
+            button.style.webkitAnimation = '';
+            button.style.mozAnimation = '';
+            button.style.oAnimation = '';
+            console.log(`📱 Mobile button ${index + 1} faded in after minigame`);
+        }, delay);
+    });
+    
+    // Restore Earth sprite to exact original positioning
+    const earthSprite = document.querySelector('.earth-sprite');
+    if (earthSprite) {
+        // Restore exact original positioning if stored
+        if (earthSprite.dataset.originalTop) {
+            earthSprite.style.top = earthSprite.dataset.originalTop;
+            earthSprite.style.left = earthSprite.dataset.originalLeft;
+            earthSprite.style.transform = earthSprite.dataset.originalTransform;
+            earthSprite.style.position = earthSprite.dataset.originalPosition;
+            earthSprite.style.width = earthSprite.dataset.originalWidth;
+            earthSprite.style.height = earthSprite.dataset.originalHeight;
+            console.log('🌍 Restored Earth sprite to exact original positioning');
+        }
+        
+        earthSprite.style.zIndex = '5';
+        earthSprite.style.pointerEvents = 'auto';
+        earthSprite.style.opacity = '1';
+    }
+    
+    // Restart desktop optimizations like page initialization (only on desktop)
+    if (typeof window.restartDesktopOptimizations === 'function' && typeof DeviceInfo !== 'undefined' && !DeviceInfo.isMobile) {
+        setTimeout(() => {
+            window.restartDesktopOptimizations();
+        }, 500);
+    }
+}
+
 function fadeInUIElementsStaggered() {
-    // Fade in satellites first (0ms delay)
+    // Restore satellites to full opacity - keep their orbital animations
     const satellites = document.querySelectorAll('.satellite');
     satellites.forEach((satellite, index) => {
         setTimeout(() => {
-            satellite.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            satellite.style.opacity = '1';
+            // Keep orbital animations running - don't disable them
+            const computedStyle = window.getComputedStyle(satellite);
+            const currentAnimation = computedStyle.animation;
+            
+            // If there's an orbital animation, keep it running
+            if (currentAnimation && currentAnimation.includes('orbit')) {
+                satellite.style.animation = currentAnimation;
+            } else {
+                // Re-enable the orbital animation if it was disabled
+                satellite.style.animation = '';
+            }
+            
+            // Keep satellite image spinning
+            const satelliteImage = satellite.querySelector('.satellite-image');
+            if (satelliteImage) {
+                satelliteImage.style.animation = 'satelliteSpin 8s linear infinite';
+            }
+            
+            // Keep labels counter-rotating
+            const label = satellite.querySelector('.satellite-label');
+            if (label) {
+                const labelAnimation = computedStyle.animation;
+                if (labelAnimation && labelAnimation.includes('counterRotate')) {
+                    label.style.animation = labelAnimation;
+                } else {
+                    label.style.animation = '';
+                }
+            }
+            
+            // Restore to full opacity
+            satellite.style.transition = 'opacity 0.6s ease';
+            satellite.style.opacity = '1'; // Full opacity
             satellite.style.pointerEvents = 'auto';
             satellite.style.zIndex = '20'; // Restore original z-index
-            // Add a subtle bounce effect
-            satellite.style.transform = 'scale(1.05)';
-            setTimeout(() => {
-                satellite.style.transform = 'scale(1)';
-            }, 100);
+            
+            // Also restore label opacity
+            if (label) {
+                label.style.transition = 'opacity 0.6s ease';
+                label.style.opacity = '1';
+            }
         }, index * 100);
     });
     
-    // Fade in name and subtitle with slight delay (300ms)
-    // Restore them to their final state and mark them as restored
+    // Skip title/subtitle restoration - they're already restored in showGameEndAnimation
+    // Only restore if they haven't been restored yet
     setTimeout(() => {
         const nameElements = document.querySelectorAll('.title-line, .title-subtitle');
         nameElements.forEach((element, index) => {
+            // Skip if already restored
+            if (element.dataset.restored) {
+                return;
+            }
+            
             setTimeout(() => {
-                // Remove all inline styles
-                element.style.removeProperty('opacity');
-                element.style.removeProperty('transition');
+                // Remove all inline styles that might cause animations
                 element.style.removeProperty('animation');
                 element.style.removeProperty('webkitAnimation');
                 element.style.removeProperty('mozAnimation');
                 element.style.removeProperty('oAnimation');
+                element.style.removeProperty('transform');
+                element.style.removeProperty('transition');
                 
-                // Restore the original transform to maintain positioning
-                if (element.dataset.originalTransform) {
-                    element.style.transform = element.dataset.originalTransform;
-                }
-                
-                // Add smooth transition for opacity
-                element.style.transition = 'opacity 0.6s ease';
-                
-                // Fade in smoothly
-                element.style.opacity = '1';
+                // Instant opacity restoration - no transitions
+                element.style.setProperty('opacity', '1', 'important');
+                element.style.setProperty('transition', 'none', 'important');
                 
                 // Ensure pointer events are restored
                 element.style.pointerEvents = 'auto';
@@ -366,18 +637,16 @@ function fadeInUIElementsStaggered() {
                 if (heroTitle) {
                     heroTitle.dataset.restored = 'true';
                 }
-                
-                // This prevents the CSS animations from running again and causing visual jumps
-            }, index * 150);
+            }, index * 50); // Further reduced stagger delay for smoother appearance
         });
     }, 300);
     
-    // Fade in social media buttons last (600ms)
+    // Fade in social media buttons last (600ms) - simple fade only
     setTimeout(() => {
         const socialButtons = document.querySelectorAll('.social-links a');
         socialButtons.forEach((button, index) => {
             setTimeout(() => {
-                button.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                button.style.transition = 'opacity 0.6s ease';
                 button.style.opacity = '1';
                 button.style.pointerEvents = 'auto';
                 button.style.zIndex = '200'; // Restore original z-index
@@ -387,49 +656,76 @@ function fadeInUIElementsStaggered() {
                     button.href = button.getAttribute('data-original-href');
                     button.removeAttribute('data-original-href');
                 }
-                // Add a subtle entrance effect
-                button.style.transform = 'scale(1.1)';
-                setTimeout(() => {
-                    button.style.transform = 'scale(1)';
-                }, 150);
             }, index * 100);
         });
     }, 600);
     
-    // Fade in mobile link tree buttons last (900ms)
-    setTimeout(() => {
-        const mobileButtons = document.querySelectorAll('.mobile-link-item');
-        mobileButtons.forEach((button, index) => {
-            setTimeout(() => {
-                button.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                button.style.opacity = '1';
-                button.style.pointerEvents = 'auto';
-                button.style.zIndex = '10'; // Restore original z-index
-                button.style.cursor = 'pointer';
-                // Restore the link functionality
-                if (button.getAttribute('data-original-href')) {
-                    button.href = button.getAttribute('data-original-href');
-                    button.removeAttribute('data-original-href');
-                }
-                // Re-enable CSS animations
-                button.style.animation = '';
-                button.style.webkitAnimation = '';
-                button.style.mozAnimation = '';
-                button.style.oAnimation = '';
-                // Add a subtle entrance effect
-                button.style.transform = 'scale(1.1)';
-                setTimeout(() => {
-                    button.style.transform = 'scale(1)';
-                }, 150);
-            }, index * 100);
-        });
-    }, 900);
+    // Fade in mobile link tree buttons with faster staggered timing
+    const mobileButtons = document.querySelectorAll('.mobile-link-item');
+    mobileButtons.forEach((button, index) => {
+        const delay = 1000 + (index * 200); // 1.0s, 1.2s, 1.4s, 1.6s (much faster than satellites)
+        
+        setTimeout(() => {
+            button.style.transition = 'opacity 0.6s ease';
+            button.style.opacity = '1';
+            button.style.pointerEvents = 'auto';
+            button.style.zIndex = '10'; // Restore original z-index
+            button.style.cursor = 'pointer';
+            // Restore the link functionality
+            if (button.getAttribute('data-original-href')) {
+                button.href = button.getAttribute('data-original-href');
+                button.removeAttribute('data-original-href');
+            }
+            // Re-enable CSS animations
+            button.style.animation = '';
+            button.style.webkitAnimation = '';
+            button.style.mozAnimation = '';
+            button.style.oAnimation = '';
+            console.log(`📱 Mobile button ${index + 1} faded in after minigame (staggered)`);
+        }, delay);
+    });
     
-    // Restore Earth sprite z-index
+    // Restore Earth sprite z-index and prevent animations
     const earthSprite = document.querySelector('.earth-sprite');
     if (earthSprite) {
+        // Prevent any CSS animations from running
+        earthSprite.style.animation = 'none';
+        earthSprite.style.webkitAnimation = 'none';
+        earthSprite.style.mozAnimation = 'none';
+        earthSprite.style.oAnimation = 'none';
+        
+        // Restore exact original positioning if stored
+        if (earthSprite.dataset.originalTop) {
+            earthSprite.style.top = earthSprite.dataset.originalTop;
+            earthSprite.style.left = earthSprite.dataset.originalLeft;
+            earthSprite.style.transform = earthSprite.dataset.originalTransform;
+            earthSprite.style.position = earthSprite.dataset.originalPosition;
+            earthSprite.style.width = earthSprite.dataset.originalWidth;
+            earthSprite.style.height = earthSprite.dataset.originalHeight;
+            console.log('🌍 Restored Earth sprite to exact original positioning (staggered)');
+        } else {
+            // Fallback to device-specific positioning
+            if (typeof DeviceInfo !== 'undefined' && DeviceInfo.isMobile) {
+                // Let CSS handle mobile positioning - don't override with desktop positioning
+                earthSprite.style.removeProperty('transform');
+                earthSprite.style.removeProperty('top');
+                earthSprite.style.removeProperty('left');
+            } else {
+                // Desktop positioning
+                earthSprite.style.transform = 'translate(-50%, -50%)';
+            }
+        }
+        
+        earthSprite.style.opacity = '1';
         earthSprite.style.zIndex = '5';
         earthSprite.style.pointerEvents = 'auto';
+    }
+    
+    // Restart desktop optimizations like page initialization (only on desktop)
+    if (typeof window.restartDesktopOptimizations === 'function' && typeof DeviceInfo !== 'undefined' && !DeviceInfo.isMobile) {
+        setTimeout(() => {
+            window.restartDesktopOptimizations();
+        }, 500); // Reduced delay for smoother transition
     }
 }
 
@@ -613,8 +909,53 @@ function showGameEndAnimation() {
                     flashOverlay.remove();
                 }
                 
-                // Now fade in UI elements with staggered timing
-                fadeInUIElementsStaggered();
+                // Restore title/subtitle with proper animation restoration
+                const nameElements = document.querySelectorAll('.title-line, .title-subtitle');
+                nameElements.forEach(element => {
+                    // Remove all inline styles that override CSS animations
+                    element.style.removeProperty('opacity');
+                    element.style.removeProperty('transform');
+                    element.style.removeProperty('transition');
+                    
+                    // Restore original animations if they were stored
+                    if (element.dataset.originalAnimation) {
+                        element.style.animation = element.dataset.originalAnimation;
+                    } else {
+                        element.style.removeProperty('animation');
+                    }
+                    if (element.dataset.originalWebkitAnimation) {
+                        element.style.webkitAnimation = element.dataset.originalWebkitAnimation;
+                    } else {
+                        element.style.removeProperty('webkitAnimation');
+                    }
+                    if (element.dataset.originalMozAnimation) {
+                        element.style.mozAnimation = element.dataset.originalMozAnimation;
+                    } else {
+                        element.style.removeProperty('mozAnimation');
+                    }
+                    if (element.dataset.originalOAnimation) {
+                        element.style.oAnimation = element.dataset.originalOAnimation;
+                    } else {
+                        element.style.removeProperty('oAnimation');
+                    }
+                    
+                    // Ensure pointer events are restored
+                    element.style.pointerEvents = 'auto';
+                    
+                    // Remove the restored flag to allow future animations
+                    element.removeAttribute('data-restored');
+                    element.removeAttribute('data-protected');
+                    
+                    // Clean up stored animation data
+                    element.removeAttribute('data-original-animation');
+                    element.removeAttribute('data-original-webkit-animation');
+                    element.removeAttribute('data-original-moz-animation');
+                    element.removeAttribute('data-original-o-animation');
+                    element.removeAttribute('data-original-transform');
+                });
+                
+                // Now use simplified restoration - just run satellite initialization again
+                fadeInUIElementsSimplified();
             }, 400);
         }, 200);
     }, 100);
@@ -667,67 +1008,8 @@ function resetWebpage() {
         gameTimer = null;
     }
     
-    // Reset all UI elements to full opacity and restore z-index
-    const satellites = document.querySelectorAll('.satellite');
-    satellites.forEach(satellite => {
-        satellite.style.opacity = '1';
-        satellite.style.pointerEvents = 'auto';
-        satellite.style.zIndex = '20';
-        satellite.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    });
-    
-    // Title elements are already restored in fadeInUIElementsStaggered, don't touch them again
-    // This prevents visual interruption of the title/subtitle
-    // Only touch title elements that haven't been restored yet
-    const nameElements = document.querySelectorAll('.title-line, .title-subtitle');
-    nameElements.forEach(element => {
-        if (!element.dataset.restored) {
-            // Only restore elements that haven't been restored yet
-            element.style.removeProperty('opacity');
-            element.style.removeProperty('transition');
-            element.style.removeProperty('z-index');
-            element.style.removeProperty('animation');
-            element.style.pointerEvents = 'auto';
-        }
-    });
-    
-    const socialButtons = document.querySelectorAll('.social-links a');
-    socialButtons.forEach(button => {
-        button.style.opacity = '1';
-        button.style.pointerEvents = 'auto';
-        button.style.zIndex = '200';
-        button.style.transition = 'all 0.3s ease';
-        button.style.cursor = 'pointer';
-        // Restore the link functionality
-        if (button.getAttribute('data-original-href')) {
-            button.href = button.getAttribute('data-original-href');
-            button.removeAttribute('data-original-href');
-        }
-    });
-    
-    const mobileButtons = document.querySelectorAll('.mobile-link-item');
-    mobileButtons.forEach(button => {
-        // Only restore if not already visible to prevent double animation
-        if (button.style.opacity !== '1') {
-            button.style.opacity = '1';
-            button.style.transition = 'opacity 0.3s ease';
-        }
-        button.style.pointerEvents = 'auto';
-        button.style.zIndex = '10';
-        button.style.cursor = 'pointer';
-        // Restore the link functionality
-        if (button.getAttribute('data-original-href')) {
-            button.href = button.getAttribute('data-original-href');
-            button.removeAttribute('data-original-href');
-        }
-    });
-    
-    // Restore Earth sprite with proper layering
-    const earthSprite = document.querySelector('.earth-sprite');
-    if (earthSprite) {
-        earthSprite.style.zIndex = '5'; // Above background (z-index: 2) and stars (z-index: 1)
-        earthSprite.style.pointerEvents = 'auto';
-    }
+    // Note: UI elements are already restored by fadeInUIElementsSimplified() 
+    // No need to restore them again here to avoid double restoration
     
     // Complete reset without page refresh
     console.log('🎮 Minigame reset complete - ready for new game!');

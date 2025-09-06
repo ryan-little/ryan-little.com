@@ -3,6 +3,8 @@
 
 // Wait for all modules to load
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 DOM Content Loaded - Starting initialization...');
+    
     // Randomize background positions for visual variety
     randomizeBackgroundPositions();
     
@@ -20,6 +22,13 @@ document.addEventListener('DOMContentLoaded', function() {
     if (typeof startMinigame !== 'function') {
         console.error('❌ Minigame module failed to load');
         return;
+    }
+    
+    // Check DeviceInfo availability
+    if (typeof DeviceInfo === 'undefined') {
+        console.warn('⚠️ DeviceInfo not available during initialization');
+    } else {
+        console.log('✅ DeviceInfo available:', DeviceInfo);
     }
     
     // Initialize device-specific optimizations if available
