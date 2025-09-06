@@ -42,42 +42,107 @@
             font-size: 18px;
             color: #ccc;
         }
+        .content-container {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+        .content-container.loaded {
+            display: block;
+        }
     </style>
 </head>
 <body>
-    <div class="loading-container">
+    <div class="loading-container" id="loading">
         <div class="loading-spinner"></div>
         <div class="loading-text">Loading...</div>
     </div>
 
+    <div class="content-container" id="content"></div>
+
     <script>
-        // Device detection and redirection
+        // Device detection
         function detectDevice() {
             const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
                            (window.innerWidth <= 1024);
             return isMobile;
         }
 
-        function redirectToAppropriateVersion() {
+        // Load appropriate content
+        async function loadAppropriateContent() {
             const isMobile = detectDevice();
-            const targetPage = isMobile ? 'index-mobile.html' : 'index-desktop.html';
+            const targetFile = isMobile ? 'index-mobile.html' : 'index-desktop.html';
             
-            // Add a small delay to show loading animation
-            setTimeout(() => {
-                window.location.replace(targetPage);
-            }, 500);
+            try {
+                const response = await fetch(targetFile);
+                const html = await response.text();
+                
+                // Extract the body content from the fetched HTML
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const bodyContent = doc.body.innerHTML;
+                
+                // Insert the content into our container
+                document.getElementById('content').innerHTML = bodyContent;
+                
+                // Load the appropriate CSS
+                const cssFile = isMobile ? 'src/mobile.css' : 'src/desktop.css';
+                const cssLink = document.createElement('link');
+                cssLink.rel = 'stylesheet';
+                cssLink.href = cssFile;
+                document.head.appendChild(cssLink);
+                
+                // Load Google Fonts
+                const fontLink = document.createElement('link');
+                fontLink.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap';
+                fontLink.rel = 'stylesheet';
+                document.head.appendChild(fontLink);
+                
+                // Load Font Awesome
+                const faLink = document.createElement('link');
+                faLink.rel = 'stylesheet';
+                faLink.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+                document.head.appendChild(faLink);
+                
+                // Load the appropriate JavaScript files
+                const jsFiles = [
+                    'src/js/core.js',
+                    'src/js/animations.js',
+                    'src/js/minigame.js',
+                    isMobile ? 'src/js/mobile.js' : 'src/js/desktop.js',
+                    'src/js/main.js'
+                ];
+                
+                for (const jsFile of jsFiles) {
+                    const script = document.createElement('script');
+                    script.src = jsFile;
+                    document.head.appendChild(script);
+                }
+                
+                // Hide loading and show content
+                setTimeout(() => {
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('content').classList.add('loaded');
+                }, 500);
+                
+            } catch (error) {
+                console.error('Error loading content:', error);
+                // Fallback to desktop version
+                window.location.replace('index-desktop.html');
+            }
         }
 
-        // Redirect immediately on load
-        window.addEventListener('load', redirectToAppropriateVersion);
+        // Load content on page load
+        window.addEventListener('load', loadAppropriateContent);
         
-        // Also redirect on resize if device type changes
+        // Handle resize events
         let lastDeviceType = detectDevice();
         window.addEventListener('resize', () => {
             const currentDeviceType = detectDevice();
             if (currentDeviceType !== lastDeviceType) {
                 lastDeviceType = currentDeviceType;
-                redirectToAppropriateVersion();
+                // Reload content for new device type
+                location.reload();
             }
         });
     </script>
