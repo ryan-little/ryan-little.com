@@ -1,0 +1,59 @@
+# Ryan Little Personal Website - Cursor Rules
+
+## Project Overview
+This is a personal portfolio website for Ryan Little, a Geospatial Analyst. The site features a space-themed design with interactive animations and satellite navigation.
+
+## Project Structure
+- `src/js/` - All JavaScript files (modularized)
+- `src/styles.css` - Main stylesheet
+- `assets/` - Static assets (images in PNG and WebP formats)
+- `index.html` - Main HTML file
+- Root level contains only essential files (HTML, README, CNAME, config files)
+
+## Technology Stack
+- **Frontend**: Vanilla JavaScript, HTML5, CSS3
+- **No build process** - pure client-side code
+- **Responsive design** with mobile optimization
+- **WebP images** with PNG fallbacks for better performance
+
+## Code Style & Conventions
+- Use modern JavaScript (ES6+)
+- Maintain clean, readable code with comments
+- Follow semantic HTML structure
+- Use CSS custom properties for theming
+- Optimize for performance (WebP images, efficient animations)
+
+## Key Features
+- Interactive satellite navigation system
+- Dynamic shooting star animations
+- Time-based Earth lighting system
+- Mobile-responsive design
+- Space-themed visual elements
+
+## File Organization
+- Keep JavaScript modular in `src/js/`
+- Maintain asset organization in `assets/`
+- Update HTML references when moving files
+- Follow the established directory structure
+
+## Development Guidelines
+- Test changes in browser before committing
+- Maintain responsive design across devices
+- **CRITICAL: Mobile and web versions must have feature parity** - All functionality available on desktop must be accessible on mobile
+- **PRESERVE EXISTING FOUNDATION** - Maintain the current codebase structure and functionality as much as possible when making changes
+- Optimize images for web performance
+- Keep animations smooth and performant
+- Preserve the space theme aesthetic
+
+## Git Workflow
+- Use `.gitignore` to exclude system files (.DS_Store, etc.)
+- Commit changes only after testing
+- Follow conventional commit messages
+- Keep the repository clean and organized
+
+## Documentation & Changelog
+- **MAINTAIN CHANGELOG.md** - Always update the changelog when making changes
+- Document all new features, bug fixes, and breaking changes
+- Use semantic versioning format (e.g., ## [1.2.0] - 2024-01-15)
+- Include both Added, Changed, Fixed, and Removed sections
+- Keep changelog entries concise but descriptive

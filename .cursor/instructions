@@ -1,0 +1,31 @@
+# Cursor Instructions for Ryan Little Website
+
+## When working on this project:
+
+1. **Always maintain the space theme** - This is a space-themed portfolio with satellite navigation
+2. **Preserve mobile responsiveness** - The site has mobile-specific code in `src/js/mobile.js`
+3. **MAINTAIN FEATURE PARITY** - Mobile and desktop versions must have identical functionality
+4. **PRESERVE EXISTING FOUNDATION** - Build upon the current codebase rather than rewriting from scratch
+5. **Keep animations smooth** - The site features shooting stars and satellite animations
+6. **Update file references** - When moving files, update HTML script and link tags
+7. **Test in browser** - Always verify changes work before committing
+8. **Maintain modular structure** - Keep JavaScript files organized in `src/js/`
+9. **Optimize for performance** - Use WebP images with PNG fallbacks
+10. **Follow the established patterns** - The codebase has specific animation and interaction patterns
+
+## Key files to be aware of:
+- `index.html` - Main entry point with satellite navigation
+- `src/js/main.js` - Core application logic
+- `src/js/animations.js` - Animation system
+- `src/js/mobile.js` - Mobile-specific functionality
+- `src/styles.css` - Main stylesheet with space theme
+- `assets/images_webp/` - Optimized WebP images
+- `assets/images/` - PNG fallback images
+
+## Common tasks:
+- Adding new animations: Update `src/js/animations.js`
+- Mobile improvements: Modify `src/js/mobile.js`
+- Styling changes: Edit `src/styles.css`
+- New features: Add to appropriate `src/js/` file
+- Asset management: Keep in `assets/` with both WebP and PNG versions
+- **ALWAYS update CHANGELOG.md** when making any changes to the project

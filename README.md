@@ -31,3 +31,39 @@
   
   *Built with vanilla JavaScript, CSS3 animations, and space-themed assets*
 </div>
+
+## 📁 Project Structure
+
+```
+ryan-little.com/
+├── assets/                    # Static assets
+│   ├── images/               # PNG images
+│   └── images_webp/          # WebP optimized images
+├── src/                      # Source code
+│   ├── js/                   # JavaScript files
+│   │   ├── animations.js     # Animation logic
+│   │   ├── core.js          # Core functionality
+│   │   ├── main.js          # Main application logic
+│   │   ├── minigame.js      # Mini-game features
+│   │   ├── mobile.js        # Mobile-specific code
+│   │   └── utilities.js     # Utility functions
+│   └── styles.css           # Main stylesheet
+├── index.html               # Main HTML file
+├── README.md               # Project documentation
+├── CNAME                   # Custom domain configuration
+└── .gitignore             # Git ignore rules
+```
+
+## 🚀 Getting Started
+
+1. Clone the repository
+2. Open `index.html` in your web browser
+3. No build process required - pure vanilla JavaScript!
+
+## 🛠️ Development
+
+The project follows a clean, organized structure:
+- **Source code** is organized in the `src/` directory
+- **Assets** are properly categorized in the `assets/` directory
+- **JavaScript files** are modularized for better maintainability
+- **Git ignore** rules prevent unwanted files from being tracked
