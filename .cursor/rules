@@ -39,7 +39,6 @@ This is a personal portfolio website for Ryan Little, a Geospatial Analyst. The 
 ## Development Guidelines
 - Test changes in browser before committing
 - Maintain responsive design across devices
-- **CRITICAL: Mobile and web versions must have feature parity** - All functionality available on desktop must be accessible on mobile
 - **PRESERVE EXISTING FOUNDATION** - Maintain the current codebase structure and functionality as much as possible when making changes
 - Optimize images for web performance
 - Keep animations smooth and performant

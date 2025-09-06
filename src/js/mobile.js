@@ -2,19 +2,26 @@
 // Redesigned to match desktop experience while maintaining minigame functionality
 // Performance optimized for smooth mobile experience
 
-console.log('📱 Mobile.js loaded - Performance optimized for mobile');
+console.log('📱 Mobile-new.js loaded - Performance optimized for mobile');
+
+// Mobile-specific device info (always mobile)
+window.DeviceInfo = {
+    isMobile: true,
+    isEdge: navigator.userAgent.includes('Edge') || navigator.userAgent.includes('Edg'),
+    isFirefox: navigator.userAgent.includes('Firefox'),
+    isSafari: /^((?!chrome|android).)*safari/i.test(navigator.userAgent),
+    isIOS: /iPad|iPhone|iPod/.test(navigator.userAgent),
+    isAndroid: /Android/.test(navigator.userAgent),
+    isChrome: /Chrome/.test(navigator.userAgent),
+    pixelRatio: window.devicePixelRatio || 1
+};
 
 // Mobile-specific optimizations and touch handling
 function optimizeMobileTouch() {
-    if (!DeviceInfo.isMobile) {
-        console.log('❌ Mobile touch optimization skipped - not mobile device');
-        return;
-    }
-    
     console.log('📱 Applying redesigned mobile touch optimizations...');
     
     // Optimize touch targets for all interactive elements
-    const touchElements = document.querySelectorAll('.satellite, .social-link, .mobile-link-item, .minigame-score');
+    const touchElements = document.querySelectorAll('.social-link, .mobile-link-item, .minigame-score');
     touchElements.forEach(element => {
         element.style.minWidth = '44px';
         element.style.minHeight = '44px';
@@ -34,20 +41,11 @@ function optimizeMobileTouch() {
         });
     });
     
-    // Reduce satellite animation complexity on mobile
-    const satellites = document.querySelectorAll('.satellite');
-    satellites.forEach(satellite => {
-        satellite.style.animationDuration = '20s';
-        ['webkit', 'moz', 'o'].forEach(prefix => {
-            satellite.style[`${prefix}AnimationDuration`] = '20s';
-        });
-    });
+    console.log('🛰️ Mobile touch optimizations applied');
 }
 
 // Responsive mobile layout adjustments
 function optimizeMobileLayout() {
-    if (!DeviceInfo.isMobile) return;
-    
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
     
@@ -79,18 +77,18 @@ function optimizeMobileLayout() {
         mobileLinkTree.style.marginTop = `${treeTop}px`;
     }
     
-    // Adjust social links positioning
+    // Adjust social links positioning - let them flow naturally
     const socialLinks = document.querySelector('.social-links');
     if (socialLinks) {
-        const socialTop = Math.max(220, viewportHeight * 0.45);
-        socialLinks.style.top = `${socialTop}px`;
+        socialLinks.style.position = 'relative';
+        socialLinks.style.top = 'auto';
+        socialLinks.style.left = 'auto';
+        socialLinks.style.transform = 'none';
     }
 }
 
 // Landscape mobile optimizations
 function optimizeLandscapeMobile() {
-    if (!DeviceInfo.isMobile) return;
-    
     const isLandscape = window.innerHeight < window.innerWidth;
     
     if (isLandscape) {
@@ -105,13 +103,6 @@ function optimizeLandscapeMobile() {
         if (socialLinks) {
             socialLinks.style.marginTop = '0.5rem';
         }
-        
-        // Adjust satellite sizes for landscape
-        const satellites = document.querySelectorAll('.satellite');
-        satellites.forEach(satellite => {
-            satellite.style.width = '70px';
-            satellite.style.height = '52.5px';
-        });
         
         // Adjust Earth sprite for landscape
         const earthSprite = document.querySelector('.earth-sprite');
@@ -131,10 +122,8 @@ function optimizeLandscapeMobile() {
 
 // High DPI mobile display optimizations
 function optimizeHighDPIDisplays() {
-    if (!DeviceInfo.isMobile) return;
-    
     if (DeviceInfo.pixelRatio >= 2) {
-        // Optimize star background size for high DPI displays - use smaller size for desktop
+        // Optimize star background size for high DPI displays
         const stars = document.querySelector('.stars');
         if (stars) {
             stars.style.backgroundSize = '80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px';
@@ -142,23 +131,63 @@ function optimizeHighDPIDisplays() {
     }
 }
 
-// Enhanced touch feedback for mobile
+// Enhanced touch feedback for mobile with sleek interactions
 function optimizeTouchFeedback() {
-    if (!DeviceInfo.isMobile) return;
-    
-    // Add touch feedback for interactive elements
-    const touchElements = document.querySelectorAll('.satellite, .social-link, .mobile-link-item');
-    touchElements.forEach(element => {
-        element.addEventListener('touchstart', function() {
-            this.style.transform = 'scale(0.95)';
+    // Add enhanced touch feedback for mobile link items
+    const mobileLinkItems = document.querySelectorAll('.mobile-link-item');
+    mobileLinkItems.forEach(element => {
+        element.addEventListener('touchstart', function(e) {
+            // Add ripple effect
+            const ripple = document.createElement('div');
+            ripple.style.position = 'absolute';
+            ripple.style.borderRadius = '50%';
+            ripple.style.background = 'rgba(255, 255, 255, 0.3)';
+            ripple.style.transform = 'scale(0)';
+            ripple.style.animation = 'ripple 0.6s linear';
+            ripple.style.left = (e.touches[0].clientX - this.offsetLeft) + 'px';
+            ripple.style.top = (e.touches[0].clientY - this.offsetTop) + 'px';
+            ripple.style.width = ripple.style.height = '100px';
+            ripple.style.marginLeft = '-50px';
+            ripple.style.marginTop = '-50px';
+            ripple.style.pointerEvents = 'none';
+            
+            this.appendChild(ripple);
+            
+            // Remove ripple after animation
+            setTimeout(() => {
+                if (ripple.parentNode) {
+                    ripple.parentNode.removeChild(ripple);
+                }
+            }, 600);
         }, { passive: true });
         
         element.addEventListener('touchend', function() {
-            this.style.transform = 'scale(1)';
+            // Smooth return to normal state
+            this.style.transition = 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)';
         }, { passive: true });
         
         element.addEventListener('touchcancel', function() {
-            this.style.transform = 'scale(1)';
+            // Smooth return to normal state
+            this.style.transition = 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)';
+        }, { passive: true });
+    });
+    
+    // Enhanced touch feedback for social links
+    const socialLinks = document.querySelectorAll('.social-link');
+    socialLinks.forEach(element => {
+        element.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.92) translateY(-1px)';
+            this.style.transition = 'all 0.1s ease';
+        }, { passive: true });
+        
+        element.addEventListener('touchend', function() {
+            this.style.transform = 'scale(1) translateY(0)';
+            this.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+        }, { passive: true });
+        
+        element.addEventListener('touchcancel', function() {
+            this.style.transform = 'scale(1) translateY(0)';
+            this.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
         }, { passive: true });
     });
     
@@ -177,8 +206,6 @@ function optimizeTouchFeedback() {
 
 // Mobile scroll optimizations
 function optimizeMobileScrolling() {
-    if (!DeviceInfo.isMobile) return;
-    
     // Enable smooth scrolling on mobile
     const hero = document.querySelector('.hero');
     if (hero) {
@@ -190,16 +217,12 @@ function optimizeMobileScrolling() {
     document.documentElement.style.overscrollBehavior = 'none';
 }
 
-
-
 // Comprehensive mobile performance optimizations
 function optimizeMobilePerformance() {
-    if (!DeviceInfo.isMobile) return;
-    
     console.log('🚀 Applying mobile performance optimizations...');
     
     // Reduce animation complexity for better performance
-    const animatedElements = document.querySelectorAll('.stars, .background-image, .background2, .satellite');
+    const animatedElements = document.querySelectorAll('.stars, .background-image, .background2');
     animatedElements.forEach(element => {
         // Use transform3d for hardware acceleration
         element.style.transform = 'translateZ(0)';
@@ -215,8 +238,6 @@ function optimizeMobilePerformance() {
             element.style.animationDuration = '135s';
         } else if (element.classList.contains('background2')) {
             element.style.animationDuration = '180s';
-        } else if (element.classList.contains('satellite')) {
-            element.style.animationDuration = '20s';
         }
     });
     
@@ -273,8 +294,6 @@ function optimizeMobilePerformance() {
 
 // Responsive font sizing for mobile
 function optimizeMobileTypography() {
-    if (!DeviceInfo.isMobile) return;
-    
     const viewportWidth = window.innerWidth;
     
     // Adjust hero title size based on viewport width
@@ -317,10 +336,48 @@ function optimizeMobileTypography() {
     }
 }
 
+// Force title stacking on mobile - call this after a short delay to ensure DOM is ready
+function forceTitleStacking() {
+    setTimeout(() => {
+        const heroTitle = document.querySelector('.hero-title');
+        const titleLine = document.querySelector('.hero-title .title-line');
+        const titleSubtitle = document.querySelector('.hero-title .title-subtitle');
+        
+        if (heroTitle && titleLine && titleSubtitle && !heroTitle.dataset.restored && !heroTitle.dataset.protected) {
+            // Force flexbox layout
+            heroTitle.style.display = 'flex';
+            heroTitle.style.flexDirection = 'column';
+            heroTitle.style.alignItems = 'center';
+            heroTitle.style.justifyContent = 'center';
+            heroTitle.style.width = '100%';
+            
+            // Force block display for title elements (only if not restored or protected)
+            if (!titleLine.dataset.restored && !titleLine.dataset.protected) {
+                titleLine.style.display = 'block';
+                titleLine.style.width = '100%';
+                titleLine.style.textAlign = 'center';
+                titleLine.style.marginBottom = '0.5rem';
+                titleLine.style.float = 'none';
+                titleLine.style.clear = 'both';
+            }
+            
+            if (!titleSubtitle.dataset.restored && !titleSubtitle.dataset.protected) {
+                titleSubtitle.style.display = 'block';
+                titleSubtitle.style.width = '100%';
+                titleSubtitle.style.textAlign = 'center';
+                titleSubtitle.style.marginBottom = '1.5rem';
+                titleSubtitle.style.marginTop = '0';
+                titleSubtitle.style.float = 'none';
+                titleSubtitle.style.clear = 'both';
+            }
+            
+            console.log('🎯 Forced title stacking on mobile');
+        }
+    }, 100);
+}
+
 // Initialize all mobile optimizations
 function initMobileOptimizations() {
-    if (!DeviceInfo.isMobile) return;
-    
     console.log('📱 Initializing redesigned mobile optimizations...');
     
     optimizeMobileTouch();
@@ -366,48 +423,6 @@ if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initMobileOptimizations);
 } else {
     initMobileOptimizations();
-}
-
-// Force title stacking on mobile - call this after a short delay to ensure DOM is ready
-function forceTitleStacking() {
-    if (!DeviceInfo.isMobile) return;
-    
-    setTimeout(() => {
-        const heroTitle = document.querySelector('.hero-title');
-        const titleLine = document.querySelector('.hero-title .title-line');
-        const titleSubtitle = document.querySelector('.hero-title .title-subtitle');
-        
-        if (heroTitle && titleLine && titleSubtitle && !heroTitle.dataset.restored && !heroTitle.dataset.protected) {
-            // Force flexbox layout
-            heroTitle.style.display = 'flex';
-            heroTitle.style.flexDirection = 'column';
-            heroTitle.style.alignItems = 'center';
-            heroTitle.style.justifyContent = 'center';
-            heroTitle.style.width = '100%';
-            
-            // Force block display for title elements (only if not restored or protected)
-            if (!titleLine.dataset.restored && !titleLine.dataset.protected) {
-                titleLine.style.display = 'block';
-                titleLine.style.width = '100%';
-                titleLine.style.textAlign = 'center';
-                titleLine.style.marginBottom = '0.5rem';
-                titleLine.style.float = 'none';
-                titleLine.style.clear = 'both';
-            }
-            
-            if (!titleSubtitle.dataset.restored && !titleSubtitle.dataset.protected) {
-                titleSubtitle.style.display = 'block';
-                titleSubtitle.style.width = '100%';
-                titleSubtitle.style.textAlign = 'center';
-                titleSubtitle.style.marginBottom = '1.5rem';
-                titleSubtitle.style.marginTop = '0';
-                titleSubtitle.style.float = 'none';
-                titleSubtitle.style.clear = 'both';
-            }
-            
-            console.log('🎯 Forced title stacking on mobile');
-        }
-    }, 100);
 }
 
 // Call the force function after initialization

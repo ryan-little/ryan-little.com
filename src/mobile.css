@@ -1,0 +1,1212 @@
+/* ========================================
+   CSS CUSTOM PROPERTIES FOR IMAGES
+   ======================================== */
+:root {
+    /* WebP images (preferred) */
+    --bg-image-webp: url('../assets/images_webp/background.webp');
+    --bg2-image-webp: url('../assets/images_webp/background2.webp');
+    --earth-sprite-webp: url('../assets/images_webp/earthsprite.webp');
+    --shooting-star-webp: url('../assets/images_webp/shootingstar.webp');
+    
+    /* PNG fallbacks */
+    --bg-image-png: url('../assets/images/background.png');
+    --bg2-image-png: url('../assets/images/background2.png');
+    --earth-sprite-png: url('../assets/images/earthsprite.png');
+    --shooting-star-png: url('../assets/images/shootingstar.png');
+}
+
+/* WebP support detection and fallback */
+@supports (background-image: var(--bg-image-webp)) {
+    .background-image {
+        background-image: var(--bg-image-webp);
+    }
+    
+    .background2 {
+        background-image: var(--bg2-image-webp);
+    }
+    
+    .earth-sprite {
+        background-image: var(--earth-sprite-webp);
+    }
+    
+    .shooting-star {
+        background-image: var(--shooting-star-webp);
+    }
+}
+
+/* PNG fallback for browsers without WebP support */
+@supports not (background-image: var(--bg-image-webp)) {
+    .background-image {
+        background-image: var(--bg-image-png);
+    }
+    
+    .background2 {
+        background-image: var(--bg2-image-png);
+    }
+    
+    .earth-sprite {
+        background-image: var(--earth-sprite-png);
+    }
+    
+    .shooting-star {
+        background-image: var(--shooting-star-png);
+    }
+}
+
+/* ========================================
+   RESET AND BASE STYLES
+   ======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Mobile performance optimizations */
+.mobile-link-item,
+.social-link,
+.earth-sprite,
+.stars,
+.background-image {
+    will-change: transform, opacity;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+}
+
+/* Optimize mobile animations */
+.mobile-link-item {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
+
+/* Smooth mobile scrolling */
+.hero {
+    -webkit-overflow-scrolling: touch;
+}
+
+:root {
+    /* Typography */
+    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+    
+    /* Spacing */
+    --section-padding: 6rem 0;
+    --container-padding: 0 2rem;
+    --border-radius: 8px;
+    --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html {
+    scroll-behavior: smooth;
+    background-color: #000000;
+}
+
+body {
+    font-family: var(--font-primary);
+    line-height: 1.6;
+    color: #1a1a1a;
+    background-color: #000000;
+    overflow-x: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--container-padding);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+h1 { font-size: 3.5rem; }
+h2 { font-size: 2.5rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.25rem; }
+
+p {
+    margin-bottom: 1rem;
+    color: #6c757d;
+}
+
+/* ========================================
+   SOCIAL LINKS
+   ======================================== */
+.social-links {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    z-index: 1000 !important;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    animation: fadeInUp 1.5s ease-out forwards;
+    opacity: 1;
+    transform: translateY(0);
+    width: 100%;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    color: white;
+    text-decoration: none;
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    /* Mobile touch optimizations */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    /* Ensure social links are always clickable */
+    pointer-events: auto;
+    position: relative;
+    z-index: 200;
+}
+
+.social-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.social-link:hover .social-icon-image {
+    filter: brightness(0) invert(1) contrast(1.3);
+}
+
+.social-link i {
+    font-size: 1.25rem;
+    font-smooth: never;
+    -webkit-font-smoothing: auto;
+    -moz-osx-font-smoothing: auto;
+}
+
+.social-icon-image {
+    width: 1.5rem;
+    height: 1.5rem;
+    object-fit: contain;
+    filter: brightness(0) invert(1) contrast(1.1);
+    transition: filter 0.3s ease;
+    display: block;
+    margin: 0 auto;
+    transform: translateX(3px);
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* Fallback for social links if animation fails */
+.social-links.loaded {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ========================================
+   HERO SECTION
+   ======================================== */
+.hero {
+    min-height: 100vh;
+    position: relative;
+    overflow: visible;
+    background: #000000;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Ensure dark background extends when scrolling */
+.hero::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 200vh;
+    background: #000000;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* Space Background */
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 200vh;
+    z-index: 0; /* Behind background (z-index: 1) and Earth (z-index: 5) */
+    background-image: 
+        radial-gradient(0.2px 0.2px at 100px 100px, #fff, transparent),
+        radial-gradient(0.2px 0.2px at 300px 200px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.2px 0.2px at 200px 300px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(0.2px 0.2px at 450px 150px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(0.2px 0.2px at 150px 450px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(0.2px 0.2px at 400px 350px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.2px 0.2px at 250px 500px, rgba(255,255,255,0.3), transparent),
+        radial-gradient(0.2px 0.2px at 500px 250px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(0.2px 0.2px at 75px 350px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.2px 0.2px at 350px 75px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(0.2px 0.2px at 175px 125px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.2px 0.2px at 425px 275px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(0.2px 0.2px at 125px 375px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(0.2px 0.2px at 375px 125px, rgba(255,255,255,0.3), transparent),
+        radial-gradient(0.2px 0.2px at 275px 425px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.2px 0.2px at 225px 175px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(0.2px 0.2px at 475px 325px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(0.2px 0.2px at 325px 475px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.2px 0.2px at 50px 250px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(0.2px 0.2px at 250px 50px, rgba(255,255,255,0.8), transparent);
+    background-repeat: repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat;
+    background-size: 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px;
+    animation: spaceMove 90s linear infinite !important;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Background Image Layer - Must be behind Earth */
+.background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 100vh;
+    z-index: 1; /* Behind Earth (z-index: 5) and above stars (z-index: 0) */
+    /* Background image set via CSS custom properties for WebP/PNG fallback */
+    background-repeat: repeat;
+    background-size: auto 100vh;
+    /* Background position set dynamically by JavaScript for randomization */
+    /* Fallback position in case JavaScript fails */
+    background-position: 0 10vh, 100vw 10vh;
+    animation: spaceMove 180s linear infinite !important;
+}
+
+/* Background2 Layer - Additional space background */
+.background2 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 100vh;
+    z-index: 0.5; /* Between stars (z-index: 0) and background (z-index: 1) */
+    /* Background image set via CSS custom properties for WebP/PNG fallback */
+    background-repeat: repeat;
+    background-size: auto 100vh;
+    /* Background position set dynamically by JavaScript for randomization */
+    /* Fallback position in case JavaScript fails */
+    background-position: 50vw -10vh, 150vw -10vh;
+    animation: spaceMove 240s linear infinite !important;
+    opacity: 0.7;
+}
+
+/* Earth Sprite - Must be above background and stars */
+.earth-sprite {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    background-image: url('../assets/images/earthsprite.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 5; /* Above background (z-index: 1) and stars (z-index: 0) */
+    filter: brightness(1.1) contrast(1.1);
+    transition: filter 2s ease-in-out;
+}
+
+@keyframes spaceMove {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100vw); }
+}
+
+.hero-content {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 25;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 800px;
+    padding: var(--container-padding);
+    margin-top: 0;
+    width: 100%;
+}
+
+.hero-text {
+    color: white;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    order: 0;
+}
+
+.hero-title {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.title-line {
+    display: block;
+    font-size: 4.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    animation: fadeInUp 1.5s ease-out forwards;
+    letter-spacing: -0.02em;
+    opacity: 0;
+    transform: translateY(30px);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    /* Subtle highlight effect for better readability */
+    background: rgba(0, 0, 0, 0.25);
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.title-subtitle {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 500;
+    opacity: 0;
+    animation: fadeInUp 1.5s ease-out 0.3s forwards;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transform: translateY(30px);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    /* Subtle highlight effect for better readability */
+    background: rgba(0, 0, 0, 0.25);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+    }
+}
+
+/* ========================================
+   SHOOTING STAR STYLES
+   ======================================== */
+.shooting-star {
+    position: absolute;
+    background-image: url('../assets/images/shootingstar.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    z-index: 15;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Ensure clickable shooting stars remain interactive */
+.shooting-star.clickable {
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+/* Minigame elements - prevent text selection */
+.minigame-score,
+.minigame-countdown {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* ========================================
+   MOBILE TOUCH OPTIMIZATIONS
+   ======================================== */
+/* Prevent text selection on mobile */
+* {
+    -webkit-touch-callout: none;
+    user-select: none;
+}
+
+/* Optimize touch targets */
+.social-link {
+    min-width: 44px;
+    min-height: 44px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Improve mobile scrolling */
+.hero {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Optimize animations for mobile */
+.stars,
+.background-image,
+.background2 {
+    animation-duration: 60s !important;
+    -webkit-animation-duration: 60s !important;
+    -moz-animation-duration: 60s !important;
+    -o-animation-duration: 60s !important;
+}
+
+/* Ensure proper background tiling on mobile */
+.background-image,
+.background2 {
+    background-size: auto 100vh !important;
+    width: 200vw !important;
+    height: 100vh !important;
+    /* Ensure backgrounds always cover the viewport */
+    min-width: 100vw !important;
+    min-height: 100vh !important;
+}
+
+/* Background positions set dynamically by JavaScript for randomization */
+/* Ensure backgrounds tile vertically to cover full viewport height */
+.background-image,
+.background2 {
+    background-repeat: repeat !important; /* Tile both horizontally and vertically */
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+    .hero {
+        min-height: -webkit-fill-available;
+    }
+}
+
+/* Ensure proper stacking on mobile */
+.satellite-nav {
+    z-index: 30;
+}
+
+.hero-content {
+    z-index: 50;
+}
+
+.social-links {
+    z-index: 45;
+}
+
+.earth-sprite {
+    z-index: 40;
+}
+
+.mobile-link-tree {
+    z-index: 10;
+}
+
+/* Landscape mobile optimizations */
+@media (orientation: landscape) {
+    .hero-title {
+        margin-bottom: 0.5rem;
+    }
+    
+    .social-links {
+        margin-top: 0.5rem;
+    }
+}
+
+/* High DPI mobile displays */
+@media (-webkit-min-device-pixel-ratio: 2) {
+    .stars {
+        z-index: 0; /* Ensure high DPI mobile stars are also behind background */
+        background-image: 
+            radial-gradient(1px 1px at 17px 29px, #fff, transparent),
+            radial-gradient(1px 1px at 83px 47px, #fff, transparent),
+            radial-gradient(1px 1px at 151px 73px, rgba(255,255,255,0.7), transparent),
+            radial-gradient(1px 1px at 37px 127px, #fff, transparent),
+            radial-gradient(1px 1px at 113px 91px, rgba(255,255,255,0.6), transparent),
+            radial-gradient(1px 1px at 59px 33px, rgba(255,255,255,0.8), transparent),
+            radial-gradient(1px 1px at 143px 141px, #fff, transparent),
+            radial-gradient(1px 1px at 27px 67px, rgba(255,255,255,0.9), transparent),
+            radial-gradient(1px 1px at 107px 53px, rgba(255,255,255,0.5), transparent),
+            radial-gradient(1px 1px at 71px 153px, #fff, transparent),
+            radial-gradient(1px 1px at 161px 39px, rgba(255,255,255,0.4), transparent),
+            radial-gradient(1px 1px at 47px 89px, #fff, transparent),
+            radial-gradient(1px 1px at 131px 115px, rgba(255,255,255,0.6), transparent),
+            radial-gradient(1px 1px at 91px 61px, rgba(255,255,255,0.7), transparent),
+            radial-gradient(1px 1px at 167px 97px, rgba(255,255,255,0.5), transparent),
+            radial-gradient(1px 1px at 13px 139px, #fff, transparent),
+            radial-gradient(1px 1px at 97px 23px, rgba(255,255,255,0.8), transparent),
+            radial-gradient(1px 1px at 41px 167px, rgba(255,255,255,0.6), transparent),
+            radial-gradient(1px 1px at 133px 79px, #fff, transparent),
+            radial-gradient(1px 1px at 67px 119px, rgba(255,255,255,0.7), transparent),
+            radial-gradient(1px 1px at 157px 43px, rgba(255,255,255,0.4), transparent);
+        background-size: 347px 353px, 369px 359px, 383px 365px, 359px 373px, 377px 349px, 333px 379px, 393px 355px, 367px 363px, 351px 371px, 371px 357px, 387px 351px, 363px 377px, 381px 361px, 357px 369px, 389px 367px, 353px 375px, 365px 359px, 373px 353px, 361px 371px, 379px 365px;
+    }
+}
+
+/* Enhanced touch feedback with sleek interactions */
+@media (hover: none) and (pointer: coarse) {
+    .social-link:active,
+    .mobile-link-item:active {
+        transform: scale(0.96) translateY(-1px);
+        -webkit-transform: scale(0.96) translateY(-1px);
+        -moz-transform: scale(0.96) translateY(-1px);
+        -ms-transform: scale(0.96) translateY(-1px);
+    }
+    
+    /* Enhanced mobile touch feedback with ripple effect */
+    .mobile-link-item {
+        transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .mobile-link-item:active {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.15)) !important;
+        transform: scale(0.96) translateY(-1px) !important;
+        box-shadow: 
+            0 6px 20px rgba(0, 0, 0, 0.2),
+            0 2px 8px rgba(0, 0, 0, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+        animation: buttonPulse 0.3s ease-out !important;
+    }
+    
+    .social-link:active {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.2)) !important;
+        transform: scale(0.92) translateY(-1px) !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+    }
+    
+    /* Ripple effect for mobile buttons */
+    .mobile-link-item::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.3s ease, height 0.3s ease;
+        pointer-events: none;
+    }
+    
+    .mobile-link-item:active::after {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+/* ========================================
+   MOBILE LINK TREE LAYOUT
+   ======================================== */
+/* Remove generated stars on mobile - they don't work well */
+.stars {
+    z-index: 0;
+    background-image: none;
+    background: transparent;
+}
+
+/* Enhanced mobile link tree with sleek spacing */
+.mobile-link-tree {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: min(220px, 38vw) !important;
+    width: min(220px, 38vw) !important;
+    z-index: 1 !important;
+    margin-top: 1.5rem !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    gap: clamp(0.9rem, 3vw, 1.2rem) !important;
+    position: relative;
+    padding: 0.5rem !important;
+}
+
+/* Individual link items with sleek modern design - performance optimized */
+.mobile-link-item {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05)) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 16px !important;
+    padding: clamp(0.7rem, 2.5vw, 0.9rem) !important;
+    margin-bottom: 0 !important;
+    text-decoration: none !important;
+    color: white !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    -webkit-tap-highlight-color: transparent !important;
+    touch-action: manipulation !important;
+    opacity: 0;
+    transform: translateY(30px) translateZ(0) !important;
+    animation: buttonSlideIn 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.1),
+        0 1px 3px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+    will-change: transform, opacity !important;
+    -webkit-backface-visibility: hidden !important;
+    backface-visibility: hidden !important;
+    width: clamp(160px, 32vw, 190px) !important;
+    height: clamp(60px, 14vw, 70px) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    min-width: 130px !important;
+    gap: 0.6rem !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+/* Subtle inner glow effect */
+.mobile-link-item::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent) !important;
+    border-radius: 16px !important;
+    opacity: 0 !important;
+    transition: opacity 0.3s ease !important;
+    pointer-events: none !important;
+}
+
+.mobile-link-item:hover,
+.mobile-link-item:active {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.1)) !important;
+    transform: translateY(-4px) scale(1.02) !important;
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        0 3px 10px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.mobile-link-item:hover::before,
+.mobile-link-item:active::before {
+    opacity: 1 !important;
+}
+
+.mobile-link-item:active {
+    transform: translateY(-2px) scale(0.98) !important;
+    transition: all 0.1s ease !important;
+}
+
+/* Enhanced satellite icons with sleek effects */
+.mobile-link-icon {
+    width: clamp(26px, 6.5vw, 32px) !important;
+    height: clamp(20px, 5vw, 24px) !important;
+    margin-right: 0 !important;
+    flex-shrink: 0 !important;
+    filter: 
+        drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2))
+        drop-shadow(0 1px 3px rgba(0, 0, 0, 0.1))
+        brightness(1.1) 
+        contrast(1.05) !important;
+    object-fit: contain !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.mobile-link-item:hover .mobile-link-icon {
+    filter: 
+        drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25))
+        drop-shadow(0 2px 6px rgba(0, 0, 0, 0.15))
+        brightness(1.2) 
+        contrast(1.1) !important;
+    /* Remove transform to allow animation to work */
+}
+
+/* Individual icon animations - clean spinning */
+.mobile-link-item:nth-child(1) .mobile-link-icon {
+    animation: satelliteSpin 8s linear infinite;
+}
+
+.mobile-link-item:nth-child(2) .mobile-link-icon {
+    animation: satelliteSpinReverse 10s linear infinite;
+}
+
+.mobile-link-item:nth-child(3) .mobile-link-icon {
+    animation: satelliteSpinSlow 12s linear infinite;
+}
+
+.mobile-link-item:nth-child(4) .mobile-link-icon {
+    animation: satelliteSpinSlowReverse 9s linear infinite;
+}
+
+/* Staggered entrance animations */
+.mobile-link-item:nth-child(1) { animation-delay: 0.8s; }
+.mobile-link-item:nth-child(2) { animation-delay: 1.0s; }
+.mobile-link-item:nth-child(3) { animation-delay: 1.2s; }
+.mobile-link-item:nth-child(4) { animation-delay: 1.4s; }
+
+/* Enhanced link text with sleek typography */
+.mobile-link-text {
+    display: block !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    color: white !important;
+    text-align: left !important;
+    margin-top: 0 !important;
+    margin-left: 0.3rem !important;
+    text-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.4),
+        0 0 8px rgba(255, 255, 255, 0.1) !important;
+    line-height: 1.3 !important;
+    white-space: nowrap !important;
+    letter-spacing: 0.02em !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transform: translateZ(0) !important;
+}
+
+.mobile-link-item:hover .mobile-link-text {
+    text-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.5),
+        0 0 12px rgba(255, 255, 255, 0.15) !important;
+    transform: translateX(2px) translateZ(0) !important;
+}
+
+/* Mobile minigame optimizations */
+.minigame-score,
+.minigame-countdown,
+.minigame-instructions {
+    font-size: clamp(0.9rem, 4vw, 1.1rem) !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    pointer-events: none;
+}
+
+.minigame-score {
+    top: 50%;
+    font-size: clamp(1rem, 5vw, 1.3rem) !important;
+}
+
+.minigame-countdown {
+    top: 40%;
+    font-size: clamp(1.2rem, 6vw, 1.5rem) !important;
+}
+
+.minigame-instructions {
+    top: 60%;
+    font-size: clamp(0.8rem, 4vw, 1rem) !important;
+    max-width: 90vw;
+    padding: 0 1rem;
+}
+
+/* Enhanced mobile animations - performance optimized */
+.stars {
+    animation-duration: 67.5s !important;
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
+
+.background-image {
+    animation-duration: 135s !important;
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
+
+.background2 {
+    animation-duration: 180s !important;
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
+
+/* Mobile-specific entrance animations */
+.hero-title {
+    animation: fadeInDown 1.2s ease-out;
+}
+
+.social-links {
+    animation: fadeInUp 1.5s ease-out 0.3s both;
+}
+
+.earth-sprite {
+    animation: fadeInScale 2s ease-out 0.5s both;
+}
+
+/* Mobile link tree entrance */
+.mobile-link-tree {
+    animation: fadeInUp 1.8s ease-out 0.8s both;
+}
+
+/* Ensure proper title stacking on mobile - FORCE STACKING */
+.hero-title .title-line,
+.hero-title .title-subtitle {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+    float: none !important;
+    clear: both !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.hero-title .title-line {
+    margin-bottom: 0.5rem !important;
+    margin-right: 0 !important;
+    clear: both !important;
+}
+
+.hero-title .title-subtitle {
+    margin-bottom: 1.5rem !important;
+    margin-top: 0 !important;
+    clear: both !important;
+    float: none !important;
+}
+
+/* Force mobile title container to stack */
+.hero-title {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+}
+
+/* Mobile-specific background adjustments */
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* CRITICAL: Force title stacking on mobile - override everything */
+.hero-title {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+}
+
+.hero-title .title-line,
+.hero-title .title-subtitle {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+    float: none !important;
+    clear: both !important;
+    position: static !important;
+}
+
+.hero-title .title-line {
+    margin-bottom: 0.5rem !important;
+    margin-right: 0 !important;
+}
+
+.hero-title .title-subtitle {
+    margin-bottom: 1.5rem !important;
+    margin-top: 0 !important;
+}
+
+/* Stack title vertically on smaller viewport heights */
+@media (max-height: 600px) {
+    .title-line {
+        display: block !important;
+        margin-right: 0 !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    .title-subtitle {
+        display: block !important;
+    }
+}
+
+/* Enhanced mobile responsiveness for different screen sizes */
+@media (max-width: 480px) {
+    .hero-content {
+        padding: 0 0.5rem;
+    }
+    
+    .mobile-link-tree {
+        max-width: 180px;
+        width: 180px;
+    }
+    
+    .mobile-link-item {
+        padding: 0.6rem;
+        margin-bottom: 0;
+        width: 160px;
+        height: 55px;
+    }
+    
+    .mobile-link-icon {
+        width: 22px;
+        height: 16px;
+        margin-right: 0;
+    }
+    
+    .mobile-link-text {
+        display: block !important;
+        font-size: 0.7rem !important;
+    }
+}
+
+/* Performance optimizations for lower-end devices */
+@media (max-width: 480px) and (max-resolution: 1.5dppx) {
+    .mobile-link-item,
+    .social-link {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background: rgba(255, 255, 255, 0.2) !important;
+    }
+    
+    .stars,
+    .background-image {
+        animation-duration: 120s !important;
+    }
+}
+
+@media (max-width: 375px) {
+    .title-line {
+        font-size: 2.2rem !important;
+    }
+    
+    .title-subtitle {
+        font-size: 0.9rem !important;
+    }
+    
+    .social-link {
+        width: 38px;
+        height: 38px;
+        font-size: 0.9rem;
+    }
+    
+    .earth-sprite {
+        width: 220px !important;
+        height: 220px !important;
+    }
+    
+    .mobile-link-tree {
+        max-width: 160px;
+        width: 160px;
+    }
+    
+    .mobile-link-item {
+        width: 140px;
+        height: 50px;
+        padding: 0.5rem;
+    }
+    
+    .mobile-link-icon {
+        width: 20px;
+        height: 15px;
+        margin-right: 0;
+    }
+    
+    .mobile-link-text {
+        display: block !important;
+        font-size: 0.65rem !important;
+    }
+}
+
+/* Landscape mobile optimizations */
+@media (orientation: landscape) {
+    .hero-content {
+        min-height: 100vh;
+        min-height: 100dvh;
+        padding: 1rem;
+    }
+    
+    .mobile-link-tree {
+        margin-top: 0.5rem;
+    }
+    
+    .earth-sprite {
+        width: 200px !important;
+        height: 200px !important;
+        top: 50px !important;
+    }
+    
+    .social-links {
+        margin: 1rem 0;
+    }
+}
+
+/* CRITICAL: Force mobile button sizing - override everything with sleek design */
+.mobile-link-tree {
+    max-width: 220px !important;
+    width: 220px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    gap: 1rem !important;
+}
+
+.mobile-link-item {
+    width: 200px !important;
+    height: 70px !important;
+    padding: 0.9rem !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    border-radius: 16px !important;
+}
+
+.mobile-link-icon {
+    width: 32px !important;
+    height: 24px !important;
+    margin-right: 0 !important;
+}
+
+.mobile-link-text {
+    display: block !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+}
+
+/* Satellite spinning animations - clean rotation only */
+@keyframes satelliteSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes satelliteSpinReverse {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); }
+}
+
+@keyframes satelliteSpinSlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes satelliteSpinSlowReverse {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); }
+}
+
+@keyframes satelliteSpinMedium {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes satelliteSpinMediumReverse {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); }
+}
+
+/* Sleek button entrance animation */
+@keyframes buttonSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.9);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateY(20px) scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Subtle pulse animation for interactive feedback */
+@keyframes buttonPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+/* Ripple effect animation */
+@keyframes ripple {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(4);
+        opacity: 0;
+    }
+}

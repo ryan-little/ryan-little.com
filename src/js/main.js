@@ -22,15 +22,15 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
     
-    // Initialize mobile optimizations if available
-    if (typeof initMobileOptimizations !== 'function') {
-        console.error('❌ Mobile module failed to load');
-        return;
-    }
-    
-    // Initialize Earth Night System only on desktop
-    if (typeof EarthNightSystem !== 'undefined' && !DeviceInfo?.isMobile) {
-        EarthNightSystem.init();
+    // Initialize device-specific optimizations if available
+    if (typeof initMobileOptimizations === 'function') {
+        // Mobile version
+        initMobileOptimizations();
+    } else if (typeof initDesktopOptimizations === 'function') {
+        // Desktop version
+        initDesktopOptimizations();
+    } else {
+        console.warn('⚠️ No device-specific optimizations found');
     }
     
     // Website initialized successfully

@@ -1,0 +1,739 @@
+/* ========================================
+   CSS CUSTOM PROPERTIES FOR IMAGES
+   ======================================== */
+:root {
+    /* WebP images (preferred) */
+    --bg-image-webp: url('../assets/images_webp/background.webp');
+    --bg2-image-webp: url('../assets/images_webp/background2.webp');
+    --earth-sprite-webp: url('../assets/images_webp/earthsprite.webp');
+    --shooting-star-webp: url('../assets/images_webp/shootingstar.webp');
+    
+    /* PNG fallbacks */
+    --bg-image-png: url('../assets/images/background.png');
+    --bg2-image-png: url('../assets/images/background2.png');
+    --earth-sprite-png: url('../assets/images/earthsprite.png');
+    --shooting-star-png: url('../assets/images/shootingstar.png');
+}
+
+/* WebP support detection and fallback */
+@supports (background-image: var(--bg-image-webp)) {
+    .background-image {
+        background-image: var(--bg-image-webp);
+    }
+    
+    .background2 {
+        background-image: var(--bg2-image-webp);
+    }
+    
+    .earth-sprite {
+        background-image: var(--earth-sprite-webp);
+    }
+    
+    .shooting-star {
+        background-image: var(--shooting-star-webp);
+    }
+}
+
+/* PNG fallback for browsers without WebP support */
+@supports not (background-image: var(--bg-image-webp)) {
+    .background-image {
+        background-image: var(--bg-image-png);
+    }
+    
+    .background2 {
+        background-image: var(--bg2-image-png);
+    }
+    
+    .earth-sprite {
+        background-image: var(--earth-sprite-png);
+    }
+    
+    .shooting-star {
+        background-image: var(--shooting-star-png);
+    }
+}
+
+/* ========================================
+   RESET AND BASE STYLES
+   ======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Performance optimizations - only apply to critical animated elements */
+.satellite {
+    will-change: transform;
+}
+
+.satellite-image {
+    will-change: transform;
+}
+
+.shooting-star {
+    will-change: transform;
+}
+
+:root {
+    /* Typography */
+    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+    
+    /* Spacing */
+    --section-padding: 6rem 0;
+    --container-padding: 0 2rem;
+    --border-radius: 8px;
+    --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html {
+    scroll-behavior: smooth;
+    background-color: #000000;
+}
+
+body {
+    font-family: var(--font-primary);
+    line-height: 1.6;
+    color: #1a1a1a;
+    background-color: #000000;
+    overflow-x: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--container-padding);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+h1 { font-size: 3.5rem; }
+h2 { font-size: 2.5rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.25rem; }
+
+p {
+    margin-bottom: 1rem;
+    color: #6c757d;
+}
+
+/* ========================================
+   SATELLITE NAVIGATION SYSTEM
+   ======================================== */
+.satellite-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 20;
+}
+
+.satellite {
+    position: absolute;
+    width: 180px;
+    height: 135px;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: transform 0.3s ease;
+    transform-origin: center;
+    top: 50%;
+    left: 50%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    opacity: 0;
+}
+
+.satellite:nth-child(1) { 
+    animation: orbit1 20s linear infinite, satelliteFadeIn 1.2s ease-out 4.5s forwards;
+}
+.satellite:nth-child(2) { 
+    animation: orbit2 20s linear infinite, satelliteFadeIn 1.2s ease-out 5.0s forwards;
+}
+.satellite:nth-child(3) { 
+    animation: orbit3 20s linear infinite, satelliteFadeIn 1.2s ease-out 5.5s forwards;
+}
+.satellite:nth-child(4) { 
+    animation: orbit4 20s linear infinite, satelliteFadeIn 1.2s ease-out 6.0s forwards;
+}
+
+.satellite:hover {
+    transform: scale(1.1);
+    z-index: 200;
+    filter: brightness(1.3) drop-shadow(0 0 15px rgba(255, 255, 255, 0.6));
+    transition: all 0.3s ease;
+}
+
+.satellite-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    animation: satelliteSpin 8s linear infinite;
+    animation-play-state: running;
+}
+
+/* Paused orbital animations - use more specific selectors */
+.satellite-nav .satellite.orbital-paused:nth-child(1) {
+    animation-play-state: paused;
+}
+
+.satellite-nav .satellite.orbital-paused:nth-child(2) {
+    animation-play-state: paused;
+}
+
+.satellite-nav .satellite.orbital-paused:nth-child(3) {
+    animation-play-state: paused;
+}
+
+.satellite-nav .satellite.orbital-paused:nth-child(4) {
+    animation-play-state: paused;
+}
+
+/* Ensure satellite images continue spinning when orbital is paused */
+.satellite-nav .satellite.orbital-paused .satellite-image {
+    animation-play-state: running;
+}
+
+/* Ensure labels pause their counter-rotation when orbital is paused */
+.satellite-nav .satellite.orbital-paused .satellite-label {
+    animation-play-state: paused;
+}
+
+.satellite-label {
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 1.65rem;
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+    white-space: nowrap;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    /* Ensure labels pause their counter-rotation when orbital animation is paused */
+    animation-play-state: inherit;
+    opacity: 0;
+}
+
+/* Counter-rotate labels to keep them always horizontal */
+.satellite:nth-child(1) .satellite-label {
+    animation: counterRotate1 20s linear infinite, labelFadeIn 1.2s ease-out 4.5s forwards;
+}
+
+.satellite:nth-child(2) .satellite-label {
+    animation: counterRotate2 20s linear infinite, labelFadeIn 1.2s ease-out 5.0s forwards;
+}
+
+.satellite:nth-child(3) .satellite-label {
+    animation: counterRotate3 20s linear infinite, labelFadeIn 1.2s ease-out 5.5s forwards;
+}
+
+.satellite:nth-child(4) .satellite-label {
+    animation: counterRotate4 20s linear infinite, labelFadeIn 1.2s ease-out 6.0s forwards;
+}
+
+/* Orbital animations for satellites around the center */
+@keyframes orbit1 {
+    0% { transform: translate(-50%, -50%) rotate(0deg) translateX(var(--satellite1-distance, 300px)); }
+    100% { transform: translate(-50%, -50%) rotate(360deg) translateX(var(--satellite1-distance, 300px)); }
+}
+
+@keyframes orbit2 {
+    0% { transform: translate(-50%, -50%) rotate(90deg) translateX(var(--satellite2-distance, 330px)); }
+    100% { transform: translate(-50%, -50%) rotate(450deg) translateX(var(--satellite2-distance, 330px)); }
+}
+
+@keyframes orbit3 {
+    0% { transform: translate(-50%, -50%) rotate(180deg) translateX(var(--satellite3-distance, 360px)); }
+    100% { transform: translate(-50%, -50%) rotate(540deg) translateX(var(--satellite3-distance, 360px)); }
+}
+
+@keyframes orbit4 {
+    0% { transform: translate(-50%, -50%) rotate(270deg) translateX(var(--satellite4-distance, 390px)); }
+    100% { transform: translate(-50%, -50%) rotate(630deg) translateX(var(--satellite4-distance, 390px)); }
+}
+
+/* Satellite spinning animations */
+@keyframes satelliteSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Counter-rotation animations to keep labels always horizontal */
+@keyframes counterRotate1 {
+    0% { transform: translateX(-50%) rotate(0deg); }
+    100% { transform: translateX(-50%) rotate(-360deg); }
+}
+
+@keyframes counterRotate2 {
+    0% { transform: translateX(-50%) rotate(-90deg); }
+    100% { transform: translateX(-50%) rotate(-450deg); }
+}
+
+@keyframes counterRotate3 {
+    0% { transform: translateX(-50%) rotate(-180deg); }
+    100% { transform: translateX(-50%) rotate(-540deg); }
+}
+
+@keyframes counterRotate4 {
+    0% { transform: translateX(-50%) rotate(-270deg); }
+    100% { transform: translateX(-50%) rotate(-630deg); }
+}
+
+/* ========================================
+   SOCIAL LINKS
+   ======================================== */
+.social-links {
+    position: relative;
+    margin-top: -0.625rem;
+    z-index: 200;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    animation: fadeInUp 1.5s ease-out 2.3s forwards;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    color: white;
+    text-decoration: none;
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    /* Ensure social links are always clickable */
+    pointer-events: auto;
+    position: relative;
+    z-index: 200;
+}
+
+.social-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.social-link:hover .social-icon-image {
+    filter: brightness(0) invert(1) contrast(1.3);
+}
+
+.social-link i {
+    font-size: 1.25rem;
+    font-smooth: never;
+    -webkit-font-smoothing: auto;
+    -moz-osx-font-smoothing: auto;
+}
+
+.social-icon-image {
+    width: 1.5rem;
+    height: 1.5rem;
+    object-fit: contain;
+    filter: brightness(0) invert(1) contrast(1.1);
+    transition: filter 0.3s ease;
+    display: block;
+    margin: 0 auto;
+    transform: translateX(3px);
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* Fallback for social links if animation fails */
+.social-links.loaded {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ========================================
+   HERO SECTION
+   ======================================== */
+.hero {
+    min-height: 100vh;
+    position: relative;
+    overflow: visible;
+    background: #000000;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Ensure dark background extends when scrolling */
+.hero::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 200vh;
+    background: #000000;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* Space Background */
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 200vh;
+    z-index: 0; /* Behind background (z-index: 1) and Earth (z-index: 5) */
+    background-image: 
+        radial-gradient(0.2px 0.2px at 100px 100px, #fff, transparent),
+        radial-gradient(0.2px 0.2px at 300px 200px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.2px 0.2px at 200px 300px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(0.2px 0.2px at 450px 150px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(0.2px 0.2px at 150px 450px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(0.2px 0.2px at 400px 350px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.2px 0.2px at 250px 500px, rgba(255,255,255,0.3), transparent),
+        radial-gradient(0.2px 0.2px at 500px 250px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(0.2px 0.2px at 75px 350px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.2px 0.2px at 350px 75px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(0.2px 0.2px at 175px 125px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.2px 0.2px at 425px 275px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(0.2px 0.2px at 125px 375px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(0.2px 0.2px at 375px 125px, rgba(255,255,255,0.3), transparent),
+        radial-gradient(0.2px 0.2px at 275px 425px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.2px 0.2px at 225px 175px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(0.2px 0.2px at 475px 325px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(0.2px 0.2px at 325px 475px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.2px 0.2px at 50px 250px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(0.2px 0.2px at 250px 50px, rgba(255,255,255,0.8), transparent);
+    background-repeat: repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat;
+    background-size: 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px;
+    animation: spaceMove 90s linear infinite !important;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Background Image Layer - Must be behind Earth */
+.background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 100vh;
+    z-index: 1; /* Behind Earth (z-index: 5) and above stars (z-index: 0) */
+    /* Background image set via CSS custom properties for WebP/PNG fallback */
+    background-repeat: repeat;
+    background-size: auto 100vh;
+    /* Background position set dynamically by JavaScript for randomization */
+    /* Fallback position in case JavaScript fails */
+    background-position: 0 10vh, 100vw 10vh;
+    animation: spaceMove 180s linear infinite !important;
+}
+
+/* Background2 Layer - Additional space background */
+.background2 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 100vh;
+    z-index: 0.5; /* Between stars (z-index: 0) and background (z-index: 1) */
+    /* Background image set via CSS custom properties for WebP/PNG fallback */
+    background-repeat: repeat;
+    background-size: auto 100vh;
+    /* Background position set dynamically by JavaScript for randomization */
+    /* Fallback position in case JavaScript fails */
+    background-position: 50vw -10vh, 150vw -10vh;
+    animation: spaceMove 240s linear infinite !important;
+    opacity: 0.7;
+}
+
+/* Earth Sprite - Must be above background and stars */
+.earth-sprite {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    background-image: url('../assets/images/earthsprite.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 5; /* Above background (z-index: 1) and stars (z-index: 0) */
+    filter: brightness(1.1) contrast(1.1);
+    transition: filter 2s ease-in-out;
+    animation: fadeInScale 1.5s ease-out 0.5s both;
+}
+
+@keyframes spaceMove {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100vw); }
+}
+
+.hero-content {
+    position: absolute;
+    top: 51%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 25;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 800px;
+    padding: var(--container-padding);
+    margin-top: 0;
+}
+
+.hero-text {
+    color: white;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.hero-title {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.title-line {
+    display: block;
+    font-size: 4.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    animation: fadeInUp 1.5s ease-out 2.3s forwards;
+    letter-spacing: -0.02em;
+    opacity: 0;
+    transform: translateY(30px);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.title-subtitle {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 500;
+    opacity: 0;
+    animation: fadeInUp 1.5s ease-out 2.6s forwards;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transform: translateY(30px);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes satelliteFadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
+@keyframes labelFadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Desktop responsive design */
+@media (min-width: 769px) {
+    .title-line {
+        font-size: 3rem;
+    }
+    
+    /* Keep desktop Earth at original size */
+    .earth-sprite {
+        width: 500px;
+        height: 500px;
+    }
+    
+    .satellite {
+        width: 108px;
+        height: 81px;
+    }
+    
+    .satellite-label {
+        font-size: 1.2rem;
+        bottom: -25px;
+    }
+    
+    /* Desktop satellite animations */
+    .satellite:nth-child(1) { 
+        animation: orbit1 20s linear infinite, satelliteFadeIn 1.2s ease-out 4.5s forwards;
+    }
+    .satellite:nth-child(2) { 
+        animation: orbit2 20s linear infinite, satelliteFadeIn 1.2s ease-out 5.0s forwards;
+    }
+    .satellite:nth-child(3) { 
+        animation: orbit3 20s linear infinite, satelliteFadeIn 1.2s ease-out 5.5s forwards;
+    }
+    .satellite:nth-child(4) { 
+        animation: orbit4 20s linear infinite, satelliteFadeIn 1.2s ease-out 6.0s forwards;
+    }
+}
+
+/* ========================================
+   SHOOTING STAR STYLES
+   ======================================== */
+.shooting-star {
+    position: absolute;
+    background-image: url('../assets/images/shootingstar.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+    z-index: 15;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Ensure clickable shooting stars remain interactive */
+.shooting-star.clickable {
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+/* Minigame elements - prevent text selection */
+.minigame-score,
+.minigame-countdown {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* ========================================
+   DESKTOP OPTIMIZATIONS
+   ======================================== */
+/* Desktop hover effects */
+.satellite:hover {
+    transform: scale(1.1);
+    z-index: 200;
+    filter: brightness(1.3) drop-shadow(0 0 15px rgba(255, 255, 255, 0.6));
+    transition: all 0.3s ease;
+}
+
+/* Desktop performance optimizations */
+.satellite {
+    will-change: transform;
+}
+
+.satellite-image {
+    will-change: transform;
+}
+
+.shooting-star {
+    will-change: transform;
+}
+
+/* Desktop minigame optimizations */
+.minigame-score,
+.minigame-countdown,
+.minigame-instructions {
+    font-size: 1.25rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    pointer-events: none;
+}
+
+.minigame-score {
+    top: 65%;
+    font-size: 1.5rem;
+}
+
+.minigame-countdown {
+    top: 50%;
+    font-size: 4rem;
+}
+
+.minigame-instructions {
+    top: 30%;
+    font-size: 1.5rem;
+    max-width: 90vw;
+    padding: 0 1rem;
+}

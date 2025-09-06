@@ -6,121 +6,80 @@
     <title>Ryan Little - Geospatial Analyst</title>
     <meta name="description" content="Ryan Little - Geospatial Analyst with expertise in GIS, Remote Sensing, and Spatial Analysis. UC Santa Barbara Geography graduate specializing in Aerial Photos and Remote Sensing.">
     <meta name="keywords" content="geospatial analyst, GIS, remote sensing, spatial analysis, cartography, geography, UC Santa Barbara">
-    <link rel="stylesheet" href="src/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <meta name="theme-color" content="#1a1a1a">
     <link rel="icon" type="image/x-icon" href="assets/images_webp/earthsprite.webp">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #1a1a1a;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .loading-container {
+            text-align: center;
+            z-index: 1000;
+        }
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid #333;
+            border-top: 3px solid #00d4ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loading-text {
+            font-size: 18px;
+            color: #ccc;
+        }
+    </style>
 </head>
 <body>
-    <!-- Satellite Navigation System -->
-    <div class="satellite-nav">
-        <div class="satellite satellite-about" data-target="about">
-            <picture>
-                <source srcset="assets/images_webp/satellite1.webp" type="image/webp">
-                <img src="assets/images/satellite1.png" alt="About Satellite" class="satellite-image">
-            </picture>
-            <div class="satellite-label">About</div>
-        </div>
-        <div class="satellite satellite-trees" data-target="trees">
-            <picture>
-                <source srcset="assets/images_webp/satellite3.webp" type="image/webp">
-                <img src="assets/images/satellite3.png" alt="Trees Satellite" class="satellite-image">
-            </picture>
-            <div class="satellite-label">Trees</div>
-        </div>
-        <div class="satellite satellite-portfolio" data-target="portfolio">
-            <picture>
-                <source srcset="assets/images_webp/satellite1.webp" type="image/webp">
-                <img src="assets/images/satellite1.png" alt="Portfolio Satellite" class="satellite-image">
-            </picture>
-            <div class="satellite-label">Portfolio</div>
-        </div>
-        <div class="satellite satellite-contact" data-target="contact">
-            <picture>
-                <source srcset="assets/images_webp/satellite2.webp" type="image/webp">
-                <img src="assets/images/satellite2.png" alt="Contact Satellite" class="satellite-image">
-            </picture>
-            <div class="satellite-label">Contact</div>
-        </div>
+    <div class="loading-container">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading...</div>
     </div>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-background">
-            <div class="background-image"></div>
-            <div class="background2"></div>
-            <div class="stars"></div>
-            <div class="earth-sprite"></div>
-        </div>
+    <script>
+        // Device detection and redirection
+        function detectDevice() {
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                           (window.innerWidth <= 1024);
+            return isMobile;
+        }
 
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1 class="hero-title">
-                    <span class="title-line">Ryan Little</span>
-                    <span class="title-subtitle">Geospatial Analyst</span>
-                </h1>
-            </div>
+        function redirectToAppropriateVersion() {
+            const isMobile = detectDevice();
+            const targetPage = isMobile ? 'index-mobile.html' : 'index-desktop.html';
             
+            // Add a small delay to show loading animation
+            setTimeout(() => {
+                window.location.replace(targetPage);
+            }, 500);
+        }
 
-            <div class="social-links">
-                <a href="https://linkedin.com/in/rpdlittle" target="_blank" rel="noopener" class="social-link" onclick="console.log('LinkedIn clicked!')">
-                    <i class="fab fa-linkedin"></i>
-                </a>
-                <a href="mailto:ryan@ryanpdlittle.com" class="social-link" onclick="console.log('Email clicked!')">
-                    <i class="fas fa-envelope"></i>
-                </a>
-                <a href="https://github.com/ryan-little" target="_blank" rel="noopener" class="social-link" onclick="console.log('GitHub clicked!')">
-                    <i class="fab fa-github"></i>
-                </a>
-                <a href="https://littlehammerlabs.com" target="_blank" rel="noopener" class="social-link" onclick="console.log('Little Hammer Labs clicked!')">
-                    <img src="assets/images_webp/lhlhammer_transback.webp" alt="Little Hammer Labs" class="social-icon-image">
-                </a>
-            </div>
-            <div class="social-link-blur social-link-blur-1"></div>
-            <div class="social-link-blur social-link-blur-2"></div>
-            <div class="social-link-blur social-link-blur-3"></div>
-            <div class="social-link-blur social-link-blur-4"></div>
-            
-            <!-- Mobile Link Tree -->
-            <div class="mobile-link-tree">
-                <a href="#portfolio" class="mobile-link-item">
-                    <picture>
-                        <source srcset="assets/images_webp/satellite1.webp" type="image/webp">
-                        <img src="assets/images/satellite1.png" alt="Portfolio" class="mobile-link-icon">
-                    </picture>
-                    <span class="mobile-link-text">Portfolio</span>
-                </a>
-                <a href="#about" class="mobile-link-item">
-                    <picture>
-                        <source srcset="assets/images_webp/satellite2.webp" type="image/webp">
-                        <img src="assets/images/satellite2.png" alt="About" class="mobile-link-icon">
-                    </picture>
-                    <span class="mobile-link-text">About</span>
-                </a>
-                <a href="#trees" class="mobile-link-item">
-                    <picture>
-                        <source srcset="assets/images_webp/satellite3.webp" type="image/webp">
-                        <img src="assets/images/satellite3.png" alt="Trees" class="mobile-link-icon">
-                    </picture>
-                    <span class="mobile-link-text">Trees</span>
-                </a>
-                <a href="#contact" class="mobile-link-item">
-                    <picture>
-                        <source srcset="assets/images_webp/satellite2.webp" type="image/webp">
-                        <img src="assets/images/satellite2.png" alt="Contact" class="mobile-link-icon">
-                    </picture>
-                    <span class="mobile-link-text">Contact</span>
-                </a>
-            </div>
-        </div>
-    </section>
-    <!-- Scripts -->
-    <script src="src/js/utilities.js"></script>
-    <script src="src/js/core.js"></script>
-    <script src="src/js/animations.js"></script>
-    <script src="src/js/minigame.js"></script>
-    <script src="src/js/mobile.js"></script>
-    <script src="src/js/main.js"></script>
+        // Redirect immediately on load
+        window.addEventListener('load', redirectToAppropriateVersion);
+        
+        // Also redirect on resize if device type changes
+        let lastDeviceType = detectDevice();
+        window.addEventListener('resize', () => {
+            const currentDeviceType = detectDevice();
+            if (currentDeviceType !== lastDeviceType) {
+                lastDeviceType = currentDeviceType;
+                redirectToAppropriateVersion();
+            }
+        });
+    </script>
 </body>
 </html>
