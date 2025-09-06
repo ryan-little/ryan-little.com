@@ -363,7 +363,7 @@ p {
     }
 
 .social-link:hover .social-icon-image {
-        filter: brightness(1.5) contrast(1.2);
+        filter: brightness(0) invert(1) contrast(1.3);
     }
 
 .social-link i {
@@ -377,7 +377,7 @@ p {
     width: 2rem;
     height: 2rem;
     object-fit: contain;
-    filter: brightness(1.3) contrast(1.1);
+    filter: brightness(0) invert(1) contrast(1.1);
     transition: filter 0.3s ease;
     display: block;
     margin: 0 auto;
@@ -1039,7 +1039,7 @@ p {
         width: clamp(1.6rem, 7vw, 2rem);
         height: clamp(1.6rem, 7vw, 2rem);
         object-fit: contain;
-        filter: brightness(1.3) contrast(1.1);
+        filter: brightness(0) invert(1) contrast(1.1);
         transition: filter 0.3s ease;
         display: block;
         margin: 0 auto;
@@ -1055,7 +1055,7 @@ p {
     
     .social-link:hover .social-icon-image,
     .social-link:active .social-icon-image {
-        filter: brightness(1.5) contrast(1.2);
+        filter: brightness(0) invert(1) contrast(1.3);
     }
     
     /* Responsive Earth sprite - larger on mobile */
