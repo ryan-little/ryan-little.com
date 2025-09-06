@@ -374,14 +374,16 @@ p {
 }
 
 .social-icon-image {
-    width: 2rem;
-    height: 2rem;
+    width: 1.5rem;
+    height: 1.5rem;
     object-fit: contain;
     filter: brightness(0) invert(1) contrast(1.1);
     transition: filter 0.3s ease;
     display: block;
     margin: 0 auto;
     transform: translateX(3px);
+    max-width: 100%;
+    max-height: 100%;
 }
 
 /* Fallback for social links if animation fails */
@@ -1036,14 +1038,16 @@ p {
     }
     
     .social-icon-image {
-        width: clamp(1.6rem, 7vw, 2rem);
-        height: clamp(1.6rem, 7vw, 2rem);
+        width: clamp(1.2rem, 4vw, 1.5rem);
+        height: clamp(1.2rem, 4vw, 1.5rem);
         object-fit: contain;
         filter: brightness(0) invert(1) contrast(1.1);
         transition: filter 0.3s ease;
         display: block;
         margin: 0 auto;
         transform: translateX(3px);
+        max-width: 100%;
+        max-height: 100%;
     }
     
     .social-link:hover,
