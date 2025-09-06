@@ -981,16 +981,16 @@ p {
 }
 
 /* Mobile earth sprite sizing - make it appropriately sized for mobile */
-.mobile .earth-sprite {
-    width: 300px;
-    height: 300px;
-    position: absolute;
-    top: 7%;
-    left: 170px;
-    transform: translate(-50%, -50%);
-    background-position: center center;
-    background-size: contain;
-    background-repeat: no-repeat;
+body.mobile .hero .hero-background .earth-sprite {
+    width: 300px !important;
+    height: 300px !important;
+    position: absolute !important;
+    top: 200px !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    background-position: center center !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
 }
 
 .mobile .hero-title .title-line,
@@ -1124,15 +1124,15 @@ p {
     }
     
     .mobile .earth-sprite {
-        width: 200px;
-        height: 200px;
-        position: absolute;
-        top: 6%;
-        left: 100px;
-        transform: translate(-50%, -50%);
-        background-position: center center;
-        background-size: contain;
-        background-repeat: no-repeat;
+        width: 200px !important;
+        height: 200px !important;
+        position: absolute !important;
+        top: 6% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        background-position: center center !important;
+        background-size: contain !important;
+        background-repeat: no-repeat !important;
     }
     
     .social-links {
@@ -1236,4 +1236,828 @@ p {
         transform: scale(4);
         opacity: 0;
     }
+}
+
+/* ========================================
+   MOBILE PAGE OVERLAY STYLES
+   ======================================== */
+
+/* About Page Overlay */
+.about-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+    pointer-events: none;
+}
+
+.about-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.about-overlay .background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 100vh;
+    z-index: 0.5;
+    background-repeat: repeat;
+    background-size: auto 100vh;
+    background-position: 0 10vh, 100vw 10vh;
+    animation: spaceMove 180s linear infinite;
+    opacity: 0.8;
+}
+
+.about-overlay .background2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 100vh;
+    z-index: 0.3;
+    background-repeat: repeat;
+    background-size: auto 100vh;
+    background-position: 50vw -10vh, 150vw -10vh;
+    animation: spaceMove 240s linear infinite;
+    opacity: 0.6;
+}
+
+.about-overlay .stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 200vh;
+    z-index: 1;
+    background-image: 
+        radial-gradient(0.2px 0.2px at 100px 100px, #fff, transparent),
+        radial-gradient(0.2px 0.2px at 300px 200px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.2px 0.2px at 200px 300px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(0.2px 0.2px at 450px 150px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(0.2px 0.2px at 150px 450px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(0.2px 0.2px at 400px 350px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.2px 0.2px at 250px 500px, rgba(255,255,255,0.3), transparent),
+        radial-gradient(0.2px 0.2px at 500px 250px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(0.2px 0.2px at 75px 350px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.2px 0.2px at 350px 75px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(0.2px 0.2px at 175px 125px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.2px 0.2px at 425px 275px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(0.2px 0.2px at 125px 375px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(0.2px 0.2px at 375px 425px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.2px 0.2px at 275px 175px, rgba(255,255,255,0.4), transparent);
+    background-size: 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px;
+    animation: starMove 90s linear infinite;
+    opacity: 0.7;
+}
+
+.about-overlay .centered-satellite {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0;
+    transition: transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 1.2s ease 0.3s;
+}
+
+.about-overlay.active .centered-satellite {
+    transform: translate(-50%, -50%) scale(5);
+    opacity: 1;
+}
+
+.about-overlay .centered-satellite .satellite-image {
+    width: 180px;
+    height: 135px;
+    object-fit: contain;
+    animation: satelliteSpin 8s linear infinite;
+    filter: brightness(1.2) drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+    transition: filter 0.8s ease;
+}
+
+.about-overlay.active .centered-satellite .satellite-image {
+    filter: brightness(1.4) drop-shadow(0 0 30px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 60px rgba(0, 212, 255, 0.3));
+}
+
+.about-content-pane {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 95%;
+    max-width: 400px;
+    max-height: 85vh;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 1.5rem;
+    z-index: 3;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+    transition: opacity 1s ease 0.5s, transform 1s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.about-content-pane::-webkit-scrollbar {
+    width: 6px;
+}
+
+.about-content-pane::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.about-content-pane::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.about-overlay.active .about-content-pane {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.about-back-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 140px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 200;
+    touch-action: manipulation;
+}
+
+.about-back-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.about-back-button .arrow {
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+}
+
+.about-back-button:hover .arrow {
+    transform: translateX(-3px);
+}
+
+.about-info {
+    color: white;
+}
+
+.about-info h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center;
+    background: linear-gradient(135deg, #ffffff, #cccccc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.about-info > p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.about-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.about-section {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.25rem;
+    transition: all 0.3s ease;
+}
+
+.about-section:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.about-section h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: #00d4ff;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.about-section h3 i {
+    font-size: 1rem;
+}
+
+.about-section p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0.5rem;
+}
+
+.about-section p:last-child {
+    margin-bottom: 0;
+}
+
+.about-section p strong {
+    color: white;
+    font-weight: 600;
+}
+
+/* Portfolio Page Overlay */
+.portfolio-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+    pointer-events: none;
+}
+
+.portfolio-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.portfolio-overlay .background-image,
+.portfolio-overlay .background2,
+.portfolio-overlay .stars,
+.portfolio-overlay .centered-satellite {
+    /* Same as about overlay */
+}
+
+.portfolio-overlay .background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 100vh;
+    z-index: 0.5;
+    background-repeat: repeat;
+    background-size: auto 100vh;
+    background-position: 0 10vh, 100vw 10vh;
+    animation: spaceMove 180s linear infinite;
+    opacity: 0.8;
+}
+
+.portfolio-overlay .background2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 100vh;
+    z-index: 0.3;
+    background-repeat: repeat;
+    background-size: auto 100vh;
+    background-position: 50vw -10vh, 150vw -10vh;
+    animation: spaceMove 240s linear infinite;
+    opacity: 0.6;
+}
+
+.portfolio-overlay .stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 200vh;
+    z-index: 1;
+    background-image: 
+        radial-gradient(0.2px 0.2px at 100px 100px, #fff, transparent),
+        radial-gradient(0.2px 0.2px at 300px 200px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.2px 0.2px at 200px 300px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(0.2px 0.2px at 450px 150px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(0.2px 0.2px at 150px 450px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(0.2px 0.2px at 400px 350px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.2px 0.2px at 250px 500px, rgba(255,255,255,0.3), transparent),
+        radial-gradient(0.2px 0.2px at 500px 250px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(0.2px 0.2px at 75px 350px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.2px 0.2px at 350px 75px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(0.2px 0.2px at 175px 125px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.2px 0.2px at 425px 275px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(0.2px 0.2px at 125px 375px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(0.2px 0.2px at 375px 425px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.2px 0.2px at 275px 175px, rgba(255,255,255,0.4), transparent);
+    background-size: 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px;
+    animation: starMove 90s linear infinite;
+    opacity: 0.7;
+}
+
+.portfolio-overlay .centered-satellite {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0;
+    transition: transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 1.2s ease 0.3s;
+}
+
+.portfolio-overlay.active .centered-satellite {
+    transform: translate(-50%, -50%) scale(5);
+    opacity: 1;
+}
+
+.portfolio-overlay .centered-satellite .satellite-image {
+    width: 180px;
+    height: 135px;
+    object-fit: contain;
+    animation: satelliteSpin 8s linear infinite;
+    filter: brightness(1.2) drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+    transition: filter 0.8s ease;
+}
+
+.portfolio-overlay.active .centered-satellite .satellite-image {
+    filter: brightness(1.4) drop-shadow(0 0 30px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 60px rgba(0, 212, 255, 0.3));
+}
+
+.portfolio-content-pane {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 95%;
+    max-width: 450px;
+    max-height: 85vh;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 1.5rem;
+    z-index: 3;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+    transition: opacity 1s ease 0.5s, transform 1s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.portfolio-content-pane::-webkit-scrollbar {
+    width: 6px;
+}
+
+.portfolio-content-pane::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.portfolio-content-pane::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.portfolio-overlay.active .portfolio-content-pane {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.portfolio-back-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 140px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 200;
+    touch-action: manipulation;
+}
+
+.portfolio-back-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.portfolio-back-button .arrow {
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+}
+
+.portfolio-back-button:hover .arrow {
+    transform: translateX(-3px);
+}
+
+.portfolio-info {
+    color: white;
+}
+
+.portfolio-info h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center;
+    background: linear-gradient(135deg, #ffffff, #cccccc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.portfolio-info > p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.portfolio-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.portfolio-section {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.25rem;
+    transition: all 0.3s ease;
+}
+
+.portfolio-section:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.portfolio-section h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #00d4ff;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.portfolio-section h3 i {
+    font-size: 1rem;
+}
+
+.portfolio-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.portfolio-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.portfolio-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.portfolio-item h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.portfolio-item p {
+    font-size: 0.85rem;
+    line-height: 1.3;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Trees Page Overlay */
+.trees-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+    pointer-events: none;
+}
+
+.trees-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.trees-overlay .background-image,
+.trees-overlay .background2,
+.trees-overlay .stars,
+.trees-overlay .centered-satellite {
+    /* Same as about overlay */
+}
+
+.trees-overlay .background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 100vh;
+    z-index: 0.5;
+    background-repeat: repeat;
+    background-size: auto 100vh;
+    background-position: 0 10vh, 100vw 10vh;
+    animation: spaceMove 180s linear infinite;
+    opacity: 0.8;
+}
+
+.trees-overlay .background2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 100vh;
+    z-index: 0.3;
+    background-repeat: repeat;
+    background-size: auto 100vh;
+    background-position: 50vw -10vh, 150vw -10vh;
+    animation: spaceMove 240s linear infinite;
+    opacity: 0.6;
+}
+
+.trees-overlay .stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 200vh;
+    z-index: 1;
+    background-image: 
+        radial-gradient(0.2px 0.2px at 100px 100px, #fff, transparent),
+        radial-gradient(0.2px 0.2px at 300px 200px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.2px 0.2px at 200px 300px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(0.2px 0.2px at 450px 150px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(0.2px 0.2px at 150px 450px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(0.2px 0.2px at 400px 350px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.2px 0.2px at 250px 500px, rgba(255,255,255,0.3), transparent),
+        radial-gradient(0.2px 0.2px at 500px 250px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(0.2px 0.2px at 75px 350px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.2px 0.2px at 350px 75px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(0.2px 0.2px at 175px 125px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.2px 0.2px at 425px 275px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(0.2px 0.2px at 125px 375px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(0.2px 0.2px at 375px 425px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.2px 0.2px at 275px 175px, rgba(255,255,255,0.4), transparent);
+    background-size: 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 80px 80px;
+    animation: starMove 90s linear infinite;
+    opacity: 0.7;
+}
+
+.trees-overlay .centered-satellite {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0;
+    transition: transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 1.2s ease 0.3s;
+}
+
+.trees-overlay.active .centered-satellite {
+    transform: translate(-50%, -50%) scale(5);
+    opacity: 1;
+}
+
+.trees-overlay .centered-satellite .satellite-image {
+    width: 180px;
+    height: 135px;
+    object-fit: contain;
+    animation: satelliteSpin 8s linear infinite;
+    filter: brightness(1.2) drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+    transition: filter 0.8s ease;
+}
+
+.trees-overlay.active .centered-satellite .satellite-image {
+    filter: brightness(1.4) drop-shadow(0 0 30px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 60px rgba(0, 212, 255, 0.3));
+}
+
+.trees-content-pane {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 95%;
+    max-width: 400px;
+    max-height: 85vh;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 1.5rem;
+    z-index: 3;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+    transition: opacity 1s ease 0.5s, transform 1s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.trees-content-pane::-webkit-scrollbar {
+    width: 6px;
+}
+
+.trees-content-pane::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.trees-content-pane::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.trees-overlay.active .trees-content-pane {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.trees-back-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 140px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 200;
+    touch-action: manipulation;
+}
+
+.trees-back-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.trees-back-button .arrow {
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+}
+
+.trees-back-button:hover .arrow {
+    transform: translateX(-3px);
+}
+
+.trees-info {
+    color: white;
+}
+
+.trees-info h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center;
+    background: linear-gradient(135deg, #ffffff, #cccccc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.trees-info > p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.trees-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.trees-section {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.25rem;
+    transition: all 0.3s ease;
+}
+
+.trees-section:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.trees-section h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: #00d4ff;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.trees-section h3 i {
+    font-size: 1rem;
+}
+
+.tree-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.tree-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.tree-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.tree-item h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.tree-item p {
+    font-size: 0.85rem;
+    line-height: 1.3;
+    color: rgba(255, 255, 255, 0.8);
 }

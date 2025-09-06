@@ -276,8 +276,7 @@ function initSatelliteMovement() {
             const target = satellite.getAttribute('data-target');
             if (target) {
                 console.log(`🛰️ Desktop satellite clicked: ${target}`);
-                // Add navigation logic here when pages are implemented
-                // For now, just log the target
+                handleSatelliteNavigation(target, satellite);
             }
         });
     });
@@ -463,9 +462,427 @@ window.restartDesktopOptimizations = function() {
     }, 50); // Reduced delay for smoother transition
 };
 
+// Page Navigation System
+function handleSatelliteNavigation(target, clickedSatellite) {
+    console.log(`🛰️ Navigating to: ${target}`);
+    
+    if (target === 'contact') {
+        openContactPage(clickedSatellite);
+    } else if (target === 'about') {
+        openAboutPage(clickedSatellite);
+    } else if (target === 'portfolio') {
+        openPortfolioPage(clickedSatellite);
+    } else if (target === 'trees') {
+        openTreesPage(clickedSatellite);
+    } else {
+        console.log(`📄 ${target} page not implemented yet`);
+    }
+}
+
+function openContactPage(clickedSatellite) {
+    console.log('📧 Opening contact page...');
+    
+    // Pause all animations except background stars and scaled satellite
+    pauseAllAnimationsExceptContact();
+    
+    // Get the clicked satellite's image source
+    const satelliteImg = clickedSatellite.querySelector('.satellite-image');
+    const satelliteSrc = satelliteImg.src;
+    const satelliteSrcset = satelliteImg.srcset;
+    
+    // Update the centered satellite in the overlay
+    const centeredSatellite = document.querySelector('.contact-overlay .centered-satellite img');
+    if (centeredSatellite) {
+        centeredSatellite.src = satelliteSrc;
+        if (satelliteSrcset) {
+            centeredSatellite.srcset = satelliteSrcset;
+        }
+    }
+    
+    // Show the contact overlay
+    const contactOverlay = document.getElementById('contact-overlay');
+    if (contactOverlay) {
+        contactOverlay.classList.add('active');
+        
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+        
+        console.log('✅ Contact page opened - all animations paused except stars and scaled satellite');
+    }
+}
+
+function closeContactPage() {
+    console.log('📧 Closing contact page...');
+    
+    const contactOverlay = document.getElementById('contact-overlay');
+    if (contactOverlay) {
+        contactOverlay.classList.remove('active');
+        
+        // Restore body scroll
+        document.body.style.overflow = '';
+        
+        // Resume all animations after a short delay
+        setTimeout(() => {
+            resumeAllAnimationsAfterContact();
+        }, 500);
+        
+        console.log('✅ Contact page closed - all animations resumed');
+    }
+}
+
+// Animation control functions for contact page
+function pauseAllAnimationsExceptContact() {
+    console.log('⏸️ Pausing all animations except background stars and scaled satellite...');
+    
+    // Pause satellite orbital animations
+    const satellites = document.querySelectorAll('.satellite');
+    satellites.forEach(sat => {
+        sat.classList.add('orbital-paused');
+    });
+    
+    // Pause background image animations (but keep stars moving)
+    const backgroundImage = document.querySelector('.hero-background .background-image');
+    const background2 = document.querySelector('.hero-background .background2');
+    
+    if (backgroundImage) {
+        backgroundImage.style.animationPlayState = 'paused';
+    }
+    if (background2) {
+        background2.style.animationPlayState = 'paused';
+    }
+    
+    // Pause Earth sprite if it has animations
+    const earthSprite = document.querySelector('.earth-sprite');
+    if (earthSprite) {
+        earthSprite.style.animationPlayState = 'paused';
+    }
+    
+    // Pause any shooting stars
+    if (typeof window.clearAllShootingStars === 'function') {
+        window.clearAllShootingStars();
+    }
+    
+    // Set page active state to prevent satellite movement
+    window.SatelliteMovementState.isPageActive = true;
+    
+    console.log('✅ All animations paused except background stars and scaled satellite');
+}
+
+function resumeAllAnimationsAfterContact() {
+    console.log('▶️ Resuming all animations...');
+    
+    // Resume satellite orbital animations
+    const satellites = document.querySelectorAll('.satellite');
+    satellites.forEach(sat => {
+        sat.classList.remove('orbital-paused');
+    });
+    
+    // Resume background image animations
+    const backgroundImage = document.querySelector('.hero-background .background-image');
+    const background2 = document.querySelector('.hero-background .background2');
+    
+    if (backgroundImage) {
+        backgroundImage.style.animationPlayState = 'running';
+    }
+    if (background2) {
+        background2.style.animationPlayState = 'running';
+    }
+    
+    // Resume Earth sprite animations
+    const earthSprite = document.querySelector('.earth-sprite');
+    if (earthSprite) {
+        earthSprite.style.animationPlayState = 'running';
+    }
+    
+    // Resume shooting stars
+    if (typeof window.initShootingStars === 'function') {
+        window.initShootingStars();
+    }
+    
+    // Clear page active state to allow satellite movement
+    window.SatelliteMovementState.isPageActive = false;
+    
+    // Resume satellite movement if not hovering
+    if (!window.SatelliteMovementState.isHovering) {
+        const satellites = document.querySelectorAll('.satellite');
+        satellites.forEach(sat => {
+            sat.classList.remove('orbital-paused');
+        });
+    }
+    
+    console.log('✅ All animations resumed');
+}
+
+// About Page Functions
+function openAboutPage(clickedSatellite) {
+    console.log('👤 Opening about page...');
+    
+    // Pause all animations except background stars and scaled satellite
+    pauseAllAnimationsExceptPage();
+    
+    // Get the clicked satellite's image source
+    const satelliteImg = clickedSatellite.querySelector('.satellite-image');
+    const satelliteSrc = satelliteImg.src;
+    const satelliteSrcset = satelliteImg.srcset;
+    
+    // Update the centered satellite in the overlay
+    const centeredSatellite = document.querySelector('.about-overlay .centered-satellite img');
+    if (centeredSatellite) {
+        centeredSatellite.src = satelliteSrc;
+        if (satelliteSrcset) {
+            centeredSatellite.srcset = satelliteSrcset;
+        }
+    }
+    
+    // Show the about overlay
+    const aboutOverlay = document.getElementById('about-overlay');
+    if (aboutOverlay) {
+        aboutOverlay.classList.add('active');
+        
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+        
+        console.log('✅ About page opened - all animations paused except stars and scaled satellite');
+    }
+}
+
+function closeAboutPage() {
+    console.log('👤 Closing about page...');
+    
+    const aboutOverlay = document.getElementById('about-overlay');
+    if (aboutOverlay) {
+        aboutOverlay.classList.remove('active');
+        
+        // Restore body scroll
+        document.body.style.overflow = '';
+        
+        // Resume all animations after a short delay
+        setTimeout(() => {
+            resumeAllAnimationsAfterPage();
+        }, 500);
+        
+        console.log('✅ About page closed - all animations resumed');
+    }
+}
+
+// Portfolio Page Functions
+function openPortfolioPage(clickedSatellite) {
+    console.log('💼 Opening portfolio page...');
+    
+    // Pause all animations except background stars and scaled satellite
+    pauseAllAnimationsExceptPage();
+    
+    // Get the clicked satellite's image source
+    const satelliteImg = clickedSatellite.querySelector('.satellite-image');
+    const satelliteSrc = satelliteImg.src;
+    const satelliteSrcset = satelliteImg.srcset;
+    
+    // Update the centered satellite in the overlay
+    const centeredSatellite = document.querySelector('.portfolio-overlay .centered-satellite img');
+    if (centeredSatellite) {
+        centeredSatellite.src = satelliteSrc;
+        if (satelliteSrcset) {
+            centeredSatellite.srcset = satelliteSrcset;
+        }
+    }
+    
+    // Show the portfolio overlay
+    const portfolioOverlay = document.getElementById('portfolio-overlay');
+    if (portfolioOverlay) {
+        portfolioOverlay.classList.add('active');
+        
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+        
+        console.log('✅ Portfolio page opened - all animations paused except stars and scaled satellite');
+    }
+}
+
+function closePortfolioPage() {
+    console.log('💼 Closing portfolio page...');
+    
+    const portfolioOverlay = document.getElementById('portfolio-overlay');
+    if (portfolioOverlay) {
+        portfolioOverlay.classList.remove('active');
+        
+        // Restore body scroll
+        document.body.style.overflow = '';
+        
+        // Resume all animations after a short delay
+        setTimeout(() => {
+            resumeAllAnimationsAfterPage();
+        }, 500);
+        
+        console.log('✅ Portfolio page closed - all animations resumed');
+    }
+}
+
+// Trees Page Functions
+function openTreesPage(clickedSatellite) {
+    console.log('🌳 Opening trees page...');
+    
+    // Pause all animations except background stars and scaled satellite
+    pauseAllAnimationsExceptPage();
+    
+    // Get the clicked satellite's image source
+    const satelliteImg = clickedSatellite.querySelector('.satellite-image');
+    const satelliteSrc = satelliteImg.src;
+    const satelliteSrcset = satelliteImg.srcset;
+    
+    // Update the centered satellite in the overlay
+    const centeredSatellite = document.querySelector('.trees-overlay .centered-satellite img');
+    if (centeredSatellite) {
+        centeredSatellite.src = satelliteSrc;
+        if (satelliteSrcset) {
+            centeredSatellite.srcset = satelliteSrcset;
+        }
+    }
+    
+    // Show the trees overlay
+    const treesOverlay = document.getElementById('trees-overlay');
+    if (treesOverlay) {
+        treesOverlay.classList.add('active');
+        
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+        
+        console.log('✅ Trees page opened - all animations paused except stars and scaled satellite');
+    }
+}
+
+function closeTreesPage() {
+    console.log('🌳 Closing trees page...');
+    
+    const treesOverlay = document.getElementById('trees-overlay');
+    if (treesOverlay) {
+        treesOverlay.classList.remove('active');
+        
+        // Restore body scroll
+        document.body.style.overflow = '';
+        
+        // Resume all animations after a short delay
+        setTimeout(() => {
+            resumeAllAnimationsAfterPage();
+        }, 500);
+        
+        console.log('✅ Trees page closed - all animations resumed');
+    }
+}
+
+// Generic animation control functions for all pages
+function pauseAllAnimationsExceptPage() {
+    console.log('⏸️ Pausing all animations except background stars and scaled satellite...');
+    
+    // Pause satellite orbital animations
+    const satellites = document.querySelectorAll('.satellite');
+    satellites.forEach(sat => {
+        sat.classList.add('orbital-paused');
+    });
+    
+    // Pause background image animations (but keep stars moving)
+    const backgroundImage = document.querySelector('.hero-background .background-image');
+    const background2 = document.querySelector('.hero-background .background2');
+    
+    if (backgroundImage) {
+        backgroundImage.style.animationPlayState = 'paused';
+    }
+    if (background2) {
+        background2.style.animationPlayState = 'paused';
+    }
+    
+    // Pause Earth sprite if it has animations
+    const earthSprite = document.querySelector('.earth-sprite');
+    if (earthSprite) {
+        earthSprite.style.animationPlayState = 'paused';
+    }
+    
+    // Pause any shooting stars
+    if (typeof window.clearAllShootingStars === 'function') {
+        window.clearAllShootingStars();
+    }
+    
+    // Set page active state to prevent satellite movement
+    window.SatelliteMovementState.isPageActive = true;
+    
+    console.log('✅ All animations paused except background stars and scaled satellite');
+}
+
+function resumeAllAnimationsAfterPage() {
+    console.log('▶️ Resuming all animations...');
+    
+    // Resume satellite orbital animations
+    const satellites = document.querySelectorAll('.satellite');
+    satellites.forEach(sat => {
+        sat.classList.remove('orbital-paused');
+    });
+    
+    // Resume background image animations
+    const backgroundImage = document.querySelector('.hero-background .background-image');
+    const background2 = document.querySelector('.hero-background .background2');
+    
+    if (backgroundImage) {
+        backgroundImage.style.animationPlayState = 'running';
+    }
+    if (background2) {
+        background2.style.animationPlayState = 'running';
+    }
+    
+    // Resume Earth sprite animations
+    const earthSprite = document.querySelector('.earth-sprite');
+    if (earthSprite) {
+        earthSprite.style.animationPlayState = 'running';
+    }
+    
+    // Resume shooting stars
+    if (typeof window.initShootingStars === 'function') {
+        window.initShootingStars();
+    }
+    
+    // Clear page active state to allow satellite movement
+    window.SatelliteMovementState.isPageActive = false;
+    
+    // Resume satellite movement if not hovering
+    if (!window.SatelliteMovementState.isHovering) {
+        const satellites = document.querySelectorAll('.satellite');
+        satellites.forEach(sat => {
+            sat.classList.remove('orbital-paused');
+        });
+    }
+    
+    console.log('✅ All animations resumed');
+}
+
+// Handle escape key to close any active page
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+        const contactOverlay = document.getElementById('contact-overlay');
+        const aboutOverlay = document.getElementById('about-overlay');
+        const portfolioOverlay = document.getElementById('portfolio-overlay');
+        const treesOverlay = document.getElementById('trees-overlay');
+        
+        if (contactOverlay && contactOverlay.classList.contains('active')) {
+            closeContactPage();
+        } else if (aboutOverlay && aboutOverlay.classList.contains('active')) {
+            closeAboutPage();
+        } else if (portfolioOverlay && portfolioOverlay.classList.contains('active')) {
+            closePortfolioPage();
+        } else if (treesOverlay && treesOverlay.classList.contains('active')) {
+            closeTreesPage();
+        }
+    }
+});
+
 // Export for global access
 window.initDesktopOptimizations = initDesktopOptimizations;
 window.EarthNightSystem = EarthNightSystem;
 window.initSatelliteFadeIn = initSatelliteFadeIn;
 window.initSatelliteFadeInFast = initSatelliteFadeInFast;
 window.reverseSatelliteFadeIn = reverseSatelliteFadeIn;
+window.openContactPage = openContactPage;
+window.closeContactPage = closeContactPage;
+window.openAboutPage = openAboutPage;
+window.closeAboutPage = closeAboutPage;
+window.openPortfolioPage = openPortfolioPage;
+window.closePortfolioPage = closePortfolioPage;
+window.openTreesPage = openTreesPage;
+window.closeTreesPage = closeTreesPage;

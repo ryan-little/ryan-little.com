@@ -72,10 +72,11 @@ function optimizeMobileLayout() {
         earthSprite.style.width = `${earthSize}px`;
         earthSprite.style.height = `${earthSize}px`;
         
-        // Let CSS handle positioning - don't override
-        // earthSprite.style.top = '50%';
-        // earthSprite.style.left = '50%';
-        // earthSprite.style.transform = 'translate(-50%, -50%)';
+        // Force mobile positioning - override any minigame restoration
+        earthSprite.style.top = '200px';
+        earthSprite.style.left = '50%';
+        earthSprite.style.transform = 'translate(-50%, -50%)';
+        earthSprite.style.position = 'absolute';
     }
     
     // Adjust mobile link tree positioning - move way up
@@ -117,7 +118,11 @@ function optimizeLandscapeMobile() {
         if (earthSprite) {
             earthSprite.style.width = '200px';
             earthSprite.style.height = '200px';
-            earthSprite.style.top = '100px';
+            // Force landscape positioning - override any minigame restoration
+            earthSprite.style.top = '150px';
+            earthSprite.style.left = '50%';
+            earthSprite.style.transform = 'translate(-50%, -50%)';
+            earthSprite.style.position = 'absolute';
         }
         
         // Adjust mobile link tree for landscape
@@ -458,5 +463,197 @@ if (document.readyState === 'loading') {
     setTimeout(forceTitleStacking, 100);
 }
 
+// Mobile Page Navigation Functions
+function handleMobileNavigation(target) {
+    console.log(`📱 Mobile navigating to: ${target}`);
+    
+    if (target === 'about') {
+        openAboutPageMobile();
+    } else if (target === 'portfolio') {
+        openPortfolioPageMobile();
+    } else if (target === 'trees') {
+        openTreesPageMobile();
+    } else if (target === 'contact') {
+        openContactPageMobile();
+    } else {
+        console.log(`📄 ${target} page not implemented yet`);
+    }
+}
+
+// About Page Mobile Functions
+function openAboutPageMobile() {
+    console.log('👤 Opening about page on mobile...');
+    
+    // Show the about overlay
+    const aboutOverlay = document.getElementById('about-overlay');
+    if (aboutOverlay) {
+        aboutOverlay.classList.add('active');
+        
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+        
+        console.log('✅ About page opened on mobile');
+    }
+}
+
+function closeAboutPageMobile() {
+    console.log('👤 Closing about page on mobile...');
+    
+    const aboutOverlay = document.getElementById('about-overlay');
+    if (aboutOverlay) {
+        aboutOverlay.classList.remove('active');
+        
+        // Restore body scroll
+        document.body.style.overflow = '';
+        
+        console.log('✅ About page closed on mobile');
+    }
+}
+
+// Portfolio Page Mobile Functions
+function openPortfolioPageMobile() {
+    console.log('💼 Opening portfolio page on mobile...');
+    
+    // Show the portfolio overlay
+    const portfolioOverlay = document.getElementById('portfolio-overlay');
+    if (portfolioOverlay) {
+        portfolioOverlay.classList.add('active');
+        
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+        
+        console.log('✅ Portfolio page opened on mobile');
+    }
+}
+
+function closePortfolioPageMobile() {
+    console.log('💼 Closing portfolio page on mobile...');
+    
+    const portfolioOverlay = document.getElementById('portfolio-overlay');
+    if (portfolioOverlay) {
+        portfolioOverlay.classList.remove('active');
+        
+        // Restore body scroll
+        document.body.style.overflow = '';
+        
+        console.log('✅ Portfolio page closed on mobile');
+    }
+}
+
+// Trees Page Mobile Functions
+function openTreesPageMobile() {
+    console.log('🌳 Opening trees page on mobile...');
+    
+    // Show the trees overlay
+    const treesOverlay = document.getElementById('trees-overlay');
+    if (treesOverlay) {
+        treesOverlay.classList.add('active');
+        
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+        
+        console.log('✅ Trees page opened on mobile');
+    }
+}
+
+function closeTreesPageMobile() {
+    console.log('🌳 Closing trees page on mobile...');
+    
+    const treesOverlay = document.getElementById('trees-overlay');
+    if (treesOverlay) {
+        treesOverlay.classList.remove('active');
+        
+        // Restore body scroll
+        document.body.style.overflow = '';
+        
+        console.log('✅ Trees page closed on mobile');
+    }
+}
+
+// Contact Page Mobile Functions
+function openContactPageMobile() {
+    console.log('📧 Opening contact page on mobile...');
+    
+    // Show the contact overlay
+    const contactOverlay = document.getElementById('contact-overlay');
+    if (contactOverlay) {
+        contactOverlay.classList.add('active');
+        
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+        
+        console.log('✅ Contact page opened on mobile');
+    }
+}
+
+function closeContactPageMobile() {
+    console.log('📧 Closing contact page on mobile...');
+    
+    const contactOverlay = document.getElementById('contact-overlay');
+    if (contactOverlay) {
+        contactOverlay.classList.remove('active');
+        
+        // Restore body scroll
+        document.body.style.overflow = '';
+        
+        console.log('✅ Contact page closed on mobile');
+    }
+}
+
+// Add click handlers for mobile link items
+function initMobileNavigation() {
+    console.log('📱 Initializing mobile navigation...');
+    
+    // Add click handlers for mobile link items
+    const mobileLinkItems = document.querySelectorAll('.mobile-link-item');
+    mobileLinkItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            const href = this.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                const target = href.substring(1); // Remove the #
+                handleMobileNavigation(target);
+            }
+        });
+    });
+    
+    // Handle escape key to close any active page
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            const contactOverlay = document.getElementById('contact-overlay');
+            const aboutOverlay = document.getElementById('about-overlay');
+            const portfolioOverlay = document.getElementById('portfolio-overlay');
+            const treesOverlay = document.getElementById('trees-overlay');
+            
+            if (contactOverlay && contactOverlay.classList.contains('active')) {
+                closeContactPageMobile();
+            } else if (aboutOverlay && aboutOverlay.classList.contains('active')) {
+                closeAboutPageMobile();
+            } else if (portfolioOverlay && portfolioOverlay.classList.contains('active')) {
+                closePortfolioPageMobile();
+            } else if (treesOverlay && treesOverlay.classList.contains('active')) {
+                closeTreesPageMobile();
+            }
+        }
+    });
+    
+    console.log('✅ Mobile navigation initialized');
+}
+
+// Initialize mobile navigation when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMobileNavigation);
+} else {
+    initMobileNavigation();
+}
+
 // Export for global access
 window.initMobileOptimizations = initMobileOptimizations;
+window.openAboutPage = openAboutPageMobile;
+window.closeAboutPage = closeAboutPageMobile;
+window.openPortfolioPage = openPortfolioPageMobile;
+window.closePortfolioPage = closePortfolioPageMobile;
+window.openTreesPage = openTreesPageMobile;
+window.closeTreesPage = closeTreesPageMobile;
+window.openContactPage = openContactPageMobile;
+window.closeContactPage = closeContactPageMobile;
