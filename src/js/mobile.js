@@ -39,7 +39,10 @@ const MobileEarthNightSystem = {
             return;
         }
         
-        this.startUpdates();
+        // Wait for mobile layout optimizations to position the earth correctly
+        setTimeout(() => {
+            this.startUpdates();
+        }, 100);
     },
     
     getTimeBasedBrightness() {
@@ -517,9 +520,11 @@ function initMobileOptimizations() {
     optimizeMobileTypography();
     optimizeMobilePerformance();
     
-    // Initialize Mobile Earth Night System
+    // Initialize Mobile Earth Night System after a delay to ensure proper positioning
     if (typeof MobileEarthNightSystem !== 'undefined') {
-        MobileEarthNightSystem.init();
+        setTimeout(() => {
+            MobileEarthNightSystem.init();
+        }, 200); // Wait for layout optimizations to complete
     }
     
     // Add resize listener for responsive adjustments
@@ -752,15 +757,19 @@ window.restartMobileOptimizations = function() {
         optimizeMobileScrolling();
         optimizeMobilePerformance();
         
-        // Initialize Mobile Earth Night System
-        if (typeof MobileEarthNightSystem !== 'undefined') {
-            MobileEarthNightSystem.init();
-        }
+         // Initialize Mobile Earth Night System after a delay to ensure proper positioning
+         if (typeof MobileEarthNightSystem !== 'undefined') {
+             setTimeout(() => {
+                 MobileEarthNightSystem.init();
+             }, 200); // Wait for layout optimizations to complete
+         }
     }
     
     // Reinitialize the mobile night system to restore proper brightness/contrast
     if (typeof MobileEarthNightSystem !== 'undefined') {
-        MobileEarthNightSystem.updateEarthBrightness();
+        setTimeout(() => {
+            MobileEarthNightSystem.updateEarthBrightness();
+        }, 100);
     }
 };
 
