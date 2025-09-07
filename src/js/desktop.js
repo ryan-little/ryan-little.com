@@ -22,13 +22,23 @@ if (typeof window.DeviceInfo !== 'undefined') {
     };
 }
 
-// Simple Earth Night Dimming System (Desktop Only)
+// Simple Earth Night Dimming System (Desktop)
 const EarthNightSystem = {
     earthElement: null,
     updateInterval: null,
     
     init() {
         this.earthElement = document.querySelector('.earth-sprite');
+        
+        if (!this.earthElement) {
+            setTimeout(() => {
+                this.earthElement = document.querySelector('.earth-sprite');
+                if (this.earthElement) {
+                    this.startUpdates();
+                }
+            }, 100);
+            return;
+        }
         this.startUpdates();
     },
     
@@ -46,46 +56,55 @@ const EarthNightSystem = {
         if (time >= 6 && time < 12) {
             // Morning: 6 AM - 12 PM (gradually brightening)
             const morningProgress = (time - 6) / 6; // 0 to 1
-            brightness = 0.6 + (morningProgress * 0.5); // 0.6 to 1.1
-            contrast = 1.3 - (morningProgress * 0.2); // 1.3 to 1.1
-        } else if (time >= 12 && time < 18) {
-            // Afternoon: 12 PM - 6 PM (peak brightness)
-            brightness = 1.1;
+            brightness = 0.5 + (morningProgress * 0.5); // 0.5 to 1.0
+            contrast = 1.2 - (morningProgress * 0.1); // 1.2 to 1.1
+        } else if (time >= 12 && time < 17) {
+            // Afternoon: 12 PM - 5 PM (peak brightness)
+            brightness = 1.0;
             contrast = 1.1;
-        } else if (time >= 18 && time < 24) {
-            // Evening: 6 PM - 12 AM (gradually dimming)
-            const eveningProgress = (time - 18) / 6; // 0 to 1
-            brightness = 1.1 - (eveningProgress * 0.7); // 1.1 to 0.4
-            contrast = 1.1 + (eveningProgress * 0.1); // 1.1 to 1.2
+        } else if (time >= 17 && time < 20) {
+            // Early evening: 5 PM - 8 PM (rapid dimming)
+            const earlyEveningProgress = (time - 17) / 3; // 0 to 1
+            brightness = 1.0 - (earlyEveningProgress * 0.4); // 1.0 to 0.6
+            contrast = 1.1 + (earlyEveningProgress * 0.1); // 1.1 to 1.2
+        } else if (time >= 20 && time < 24) {
+            // Late evening: 8 PM - 12 AM (continuing to dim)
+            const lateEveningProgress = (time - 20) / 4; // 0 to 1
+            brightness = 0.6 - (lateEveningProgress * 0.3); // 0.6 to 0.3
+            contrast = 1.2 + (lateEveningProgress * 0.1); // 1.2 to 1.3
         } else {
             // Late night: 12 AM - 6 AM (darkest)
             const nightProgress = time / 6; // 0 to 1
-            brightness = 0.4 - (nightProgress * 0.2); // 0.4 to 0.2
-            contrast = 1.2 + (nightProgress * 0.1); // 1.2 to 1.3
+            brightness = 0.3 - (nightProgress * 0.15); // 0.3 to 0.15
+            contrast = 1.3 + (nightProgress * 0.1); // 1.3 to 1.4
         }
         
         return { brightness, contrast };
     },
     
     updateEarthBrightness() {
-        if (!this.earthElement) return;
+        if (!this.earthElement) {
+            console.warn('Earth element not available for brightness update');
+            return;
+        }
         
         const { brightness, contrast } = this.getTimeBasedBrightness();
         
-        // Apply smooth transition with CSS transition
-        this.earthElement.style.transition = 'filter 2s ease-in-out';
+        // Apply smooth transition with CSS transition (longer transition for the initial change)
+        this.earthElement.style.transition = 'filter 3s ease-in-out';
         this.earthElement.style.filter = `brightness(${brightness}) contrast(${contrast})`;
+        
     },
     
     startUpdates() {
-        // Update immediately
-        this.updateEarthBrightness();
+        // Start at full daylight brightness
+        this.earthElement.style.transition = 'filter 0s ease-in-out';
+        this.earthElement.style.filter = 'brightness(1.1) contrast(1.1)';
         
-        // Update every 5 minutes for smooth transitions throughout the day
-        this.updateInterval = setInterval(() => {
+        // Then transition to current time-based brightness after a short delay
+        setTimeout(() => {
             this.updateEarthBrightness();
-        }, 5 * 60 * 1000);
-        
+        }, 1000); // 1 second delay
     },
     
     stopUpdates() {
@@ -443,6 +462,11 @@ window.restartDesktopOptimizations = function() {
         });
         
         initDesktopOptimizations();
+        
+        // Reinitialize the night system to restore proper brightness/contrast
+        if (typeof EarthNightSystem !== 'undefined') {
+            EarthNightSystem.updateEarthBrightness();
+        }
     }, 50); // Reduced delay for smoother transition
 };
 
@@ -761,6 +785,44 @@ window.initDesktopOptimizations = initDesktopOptimizations;
 window.EarthNightSystem = EarthNightSystem;
 window.initSatelliteFadeIn = initSatelliteFadeIn;
 window.initSatelliteFadeInFast = initSatelliteFadeInFast;
+
+// Debug function for testing night system
+window.testNightSystem = function() {
+    console.log('=== Night System Test ===');
+    
+    if (!window.EarthNightSystem) {
+        console.error('EarthNightSystem not available');
+        return;
+    }
+    
+    const earth = document.querySelector('.earth-sprite');
+    if (!earth) {
+        console.error('Earth element not found');
+        return;
+    }
+    
+    console.log('Earth element found:', earth);
+    
+    const values = window.EarthNightSystem.getTimeBasedBrightness();
+    console.log('Expected values:', values);
+    
+    const computedStyle = window.getComputedStyle(earth);
+    console.log('Current filter:', computedStyle.filter);
+    
+    // Force an update
+    window.EarthNightSystem.updateEarthBrightness();
+    
+    const newComputedStyle = window.getComputedStyle(earth);
+    console.log('Filter after update:', newComputedStyle.filter);
+    
+    console.log('=== Test Complete ===');
+};
+
+// Console clear function
+window.clearConsole = function() {
+    console.clear();
+    console.log('Console cleared! 🌍');
+};
 window.reverseSatelliteFadeIn = reverseSatelliteFadeIn;
 window.openAdventuresPage = openAdventuresPage;
 window.closeAdventuresPage = closeAdventuresPage;

@@ -21,6 +21,107 @@ if (typeof window.DeviceInfo !== 'undefined') {
     };
 }
 
+// Mobile Earth Night Dimming System
+const MobileEarthNightSystem = {
+    earthElement: null,
+    updateInterval: null,
+    
+    init() {
+        this.earthElement = document.querySelector('.earth-sprite');
+        
+        if (!this.earthElement) {
+            setTimeout(() => {
+                this.earthElement = document.querySelector('.earth-sprite');
+                if (this.earthElement) {
+                    this.startUpdates();
+                }
+            }, 100);
+            return;
+        }
+        
+        this.startUpdates();
+    },
+    
+    getTimeBasedBrightness() {
+        const now = new Date();
+        const hour = now.getHours();
+        const minute = now.getMinutes();
+        
+        // Convert to decimal time for smoother transitions
+        const time = hour + (minute / 60);
+        
+        // Define brightness levels throughout the day (same as desktop)
+        let brightness, contrast;
+        
+        if (time >= 6 && time < 12) {
+            // Morning: 6 AM - 12 PM (gradually brightening)
+            const morningProgress = (time - 6) / 6; // 0 to 1
+            brightness = 0.5 + (morningProgress * 0.5); // 0.5 to 1.0
+            contrast = 1.2 - (morningProgress * 0.1); // 1.2 to 1.1
+        } else if (time >= 12 && time < 17) {
+            // Afternoon: 12 PM - 5 PM (peak brightness)
+            brightness = 1.0;
+            contrast = 1.1;
+        } else if (time >= 17 && time < 20) {
+            // Early evening: 5 PM - 8 PM (rapid dimming)
+            const earlyEveningProgress = (time - 17) / 3; // 0 to 1
+            brightness = 1.0 - (earlyEveningProgress * 0.4); // 1.0 to 0.6
+            contrast = 1.1 + (earlyEveningProgress * 0.1); // 1.1 to 1.2
+        } else if (time >= 20 && time < 24) {
+            // Late evening: 8 PM - 12 AM (continuing to dim)
+            const lateEveningProgress = (time - 20) / 4; // 0 to 1
+            brightness = 0.6 - (lateEveningProgress * 0.3); // 0.6 to 0.3
+            contrast = 1.2 + (lateEveningProgress * 0.1); // 1.2 to 1.3
+        } else {
+            // Late night: 12 AM - 6 AM (darkest)
+            const nightProgress = time / 6; // 0 to 1
+            brightness = 0.3 - (nightProgress * 0.15); // 0.3 to 0.15
+            contrast = 1.3 + (nightProgress * 0.1); // 1.3 to 1.4
+        }
+        
+        return { brightness, contrast };
+    },
+    
+    updateEarthBrightness() {
+        if (!this.earthElement) return;
+        
+        const { brightness, contrast } = this.getTimeBasedBrightness();
+        
+        // Apply smooth transition with CSS transition (longer transition for the initial change)
+        this.earthElement.style.transition = 'filter 3s ease-in-out';
+        this.earthElement.style.filter = `brightness(${brightness}) contrast(${contrast})`;
+        
+        // Add a subtle blue tint for night time
+        if (brightness < 0.7) {
+            const blueTint = Math.max(0, (0.7 - brightness) * 0.3);
+            this.earthElement.style.filter += ` hue-rotate(${blueTint * 20}deg) saturate(${1 + blueTint})`;
+        }
+    },
+    
+    startUpdates() {
+        // Start at full daylight brightness
+        this.earthElement.style.transition = 'filter 0s ease-in-out';
+        this.earthElement.style.filter = 'brightness(1.1) contrast(1.1)';
+        
+        // Then transition to current time-based brightness after a short delay
+        setTimeout(() => {
+            this.updateEarthBrightness();
+        }, 1000); // 1 second delay
+        
+        // Update every minute for smooth transitions
+        this.updateInterval = setInterval(() => {
+            this.updateEarthBrightness();
+        }, 60000);
+    },
+    
+    stopUpdates() {
+        if (this.updateInterval) {
+            clearInterval(this.updateInterval);
+            this.updateInterval = null;
+        }
+    }
+};
+
 // Mobile-specific optimizations and touch handling
 function optimizeMobileTouch() {
     
@@ -416,6 +517,11 @@ function initMobileOptimizations() {
     optimizeMobileTypography();
     optimizeMobilePerformance();
     
+    // Initialize Mobile Earth Night System
+    if (typeof MobileEarthNightSystem !== 'undefined') {
+        MobileEarthNightSystem.init();
+    }
+    
     // Add resize listener for responsive adjustments
     window.addEventListener('resize', () => {
         setTimeout(() => {
@@ -623,6 +729,47 @@ if (document.readyState === 'loading') {
     initMobileNavigation();
 }
 
+// Function to restart mobile optimizations like page initialization
+window.restartMobileOptimizations = function() {
+    // Reinitialize mobile optimizations, but skip typography optimizations if elements are restored
+    const heroTitle = document.querySelector('.hero-title');
+    const titleLine = document.querySelector('.hero-title .title-line');
+    const titleSubtitle = document.querySelector('.hero-title .title-subtitle');
+    
+    // Check if title elements are already restored from minigame
+    const isRestored = heroTitle && heroTitle.dataset.restored;
+    
+    if (!isRestored) {
+        // Only reinitialize mobile optimizations if not restored
+        initMobileOptimizations();
+    } else {
+        // Just reinitialize the parts that don't interfere with restored elements
+        optimizeMobileTouch();
+        optimizeMobileLayout();
+        optimizeLandscapeMobile();
+        optimizeHighDPIDisplays();
+        optimizeTouchFeedback();
+        optimizeMobileScrolling();
+        optimizeMobilePerformance();
+        
+        // Initialize Mobile Earth Night System
+        if (typeof MobileEarthNightSystem !== 'undefined') {
+            MobileEarthNightSystem.init();
+        }
+    }
+    
+    // Reinitialize the mobile night system to restore proper brightness/contrast
+    if (typeof MobileEarthNightSystem !== 'undefined') {
+        MobileEarthNightSystem.updateEarthBrightness();
+    }
+};
+
+// Console clear function
+window.clearConsole = function() {
+    console.clear();
+    console.log('Console cleared! 🌍');
+};
+
 // Export for global access
 window.initMobileOptimizations = initMobileOptimizations;
 window.handleMobileNavigation = handleMobileNavigation;
@@ -634,3 +781,4 @@ window.openPortfolioPage = openPortfolioPageMobile;
 window.closePortfolioPage = closePortfolioPageMobile;
 window.openTreesPage = openTreesPageMobile;
 window.closeTreesPage = closeTreesPageMobile;
+window.MobileEarthNightSystem = MobileEarthNightSystem;

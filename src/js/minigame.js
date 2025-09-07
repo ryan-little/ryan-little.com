@@ -503,14 +503,14 @@ function fadeInUIElementsSimplified() {
     const nameElements = document.querySelectorAll('.title-line, .title-subtitle');
     nameElements.forEach(element => {
         element.style.setProperty('opacity', '1', 'important');
-        element.style.setProperty('transition', 'opacity 0.6s ease', 'important');
+        element.style.setProperty('transition', 'opacity 1.2s ease', 'important');
         element.style.pointerEvents = 'auto';
     });
     
     // Restore social media buttons
     const socialButtons = document.querySelectorAll('.social-links a');
     socialButtons.forEach(button => {
-        button.style.transition = 'opacity 0.6s ease';
+        button.style.transition = 'opacity 1.2s ease';
         button.style.opacity = '1';
         button.style.pointerEvents = 'auto';
         button.style.cursor = 'pointer';
@@ -550,7 +550,7 @@ function fadeInUIElementsSimplified() {
         const delay = 1000 + (index * 200); // 1.0s, 1.2s, 1.4s, 1.6s (much faster than satellites)
         
         setTimeout(() => {
-            button.style.transition = 'opacity 0.6s ease';
+            button.style.transition = 'opacity 1.2s ease';
             button.style.opacity = '1';
             button.style.pointerEvents = 'auto';
             button.style.cursor = 'pointer';
@@ -580,11 +580,17 @@ function fadeInUIElementsSimplified() {
         earthSprite.style.opacity = '1';
     }
     
-    // Restart desktop optimizations like page initialization (only on desktop)
-    if (typeof window.restartDesktopOptimizations === 'function' && typeof DeviceInfo !== 'undefined' && !DeviceInfo.isMobile) {
-        setTimeout(() => {
-            window.restartDesktopOptimizations();
-        }, 500);
+    // Restart optimizations like page initialization
+    if (typeof DeviceInfo !== 'undefined') {
+        if (DeviceInfo.isMobile && typeof window.restartMobileOptimizations === 'function') {
+            setTimeout(() => {
+                window.restartMobileOptimizations();
+            }, 500);
+        } else if (!DeviceInfo.isMobile && typeof window.restartDesktopOptimizations === 'function') {
+            setTimeout(() => {
+                window.restartDesktopOptimizations();
+            }, 500);
+        }
     }
 }
 
@@ -623,14 +629,14 @@ function fadeInUIElementsStaggered() {
             }
             
             // Restore to full opacity
-            satellite.style.transition = 'opacity 0.6s ease';
+            satellite.style.transition = 'opacity 1.2s ease';
             satellite.style.opacity = '1'; // Full opacity
             satellite.style.pointerEvents = 'auto';
             satellite.style.zIndex = '20'; // Restore original z-index
             
             // Also restore label opacity
             if (label) {
-                label.style.transition = 'opacity 0.6s ease';
+                label.style.transition = 'opacity 1.2s ease';
                 label.style.opacity = '1';
             }
         }, index * 100);
@@ -679,7 +685,7 @@ function fadeInUIElementsStaggered() {
         const socialButtons = document.querySelectorAll('.social-links a');
         socialButtons.forEach((button, index) => {
             setTimeout(() => {
-                button.style.transition = 'opacity 0.6s ease';
+                button.style.transition = 'opacity 1.2s ease';
                 button.style.opacity = '1';
                 button.style.pointerEvents = 'auto';
                 button.style.zIndex = '200'; // Restore original z-index
@@ -723,7 +729,7 @@ function fadeInUIElementsStaggered() {
         const delay = 1000 + (index * 200); // 1.0s, 1.2s, 1.4s, 1.6s (much faster than satellites)
         
         setTimeout(() => {
-            button.style.transition = 'opacity 0.6s ease';
+            button.style.transition = 'opacity 1.2s ease';
             button.style.opacity = '1';
             button.style.pointerEvents = 'auto';
             button.style.zIndex = '10'; // Restore original z-index
@@ -771,11 +777,17 @@ function fadeInUIElementsStaggered() {
         earthSprite.style.pointerEvents = 'auto';
     }
     
-    // Restart desktop optimizations like page initialization (only on desktop)
-    if (typeof window.restartDesktopOptimizations === 'function' && typeof DeviceInfo !== 'undefined' && !DeviceInfo.isMobile) {
-        setTimeout(() => {
-            window.restartDesktopOptimizations();
-        }, 500); // Reduced delay for smoother transition
+    // Restart optimizations like page initialization
+    if (typeof DeviceInfo !== 'undefined') {
+        if (DeviceInfo.isMobile && typeof window.restartMobileOptimizations === 'function') {
+            setTimeout(() => {
+                window.restartMobileOptimizations();
+            }, 500);
+        } else if (!DeviceInfo.isMobile && typeof window.restartDesktopOptimizations === 'function') {
+            setTimeout(() => {
+                window.restartDesktopOptimizations();
+            }, 500);
+        }
     }
 }
 
@@ -961,6 +973,8 @@ function showGameEndAnimation() {
                 
                 // Restore title/subtitle with proper animation restoration
                 const nameElements = document.querySelectorAll('.title-line, .title-subtitle');
+                const heroTitle = document.querySelector('.hero-title');
+                
                 nameElements.forEach(element => {
                     // Remove all inline styles that override CSS animations
                     element.style.removeProperty('opacity');
@@ -1002,6 +1016,35 @@ function showGameEndAnimation() {
                     element.removeAttribute('data-original-moz-animation');
                     element.removeAttribute('data-original-o-animation');
                     element.removeAttribute('data-original-transform');
+                });
+                
+                // Mark the hero-title as restored to prevent mobile optimizations from interfering
+                if (heroTitle) {
+                    heroTitle.dataset.restored = 'true';
+                }
+                
+                // Restore social media buttons with proper fade-in
+                const socialButtons = document.querySelectorAll('.social-links a');
+                socialButtons.forEach(button => {
+                    // Remove any inline opacity styles to let CSS take over
+                    button.style.removeProperty('opacity');
+                    button.style.removeProperty('transition');
+                    
+                    // Restore functionality
+                    button.style.pointerEvents = 'auto';
+                    button.style.cursor = 'pointer';
+                    
+                    // Restore href if it was stored
+                    if (button.getAttribute('data-original-href')) {
+                        button.href = button.getAttribute('data-original-href');
+                        button.removeAttribute('data-original-href');
+                    }
+                    
+                    // Ensure the button is visible by removing any animation overrides
+                    button.style.removeProperty('animation');
+                    button.style.removeProperty('webkitAnimation');
+                    button.style.removeProperty('mozAnimation');
+                    button.style.removeProperty('oAnimation');
                 });
                 
                 // Now use simplified restoration - just run satellite initialization again
