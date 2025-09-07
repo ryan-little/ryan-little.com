@@ -1,7 +1,6 @@
 // Desktop-specific functionality for Ryan Little's personal website
 // Handles satellite navigation, Earth night system, and desktop optimizations
 
-console.log('💻 Desktop.js loaded - Desktop optimizations active');
 
 // Desktop-specific device info (always desktop)
 // Override the default DeviceInfo with desktop-specific values
@@ -29,7 +28,6 @@ const EarthNightSystem = {
     updateInterval: null,
     
     init() {
-        console.log('🌍 Initializing Earth Night System...');
         this.earthElement = document.querySelector('.earth-sprite');
         this.startUpdates();
     },
@@ -88,7 +86,6 @@ const EarthNightSystem = {
             this.updateEarthBrightness();
         }, 5 * 60 * 1000);
         
-        console.log('🌍 Earth Night System updates started');
     },
     
     stopUpdates() {
@@ -102,7 +99,6 @@ const EarthNightSystem = {
 // Desktop Performance Optimizations
 const DesktopPerformanceOptimizer = {
     optimizeForDevice: () => {
-        console.log('💻 Applying desktop optimizations...');
         
         // Desktop-specific optimizations
         const stars = document.querySelector('.stars');
@@ -111,15 +107,26 @@ const DesktopPerformanceOptimizer = {
             ['webkit', 'moz', 'o'].forEach(prefix => {
                 stars.style[`${prefix}AnimationDuration`] = '90s';
             });
-            console.log('⭐ Stars animation optimized for desktop');
+            // Enable hardware acceleration for better performance
+            stars.style.transform = 'translateZ(0)';
+            stars.style.willChange = 'transform';
         }
         
-        // Optimize satellite interactions
+        // Optimize satellite interactions with hardware acceleration
         const satellites = document.querySelectorAll('.satellite');
         satellites.forEach(satellite => {
             satellite.style.cursor = 'pointer';
+            // Enable hardware acceleration for smoother animations
+            satellite.style.transform = 'translateZ(0)';
+            satellite.style.willChange = 'transform';
         });
-        console.log('🛰️ Satellites optimized for desktop interaction');
+        
+        // Optimize Earth sprite for better performance
+        const earthSprite = document.querySelector('.earth-sprite');
+        if (earthSprite) {
+            earthSprite.style.transform = 'translateZ(0)';
+            earthSprite.style.willChange = 'transform, filter';
+        }
     },
     
     applyBrowserFixes: () => {
@@ -146,7 +153,6 @@ window.SatelliteMovementState = {
 
 // Initialize dynamic satellite movement (Desktop Only)
 function initSatelliteMovement() {
-    console.log('🛰️ Initializing desktop satellite movement...');
     
     const satellites = document.querySelectorAll('.satellite');
     
@@ -211,10 +217,8 @@ function initSatelliteMovement() {
         window.SatelliteMovementState.isPageVisible = !document.hidden;
         if (!window.SatelliteMovementState.isPageVisible && (window.SatelliteMovementState.isHovering || window.SatelliteMovementState.isPageActive)) {
             // Keep paused when page is not visible and was hovering or in a page
-            console.log('🛰️ Page hidden - maintaining satellite pause state');
         } else if (window.SatelliteMovementState.isPageVisible && (window.SatelliteMovementState.isHovering || window.SatelliteMovementState.isPageActive)) {
             // Resume paused state when page becomes visible again
-            console.log('🛰️ Page visible - maintaining satellite pause state');
         }
     });
     
@@ -223,7 +227,6 @@ function initSatelliteMovement() {
         satellites.forEach(sat => {
             sat.classList.add('orbital-paused');
         });
-        console.log('🛰️ All orbital animations paused (rotation and distance)');
     }
     
     // Function to resume all orbital animations
@@ -231,14 +234,12 @@ function initSatelliteMovement() {
         satellites.forEach(sat => {
             sat.classList.remove('orbital-paused');
         });
-        console.log('🛰️ All orbital animations resumed (rotation and distance)');
     }
     
     // Function to pause for page navigation (will be called when pages are added)
     window.pauseSatellitesForPage = function() {
         window.SatelliteMovementState.isPageActive = true;
         pauseAllOrbitalAnimations();
-        console.log('🛰️ Satellites paused for page navigation');
     };
     
     // Function to resume after page navigation (will be called by back button)
@@ -246,7 +247,6 @@ function initSatelliteMovement() {
         window.SatelliteMovementState.isPageActive = false;
         if (!window.SatelliteMovementState.isHovering) {
             resumeAllOrbitalAnimations();
-            console.log('🛰️ Satellites resumed after page navigation');
         }
     };
     
@@ -255,7 +255,6 @@ function initSatelliteMovement() {
         satellite.addEventListener('mouseenter', () => {
             if (!window.SatelliteMovementState.isHovering) {
                 window.SatelliteMovementState.isHovering = true;
-                console.log('🛰️ Satellite hovered - pausing orbital animations, keeping spinning');
                 pauseAllOrbitalAnimations();
             }
         });
@@ -263,7 +262,6 @@ function initSatelliteMovement() {
         satellite.addEventListener('mouseleave', () => {
             if (window.SatelliteMovementState.isHovering) {
                 window.SatelliteMovementState.isHovering = false;
-                console.log('🛰️ Satellite hover ended - resuming orbital animations');
                 if (!window.SatelliteMovementState.isPageActive) {
                     resumeAllOrbitalAnimations();
                 }
@@ -275,7 +273,6 @@ function initSatelliteMovement() {
             e.preventDefault();
             const target = satellite.getAttribute('data-target');
             if (target) {
-                console.log(`🛰️ Desktop satellite clicked: ${target}`);
                 handleSatelliteNavigation(target, satellite);
             }
         });
@@ -284,7 +281,6 @@ function initSatelliteMovement() {
 
 // Initialize satellite fade-in with staggered timing
 function initSatelliteFadeIn() {
-    console.log('🛰️ Initializing satellite fade-in...');
     
     const satellites = document.querySelectorAll('.satellite');
     const labels = document.querySelectorAll('.satellite-label');
@@ -297,7 +293,6 @@ function initSatelliteFadeIn() {
             satellite.style.opacity = '1';
             satellite.style.pointerEvents = 'auto'; // Restore clickability
             satellite.style.cursor = 'pointer'; // Ensure cursor shows it's clickable
-            console.log(`🛰️ Satellite ${index + 1} faded in and made clickable`);
         }, delay);
     });
     
@@ -307,14 +302,12 @@ function initSatelliteFadeIn() {
         
         setTimeout(() => {
             label.style.opacity = '1';
-            console.log(`🏷️ Label ${index + 1} faded in`);
         }, delay);
     });
 }
 
 // Fast satellite restoration for post-minigame (much quicker than initial page load)
 function initSatelliteFadeInFast() {
-    console.log('🛰️ Initializing fast satellite fade-in for post-minigame...');
     
     const satellites = document.querySelectorAll('.satellite');
     const labels = document.querySelectorAll('.satellite-label');
@@ -329,7 +322,6 @@ function initSatelliteFadeInFast() {
             satellite.style.pointerEvents = 'auto'; // Restore clickability
             satellite.style.cursor = 'pointer'; // Ensure cursor shows it's clickable
             satellite.style.zIndex = '20'; // Restore original z-index
-            console.log(`🛰️ Satellite ${index + 1} quickly faded in and made clickable`);
         }, delay);
     });
     
@@ -340,14 +332,12 @@ function initSatelliteFadeInFast() {
         setTimeout(() => {
             label.style.transition = 'opacity 0.4s ease';
             label.style.opacity = '1';
-            console.log(`🏷️ Label ${index + 1} quickly faded in`);
         }, delay);
     });
 }
 
 // Reverse satellite initialization - fade out satellites (opposite of initSatelliteFadeIn)
 function reverseSatelliteFadeIn() {
-    console.log('🛰️ Reversing satellite fade-in (fading out)...');
     
     const satellites = document.querySelectorAll('.satellite');
     const labels = document.querySelectorAll('.satellite-label');
@@ -360,7 +350,6 @@ function reverseSatelliteFadeIn() {
             satellite.style.transition = 'opacity 0.5s ease';
             satellite.style.opacity = '0.3'; // Ghost-like appearance during minigame
             satellite.style.pointerEvents = 'none';
-            console.log(`🛰️ Satellite ${index + 1} faded out for minigame`);
         }, delay);
     });
     
@@ -371,14 +360,12 @@ function reverseSatelliteFadeIn() {
         setTimeout(() => {
             label.style.transition = 'opacity 0.5s ease';
             label.style.opacity = '0.3';
-            console.log(`🏷️ Label ${index + 1} faded out for minigame`);
         }, delay);
     });
 }
 
 // Desktop-specific initialization
 function initDesktopOptimizations() {
-    console.log('💻 Initializing desktop optimizations...');
     
     // Initialize satellite movement
     initSatelliteMovement();
@@ -392,7 +379,6 @@ function initDesktopOptimizations() {
         EarthNightSystem.init();
     }
     
-    console.log('✅ Desktop optimizations initialized');
 }
 
 // Initialize desktop optimizations when DOM is ready
@@ -404,7 +390,6 @@ if (document.readyState === 'loading') {
 
 // Function to restart desktop optimizations like page initialization
 window.restartDesktopOptimizations = function() {
-    console.log('🛰️ Restarting desktop optimizations like page initialization...');
     
     // Get current satellite positions to maintain visual continuity
     const satellites = document.querySelectorAll('.satellite');
@@ -458,16 +443,14 @@ window.restartDesktopOptimizations = function() {
         });
         
         initDesktopOptimizations();
-        console.log('✅ Desktop optimizations restarted - hover functionality restored');
     }, 50); // Reduced delay for smoother transition
 };
 
 // Page Navigation System
 function handleSatelliteNavigation(target, clickedSatellite) {
-    console.log(`🛰️ Navigating to: ${target}`);
     
-    if (target === 'contact') {
-        openContactPage(clickedSatellite);
+    if (target === 'adventures') {
+        openAdventuresPage(clickedSatellite);
     } else if (target === 'about') {
         openAboutPage(clickedSatellite);
     } else if (target === 'portfolio') {
@@ -475,12 +458,10 @@ function handleSatelliteNavigation(target, clickedSatellite) {
     } else if (target === 'trees') {
         openTreesPage(clickedSatellite);
     } else {
-        console.log(`📄 ${target} page not implemented yet`);
     }
 }
 
 function openContactPage(clickedSatellite) {
-    console.log('📧 Opening contact page...');
     
     // Pause all animations except background stars and scaled satellite
     pauseAllAnimationsExceptContact();
@@ -507,12 +488,10 @@ function openContactPage(clickedSatellite) {
         // Prevent body scroll
         document.body.style.overflow = 'hidden';
         
-        console.log('✅ Contact page opened - all animations paused except stars and scaled satellite');
     }
 }
 
 function closeContactPage() {
-    console.log('📧 Closing contact page...');
     
     const contactOverlay = document.getElementById('contact-overlay');
     if (contactOverlay) {
@@ -526,13 +505,59 @@ function closeContactPage() {
             resumeAllAnimationsAfterContact();
         }, 500);
         
-        console.log('✅ Contact page closed - all animations resumed');
+    }
+}
+
+// Adventures Page Functions
+function openAdventuresPage(clickedSatellite) {
+    
+    // Pause all animations except background stars and scaled satellite
+    pauseAllAnimationsExceptPage();
+    
+    // Get the clicked satellite's image source
+    const satelliteImg = clickedSatellite.querySelector('.satellite-image');
+    const satelliteSrc = satelliteImg.src;
+    const satelliteSrcset = satelliteImg.srcset;
+    
+    // Update the centered satellite in the overlay
+    const centeredSatellite = document.querySelector('.adventures-overlay .centered-satellite img');
+    if (centeredSatellite) {
+        centeredSatellite.src = satelliteSrc;
+        if (satelliteSrcset) {
+            centeredSatellite.srcset = satelliteSrcset;
+        }
+    }
+    
+    // Show the adventures overlay
+    const adventuresOverlay = document.getElementById('adventures-overlay');
+    if (adventuresOverlay) {
+        adventuresOverlay.classList.add('active');
+        
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+        
+    }
+}
+
+function closeAdventuresPage() {
+    
+    const adventuresOverlay = document.getElementById('adventures-overlay');
+    if (adventuresOverlay) {
+        adventuresOverlay.classList.remove('active');
+        
+        // Restore body scroll
+        document.body.style.overflow = '';
+        
+        // Resume all animations after a short delay
+        setTimeout(() => {
+            resumeAllAnimationsAfterPage();
+        }, 500);
+        
     }
 }
 
 // Animation control functions for contact page
 function pauseAllAnimationsExceptContact() {
-    console.log('⏸️ Pausing all animations except background stars and scaled satellite...');
     
     // Pause satellite orbital animations
     const satellites = document.querySelectorAll('.satellite');
@@ -565,11 +590,9 @@ function pauseAllAnimationsExceptContact() {
     // Set page active state to prevent satellite movement
     window.SatelliteMovementState.isPageActive = true;
     
-    console.log('✅ All animations paused except background stars and scaled satellite');
 }
 
 function resumeAllAnimationsAfterContact() {
-    console.log('▶️ Resuming all animations...');
     
     // Resume satellite orbital animations
     const satellites = document.querySelectorAll('.satellite');
@@ -610,12 +633,10 @@ function resumeAllAnimationsAfterContact() {
         });
     }
     
-    console.log('✅ All animations resumed');
 }
 
 // About Page Functions
 function openAboutPage(clickedSatellite) {
-    console.log('👤 Opening about page...');
     
     // Pause all animations except background stars and scaled satellite
     pauseAllAnimationsExceptPage();
@@ -642,12 +663,10 @@ function openAboutPage(clickedSatellite) {
         // Prevent body scroll
         document.body.style.overflow = 'hidden';
         
-        console.log('✅ About page opened - all animations paused except stars and scaled satellite');
     }
 }
 
 function closeAboutPage() {
-    console.log('👤 Closing about page...');
     
     const aboutOverlay = document.getElementById('about-overlay');
     if (aboutOverlay) {
@@ -661,13 +680,11 @@ function closeAboutPage() {
             resumeAllAnimationsAfterPage();
         }, 500);
         
-        console.log('✅ About page closed - all animations resumed');
     }
 }
 
 // Portfolio Page Functions
 function openPortfolioPage(clickedSatellite) {
-    console.log('💼 Opening portfolio page...');
     
     // Pause all animations except background stars and scaled satellite
     pauseAllAnimationsExceptPage();
@@ -694,12 +711,10 @@ function openPortfolioPage(clickedSatellite) {
         // Prevent body scroll
         document.body.style.overflow = 'hidden';
         
-        console.log('✅ Portfolio page opened - all animations paused except stars and scaled satellite');
     }
 }
 
 function closePortfolioPage() {
-    console.log('💼 Closing portfolio page...');
     
     const portfolioOverlay = document.getElementById('portfolio-overlay');
     if (portfolioOverlay) {
@@ -713,13 +728,11 @@ function closePortfolioPage() {
             resumeAllAnimationsAfterPage();
         }, 500);
         
-        console.log('✅ Portfolio page closed - all animations resumed');
     }
 }
 
 // Trees Page Functions
 function openTreesPage(clickedSatellite) {
-    console.log('🌳 Opening trees page...');
     
     // Pause all animations except background stars and scaled satellite
     pauseAllAnimationsExceptPage();
@@ -746,12 +759,10 @@ function openTreesPage(clickedSatellite) {
         // Prevent body scroll
         document.body.style.overflow = 'hidden';
         
-        console.log('✅ Trees page opened - all animations paused except stars and scaled satellite');
     }
 }
 
 function closeTreesPage() {
-    console.log('🌳 Closing trees page...');
     
     const treesOverlay = document.getElementById('trees-overlay');
     if (treesOverlay) {
@@ -765,13 +776,11 @@ function closeTreesPage() {
             resumeAllAnimationsAfterPage();
         }, 500);
         
-        console.log('✅ Trees page closed - all animations resumed');
     }
 }
 
 // Generic animation control functions for all pages
 function pauseAllAnimationsExceptPage() {
-    console.log('⏸️ Pausing all animations except background stars and scaled satellite...');
     
     // Pause satellite orbital animations
     const satellites = document.querySelectorAll('.satellite');
@@ -804,11 +813,9 @@ function pauseAllAnimationsExceptPage() {
     // Set page active state to prevent satellite movement
     window.SatelliteMovementState.isPageActive = true;
     
-    console.log('✅ All animations paused except background stars and scaled satellite');
 }
 
 function resumeAllAnimationsAfterPage() {
-    console.log('▶️ Resuming all animations...');
     
     // Resume satellite orbital animations
     const satellites = document.querySelectorAll('.satellite');
@@ -849,19 +856,18 @@ function resumeAllAnimationsAfterPage() {
         });
     }
     
-    console.log('✅ All animations resumed');
 }
 
 // Handle escape key to close any active page
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
-        const contactOverlay = document.getElementById('contact-overlay');
+        const adventuresOverlay = document.getElementById('adventures-overlay');
         const aboutOverlay = document.getElementById('about-overlay');
         const portfolioOverlay = document.getElementById('portfolio-overlay');
         const treesOverlay = document.getElementById('trees-overlay');
         
-        if (contactOverlay && contactOverlay.classList.contains('active')) {
-            closeContactPage();
+        if (adventuresOverlay && adventuresOverlay.classList.contains('active')) {
+            closeAdventuresPage();
         } else if (aboutOverlay && aboutOverlay.classList.contains('active')) {
             closeAboutPage();
         } else if (portfolioOverlay && portfolioOverlay.classList.contains('active')) {
@@ -878,8 +884,8 @@ window.EarthNightSystem = EarthNightSystem;
 window.initSatelliteFadeIn = initSatelliteFadeIn;
 window.initSatelliteFadeInFast = initSatelliteFadeInFast;
 window.reverseSatelliteFadeIn = reverseSatelliteFadeIn;
-window.openContactPage = openContactPage;
-window.closeContactPage = closeContactPage;
+window.openAdventuresPage = openAdventuresPage;
+window.closeAdventuresPage = closeAdventuresPage;
 window.openAboutPage = openAboutPage;
 window.closeAboutPage = closeAboutPage;
 window.openPortfolioPage = openPortfolioPage;

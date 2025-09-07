@@ -119,7 +119,6 @@ class ShootingStarSystem {
         
         // Validate coordinates to prevent NaN errors
         if (isNaN(startX) || isNaN(startY) || isNaN(endX) || isNaN(endY)) {
-            console.warn('Invalid coordinates detected, skipping shooting star creation');
             return null;
         }
         
@@ -138,7 +137,7 @@ class ShootingStarSystem {
             (Math.random() * 3 + 6) : // Slower for minigame
             (Math.random() * 2 + 4);  // Faster for background
         
-        // Set initial position and rotation
+        // Set initial position and rotation with hardware acceleration
         shootingStar.style.cssText = `
             position: absolute;
             left: ${startX}px;
@@ -149,7 +148,7 @@ class ShootingStarSystem {
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-            transform: rotate(${angle}deg);
+            transform: rotate(${angle}deg) translateZ(0);
             opacity: 0;
             filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
             cursor: pointer;
@@ -157,6 +156,7 @@ class ShootingStarSystem {
             z-index: ${type === 'minigame' ? '160' : '155'};
             touch-action: manipulation;
             -webkit-tap-highlight-color: transparent;
+            will-change: transform, opacity;
         `;
         
         // Add event listeners based on type
@@ -211,29 +211,14 @@ class ShootingStarSystem {
         e.preventDefault();
         e.stopPropagation();
         
-        console.log('🎯 Background star clicked!', {
-            type: e.type,
-            target: e.target,
-            minigameActive: window.minigameActive,
-            gameCooldown: window.gameCooldown,
-            hasStartMinigame: typeof startMinigame === 'function',
-            DeviceInfo: typeof DeviceInfo !== 'undefined' ? DeviceInfo : 'undefined'
-        });
         
         // Start minigame if not active and not in cooldown
         if (typeof startMinigame === 'function' && !window.minigameActive && !window.gameCooldown) {
-            console.log('🎮 Starting minigame from background star click');
             try {
                 startMinigame();
             } catch (error) {
-                console.error('❌ Error starting minigame:', error);
             }
         } else {
-            console.log('❌ Cannot start minigame:', {
-                startMinigameExists: typeof startMinigame === 'function',
-                minigameActive: window.minigameActive,
-                gameCooldown: window.gameCooldown
-            });
         }
         
         // Remove the clicked star
@@ -249,12 +234,10 @@ class ShootingStarSystem {
             // Increment score if minigame is active
             if (typeof window.gameScore === 'number') {
                 window.gameScore++;
-                console.log('🎯 Minigame star clicked! Score:', window.gameScore);
                 if (typeof updateScoreDisplay === 'function') {
                     updateScoreDisplay();
                 }
             } else {
-                console.warn('❌ gameScore is not a number:', window.gameScore);
             }
         } else if (!window.gameCooldown) {
             // Start minigame if not active and not in cooldown
@@ -334,7 +317,6 @@ let shootingStarSystem;
 function initShootingStars() {
     if (!shootingStarSystem) {
         shootingStarSystem = new ShootingStarSystem();
-        console.log('⭐ Shooting star system initialized');
     }
 }
 

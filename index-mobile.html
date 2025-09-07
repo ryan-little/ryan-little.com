@@ -72,16 +72,50 @@
                     </picture>
                     <span class="mobile-link-text">Trees</span>
                 </a>
-                <a href="#contact" class="mobile-link-item">
+                <a href="#adventures" class="mobile-link-item">
                     <picture>
                         <source srcset="assets/images_webp/satellite2.webp" type="image/webp">
-                        <img src="assets/images/satellite2.png" alt="Contact" class="mobile-link-icon mobile-spin-fast-reverse">
+                        <img src="assets/images/satellite2.png" alt="Adventures" class="mobile-link-icon mobile-spin-fast-reverse">
                     </picture>
-                    <span class="mobile-link-text">Contact</span>
+                    <span class="mobile-link-text">Adventures</span>
                 </a>
             </div>
         </div>
     </section>
+
+    <!-- Adventures Page Overlay -->
+    <div id="adventures-overlay" class="adventures-overlay">
+        <div class="background-image"></div>
+        <div class="background2"></div>
+        <div class="stars"></div>
+        <div class="centered-satellite">
+            <picture>
+                <source srcset="assets/images_webp/satellite2.webp" type="image/webp">
+                <img src="assets/images/satellite2.png" alt="Adventures Satellite" class="satellite-image">
+            </picture>
+        </div>
+        <div class="adventures-content-pane">
+            <button class="adventures-back-button" onclick="closeAdventuresPage()">
+                <span class="arrow">←</span>
+                Back to Earth
+            </button>
+            <div class="adventures-info">
+                <h2>Adventures</h2>
+                <p>Exploring the world, one adventure at a time.</p>
+                
+                <!-- Countries Counter -->
+                <div class="countries-counter">
+                    <div class="counter-number">12</div>
+                    <div class="counter-label">Countries Visited</div>
+                </div>
+                
+                <!-- Adventure Panels - Populated by template system -->
+                <div class="adventures-grid">
+                    <!-- Content will be populated by templates.js -->
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- About Me Page Overlay -->
     <div id="about-overlay" class="about-overlay">
@@ -103,30 +137,17 @@
                 <h2>About Me</h2>
                 <p>Exploring the intersection of geography, technology, and nature.</p>
                 
+                <!-- Professional Headshot -->
+                <div class="image-container" style="max-width: 250px; margin: 1.5rem auto;">
+                    <picture>
+                        <source srcset="assets/images_webp/bigbendnp_headshot.webp" type="image/webp">
+                        <img src="assets/images/bigbendnp_headshot.JPG" alt="Ryan Little at Big Bend National Park" class="content-image">
+                    </picture>
+                    <div class="image-caption">Exploring Big Bend National Park</div>
+                </div>
+                
                 <div class="about-sections">
-                    <div class="about-section">
-                        <h3><i class="fas fa-graduation-cap"></i> Education</h3>
-                        <p><strong>B.A. in Geography</strong> - University of California, Santa Barbara</p>
-                        <p>Specialization in Geographic Information Science with focus on Aerial Photos and Remote Sensing</p>
-                    </div>
-                    
-                    <div class="about-section">
-                        <h3><i class="fas fa-briefcase"></i> Professional</h3>
-                        <p><strong>Geospatial Analyst</strong> - Transforming data into spatial insights</p>
-                        <p>Expertise in GIS, Remote Sensing, and Spatial Analysis for environmental and urban planning applications</p>
-                    </div>
-                    
-                    <div class="about-section">
-                        <h3><i class="fas fa-mountain"></i> Passion</h3>
-                        <p><strong>Nature & Photography</strong> - Capturing the beauty of our planet</p>
-                        <p>Exploring national parks including Glacier, Yosemite, and Rocky Mountain, documenting the natural world through photography</p>
-                    </div>
-                    
-                    <div class="about-section">
-                        <h3><i class="fas fa-code"></i> Technology</h3>
-                        <p><strong>Full-Stack Development</strong> - Building digital solutions</p>
-                        <p>Founder of Little Hammer Labs, creating innovative web applications and geospatial tools</p>
-                    </div>
+                    <!-- Content will be populated by templates.js -->
                 </div>
             </div>
         </div>
@@ -153,59 +174,7 @@
                 <p>Showcasing my work in geospatial analysis, web development, and photography.</p>
                 
                 <div class="portfolio-sections">
-                    <div class="portfolio-section">
-                        <h3><i class="fas fa-map"></i> GIS Projects</h3>
-                        <div class="portfolio-items">
-                            <div class="portfolio-item">
-                                <h4>Urban Heat Island Analysis</h4>
-                                <p>Remote sensing analysis of temperature variations in metropolitan areas using Landsat imagery</p>
-                            </div>
-                            <div class="portfolio-item">
-                                <h4>Watershed Delineation</h4>
-                                <p>Digital elevation model processing for hydrological modeling and flood risk assessment</p>
-                            </div>
-                            <div class="portfolio-item">
-                                <h4>Land Use Change Detection</h4>
-                                <p>Multi-temporal analysis of land cover changes using satellite imagery classification</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="portfolio-section">
-                        <h3><i class="fas fa-camera"></i> Photography</h3>
-                        <div class="portfolio-items">
-                            <div class="portfolio-item">
-                                <h4>National Parks Collection</h4>
-                                <p>Landscape photography from Glacier, Yosemite, and Rocky Mountain National Parks</p>
-                            </div>
-                            <div class="portfolio-item">
-                                <h4>Tree Documentation</h4>
-                                <p>Detailed photography of various tree species and their ecological significance</p>
-                            </div>
-                            <div class="portfolio-item">
-                                <h4>Nature Conservation</h4>
-                                <p>Visual storytelling through photography to promote environmental awareness</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="portfolio-section">
-                        <h3><i class="fas fa-laptop-code"></i> Web Development</h3>
-                        <div class="portfolio-items">
-                            <div class="portfolio-item">
-                                <h4>Little Hammer Labs</h4>
-                                <p>Full-stack web applications with modern frameworks and geospatial integration</p>
-                            </div>
-                            <div class="portfolio-item">
-                                <h4>Interactive Maps</h4>
-                                <p>Web-based mapping applications using Leaflet, Mapbox, and custom GIS solutions</p>
-                            </div>
-                            <div class="portfolio-item">
-                                <h4>Data Visualization</h4>
-                                <p>Dynamic charts and graphs for presenting geospatial data and analysis results</p>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Content will be populated by templates.js -->
                 </div>
             </div>
         </div>
@@ -228,63 +197,11 @@
                 Back to Earth
             </button>
             <div class="trees-info">
-                <h2>Trees</h2>
+                <h2>Trees I've Visited</h2>
                 <p>Celebrating the silent giants that shape our landscapes and sustain our planet.</p>
                 
                 <div class="trees-sections">
-                    <div class="trees-section">
-                        <h3><i class="fas fa-seedling"></i> Tree Species</h3>
-                        <div class="tree-items">
-                            <div class="tree-item">
-                                <h4>Giant Sequoias</h4>
-                                <p>The largest trees on Earth, found in California's Sierra Nevada mountains</p>
-                            </div>
-                            <div class="tree-item">
-                                <h4>Coastal Redwoods</h4>
-                                <p>The tallest trees in the world, reaching heights of over 300 feet</p>
-                            </div>
-                            <div class="tree-item">
-                                <h4>Ancient Bristlecone Pines</h4>
-                                <p>Some of the oldest living organisms, with specimens over 4,000 years old</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="trees-section">
-                        <h3><i class="fas fa-leaf"></i> Ecological Importance</h3>
-                        <div class="tree-items">
-                            <div class="tree-item">
-                                <h4>Carbon Sequestration</h4>
-                                <p>Trees absorb CO₂ from the atmosphere, playing a crucial role in climate regulation</p>
-                            </div>
-                            <div class="tree-item">
-                                <h4>Biodiversity Support</h4>
-                                <p>Forests provide habitat for countless species and maintain ecosystem balance</p>
-                            </div>
-                            <div class="tree-item">
-                                <h4>Water Cycle Regulation</h4>
-                                <p>Trees help maintain watershed health and prevent soil erosion</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="trees-section">
-                        <h3><i class="fas fa-camera"></i> Photography Focus</h3>
-                        <div class="tree-items">
-                            <div class="tree-item">
-                                <h4>Tree Portraits</h4>
-                                <p>Capturing the unique character and beauty of individual trees</p>
-                            </div>
-                            <div class="tree-item">
-                                <h4>Forest Landscapes</h4>
-                                <p>Documenting the grandeur of forest ecosystems and their seasonal changes</p>
-                            </div>
-                            <div class="tree-item">
-                                <h4>Conservation Stories</h4>
-                                <p>Using photography to highlight the importance of forest preservation</p>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Content will be populated by templates.js -->
                 </div>
             </div>
         </div>
@@ -294,6 +211,9 @@
     <script src="src/js/core.js"></script>
     <script src="src/js/animations.js"></script>
     <script src="src/js/minigame.js"></script>
+    <script src="src/js/content-manager.js"></script>
+    <script src="src/js/templates.js"></script>
+    <script src="src/js/components.js"></script>
     <script src="src/js/mobile.js"></script>
     <script src="src/js/main.js"></script>
 </body>

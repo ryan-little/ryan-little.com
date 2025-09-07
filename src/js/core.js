@@ -33,11 +33,12 @@ const PerformanceOptimizer = {
                 stars.style.backgroundSize = '150px 150px, 150px 150px, 150px 150px, 150px 150px, 150px 150px';
             }
             
-            // Fix for Edge transform issues
+            // Fix for Edge transform issues with hardware acceleration
             const elements = document.querySelectorAll('.satellite, .hero-background, .stars');
             elements.forEach(el => {
                 el.style.msTransform = 'translateZ(0)';
                 el.style.transform = 'translateZ(0)';
+                el.style.willChange = 'transform';
             });
         }
         
@@ -48,11 +49,12 @@ const PerformanceOptimizer = {
                 hero.style.minHeight = '-webkit-fill-available';
             }
             
-            // Fix for iOS transform issues
+            // Fix for iOS transform issues with hardware acceleration
             const transformElements = document.querySelectorAll('.satellite, .hero-background, .stars');
             transformElements.forEach(el => {
                 el.style.webkitTransform = 'translate3d(0, 0, 0)';
                 el.style.transform = 'translate3d(0, 0, 0)';
+                el.style.willChange = 'transform';
             });
         }
         
@@ -65,19 +67,21 @@ const PerformanceOptimizer = {
         }
         
         if (DeviceInfo.isFirefox) {
-            // Firefox-specific optimizations
+            // Firefox-specific optimizations with hardware acceleration
             const animatedElements = document.querySelectorAll('.satellite, .hero-background, .stars');
             animatedElements.forEach(el => {
                 el.style.transform = 'translateZ(0)';
+                el.style.willChange = 'transform';
             });
         }
         
         if (DeviceInfo.isSafari) {
-            // Safari-specific optimizations
+            // Safari-specific optimizations with hardware acceleration
             const transformElements = document.querySelectorAll('.satellite, .hero-background, .stars');
             transformElements.forEach(el => {
                 el.style.webkitTransform = 'translate3d(0, 0, 0)';
                 el.style.transform = 'translate3d(0, 0, 0)';
+                el.style.willChange = 'transform';
             });
         }
     }

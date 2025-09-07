@@ -2,7 +2,6 @@
 // Redesigned to match desktop experience while maintaining minigame functionality
 // Performance optimized for smooth mobile experience
 
-console.log('📱 Mobile-new.js loaded - Performance optimized for mobile');
 
 // Mobile-specific device info (always mobile)
 // Override the default DeviceInfo with mobile-specific values
@@ -24,7 +23,6 @@ if (typeof window.DeviceInfo !== 'undefined') {
 
 // Mobile-specific optimizations and touch handling
 function optimizeMobileTouch() {
-    console.log('📱 Applying redesigned mobile touch optimizations...');
     
     // Optimize touch targets for all interactive elements
     const touchElements = document.querySelectorAll('.social-link, .mobile-link-item, .minigame-score');
@@ -45,9 +43,11 @@ function optimizeMobileTouch() {
         ['webkit', 'moz', 'o'].forEach(prefix => {
             element.style[`${prefix}AnimationDuration`] = '90s';
         });
+        // Enable hardware acceleration for better performance
+        element.style.transform = 'translateZ(0)';
+        element.style.willChange = 'transform';
     });
     
-    console.log('🛰️ Mobile touch optimizations applied');
 }
 
 // Responsive mobile layout adjustments
@@ -232,7 +232,6 @@ function optimizeMobileScrolling() {
 
 // Comprehensive mobile performance optimizations
 function optimizeMobilePerformance() {
-    console.log('🚀 Applying mobile performance optimizations...');
     
     // Reduce animation complexity for better performance
     const animatedElements = document.querySelectorAll('.stars, .background-image, .background2');
@@ -317,7 +316,6 @@ function optimizeMobilePerformance() {
         element.style.webkitTouchCallout = 'none';
     });
     
-    console.log('✅ Mobile performance optimizations applied');
 }
 
 // Responsive font sizing for mobile
@@ -399,14 +397,12 @@ function forceTitleStacking() {
                 titleSubtitle.style.clear = 'both';
             }
             
-            console.log('🎯 Forced title stacking on mobile');
         }
     }, 100);
 }
 
 // Initialize all mobile optimizations
 function initMobileOptimizations() {
-    console.log('📱 Initializing redesigned mobile optimizations...');
     
     // Add mobile class to body to enable mobile-specific CSS selectors
     document.body.classList.add('mobile');
@@ -465,7 +461,6 @@ if (document.readyState === 'loading') {
 
 // Mobile Page Navigation Functions
 function handleMobileNavigation(target) {
-    console.log(`📱 Mobile navigating to: ${target}`);
     
     if (target === 'about') {
         openAboutPageMobile();
@@ -473,16 +468,14 @@ function handleMobileNavigation(target) {
         openPortfolioPageMobile();
     } else if (target === 'trees') {
         openTreesPageMobile();
-    } else if (target === 'contact') {
-        openContactPageMobile();
+    } else if (target === 'adventures') {
+        openAdventuresPageMobile();
     } else {
-        console.log(`📄 ${target} page not implemented yet`);
     }
 }
 
 // About Page Mobile Functions
 function openAboutPageMobile() {
-    console.log('👤 Opening about page on mobile...');
     
     // Show the about overlay
     const aboutOverlay = document.getElementById('about-overlay');
@@ -492,12 +485,10 @@ function openAboutPageMobile() {
         // Prevent body scroll
         document.body.style.overflow = 'hidden';
         
-        console.log('✅ About page opened on mobile');
     }
 }
 
 function closeAboutPageMobile() {
-    console.log('👤 Closing about page on mobile...');
     
     const aboutOverlay = document.getElementById('about-overlay');
     if (aboutOverlay) {
@@ -506,13 +497,37 @@ function closeAboutPageMobile() {
         // Restore body scroll
         document.body.style.overflow = '';
         
-        console.log('✅ About page closed on mobile');
+    }
+}
+
+// Adventures Page Mobile Functions
+function openAdventuresPageMobile() {
+    
+    // Show the adventures overlay
+    const adventuresOverlay = document.getElementById('adventures-overlay');
+    if (adventuresOverlay) {
+        adventuresOverlay.classList.add('active');
+        
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+        
+    }
+}
+
+function closeAdventuresPageMobile() {
+    
+    const adventuresOverlay = document.getElementById('adventures-overlay');
+    if (adventuresOverlay) {
+        adventuresOverlay.classList.remove('active');
+        
+        // Restore body scroll
+        document.body.style.overflow = '';
+        
     }
 }
 
 // Portfolio Page Mobile Functions
 function openPortfolioPageMobile() {
-    console.log('💼 Opening portfolio page on mobile...');
     
     // Show the portfolio overlay
     const portfolioOverlay = document.getElementById('portfolio-overlay');
@@ -522,12 +537,10 @@ function openPortfolioPageMobile() {
         // Prevent body scroll
         document.body.style.overflow = 'hidden';
         
-        console.log('✅ Portfolio page opened on mobile');
     }
 }
 
 function closePortfolioPageMobile() {
-    console.log('💼 Closing portfolio page on mobile...');
     
     const portfolioOverlay = document.getElementById('portfolio-overlay');
     if (portfolioOverlay) {
@@ -536,13 +549,11 @@ function closePortfolioPageMobile() {
         // Restore body scroll
         document.body.style.overflow = '';
         
-        console.log('✅ Portfolio page closed on mobile');
     }
 }
 
 // Trees Page Mobile Functions
 function openTreesPageMobile() {
-    console.log('🌳 Opening trees page on mobile...');
     
     // Show the trees overlay
     const treesOverlay = document.getElementById('trees-overlay');
@@ -552,12 +563,10 @@ function openTreesPageMobile() {
         // Prevent body scroll
         document.body.style.overflow = 'hidden';
         
-        console.log('✅ Trees page opened on mobile');
     }
 }
 
 function closeTreesPageMobile() {
-    console.log('🌳 Closing trees page on mobile...');
     
     const treesOverlay = document.getElementById('trees-overlay');
     if (treesOverlay) {
@@ -566,13 +575,11 @@ function closeTreesPageMobile() {
         // Restore body scroll
         document.body.style.overflow = '';
         
-        console.log('✅ Trees page closed on mobile');
     }
 }
 
 // Contact Page Mobile Functions
 function openContactPageMobile() {
-    console.log('📧 Opening contact page on mobile...');
     
     // Show the contact overlay
     const contactOverlay = document.getElementById('contact-overlay');
@@ -582,12 +589,10 @@ function openContactPageMobile() {
         // Prevent body scroll
         document.body.style.overflow = 'hidden';
         
-        console.log('✅ Contact page opened on mobile');
     }
 }
 
 function closeContactPageMobile() {
-    console.log('📧 Closing contact page on mobile...');
     
     const contactOverlay = document.getElementById('contact-overlay');
     if (contactOverlay) {
@@ -596,13 +601,11 @@ function closeContactPageMobile() {
         // Restore body scroll
         document.body.style.overflow = '';
         
-        console.log('✅ Contact page closed on mobile');
     }
 }
 
 // Add click handlers for mobile link items
 function initMobileNavigation() {
-    console.log('📱 Initializing mobile navigation...');
     
     // Add click handlers for mobile link items
     const mobileLinkItems = document.querySelectorAll('.mobile-link-item');
@@ -637,7 +640,6 @@ function initMobileNavigation() {
         }
     });
     
-    console.log('✅ Mobile navigation initialized');
 }
 
 // Initialize mobile navigation when DOM is ready
@@ -651,9 +653,9 @@ if (document.readyState === 'loading') {
 window.initMobileOptimizations = initMobileOptimizations;
 window.openAboutPage = openAboutPageMobile;
 window.closeAboutPage = closeAboutPageMobile;
+window.openAdventuresPage = openAdventuresPageMobile;
+window.closeAdventuresPage = closeAdventuresPageMobile;
 window.openPortfolioPage = openPortfolioPageMobile;
 window.closePortfolioPage = closePortfolioPageMobile;
 window.openTreesPage = openTreesPageMobile;
 window.closeTreesPage = closeTreesPageMobile;
-window.openContactPage = openContactPageMobile;
-window.closeContactPage = closeContactPageMobile;

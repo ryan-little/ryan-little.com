@@ -1239,8 +1239,529 @@ body.mobile .hero .hero-background .earth-sprite {
 }
 
 /* ========================================
+   IMAGE STYLES
+   ======================================== */
+.content-image {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    object-fit: cover;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+    margin: 0.75rem 0;
+}
+
+.content-image:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.image-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    margin: 0.75rem 0;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.image-container:hover img {
+    transform: scale(1.01);
+}
+
+.image-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    color: white;
+    padding: 0.75rem;
+    font-size: 0.8rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.image-container:hover .image-caption {
+    opacity: 1;
+}
+
+.hero-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    margin: 0.75rem auto;
+    display: block;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.hero-image:hover {
+    transform: scale(1.03);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* ========================================
    MOBILE PAGE OVERLAY STYLES
    ======================================== */
+
+/* Adventures Page Overlay */
+.adventures-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+    pointer-events: none;
+}
+
+.adventures-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.adventures-overlay .background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 100vh;
+    z-index: 0.5;
+    background-repeat: repeat;
+    background-size: auto 100vh;
+    background-position: 0 10vh, 100vw 10vh;
+    animation: spaceMove var(--background-move-duration) linear infinite;
+    opacity: 0.8;
+}
+
+.adventures-overlay .background2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 100vh;
+    z-index: 0.3;
+    background-repeat: repeat;
+    background-size: auto 100vh;
+    background-position: 50vw -10vh, 150vw -10vh;
+    animation: spaceMove var(--background2-move-duration) linear infinite;
+    opacity: 0.6;
+}
+
+.adventures-overlay .stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 200vh;
+    z-index: 1;
+    background-image: 
+        radial-gradient(0.2px 0.2px at 100px 100px, #fff, transparent),
+        radial-gradient(0.2px 0.2px at 300px 200px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.2px 0.2px at 200px 300px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(0.2px 0.2px at 450px 150px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(0.2px 0.2px at 150px 450px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(0.2px 0.2px at 400px 350px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.2px 0.2px at 250px 500px, rgba(255,255,255,0.3), transparent),
+        radial-gradient(0.2px 0.2px at 500px 250px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(0.2px 0.2px at 75px 350px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.2px 0.2px at 350px 75px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(0.2px 0.2px at 175px 125px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.2px 0.2px at 425px 275px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(0.2px 0.2px at 125px 375px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(0.2px 0.2px at 375px 125px, rgba(255,255,255,0.3), transparent),
+        radial-gradient(0.2px 0.2px at 275px 425px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.2px 0.2px at 225px 175px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(0.2px 0.2px at 475px 325px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(0.2px 0.2px at 325px 475px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.2px 0.2px at 50px 250px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(0.2px 0.2px at 250px 50px, rgba(255,255,255,0.8), transparent);
+    background-repeat: repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat;
+    background-size: 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px, 600px 600px;
+    animation: spaceMove var(--space-move-duration) linear infinite;
+    animation-play-state: running;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    opacity: 0.6;
+}
+
+.adventures-overlay .centered-satellite {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0;
+    transition: transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 1.2s ease 0.3s;
+}
+
+.adventures-overlay.active .centered-satellite {
+    transform: translate(-50%, -50%) scale(5);
+    opacity: 1;
+}
+
+.adventures-overlay .centered-satellite .satellite-image {
+    width: 180px;
+    height: 135px;
+    object-fit: contain;
+    animation: satelliteSpin 8s linear infinite;
+    filter: brightness(1.2) drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+    transition: filter 0.8s ease;
+}
+
+.adventures-overlay.active .centered-satellite .satellite-image {
+    filter: brightness(1.4) drop-shadow(0 0 30px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 60px rgba(0, 212, 255, 0.3));
+}
+
+.adventures-content-pane {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 1200px;
+    max-height: 85vh;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 2rem;
+    z-index: 3;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+    transition: opacity 0.6s ease 0.3s, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.adventures-content-pane::-webkit-scrollbar {
+    width: 6px;
+}
+
+.adventures-content-pane::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.adventures-content-pane::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.adventures-overlay.active .adventures-content-pane {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.adventures-back-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 160px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 2rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.adventures-back-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.adventures-back-button:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.adventures-back-button .arrow {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.adventures-back-button:hover .arrow {
+    transform: translateX(-3px);
+}
+
+.adventures-info {
+    color: white;
+}
+
+.adventures-info h2 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center;
+    background: linear-gradient(135deg, #ffffff, #cccccc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.adventures-info > p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Countries Counter */
+.countries-counter {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.counter-number {
+    font-size: 4rem;
+    font-weight: 700;
+    color: #00d4ff;
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+    margin-bottom: 0.5rem;
+    line-height: 1;
+}
+
+.counter-label {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* Adventures Grid */
+.adventures-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.adventure-panel {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.adventure-panel:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.adventure-image {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+}
+
+.panel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.adventure-panel:hover .panel-image {
+    transform: scale(1.05);
+}
+
+.adventure-details {
+    padding: 1.5rem;
+}
+
+.adventure-details h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.adventure-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.adventure-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.adventure-meta i {
+    color: #00d4ff;
+    font-size: 0.75rem;
+}
+
+.adventure-details p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 1rem;
+}
+
+.adventure-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.tag {
+    background: rgba(0, 212, 255, 0.2);
+    color: #00d4ff;
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+}
+
+/* What's Next Panel */
+.whats-next-panel {
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    background: rgba(0, 212, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.whats-next-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+.whats-next-panel:hover {
+    border-color: rgba(0, 212, 255, 0.5);
+    background: rgba(0, 212, 255, 0.08);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+}
+
+.whats-next-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #00d4ff;
+    font-size: 1rem;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 212, 255, 0.05));
+}
+
+.whats-next-placeholder i {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    .adventures-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .adventure-image {
+        height: 160px;
+    }
+    
+    .adventure-details {
+        padding: 1rem;
+    }
+    
+    .adventure-details h3 {
+        font-size: 1.1rem;
+    }
+    
+    .adventure-details p {
+        font-size: 0.85rem;
+    }
+    
+    .adventure-meta span {
+        font-size: 0.8rem;
+    }
+    
+    .tag {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.5rem;
+    }
+    
+    .counter-number {
+        font-size: 3rem;
+    }
+    
+    .counter-label {
+        font-size: 1rem;
+    }
+}
 
 /* About Page Overlay */
 .about-overlay {
@@ -1466,6 +1987,286 @@ body.mobile .hero .hero-background .earth-sprite {
 
 .about-section:hover {
     background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* ========================================
+   CONTACT PAGE OVERLAY STYLES
+   ======================================== */
+.contact-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+    pointer-events: none;
+}
+
+.contact-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.contact-overlay .background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 100vh;
+    z-index: 0.5;
+    background-repeat: repeat;
+    background-size: auto 100vh;
+    background-position: 0 10vh, 100vw 10vh;
+    animation: spaceMove var(--background-move-duration) linear infinite;
+    opacity: 0.8;
+}
+
+.contact-overlay .background2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 100vh;
+    z-index: 0.3;
+    background-repeat: repeat;
+    background-size: auto 100vh;
+    background-position: 50vw -10vh, 150vw -10vh;
+    animation: spaceMove var(--background2-move-duration) linear infinite;
+    opacity: 0.6;
+}
+
+.contact-overlay .stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 200vh;
+    z-index: 1;
+    background-image: 
+        radial-gradient(0.2px 0.2px at 100px 100px, #fff, transparent),
+        radial-gradient(0.2px 0.2px at 300px 200px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(0.2px 0.2px at 200px 300px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(0.2px 0.2px at 450px 150px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(0.2px 0.2px at 150px 450px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(0.2px 0.2px at 400px 350px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(0.2px 0.2px at 250px 500px, rgba(255,255,255,0.3), transparent),
+        radial-gradient(0.2px 0.2px at 500px 250px, rgba(255,255,255,0.9), transparent);
+    background-size: 600px 600px, 800px 800px, 1000px 1000px, 1200px 1200px, 1400px 1400px, 1600px 1600px, 1800px 1800px, 2000px 2000px;
+    animation: starMove 200s linear infinite;
+    backface-visibility: hidden;
+    perspective: 1000px;
+    opacity: 0.7;
+}
+
+.contact-overlay .centered-satellite {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0;
+    transition: transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 1.2s ease 0.3s;
+}
+
+.contact-overlay.active .centered-satellite {
+    transform: translate(-50%, -50%) scale(5);
+    opacity: 1;
+}
+
+.contact-overlay .centered-satellite .satellite-image {
+    width: 180px;
+    height: 135px;
+    object-fit: contain;
+    animation: satelliteSpin 8s linear infinite;
+    filter: brightness(1.2) drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+    transition: filter 0.8s ease;
+}
+
+.contact-overlay.active .centered-satellite .satellite-image {
+    filter: brightness(1.4) drop-shadow(0 0 30px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 60px rgba(0, 212, 255, 0.3));
+}
+
+.contact-content-pane {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 1.5rem;
+    z-index: 3;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+    transition: opacity 0.6s ease 0.3s, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.contact-content-pane::-webkit-scrollbar {
+    display: none;
+}
+
+.contact-overlay.active .contact-content-pane {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.contact-back-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 140px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 200;
+    touch-action: manipulation;
+}
+
+.contact-back-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.contact-back-button .arrow {
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+}
+
+.contact-back-button:hover .arrow {
+    transform: translateX(-3px);
+}
+
+.contact-info {
+    color: white;
+}
+
+.contact-info h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center;
+    background: linear-gradient(135deg, #ffffff, #cccccc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.contact-info > p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.contact-methods {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.contact-method {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    color: white;
+    text-decoration: none;
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    pointer-events: auto;
+    position: relative;
+    z-index: 200;
+}
+
+.contact-method:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.contact-method:hover .contact-icon-image {
+    filter: brightness(0) invert(1) contrast(1.3);
+}
+
+.contact-method i {
+    font-size: 1.1rem;
+    font-smooth: never;
+    -webkit-font-smoothing: auto;
+    -moz-osx-font-smoothing: auto;
+}
+
+.contact-icon-image {
+    width: 1.3rem;
+    height: 1.3rem;
+    object-fit: contain;
+    filter: brightness(0) invert(1) contrast(1.1);
+    transition: filter 0.3s ease;
+    display: block;
+    margin: 0 auto;
+    transform: translateX(3px);
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding: 1.25rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+}
+
+.contact-detail {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+}
+
+.contact-detail i {
+    width: 18px;
+    color: #00d4ff;
+    font-size: 1rem;
+}
     border-color: rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
 }
@@ -1998,8 +2799,9 @@ body.mobile .hero .hero-background .earth-sprite {
 .trees-sections {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 2rem;
     margin-top: 1.5rem;
+    max-width: 100%;
 }
 
 .trees-section {
@@ -2037,27 +2839,76 @@ body.mobile .hero .hero-background .earth-sprite {
 }
 
 .tree-item {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 8px;
-    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
     transition: all 0.3s ease;
+    text-align: center;
 }
 
 .tree-item:hover {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
 }
 
 .tree-item h4 {
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 600;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
     color: white;
+    text-align: center;
 }
 
 .tree-item p {
-    font-size: 0.85rem;
-    line-height: 1.3;
+    font-size: 0.9rem;
+    line-height: 1.4;
     color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.tree-stats {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 1rem;
+    text-align: left;
+}
+
+.tree-stats h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: #00d4ff;
+    text-align: center;
+}
+
+.tree-stats ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tree-stats li {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0.4rem;
+    padding-left: 0.8rem;
+    position: relative;
+}
+
+.tree-stats li:before {
+    content: "•";
+    color: #00d4ff;
+    position: absolute;
+    left: 0;
+}
+
+.tree-stats strong {
+    color: white;
+    font-weight: 600;
 }

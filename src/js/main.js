@@ -3,32 +3,26 @@
 
 // Wait for all modules to load
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 DOM Content Loaded - Starting initialization...');
     
     // Randomize background positions for visual variety
     randomizeBackgroundPositions();
     
     // Verify all required functions are available
     if (typeof initializeWebsite !== 'function') {
-        console.error('❌ Core module failed to load');
         return;
     }
     
     if (typeof initShootingStars !== 'function') {
-        console.error('❌ Animations module failed to load');
         return;
     }
     
     if (typeof startMinigame !== 'function') {
-        console.error('❌ Minigame module failed to load');
         return;
     }
     
     // Check DeviceInfo availability
     if (typeof DeviceInfo === 'undefined') {
-        console.warn('⚠️ DeviceInfo not available during initialization');
     } else {
-        console.log('✅ DeviceInfo available:', DeviceInfo);
     }
     
     // Initialize device-specific optimizations if available
@@ -39,23 +33,27 @@ document.addEventListener('DOMContentLoaded', function() {
         // Desktop version
         initDesktopOptimizations();
     } else {
-        console.warn('⚠️ No device-specific optimizations found');
     }
     
     // Website initialized successfully
-    console.log('🚀 Website ready');
 });
 
 // Add error handling for script loading
 window.addEventListener('error', function(e) {
     if (e.target.tagName === 'SCRIPT') {
-        console.error('❌ Script loading error:', e.target.src);
     }
 });
 
-// Performance monitoring (silent)
+// Performance monitoring and optimizations
 window.addEventListener('load', function() {
-    // Performance monitoring active but silent
+    // Enable hardware acceleration for better performance
+    const animatedElements = document.querySelectorAll('.stars, .background-image, .background2, .satellite, .earth-sprite');
+    animatedElements.forEach(element => {
+        if (element) {
+            element.style.transform = 'translateZ(0)';
+            element.style.willChange = 'transform';
+        }
+    });
 });
 
 // Background randomization function
@@ -104,11 +102,6 @@ function randomizeBackgroundPositions() {
         secondaryBg.style.backgroundPosition = `${secondaryBgOffsetX}vw ${secondaryBgOffsetY}vh, ${secondaryBgOffsetX + 100}vw ${secondaryBgOffsetY}vh`;
     }
     
-    console.log('🎲 Backgrounds randomized:', {
-        device: isMobile ? 'mobile' : 'desktop',
-        main: `${mainBgOffsetX.toFixed(1)}vw ${mainBgOffsetY.toFixed(1)}vh`,
-        secondary: `${secondaryBgOffsetX.toFixed(1)}vw ${secondaryBgOffsetY}vh`
-    });
 }
 
 // Make function available globally for potential future use (e.g., button click)
@@ -123,7 +116,6 @@ window.addEventListener('resize', function() {
     
     // Only re-randomize if we cross the mobile/desktop threshold
     if (wasMobile !== isMobile) {
-        console.log('🔄 Device type changed, re-randomizing backgrounds...');
         randomizeBackgroundPositions();
     }
     

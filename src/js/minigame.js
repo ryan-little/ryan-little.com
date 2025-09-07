@@ -17,7 +17,6 @@ window.gameCooldown = gameCooldown;
 function startMinigame() {
     // Check if DeviceInfo is available
     if (typeof DeviceInfo === 'undefined') {
-        console.error('❌ DeviceInfo not available, cannot start minigame');
         return;
     }
     
@@ -28,7 +27,6 @@ function startMinigame() {
     window.minigameActive = minigameActive;
     window.gameScore = gameScore;
     
-    console.log('🎮 Minigame started! Global score:', window.gameScore, 'Local score:', gameScore);
     
     // Hide any existing score display from previous game
     const existingScore = document.querySelector('.minigame-score');
@@ -241,14 +239,11 @@ function endMinigame() {
 
 // Simplified fade out function that uses reverse satellite animation
 function fadeOutUIElementsSimplified() {
-    console.log('🎮 Starting simplified minigame fade out...');
-    console.log('🎮 DeviceInfo.isMobile:', typeof DeviceInfo !== 'undefined' ? DeviceInfo.isMobile : 'undefined');
     
     // Use the reverse satellite animation from desktop.js
     if (typeof reverseSatelliteFadeIn === 'function') {
         reverseSatelliteFadeIn();
     } else {
-        console.warn('⚠️ reverseSatelliteFadeIn function not available, falling back to basic fade');
         // Fallback: basic satellite fade
         const satellites = document.querySelectorAll('.satellite');
         satellites.forEach(satellite => {
@@ -264,7 +259,6 @@ function fadeOutUIElementsSimplified() {
         element.style.setProperty('opacity', '0.3', 'important');
         element.style.setProperty('transition', 'opacity 0.5s ease', 'important');
         element.style.pointerEvents = 'none';
-        console.log('🎮 Title/subtitle faded out for minigame:', element.textContent);
     });
     
     // Fade out social media buttons
@@ -280,7 +274,6 @@ function fadeOutUIElementsSimplified() {
     
     // Fade out mobile link tree buttons with staggered timing (like satellites)
     const mobileButtons = document.querySelectorAll('.mobile-link-item');
-    console.log(`📱 Found ${mobileButtons.length} mobile buttons to fade out`);
     
     if (mobileButtons.length > 0) {
         mobileButtons.forEach((button, index) => {
@@ -299,11 +292,9 @@ function fadeOutUIElementsSimplified() {
                 button.style.cursor = 'default';
                 button.setAttribute('data-original-href', button.href);
                 button.removeAttribute('href');
-                console.log(`📱 Mobile button ${index + 1} faded out for minigame (opacity: ${button.style.opacity})`);
             }, delay);
         });
     } else {
-        console.warn('⚠️ No mobile buttons found to fade out');
     }
     
     // Store original Earth sprite positioning and lower z-index during minigame
@@ -320,7 +311,6 @@ function fadeOutUIElementsSimplified() {
         
         earthSprite.style.zIndex = '1';
         earthSprite.style.pointerEvents = 'none';
-        console.log('🌍 Stored original Earth sprite positioning for restoration');
     }
 }
 
@@ -439,7 +429,6 @@ function fadeOutUIElements() {
             button.style.cursor = 'default';
             button.setAttribute('data-original-href', button.href);
             button.removeAttribute('href');
-            console.log(`📱 Mobile button ${index + 1} faded out for minigame (staggered)`);
         }, delay);
     });
     
@@ -455,7 +444,6 @@ function fadeOutUIElements() {
             earthSprite.dataset.originalPosition = computedStyle.position;
             earthSprite.dataset.originalWidth = computedStyle.width;
             earthSprite.dataset.originalHeight = computedStyle.height;
-            console.log('🌍 Stored original Earth sprite positioning for restoration (fadeOutUIElements)');
         }
         
         earthSprite.style.zIndex = '1';
@@ -465,7 +453,6 @@ function fadeOutUIElements() {
 
 // Simplified fade in function that uses satellite initialization
 function fadeInUIElementsSimplified() {
-    console.log('🎮 Starting simplified minigame fade in...');
     
     // Use the fast satellite initialization from desktop.js for quicker restoration
     if (typeof initSatelliteFadeInFast === 'function') {
@@ -473,7 +460,6 @@ function fadeInUIElementsSimplified() {
     } else if (typeof initSatelliteFadeIn === 'function') {
         initSatelliteFadeIn();
     } else {
-        console.warn('⚠️ initSatelliteFadeInFast function not available, falling back to basic fade');
         // Fallback: basic satellite fade
         const satellites = document.querySelectorAll('.satellite');
         satellites.forEach(satellite => {
@@ -489,7 +475,6 @@ function fadeInUIElementsSimplified() {
         element.style.setProperty('opacity', '1', 'important');
         element.style.setProperty('transition', 'opacity 0.6s ease', 'important');
         element.style.pointerEvents = 'auto';
-        console.log('🎮 Title/subtitle restored after minigame:', element.textContent);
     });
     
     // Restore social media buttons
@@ -524,7 +509,6 @@ function fadeInUIElementsSimplified() {
             button.style.webkitAnimation = '';
             button.style.mozAnimation = '';
             button.style.oAnimation = '';
-            console.log(`📱 Mobile button ${index + 1} faded in after minigame`);
         }, delay);
     });
     
@@ -539,7 +523,6 @@ function fadeInUIElementsSimplified() {
             earthSprite.style.position = earthSprite.dataset.originalPosition;
             earthSprite.style.width = earthSprite.dataset.originalWidth;
             earthSprite.style.height = earthSprite.dataset.originalHeight;
-            console.log('🌍 Restored Earth sprite to exact original positioning');
         }
         
         earthSprite.style.zIndex = '5';
@@ -681,7 +664,6 @@ function fadeInUIElementsStaggered() {
             button.style.webkitAnimation = '';
             button.style.mozAnimation = '';
             button.style.oAnimation = '';
-            console.log(`📱 Mobile button ${index + 1} faded in after minigame (staggered)`);
         }, delay);
     });
     
@@ -702,7 +684,6 @@ function fadeInUIElementsStaggered() {
             earthSprite.style.position = earthSprite.dataset.originalPosition;
             earthSprite.style.width = earthSprite.dataset.originalWidth;
             earthSprite.style.height = earthSprite.dataset.originalHeight;
-            console.log('🌍 Restored Earth sprite to exact original positioning (staggered)');
         } else {
             // Fallback to device-specific positioning
             if (typeof DeviceInfo !== 'undefined' && DeviceInfo.isMobile) {
@@ -1012,13 +993,11 @@ function resetWebpage() {
     // No need to restore them again here to avoid double restoration
     
     // Complete reset without page refresh
-    console.log('🎮 Minigame reset complete - ready for new game!');
 }
 
 // Initialize mobile minigame after all functions and variables are defined
 function initMobileMinigame() {
     // Minigame can only be started by clicking shooting stars after cooldown
-    console.log('🎮 Mobile minigame ready - click shooting stars to start!');
 }
 
 initMobileMinigame();
