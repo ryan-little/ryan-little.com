@@ -194,6 +194,15 @@
             "description": "Comprehensive Python-based internal tool with 490+ functions that saves the company $15,000 annually. Features open source AI model integration as a core component, streamlining workflows and automating complex processes."
           },
           {
+            "title": "DGA Transcriber",
+            "description": "Custom transcription tool built for a Little Hammer Labs customer, featuring advanced audio processing capabilities and automated transcription workflows to streamline document creation and data processing.",
+            "image": {
+              "webp": "assets/images_webp/dgatranscribericon.webp",
+              "alt": "DGA Transcriber Logo",
+              "caption": "DGA Transcriber - Custom transcription solution"
+            }
+          },
+          {
             "title": "Custom Websites",
             "description": "Full-stack web applications built with modern frameworks, featuring responsive design and optimized user experiences"
           }
