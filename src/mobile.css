@@ -68,7 +68,6 @@
 .earth-sprite,
 .stars,
 .background-image {
-    will-change: transform, opacity;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     -webkit-perspective: 1000px;
@@ -721,7 +720,6 @@ body.mobile .earth-sprite,
     gap: var(--mobile-link-gap);
     position: relative;
     padding: 0.5rem;
-    will-change: transform;
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
     -webkit-backface-visibility: hidden;
@@ -753,7 +751,6 @@ body.mobile .earth-sprite,
         0 4px 16px rgba(0, 0, 0, 0.1),
         0 1px 3px rgba(0, 0, 0, 0.1),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    will-change: transform, opacity;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     -webkit-transform: translateY(20px) translateZ(0) scale(0.96);
@@ -900,21 +897,18 @@ body.mobile .earth-sprite,
 /* Enhanced mobile animations - performance optimized */
 .mobile .stars {
     animation-duration: 67.5s;
-    will-change: transform;
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
 }
 
 .mobile .background-image {
     animation-duration: 135s;
-    will-change: transform;
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
 }
 
 .mobile .background2 {
     animation-duration: 180s;
-    will-change: transform;
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
 }
@@ -1339,8 +1333,9 @@ body.mobile .hero .hero-background .earth-sprite {
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
     pointer-events: none;
+    transform: translateZ(0);
 }
 
 .adventures-overlay.active {
@@ -1423,7 +1418,10 @@ body.mobile .hero .hero-background .earth-sprite {
     z-index: 2;
     pointer-events: none;
     opacity: 0;
-    transition: transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 1.2s ease 0.3s;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease 0.1s;
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 .adventures-overlay.active .centered-satellite {
@@ -1437,7 +1435,7 @@ body.mobile .hero .hero-background .earth-sprite {
     object-fit: contain;
     animation: satelliteSpin 8s linear infinite;
     filter: brightness(1.2) drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
-    transition: filter 0.8s ease;
+    transition: filter 0.3s ease;
 }
 
 .adventures-overlay.active .centered-satellite .satellite-image {
@@ -1461,11 +1459,13 @@ body.mobile .hero .hero-background .earth-sprite {
     z-index: 3;
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.8);
-    transition: opacity 0.6s ease 0.3s, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+    transition: opacity 0.3s ease 0.1s, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
     overflow-y: auto;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     scrollbar-width: thin;
     scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 .adventures-content-pane::-webkit-scrollbar {
@@ -1787,8 +1787,9 @@ body.mobile .hero .hero-background .earth-sprite {
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
     pointer-events: none;
+    transform: translateZ(0);
 }
 
 .about-overlay.active {
@@ -1861,7 +1862,10 @@ body.mobile .hero .hero-background .earth-sprite {
     z-index: 2;
     pointer-events: none;
     opacity: 0;
-    transition: transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 1.2s ease 0.3s;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease 0.1s;
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 .about-overlay.active .centered-satellite {
@@ -1875,7 +1879,7 @@ body.mobile .hero .hero-background .earth-sprite {
     object-fit: contain;
     animation: satelliteSpin 8s linear infinite;
     filter: brightness(1.2) drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
-    transition: filter 0.8s ease;
+    transition: filter 0.3s ease;
 }
 
 .about-overlay.active .centered-satellite .satellite-image {
@@ -1899,10 +1903,12 @@ body.mobile .hero .hero-background .earth-sprite {
     z-index: 3;
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.8);
-    transition: opacity 1s ease 0.5s, transform 1s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s;
+    transition: opacity 0.3s ease 0.1s, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 .about-content-pane::-webkit-scrollbar {
@@ -2045,8 +2051,9 @@ body.mobile .hero .hero-background .earth-sprite {
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
     pointer-events: none;
+    transform: translateZ(0);
 }
 
 .portfolio-overlay.active {
@@ -2126,7 +2133,10 @@ body.mobile .hero .hero-background .earth-sprite {
     z-index: 2;
     pointer-events: none;
     opacity: 0;
-    transition: transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 1.2s ease 0.3s;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease 0.1s;
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 .portfolio-overlay.active .centered-satellite {
@@ -2140,7 +2150,7 @@ body.mobile .hero .hero-background .earth-sprite {
     object-fit: contain;
     animation: satelliteSpin 8s linear infinite;
     filter: brightness(1.2) drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
-    transition: filter 0.8s ease;
+    transition: filter 0.3s ease;
 }
 
 .portfolio-overlay.active .centered-satellite .satellite-image {
@@ -2164,10 +2174,12 @@ body.mobile .hero .hero-background .earth-sprite {
     z-index: 3;
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.8);
-    transition: opacity 1s ease 0.5s, transform 1s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s;
+    transition: opacity 0.3s ease 0.1s, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 .portfolio-content-pane::-webkit-scrollbar {
@@ -2326,8 +2338,9 @@ body.mobile .hero .hero-background .earth-sprite {
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
     pointer-events: none;
+    transform: translateZ(0);
 }
 
 .trees-overlay.active {
@@ -2407,7 +2420,10 @@ body.mobile .hero .hero-background .earth-sprite {
     z-index: 2;
     pointer-events: none;
     opacity: 0;
-    transition: transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 1.2s ease 0.3s;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease 0.1s;
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 .trees-overlay.active .centered-satellite {
@@ -2421,7 +2437,7 @@ body.mobile .hero .hero-background .earth-sprite {
     object-fit: contain;
     animation: satelliteSpin 8s linear infinite;
     filter: brightness(1.2) drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
-    transition: filter 0.8s ease;
+    transition: filter 0.3s ease;
 }
 
 .trees-overlay.active .centered-satellite .satellite-image {
@@ -2445,10 +2461,12 @@ body.mobile .hero .hero-background .earth-sprite {
     z-index: 3;
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.8);
-    transition: opacity 1s ease 0.5s, transform 1s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s;
+    transition: opacity 0.3s ease 0.1s, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 .trees-content-pane::-webkit-scrollbar {
