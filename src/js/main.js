@@ -58,6 +58,31 @@ window.addEventListener('load', function() {
             element.style.willChange = 'transform';
         }
     });
+    
+    // Add keyboard navigation support
+    document.addEventListener('keydown', function(event) {
+        // ESC key to close any open overlays
+        if (event.key === 'Escape') {
+            const activeOverlay = document.querySelector('.adventures-overlay.active, .about-overlay.active, .portfolio-overlay.active, .trees-overlay.active');
+            if (activeOverlay) {
+                activeOverlay.classList.remove('active');
+            }
+        }
+    });
+    
+    // Add focus management for accessibility
+    const focusableElements = document.querySelectorAll('a, button, [tabindex]:not([tabindex="-1"])');
+    focusableElements.forEach(element => {
+        element.addEventListener('focus', function() {
+            this.style.outline = '2px solid #00d4ff';
+            this.style.outlineOffset = '2px';
+        });
+        
+        element.addEventListener('blur', function() {
+            this.style.outline = '';
+            this.style.outlineOffset = '';
+        });
+    });
 });
 
 // Background randomization function

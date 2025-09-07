@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /
+
+# Prevent search engines from indexing this personal website
+# This ensures the site remains private and doesn't appear in search results
+
+# Sitemap (for reference, but site is not indexed)
+Sitemap: https://ryan-little.com/sitemap.xml

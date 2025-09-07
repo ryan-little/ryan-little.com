@@ -7,6 +7,29 @@
     <meta name="description" content="Ryan Little - Geospatial Analyst with expertise in GIS, Remote Sensing, and Spatial Analysis. UC Santa Barbara Geography graduate specializing in Aerial Photos and Remote Sensing.">
     <meta name="keywords" content="geospatial analyst, GIS, remote sensing, spatial analysis, cartography, geography, UC Santa Barbara">
     <meta name="theme-color" content="#1a1a1a">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    
+    <!-- Performance Optimizations -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="assets/images_webp/earthsprite.webp" as="image" type="image/webp">
+    <link rel="preload" href="src/desktop.css" as="style">
+    <link rel="preload" href="src/mobile.css" as="style">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
     <link rel="icon" type="image/x-icon" href="assets/images_webp/earthsprite.webp">
     <style>
         body {
@@ -55,12 +78,12 @@
     </style>
 </head>
 <body>
-    <div class="loading-container" id="loading">
-        <div class="loading-earth"></div>
+    <div class="loading-container" id="loading" role="status" aria-live="polite" aria-label="Loading website content">
+        <div class="loading-earth" aria-hidden="true"></div>
         <div class="loading-text">Loading...</div>
     </div>
 
-    <div class="content-container" id="content"></div>
+    <div class="content-container" id="content" role="main" aria-label="Main website content"></div>
 
     <script>
         // Device detection
@@ -77,6 +100,11 @@
             
             try {
                 const response = await fetch(targetFile);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
                 const html = await response.text();
                 
                 // Extract the body content from the fetched HTML
@@ -121,6 +149,9 @@
                 for (const jsFile of jsFiles) {
                     const script = document.createElement('script');
                     script.src = jsFile;
+                    script.onerror = function() {
+                        console.error(`Failed to load script: ${jsFile}`);
+                    };
                     document.head.appendChild(script);
                 }
                 
@@ -143,13 +174,48 @@
                 
             } catch (error) {
                 console.error('Error loading content:', error);
-                // Fallback to desktop version
-                window.location.replace('index-desktop.html');
+                
+                // Show user-friendly error message
+                const loadingContainer = document.getElementById('loading');
+                if (loadingContainer) {
+                    loadingContainer.innerHTML = `
+                        <div class="loading-earth" aria-hidden="true"></div>
+                        <div class="loading-text">Unable to load content. Please refresh the page.</div>
+                    `;
+                }
+                
+                // Fallback to desktop version after a delay
+                setTimeout(() => {
+                    window.location.replace('index-desktop.html');
+                }, 3000);
             }
         }
 
         // Load content on page load
         window.addEventListener('load', loadAppropriateContent);
+        
+        // Register Service Worker for offline functionality
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(registration => {
+                        console.log('Service Worker registered successfully:', registration.scope);
+                        
+                        // Check for updates
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    console.log('New service worker available');
+                                }
+                            });
+                        });
+                    })
+                    .catch(error => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
         
         // Handle resize events
         let lastDeviceType = detectDevice();
