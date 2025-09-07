@@ -84,15 +84,47 @@ class TemplateEngine {
 
             if (item.image) {
                 const maxWidth = this.isMobile ? '250px' : '300px';
-                itemHTML += `
-                    <div class="image-container" style="max-width: ${maxWidth}; margin: 1rem auto;">
-                        <picture>
-                            <source srcset="${item.image.webp}" type="image/webp">
-                            <img src="${item.image.fallback}" alt="${item.image.alt}" class="content-image">
-                        </picture>
-                        <div class="image-caption">${item.image.caption}</div>
-                    </div>
-                `;
+                
+                // Check if there are additional images to display side by side
+                if (item.additionalImages && item.additionalImages.length > 0) {
+                    // Display images side by side
+                    itemHTML += `
+                        <div class="images-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 1rem auto;">
+                            <div class="image-container" style="max-width: ${maxWidth}; flex: 1; min-width: 200px;">
+                                <picture>
+                                    <source srcset="${item.image.webp}" type="image/webp">
+                                    <img src="${item.image.fallback}" alt="${item.image.alt}" class="content-image">
+                                </picture>
+                                <div class="image-caption">${item.image.caption}</div>
+                            </div>
+                    `;
+                    
+                    // Add additional images
+                    item.additionalImages.forEach(additionalImage => {
+                        itemHTML += `
+                            <div class="image-container" style="max-width: ${maxWidth}; flex: 1; min-width: 200px;">
+                                <picture>
+                                    <source srcset="${additionalImage.webp}" type="image/webp">
+                                    <img src="${additionalImage.fallback}" alt="${additionalImage.alt}" class="content-image">
+                                </picture>
+                                <div class="image-caption">${additionalImage.caption}</div>
+                            </div>
+                        `;
+                    });
+                    
+                    itemHTML += `</div>`;
+                } else {
+                    // Single image display
+                    itemHTML += `
+                        <div class="image-container" style="max-width: ${maxWidth}; margin: 1rem auto;">
+                            <picture>
+                                <source srcset="${item.image.webp}" type="image/webp">
+                                <img src="${item.image.fallback}" alt="${item.image.alt}" class="content-image">
+                            </picture>
+                            <div class="image-caption">${item.image.caption}</div>
+                        </div>
+                    `;
+                }
             }
 
             itemHTML += `</div>`;
@@ -183,7 +215,10 @@ class TemplateEngine {
         if (!this.contentData) await this.loadContent();
         
         const adventuresGrid = document.querySelector('.adventures-grid');
-        if (!adventuresGrid) return;
+        if (!adventuresGrid) {
+            console.warn('TemplateEngine: Adventures grid not found');
+            return;
+        }
 
         const adventuresHTML = this.contentData.adventures.panels
             .map(adventure => this.generateAdventurePanel(adventure))
@@ -192,12 +227,32 @@ class TemplateEngine {
         adventuresGrid.innerHTML = adventuresHTML;
     }
 
+    // Populate adventure counters
+    async populateAdventureCounters() {
+        if (!this.contentData) await this.loadContent();
+        
+        // Update countries counter
+        const countriesCounter = document.querySelector('.countries-counter .counter-number');
+        if (countriesCounter && this.contentData.adventures.countriesVisited) {
+            countriesCounter.textContent = this.contentData.adventures.countriesVisited;
+        }
+
+        // Update national parks counter
+        const nationalParksCounter = document.querySelector('.national-parks-counter .counter-number');
+        if (nationalParksCounter && this.contentData.adventures.nationalParksVisited) {
+            nationalParksCounter.textContent = this.contentData.adventures.nationalParksVisited;
+        }
+    }
+
     // Populate portfolio section
     async populatePortfolio() {
         if (!this.contentData) await this.loadContent();
         
         const portfolioSections = document.querySelector('.portfolio-sections');
-        if (!portfolioSections) return;
+        if (!portfolioSections) {
+            console.warn('TemplateEngine: Portfolio sections not found');
+            return;
+        }
 
         const portfolioHTML = this.contentData.portfolio.sections
             .map(section => this.generatePortfolioSection(section))
@@ -211,7 +266,10 @@ class TemplateEngine {
         if (!this.contentData) await this.loadContent();
         
         const treesSections = document.querySelector('.trees-sections');
-        if (!treesSections) return;
+        if (!treesSections) {
+            console.warn('TemplateEngine: Trees sections not found');
+            return;
+        }
 
         const treesHTML = this.contentData.trees.items
             .map(tree => this.generateTreeItem(tree))
@@ -225,7 +283,10 @@ class TemplateEngine {
         if (!this.contentData) await this.loadContent();
         
         const aboutSections = document.querySelector('.about-sections');
-        if (!aboutSections) return;
+        if (!aboutSections) {
+            console.warn('TemplateEngine: About sections not found');
+            return;
+        }
 
         const aboutHTML = this.contentData.about.sections
             .map(section => this.generateAboutSection(section))
@@ -242,6 +303,7 @@ class TemplateEngine {
         // Populate sections in parallel for better performance
         await Promise.all([
             this.populateAdventures(),
+            this.populateAdventureCounters(),
             this.populatePortfolio(),
             this.populateTrees(),
             this.populateAbout()
@@ -260,11 +322,14 @@ class TemplateEngine {
 // Create global template engine instance
 window.TemplateEngine = new TemplateEngine();
 
-// Initialize templates when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
+// Add global function for manual testing
+window.testTemplates = function() {
+    if (window.TemplateEngine) {
         window.TemplateEngine.populateAllSections();
-    });
-} else {
-    window.TemplateEngine.populateAllSections();
-}
+    } else {
+        console.error('TemplateEngine not available');
+    }
+};
+
+// Template initialization is now handled by main index.html after content is loaded
+// This ensures templates populate after the dynamic content is inserted into the DOM

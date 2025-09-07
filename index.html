@@ -128,6 +128,17 @@
                 setTimeout(() => {
                     document.getElementById('loading').style.display = 'none';
                     document.getElementById('content').classList.add('loaded');
+                    
+                    // Populate templates after content is loaded
+                    console.log('Main index.html: Content loaded, attempting to populate templates');
+                    if (window.TemplateEngine) {
+                        console.log('Main index.html: TemplateEngine found, calling populateAllSections');
+                        setTimeout(() => {
+                            window.TemplateEngine.populateAllSections();
+                        }, 100);
+                    } else {
+                        console.error('Main index.html: TemplateEngine not found!');
+                    }
                 }, 500);
                 
             } catch (error) {

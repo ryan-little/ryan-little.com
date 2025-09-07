@@ -175,6 +175,16 @@ class ComponentSystem {
         `;
     }
 
+    // Create a reusable national parks counter component
+    createNationalParksCounter(count) {
+        return `
+            <div class="national-parks-counter">
+                <div class="counter-number">${count}</div>
+                <div class="counter-label">US National Parks Visited</div>
+            </div>
+        `;
+    }
+
     // Create a reusable back button component
     createBackButton(pageId) {
         return `

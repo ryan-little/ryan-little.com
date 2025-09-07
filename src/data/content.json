@@ -2,7 +2,8 @@
   "adventures": {
     "title": "Adventures",
     "subtitle": "Exploring the world, one adventure at a time.",
-    "countriesVisited": 13,
+    "countriesVisited": 12,
+    "nationalParksVisited": 22,
     "panels": [
       {
         "id": "big-bend",
@@ -95,7 +96,7 @@
   },
   "portfolio": {
     "title": "Portfolio",
-    "subtitle": "Showcasing my work in geospatial analysis, web development, and photography.",
+    "subtitle": "Showcasing my expertise in geospatial analysis and custom development solutions.",
     "sections": [
       {
         "id": "gis-projects",
@@ -151,36 +152,6 @@
               "alt": "Agricultural Land Classification Analysis",
               "caption": "Farmland classification and agricultural land use mapping"
             }
-          },
-          {
-            "title": "Urban Water Body Classification",
-            "description": "Analysis of water bodies within urban areas using satellite imagery and machine learning classification techniques to identify and map water features in metropolitan environments.",
-            "image": {
-              "webp": "assets/images_webp/classifyingwaterinurbanarea.webp",
-              "fallback": "assets/images/classifyingwaterinurbanareas.png",
-              "alt": "Urban Water Body Classification",
-              "caption": "Water body identification and classification in urban areas"
-            }
-          },
-          {
-            "title": "NDVI vs Temperature Correlation Analysis",
-            "description": "Comprehensive study examining the relationship between Normalized Difference Vegetation Index (NDVI) and temperature variations to understand vegetation health and climate interactions.",
-            "image": {
-              "webp": "assets/images_webp/ndvivstemp.webp",
-              "fallback": "assets/images/ndvivstemp.png",
-              "alt": "NDVI vs Temperature Analysis",
-              "caption": "Correlation analysis between vegetation health and temperature patterns"
-            }
-          },
-          {
-            "title": "Greenland Water Analysis",
-            "description": "Remote sensing analysis of water features and hydrological patterns in Greenland, examining changes in water bodies and ice coverage over time.",
-            "image": {
-              "webp": "assets/images_webp/wateringreenland.webp",
-              "fallback": "assets/images/wateringreenland.png",
-              "alt": "Greenland Water Analysis",
-              "caption": "Water feature analysis and hydrological mapping in Greenland"
-            }
           }
         ]
       },
@@ -190,21 +161,13 @@
         "icon": "fas fa-laptop-code",
         "items": [
           {
-            "title": "Little Hammer Labs Internal Tool",
-            "description": "Comprehensive Python-based internal tool with 490+ functions that saves the company $15,000 annually. Features open source AI model integration as a core component, streamlining workflows and automating complex processes."
-          },
-          {
             "title": "DGA Transcriber",
-            "description": "Custom transcription tool built for a Little Hammer Labs customer, featuring advanced audio processing capabilities and automated transcription workflows to streamline document creation and data processing.",
+            "description": "Comprehensive Python-based transcription tool with 490+ functions that saves the company $15,000 annually. Features open source AI model integration as a core component, streamlining workflows and automating complex processes. Custom transcription tool built for a Little Hammer Labs customer, featuring advanced audio processing capabilities and automated transcription workflows to streamline document creation and data processing.",
             "image": {
               "webp": "assets/images_webp/dgatranscribericon.webp",
               "alt": "DGA Transcriber Logo",
               "caption": "DGA Transcriber - Custom transcription solution"
             }
-          },
-          {
-            "title": "Custom Websites",
-            "description": "Full-stack web applications built with modern frameworks, featuring responsive design and optimized user experiences"
           }
         ]
       }
@@ -212,7 +175,7 @@
   },
   "trees": {
     "title": "Trees I've Visited",
-    "subtitle": "Celebrating the silent giants that shape our landscapes and sustain our planet.",
+    "subtitle": "Exploring the world's most remarkable trees and their incredible stories.",
     "items": [
       {
         "id": "general-sherman",
@@ -311,7 +274,13 @@
         "content": [
           "Geospatial Analyst - Leading quality control and workflow improvements",
           "Four years of experience in map creation, spatial analysis, and geodatabase editing with expertise in GIS, Remote Sensing, and Spatial Analysis"
-        ]
+        ],
+        "image": {
+          "webp": "assets/images_webp/wateringreenland.webp",
+          "fallback": "assets/images/wateringreenland.png",
+          "alt": "Greenland Water Analysis",
+          "caption": "Remote sensing analysis of water features and hydrological patterns"
+        }
       },
       {
         "id": "passion",

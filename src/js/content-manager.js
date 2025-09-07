@@ -14,10 +14,13 @@ class ContentManager {
         try {
             // Load content data
             const response = await fetch('src/data/content.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             this.contentData = await response.json();
             this.isInitialized = true;
         } catch (error) {
-            console.error('Failed to load content data:', error);
+            console.error('ContentManager: Failed to load content data:', error);
             this.isInitialized = false;
         }
     }
@@ -79,6 +82,14 @@ class ContentManager {
         if (!this.contentData?.adventures) return false;
         
         this.contentData.adventures.countriesVisited = count;
+        return true;
+    }
+
+    // Update national parks visited count
+    updateNationalParksCount(count) {
+        if (!this.contentData?.adventures) return false;
+        
+        this.contentData.adventures.nationalParksVisited = count;
         return true;
     }
 
@@ -168,7 +179,8 @@ class ContentManager {
             portfolioItems: this.contentData?.portfolio?.sections?.reduce((total, section) => total + (section.items?.length || 0), 0) || 0,
             trees: this.contentData?.trees?.items?.length || 0,
             aboutSections: this.contentData?.about?.sections?.length || 0,
-            countriesVisited: this.contentData?.adventures?.countriesVisited || 0
+            countriesVisited: this.contentData?.adventures?.countriesVisited || 0,
+            nationalParksVisited: this.contentData?.adventures?.nationalParksVisited || 0
         };
     }
 }
@@ -179,10 +191,16 @@ window.ContentManager = new ContentManager();
 // Initialize when DOM is ready
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-        window.ContentManager.initialize();
+        // Add a small delay to ensure proper initialization order
+        setTimeout(() => {
+            window.ContentManager.initialize();
+        }, 50);
     });
 } else {
-    window.ContentManager.initialize();
+    // Add a small delay to ensure proper initialization order
+    setTimeout(() => {
+        window.ContentManager.initialize();
+    }, 50);
 }
 
 // Export for use in other modules

@@ -1555,16 +1555,41 @@ body.mobile .hero .hero-background .earth-sprite {
     color: rgba(255, 255, 255, 0.8);
 }
 
+/* Adventure Counters Container */
+.adventure-counters {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
 /* Countries Counter */
 .countries-counter {
     text-align: center;
-    margin-bottom: 3rem;
-    padding: 2rem;
+    padding: 1.5rem;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    flex: 1;
+    min-width: 150px;
+    max-width: 200px;
+}
+
+/* National Parks Counter */
+.national-parks-counter {
+    text-align: center;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    flex: 1;
+    min-width: 150px;
+    max-width: 200px;
 }
 
 .counter-number {

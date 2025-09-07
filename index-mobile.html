@@ -103,10 +103,16 @@
                 <h2>Adventures</h2>
                 <p>Exploring the world, one adventure at a time.</p>
                 
-                <!-- Countries Counter -->
-                <div class="countries-counter">
-                    <div class="counter-number">12</div>
-                    <div class="counter-label">Countries Visited</div>
+                <!-- Adventure Counters -->
+                <div class="adventure-counters">
+                    <div class="countries-counter">
+                        <div class="counter-number">12</div>
+                        <div class="counter-label">Countries Visited</div>
+                    </div>
+                    <div class="national-parks-counter">
+                        <div class="counter-number">22</div>
+                        <div class="counter-label">US National Parks Visited</div>
+                    </div>
                 </div>
                 
                 <!-- Adventure Panels - Populated by template system -->
@@ -216,5 +222,15 @@
     <script src="src/js/components.js"></script>
     <script src="src/js/mobile.js"></script>
     <script src="src/js/main.js"></script>
+    <script>
+        // Initialize templates for direct access to mobile version
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                if (window.TemplateEngine) {
+                    window.TemplateEngine.populateAllSections();
+                }
+            }, 200);
+        });
+    </script>
 </body>
 </html>
