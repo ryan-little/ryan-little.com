@@ -230,7 +230,7 @@ function endMinigame() {
         gameTimer = null;
     }
     
-    // Start cooldown timer (10 seconds)
+    // Start cooldown timer (5 seconds)
     startCooldownTimer();
     
     // Add animated transition effect
@@ -268,7 +268,17 @@ function fadeOutUIElementsSimplified() {
         button.style.opacity = '0.3';
         button.style.pointerEvents = 'none';
         button.style.cursor = 'default';
-        button.setAttribute('data-original-href', button.href);
+        // Store only the hash fragment, not the full URL
+        const href = button.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            button.setAttribute('data-original-href', href);
+        } else {
+            // If it's a full URL, extract just the hash part
+            const hashIndex = href.indexOf('#');
+            if (hashIndex !== -1) {
+                button.setAttribute('data-original-href', href.substring(hashIndex));
+            }
+        }
         button.removeAttribute('href');
     });
     
@@ -277,7 +287,7 @@ function fadeOutUIElementsSimplified() {
     
     if (mobileButtons.length > 0) {
         mobileButtons.forEach((button, index) => {
-            const delay = (mobileButtons.length - 1 - index) * 200; // 0ms, 200ms, 400ms, 600ms (reverse order)
+            const delay = index * 200; // 0ms, 200ms, 400ms, 600ms (normal order)
             
             setTimeout(() => {
                 // Disable CSS animations that might override opacity
@@ -290,7 +300,17 @@ function fadeOutUIElementsSimplified() {
                 button.style.opacity = '0.3'; // Ghost-like appearance during minigame (like satellites)
                 button.style.pointerEvents = 'none';
                 button.style.cursor = 'default';
-                button.setAttribute('data-original-href', button.href);
+                // Store only the hash fragment, not the full URL
+                const href = button.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    button.setAttribute('data-original-href', href);
+                } else {
+                    // If it's a full URL, extract just the hash part
+                    const hashIndex = href.indexOf('#');
+                    if (hashIndex !== -1) {
+                        button.setAttribute('data-original-href', href.substring(hashIndex));
+                    }
+                }
                 button.removeAttribute('href');
             }, delay);
         });
@@ -405,14 +425,24 @@ function fadeOutUIElements() {
         button.style.zIndex = '100'; // Keep above other elements but below minigame UI
         // Disable the link functionality
         button.style.cursor = 'default';
-        button.setAttribute('data-original-href', button.href);
+        // Store only the hash fragment, not the full URL
+        const href = button.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            button.setAttribute('data-original-href', href);
+        } else {
+            // If it's a full URL, extract just the hash part
+            const hashIndex = href.indexOf('#');
+            if (hashIndex !== -1) {
+                button.setAttribute('data-original-href', href.substring(hashIndex));
+            }
+        }
         button.removeAttribute('href');
     });
     
     // Fade out mobile link tree buttons with staggered timing (like satellites)
     const mobileButtons = document.querySelectorAll('.mobile-link-item');
     mobileButtons.forEach((button, index) => {
-        const delay = (mobileButtons.length - 1 - index) * 200; // 0ms, 200ms, 400ms, 600ms (reverse order)
+        const delay = index * 200; // 0ms, 200ms, 400ms, 600ms (normal order)
         
         setTimeout(() => {
             // Disable CSS animations first
@@ -492,6 +522,30 @@ function fadeInUIElementsSimplified() {
     
     // Restore mobile link tree buttons with faster staggered timing
     const mobileButtons = document.querySelectorAll('.mobile-link-item');
+    
+    // First, immediately restore functionality for all buttons (no delay)
+    mobileButtons.forEach((button) => {
+        // Restore href attribute immediately
+        if (button.getAttribute('data-original-href')) {
+            button.href = button.getAttribute('data-original-href');
+            button.removeAttribute('data-original-href');
+        }
+        
+        // Re-attach mobile navigation event listener immediately
+        // Use the same approach as the original initMobileNavigation function
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const href = this.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                const target = href.substring(1); // Remove the #
+                if (typeof window.handleMobileNavigation === 'function') {
+                    window.handleMobileNavigation(target);
+                }
+            }
+        });
+    });
+    
+    // Then, handle the visual fade-in with staggered timing
     mobileButtons.forEach((button, index) => {
         const delay = 1000 + (index * 200); // 1.0s, 1.2s, 1.4s, 1.6s (much faster than satellites)
         
@@ -500,10 +554,6 @@ function fadeInUIElementsSimplified() {
             button.style.opacity = '1';
             button.style.pointerEvents = 'auto';
             button.style.cursor = 'pointer';
-            if (button.getAttribute('data-original-href')) {
-                button.href = button.getAttribute('data-original-href');
-                button.removeAttribute('data-original-href');
-            }
             // Re-enable CSS animations after fade-in
             button.style.animation = '';
             button.style.webkitAnimation = '';
@@ -645,6 +695,30 @@ function fadeInUIElementsStaggered() {
     
     // Fade in mobile link tree buttons with faster staggered timing
     const mobileButtons = document.querySelectorAll('.mobile-link-item');
+    
+    // First, immediately restore functionality for all buttons (no delay)
+    mobileButtons.forEach((button) => {
+        // Restore href attribute immediately
+        if (button.getAttribute('data-original-href')) {
+            button.href = button.getAttribute('data-original-href');
+            button.removeAttribute('data-original-href');
+        }
+        
+        // Re-attach mobile navigation event listener immediately
+        // Use the same approach as the original initMobileNavigation function
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const href = this.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                const target = href.substring(1); // Remove the #
+                if (typeof window.handleMobileNavigation === 'function') {
+                    window.handleMobileNavigation(target);
+                }
+            }
+        });
+    });
+    
+    // Then, handle the visual fade-in with staggered timing
     mobileButtons.forEach((button, index) => {
         const delay = 1000 + (index * 200); // 1.0s, 1.2s, 1.4s, 1.6s (much faster than satellites)
         
@@ -654,11 +728,6 @@ function fadeInUIElementsStaggered() {
             button.style.pointerEvents = 'auto';
             button.style.zIndex = '10'; // Restore original z-index
             button.style.cursor = 'pointer';
-            // Restore the link functionality
-            if (button.getAttribute('data-original-href')) {
-                button.href = button.getAttribute('data-original-href');
-                button.removeAttribute('data-original-href');
-            }
             // Re-enable CSS animations
             button.style.animation = '';
             button.style.webkitAnimation = '';
@@ -816,7 +885,7 @@ function startCooldownTimer() {
     // Insert cooldown display after the score
     scoreDisplay.parentNode.insertBefore(cooldownDisplay, scoreDisplay.nextSibling);
     
-    let timeLeft = 10;
+    let timeLeft = 5;
     
     function updateCooldown() {
         if (timeLeft > 0) {

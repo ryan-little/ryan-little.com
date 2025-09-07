@@ -625,6 +625,7 @@ if (document.readyState === 'loading') {
 
 // Export for global access
 window.initMobileOptimizations = initMobileOptimizations;
+window.handleMobileNavigation = handleMobileNavigation;
 window.openAboutPage = openAboutPageMobile;
 window.closeAboutPage = closeAboutPageMobile;
 window.openAdventuresPage = openAdventuresPageMobile;
