@@ -268,12 +268,27 @@ function fadeOutUIElementsSimplified() {
         button.style.opacity = '0.3';
         button.style.pointerEvents = 'none';
         button.style.cursor = 'default';
-        // Store the full URL for social media buttons
+        // Store the full URL and other attributes for social media buttons
         const href = button.getAttribute('href');
+        const target = button.getAttribute('target');
+        const rel = button.getAttribute('rel');
+        const onclick = button.getAttribute('onclick');
         if (href) {
             button.setAttribute('data-original-href', href);
         }
+        if (target) {
+            button.setAttribute('data-original-target', target);
+        }
+        if (rel) {
+            button.setAttribute('data-original-rel', rel);
+        }
+        if (onclick) {
+            button.setAttribute('data-original-onclick', onclick);
+        }
         button.removeAttribute('href');
+        button.removeAttribute('target');
+        button.removeAttribute('rel');
+        button.removeAttribute('onclick');
     });
     
     // Fade out mobile link tree buttons with staggered timing (like satellites)
@@ -419,12 +434,27 @@ function fadeOutUIElements() {
         button.style.zIndex = '100'; // Keep above other elements but below minigame UI
         // Disable the link functionality
         button.style.cursor = 'default';
-        // Store the full URL for social media buttons
+        // Store the full URL and other attributes for social media buttons
         const href = button.getAttribute('href');
+        const target = button.getAttribute('target');
+        const rel = button.getAttribute('rel');
+        const onclick = button.getAttribute('onclick');
         if (href) {
             button.setAttribute('data-original-href', href);
         }
+        if (target) {
+            button.setAttribute('data-original-target', target);
+        }
+        if (rel) {
+            button.setAttribute('data-original-rel', rel);
+        }
+        if (onclick) {
+            button.setAttribute('data-original-onclick', onclick);
+        }
         button.removeAttribute('href');
+        button.removeAttribute('target');
+        button.removeAttribute('rel');
+        button.removeAttribute('onclick');
     });
     
     // Fade out mobile link tree buttons with staggered timing (like satellites)
@@ -505,6 +535,18 @@ function fadeInUIElementsSimplified() {
         if (button.getAttribute('data-original-href')) {
             button.href = button.getAttribute('data-original-href');
             button.removeAttribute('data-original-href');
+        }
+        if (button.getAttribute('data-original-target')) {
+            button.target = button.getAttribute('data-original-target');
+            button.removeAttribute('data-original-target');
+        }
+        if (button.getAttribute('data-original-rel')) {
+            button.rel = button.getAttribute('data-original-rel');
+            button.removeAttribute('data-original-rel');
+        }
+        if (button.getAttribute('data-original-onclick')) {
+            button.onclick = button.getAttribute('data-original-onclick');
+            button.removeAttribute('data-original-onclick');
         }
     });
     
@@ -682,6 +724,18 @@ function fadeInUIElementsStaggered() {
                 if (button.getAttribute('data-original-href')) {
                     button.href = button.getAttribute('data-original-href');
                     button.removeAttribute('data-original-href');
+                }
+                if (button.getAttribute('data-original-target')) {
+                    button.target = button.getAttribute('data-original-target');
+                    button.removeAttribute('data-original-target');
+                }
+                if (button.getAttribute('data-original-rel')) {
+                    button.rel = button.getAttribute('data-original-rel');
+                    button.removeAttribute('data-original-rel');
+                }
+                if (button.getAttribute('data-original-onclick')) {
+                    button.onclick = button.getAttribute('data-original-onclick');
+                    button.removeAttribute('data-original-onclick');
                 }
             }, index * 100);
         });
@@ -1022,10 +1076,22 @@ function showGameEndAnimation() {
                     button.style.pointerEvents = 'auto';
                     button.style.cursor = 'pointer';
                     
-                    // Restore href if it was stored
+                    // Restore href and other attributes if they were stored
                     if (button.getAttribute('data-original-href')) {
                         button.href = button.getAttribute('data-original-href');
                         button.removeAttribute('data-original-href');
+                    }
+                    if (button.getAttribute('data-original-target')) {
+                        button.target = button.getAttribute('data-original-target');
+                        button.removeAttribute('data-original-target');
+                    }
+                    if (button.getAttribute('data-original-rel')) {
+                        button.rel = button.getAttribute('data-original-rel');
+                        button.removeAttribute('data-original-rel');
+                    }
+                    if (button.getAttribute('data-original-onclick')) {
+                        button.onclick = button.getAttribute('data-original-onclick');
+                        button.removeAttribute('data-original-onclick');
                     }
                     
                     // Ensure the button is visible by removing any animation overrides
