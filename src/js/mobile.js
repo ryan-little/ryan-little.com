@@ -21,6 +21,32 @@ if (typeof window.DeviceInfo !== 'undefined') {
     };
 }
 
+// IMMEDIATE earth positioning fix - run as soon as possible
+function forceEarthPosition() {
+    const earthSprite = document.querySelector('.earth-sprite');
+    if (earthSprite) {
+        earthSprite.style.top = '200px';
+        earthSprite.style.left = '50%';
+        earthSprite.style.transform = 'translate(-50%, -50%)';
+        earthSprite.style.position = 'absolute';
+        earthSprite.style.width = '300px';
+        earthSprite.style.height = '300px';
+        earthSprite.style.transition = 'none';
+        earthSprite.style.animation = 'none';
+    }
+}
+
+// Run immediately if DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', forceEarthPosition);
+} else {
+    forceEarthPosition();
+}
+
+// Also run after a short delay to catch any late changes
+setTimeout(forceEarthPosition, 10);
+setTimeout(forceEarthPosition, 100);
+
 // Mobile Earth Night Dimming System
 const MobileEarthNightSystem = {
     earthElement: null,
@@ -229,7 +255,8 @@ function optimizeMobileLayout() {
 
 // Landscape mobile optimizations
 function optimizeLandscapeMobile() {
-    const isLandscape = window.innerHeight < window.innerWidth;
+    // More robust landscape detection for Safari
+    const isLandscape = window.innerHeight < window.innerWidth && window.innerWidth > 600;
     
     if (isLandscape) {
         // Adjust hero title spacing for landscape
@@ -543,7 +570,12 @@ function initMobileOptimizations() {
     
     optimizeMobileTouch();
     optimizeMobileLayout();
-    optimizeLandscapeMobile();
+    
+    // Delay landscape optimization to ensure it doesn't interfere with main layout
+    setTimeout(() => {
+        optimizeLandscapeMobile();
+    }, 50);
+    
     optimizeHighDPIDisplays();
     optimizeTouchFeedback();
     optimizeMobileScrolling();
@@ -561,9 +593,12 @@ function initMobileOptimizations() {
     window.addEventListener('resize', () => {
         setTimeout(() => {
             optimizeMobileLayout();
-            optimizeLandscapeMobile();
+            // Don't run optimizeLandscapeMobile on resize - it resets earth position
             optimizeMobileTypography();
             optimizeMobilePerformance();
+            
+            // Force earth position after any layout changes
+            forceEarthPosition();
         }, 100);
     });
     
@@ -571,9 +606,12 @@ function initMobileOptimizations() {
     window.addEventListener('orientationchange', () => {
         setTimeout(() => {
             optimizeMobileLayout();
-            optimizeLandscapeMobile();
+            // Don't run optimizeLandscapeMobile on orientation change - it resets earth position
             optimizeMobileTypography();
             optimizeMobilePerformance();
+            
+            // Force earth position after any layout changes
+            forceEarthPosition();
         }, 100);
     });
     
@@ -582,6 +620,9 @@ function initMobileOptimizations() {
         setTimeout(() => {
             optimizeMobileLayout();
             optimizeMobileTypography();
+            
+            // Force earth position after any layout changes
+            forceEarthPosition();
         }, 100);
     });
 }
@@ -781,7 +822,7 @@ window.restartMobileOptimizations = function() {
         // Just reinitialize the parts that don't interfere with restored elements
         optimizeMobileTouch();
         optimizeMobileLayout();
-        optimizeLandscapeMobile();
+        // Don't run optimizeLandscapeMobile on restart - it resets earth position
         optimizeHighDPIDisplays();
         optimizeTouchFeedback();
         optimizeMobileScrolling();

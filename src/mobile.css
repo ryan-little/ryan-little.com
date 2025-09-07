@@ -355,13 +355,17 @@ p {
     transition: filter 2s ease-in-out;
 }
 
-/* Mobile earth positioning - override immediately */
-body.mobile .earth-sprite {
+/* Mobile earth positioning - override immediately and aggressively */
+body.mobile .earth-sprite,
+.mobile .earth-sprite {
     top: 200px !important;
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
     width: 300px !important;
     height: 300px !important;
+    position: absolute !important;
+    transition: none !important;
+    animation: none !important;
 }
 
 /* spaceMove animation for mobile background elements */
