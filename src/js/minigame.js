@@ -268,16 +268,10 @@ function fadeOutUIElementsSimplified() {
         button.style.opacity = '0.3';
         button.style.pointerEvents = 'none';
         button.style.cursor = 'default';
-        // Store only the hash fragment, not the full URL
+        // Store the full URL for social media buttons
         const href = button.getAttribute('href');
-        if (href && href.startsWith('#')) {
+        if (href) {
             button.setAttribute('data-original-href', href);
-        } else {
-            // If it's a full URL, extract just the hash part
-            const hashIndex = href.indexOf('#');
-            if (hashIndex !== -1) {
-                button.setAttribute('data-original-href', href.substring(hashIndex));
-            }
         }
         button.removeAttribute('href');
     });
@@ -425,16 +419,10 @@ function fadeOutUIElements() {
         button.style.zIndex = '100'; // Keep above other elements but below minigame UI
         // Disable the link functionality
         button.style.cursor = 'default';
-        // Store only the hash fragment, not the full URL
+        // Store the full URL for social media buttons
         const href = button.getAttribute('href');
-        if (href && href.startsWith('#')) {
+        if (href) {
             button.setAttribute('data-original-href', href);
-        } else {
-            // If it's a full URL, extract just the hash part
-            const hashIndex = href.indexOf('#');
-            if (hashIndex !== -1) {
-                button.setAttribute('data-original-href', href.substring(hashIndex));
-            }
         }
         button.removeAttribute('href');
     });
