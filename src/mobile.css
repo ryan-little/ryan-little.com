@@ -355,6 +355,15 @@ p {
     transition: filter 2s ease-in-out;
 }
 
+/* Mobile earth positioning - override immediately */
+body.mobile .earth-sprite {
+    top: 200px !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 300px !important;
+    height: 300px !important;
+}
+
 /* spaceMove animation for mobile background elements */
 @keyframes spaceMove {
     0% { transform: translateX(0); }
@@ -916,7 +925,7 @@ p {
 }
 
 .earth-sprite {
-    animation: fadeInScale 2s ease-out 0.5s both;
+    /* animation: fadeInScale 2s ease-out 0.5s both; */
 }
 
 /* Mobile link tree entrance - smoother timing */
@@ -1127,7 +1136,7 @@ body.mobile .hero .hero-background .earth-sprite {
         width: 200px !important;
         height: 200px !important;
         position: absolute !important;
-        top: 6% !important;
+        top: 150px !important;
         left: 50% !important;
         transform: translate(-50%, -50%) !important;
         background-position: center center !important;
