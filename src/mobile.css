@@ -364,7 +364,7 @@ body.mobile .earth-sprite,
     width: 300px !important;
     height: 300px !important;
     position: absolute !important;
-    transition: none !important;
+    transition: filter 2s ease-in-out !important; /* Only allow filter transitions */
     animation: none !important;
 }
 

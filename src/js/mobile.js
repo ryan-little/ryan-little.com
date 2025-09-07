@@ -51,48 +51,26 @@ setTimeout(forceEarthPosition, 100);
 const MobileEarthNightSystem = {
     earthElement: null,
     updateInterval: null,
+    isInitialized: false,
     
     init() {
+        // Prevent multiple initializations
+        if (this.isInitialized) return;
+        
         this.earthElement = document.querySelector('.earth-sprite');
         
         if (!this.earthElement) {
             setTimeout(() => {
                 this.earthElement = document.querySelector('.earth-sprite');
                 if (this.earthElement) {
-                    this.ensurePositioning();
+                    this.startUpdates();
                 }
             }, 100);
             return;
         }
         
-        this.ensurePositioning();
-    },
-    
-    ensurePositioning() {
-        // Force correct positioning before starting night system
-        if (this.earthElement) {
-            const isLandscape = window.innerHeight < window.innerWidth;
-            
-            if (isLandscape) {
-                this.earthElement.style.top = '150px';
-                this.earthElement.style.width = '200px';
-                this.earthElement.style.height = '200px';
-            } else {
-                this.earthElement.style.top = '200px';
-                const earthSize = Math.min(300, Math.max(250, window.innerWidth * 0.4));
-                this.earthElement.style.width = `${earthSize}px`;
-                this.earthElement.style.height = `${earthSize}px`;
-            }
-            
-            this.earthElement.style.left = '50%';
-            this.earthElement.style.transform = 'translate(-50%, -50%)';
-            this.earthElement.style.position = 'absolute';
-        }
-        
-        // Wait a bit more to ensure positioning is complete
-        setTimeout(() => {
-            this.startUpdates();
-        }, 150);
+        this.startUpdates();
+        this.isInitialized = true;
     },
     
     getTimeBasedBrightness() {
@@ -140,8 +118,8 @@ const MobileEarthNightSystem = {
         
         const { brightness, contrast } = this.getTimeBasedBrightness();
         
-        // Apply smooth transition with CSS transition (longer transition for the initial change)
-        this.earthElement.style.transition = 'filter 3s ease-in-out';
+        // Use consistent transition timing that matches CSS (2s)
+        this.earthElement.style.transition = 'filter 2s ease-in-out';
         this.earthElement.style.filter = `brightness(${brightness}) contrast(${contrast})`;
         
         // Add a subtle blue tint for night time
@@ -152,14 +130,14 @@ const MobileEarthNightSystem = {
     },
     
     startUpdates() {
-        // Start at full daylight brightness
+        // Start at full daylight brightness with no transition to avoid conflicts
         this.earthElement.style.transition = 'filter 0s ease-in-out';
         this.earthElement.style.filter = 'brightness(1.1) contrast(1.1)';
         
         // Then transition to current time-based brightness after a short delay
         setTimeout(() => {
             this.updateEarthBrightness();
-        }, 1000); // 1 second delay
+        }, 500); // Reduced delay to prevent positioning conflicts
         
         // Update every minute for smooth transitions
         this.updateInterval = setInterval(() => {
@@ -221,19 +199,13 @@ function optimizeMobileLayout() {
     // Adjust Earth sprite size based on viewport - work with CSS defaults
     const earthSprite = document.querySelector('.earth-sprite');
     if (earthSprite) {
-        // Use CSS default of 300px for mobile, but allow some adjustment for very small screens
+        // Only adjust size, don't reposition to avoid conflicts with night system
         const earthSize = Math.min(300, Math.max(250, viewportWidth * 0.4));
         earthSprite.style.width = `${earthSize}px`;
         earthSprite.style.height = `${earthSize}px`;
         
-        // Force mobile positioning - override any minigame restoration
-        earthSprite.style.top = '200px';
-        earthSprite.style.left = '50%';
-        earthSprite.style.transform = 'translate(-50%, -50%)';
-        earthSprite.style.position = 'absolute';
-        
-        // Ensure no transitions during positioning
-        earthSprite.style.transition = 'none';
+        // Don't reposition here - let forceEarthPosition and night system handle positioning
+        // This prevents conflicts during animations
     }
     
     // Adjust mobile link tree positioning - move way up
@@ -586,7 +558,7 @@ function initMobileOptimizations() {
     if (typeof MobileEarthNightSystem !== 'undefined') {
         setTimeout(() => {
             MobileEarthNightSystem.init();
-        }, 200); // Wait for layout optimizations to complete
+        }, 300); // Wait for layout optimizations to complete
     }
     
     // Add resize listener for responsive adjustments
@@ -827,41 +799,6 @@ window.restartMobileOptimizations = function() {
         optimizeTouchFeedback();
         optimizeMobileScrolling();
         optimizeMobilePerformance();
-        
-         // Initialize Mobile Earth Night System after a delay to ensure proper positioning
-         if (typeof MobileEarthNightSystem !== 'undefined') {
-             setTimeout(() => {
-                 MobileEarthNightSystem.init();
-             }, 200); // Wait for layout optimizations to complete
-         }
-    }
-    
-    // Reinitialize the mobile night system to restore proper brightness/contrast
-    if (typeof MobileEarthNightSystem !== 'undefined') {
-        setTimeout(() => {
-            // Ensure positioning is correct before updating brightness
-            const earthElement = document.querySelector('.earth-sprite');
-            if (earthElement) {
-                const isLandscape = window.innerHeight < window.innerWidth;
-                
-                if (isLandscape) {
-                    earthElement.style.top = '150px';
-                    earthElement.style.width = '200px';
-                    earthElement.style.height = '200px';
-                } else {
-                    earthElement.style.top = '200px';
-                    const earthSize = Math.min(300, Math.max(250, window.innerWidth * 0.4));
-                    earthElement.style.width = `${earthSize}px`;
-                    earthElement.style.height = `${earthSize}px`;
-                }
-                
-                earthElement.style.left = '50%';
-                earthElement.style.transform = 'translate(-50%, -50%)';
-                earthElement.style.position = 'absolute';
-            }
-            
-            MobileEarthNightSystem.updateEarthBrightness();
-        }, 100);
     }
 };
 
