@@ -365,7 +365,7 @@ body.mobile .earth-sprite,
     height: 300px !important;
     position: absolute !important;
     transition: filter 2s ease-in-out !important; /* Only allow filter transitions */
-    animation: none !important;
+    animation: fadeInScale 1.5s ease-out 0.5s both !important; /* Allow fade-in animation */
 }
 
 /* spaceMove animation for mobile background elements */
@@ -929,7 +929,7 @@ body.mobile .earth-sprite,
 }
 
 .earth-sprite {
-    /* animation: fadeInScale 2s ease-out 0.5s both; */
+    animation: fadeInScale 1.5s ease-out 0.5s both;
 }
 
 /* Mobile link tree entrance - smoother timing */

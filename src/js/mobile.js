@@ -31,8 +31,7 @@ function forceEarthPosition() {
         earthSprite.style.position = 'absolute';
         earthSprite.style.width = '300px';
         earthSprite.style.height = '300px';
-        earthSprite.style.transition = 'none';
-        earthSprite.style.animation = 'none';
+        // Don't reset transition or animation - let CSS handle fade-in and night system handle filter transitions
     }
 }
 
@@ -64,13 +63,17 @@ const MobileEarthNightSystem = {
                 this.earthElement = document.querySelector('.earth-sprite');
                 if (this.earthElement) {
                     this.startUpdates();
+                    this.isInitialized = true;
                 }
             }, 100);
             return;
         }
         
-        this.startUpdates();
-        this.isInitialized = true;
+        // Small delay to ensure page is fully rendered
+        setTimeout(() => {
+            this.startUpdates();
+            this.isInitialized = true;
+        }, 50);
     },
     
     getTimeBasedBrightness() {
@@ -130,14 +133,30 @@ const MobileEarthNightSystem = {
     },
     
     startUpdates() {
+        // Ensure we have the earth element
+        if (!this.earthElement) {
+            this.earthElement = document.querySelector('.earth-sprite');
+            if (!this.earthElement) return;
+        }
+        
         // Start at full daylight brightness with no transition to avoid conflicts
         this.earthElement.style.transition = 'filter 0s ease-in-out';
         this.earthElement.style.filter = 'brightness(1.1) contrast(1.1)';
         
-        // Then transition to current time-based brightness after a short delay
+        // Force a reflow to ensure the brightness is applied
+        this.earthElement.offsetHeight;
+        
+        // Wait a bit longer to ensure fade-in is complete, then show brightness pop-up
         setTimeout(() => {
-            this.updateEarthBrightness();
-        }, 500); // Reduced delay to prevent positioning conflicts
+            // Show brightness pop-up effect
+            this.earthElement.style.transition = 'filter 0s ease-in-out';
+            this.earthElement.style.filter = 'brightness(1.1) contrast(1.1)';
+            
+            // Then transition to current time-based brightness after a delay
+            setTimeout(() => {
+                this.updateEarthBrightness();
+            }, 1000); // 1 second delay to show the pop-up effect
+        }, 500); // Wait for fade-in to complete
         
         // Update every minute for smooth transitions
         this.updateInterval = setInterval(() => {
@@ -558,7 +577,7 @@ function initMobileOptimizations() {
     if (typeof MobileEarthNightSystem !== 'undefined') {
         setTimeout(() => {
             MobileEarthNightSystem.init();
-        }, 300); // Wait for layout optimizations to complete
+        }, 2500); // Wait for fade-in animation to complete (1.5s + 0.5s delay + buffer)
     }
     
     // Add resize listener for responsive adjustments
