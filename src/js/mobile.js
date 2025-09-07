@@ -33,16 +33,40 @@ const MobileEarthNightSystem = {
             setTimeout(() => {
                 this.earthElement = document.querySelector('.earth-sprite');
                 if (this.earthElement) {
-                    this.startUpdates();
+                    this.ensurePositioning();
                 }
             }, 100);
             return;
         }
         
-        // Wait for mobile layout optimizations to position the earth correctly
+        this.ensurePositioning();
+    },
+    
+    ensurePositioning() {
+        // Force correct positioning before starting night system
+        if (this.earthElement) {
+            const isLandscape = window.innerHeight < window.innerWidth;
+            
+            if (isLandscape) {
+                this.earthElement.style.top = '150px';
+                this.earthElement.style.width = '200px';
+                this.earthElement.style.height = '200px';
+            } else {
+                this.earthElement.style.top = '200px';
+                const earthSize = Math.min(300, Math.max(250, window.innerWidth * 0.4));
+                this.earthElement.style.width = `${earthSize}px`;
+                this.earthElement.style.height = `${earthSize}px`;
+            }
+            
+            this.earthElement.style.left = '50%';
+            this.earthElement.style.transform = 'translate(-50%, -50%)';
+            this.earthElement.style.position = 'absolute';
+        }
+        
+        // Wait a bit more to ensure positioning is complete
         setTimeout(() => {
             this.startUpdates();
-        }, 100);
+        }, 150);
     },
     
     getTimeBasedBrightness() {
@@ -181,6 +205,9 @@ function optimizeMobileLayout() {
         earthSprite.style.left = '50%';
         earthSprite.style.transform = 'translate(-50%, -50%)';
         earthSprite.style.position = 'absolute';
+        
+        // Ensure no transitions during positioning
+        earthSprite.style.transition = 'none';
     }
     
     // Adjust mobile link tree positioning - move way up
@@ -227,6 +254,9 @@ function optimizeLandscapeMobile() {
             earthSprite.style.left = '50%';
             earthSprite.style.transform = 'translate(-50%, -50%)';
             earthSprite.style.position = 'absolute';
+            
+            // Ensure no transitions during positioning
+            earthSprite.style.transition = 'none';
         }
         
         // Adjust mobile link tree for landscape
@@ -768,6 +798,27 @@ window.restartMobileOptimizations = function() {
     // Reinitialize the mobile night system to restore proper brightness/contrast
     if (typeof MobileEarthNightSystem !== 'undefined') {
         setTimeout(() => {
+            // Ensure positioning is correct before updating brightness
+            const earthElement = document.querySelector('.earth-sprite');
+            if (earthElement) {
+                const isLandscape = window.innerHeight < window.innerWidth;
+                
+                if (isLandscape) {
+                    earthElement.style.top = '150px';
+                    earthElement.style.width = '200px';
+                    earthElement.style.height = '200px';
+                } else {
+                    earthElement.style.top = '200px';
+                    const earthSize = Math.min(300, Math.max(250, window.innerWidth * 0.4));
+                    earthElement.style.width = `${earthSize}px`;
+                    earthElement.style.height = `${earthSize}px`;
+                }
+                
+                earthElement.style.left = '50%';
+                earthElement.style.transform = 'translate(-50%, -50%)';
+                earthElement.style.position = 'absolute';
+            }
+            
             MobileEarthNightSystem.updateEarthBrightness();
         }, 100);
     }
