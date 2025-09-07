@@ -247,62 +247,6 @@ class ComponentSystem {
         `;
     }
 
-    // Create a specialized contact overlay component
-    createContactOverlay() {
-        return `
-            <div id="contact-overlay" class="contact-overlay">
-                <div class="background-image"></div>
-                <div class="background2"></div>
-                <div class="stars"></div>
-                <div class="centered-satellite">
-                    <picture>
-                        <source srcset="assets/images_webp/satellite1.webp" type="image/webp">
-                        <img src="assets/images/satellite1.png" alt="Contact Satellite" class="satellite-image">
-                    </picture>
-                </div>
-                <div class="contact-content-pane">
-                    <button class="contact-back-button" onclick="closeContactPage()">
-                        <span class="arrow">←</span>
-                        Back to Earth
-                    </button>
-                    <div class="contact-info">
-                        <h2>Get in Touch</h2>
-                        <p>Ready to collaborate on your next geospatial project? Let's connect!</p>
-                        
-                        <div class="contact-methods">
-                            <a href="mailto:ryan@ryanpdlittle.com" class="contact-method" title="Email">
-                                <i class="fas fa-envelope"></i>
-                            </a>
-                            <a href="https://linkedin.com/in/rpdlittle" target="_blank" rel="noopener" class="contact-method" title="LinkedIn">
-                                <i class="fab fa-linkedin"></i>
-                            </a>
-                            <a href="https://github.com/ryan-little" target="_blank" rel="noopener" class="contact-method" title="GitHub">
-                                <i class="fab fa-github"></i>
-                            </a>
-                            <a href="https://littlehammerlabs.com" target="_blank" rel="noopener" class="contact-method" title="Little Hammer Labs">
-                                <img src="assets/images_webp/lhlhammer_transback.webp" alt="Little Hammer Labs" class="contact-icon-image">
-                            </a>
-                        </div>
-                        
-                        <div class="contact-details">
-                            <div class="contact-detail">
-                                <i class="fas fa-phone"></i>
-                                <span>+1-619-861-9595</span>
-                            </div>
-                            <div class="contact-detail">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>San Diego, CA</span>
-                            </div>
-                            <div class="contact-detail">
-                                <i class="fas fa-globe"></i>
-                                <span>www.ryan-little.com</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
 
     // Utility function to capitalize first letter
     capitalizeFirst(string) {
@@ -320,7 +264,6 @@ class ComponentSystem {
                     this.createPageOverlay('about', 'About Me', 'Exploring the intersection of geography, technology, and nature.', 'satellite1'),
                     this.createPageOverlay('portfolio', 'Portfolio', 'Showcasing my work in geospatial analysis, web development, and photography.', 'satellite1'),
                     this.createPageOverlay('trees', 'Trees I\'ve Visited', 'Celebrating the silent giants that shape our landscapes and sustain our planet.', 'satellite3'),
-                    this.createContactOverlay()
                 ]
             },
             'mobile': {
@@ -331,7 +274,6 @@ class ComponentSystem {
                     this.createPageOverlay('about', 'About Me', 'Exploring the intersection of geography, technology, and nature.', 'satellite1'),
                     this.createPageOverlay('portfolio', 'Portfolio', 'Showcasing my work in geospatial analysis, web development, and photography.', 'satellite1'),
                     this.createPageOverlay('trees', 'Trees I\'ve Visited', 'Celebrating the silent giants that shape our landscapes and sustain our planet.', 'satellite3'),
-                    this.createContactOverlay()
                 ]
             }
         };

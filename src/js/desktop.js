@@ -458,55 +458,11 @@ function handleSatelliteNavigation(target, clickedSatellite) {
     } else if (target === 'trees') {
         openTreesPage(clickedSatellite);
     } else {
+        console.warn('Unknown navigation target:', target);
     }
 }
 
-function openContactPage(clickedSatellite) {
-    
-    // Pause all animations except background stars and scaled satellite
-    pauseAllAnimationsExceptContact();
-    
-    // Get the clicked satellite's image source
-    const satelliteImg = clickedSatellite.querySelector('.satellite-image');
-    const satelliteSrc = satelliteImg.src;
-    const satelliteSrcset = satelliteImg.srcset;
-    
-    // Update the centered satellite in the overlay
-    const centeredSatellite = document.querySelector('.contact-overlay .centered-satellite img');
-    if (centeredSatellite) {
-        centeredSatellite.src = satelliteSrc;
-        if (satelliteSrcset) {
-            centeredSatellite.srcset = satelliteSrcset;
-        }
-    }
-    
-    // Show the contact overlay
-    const contactOverlay = document.getElementById('contact-overlay');
-    if (contactOverlay) {
-        contactOverlay.classList.add('active');
-        
-        // Prevent body scroll
-        document.body.style.overflow = 'hidden';
-        
-    }
-}
 
-function closeContactPage() {
-    
-    const contactOverlay = document.getElementById('contact-overlay');
-    if (contactOverlay) {
-        contactOverlay.classList.remove('active');
-        
-        // Restore body scroll
-        document.body.style.overflow = '';
-        
-        // Resume all animations after a short delay
-        setTimeout(() => {
-            resumeAllAnimationsAfterContact();
-        }, 500);
-        
-    }
-}
 
 // Adventures Page Functions
 function openAdventuresPage(clickedSatellite) {
@@ -556,84 +512,7 @@ function closeAdventuresPage() {
     }
 }
 
-// Animation control functions for contact page
-function pauseAllAnimationsExceptContact() {
-    
-    // Pause satellite orbital animations
-    const satellites = document.querySelectorAll('.satellite');
-    satellites.forEach(sat => {
-        sat.classList.add('orbital-paused');
-    });
-    
-    // Pause background image animations (but keep stars moving)
-    const backgroundImage = document.querySelector('.hero-background .background-image');
-    const background2 = document.querySelector('.hero-background .background2');
-    
-    if (backgroundImage) {
-        backgroundImage.style.animationPlayState = 'paused';
-    }
-    if (background2) {
-        background2.style.animationPlayState = 'paused';
-    }
-    
-    // Pause Earth sprite if it has animations
-    const earthSprite = document.querySelector('.earth-sprite');
-    if (earthSprite) {
-        earthSprite.style.animationPlayState = 'paused';
-    }
-    
-    // Pause any shooting stars
-    if (typeof window.clearAllShootingStars === 'function') {
-        window.clearAllShootingStars();
-    }
-    
-    // Set page active state to prevent satellite movement
-    window.SatelliteMovementState.isPageActive = true;
-    
-}
 
-function resumeAllAnimationsAfterContact() {
-    
-    // Resume satellite orbital animations
-    const satellites = document.querySelectorAll('.satellite');
-    satellites.forEach(sat => {
-        sat.classList.remove('orbital-paused');
-    });
-    
-    // Resume background image animations
-    const backgroundImage = document.querySelector('.hero-background .background-image');
-    const background2 = document.querySelector('.hero-background .background2');
-    
-    if (backgroundImage) {
-        backgroundImage.style.animationPlayState = 'running';
-    }
-    if (background2) {
-        background2.style.animationPlayState = 'running';
-    }
-    
-    // Resume Earth sprite animations
-    const earthSprite = document.querySelector('.earth-sprite');
-    if (earthSprite) {
-        earthSprite.style.animationPlayState = 'running';
-    }
-    
-    // Resume shooting stars
-    if (typeof window.initShootingStars === 'function') {
-        window.initShootingStars();
-    }
-    
-    // Clear page active state to allow satellite movement
-    window.SatelliteMovementState.isPageActive = false;
-    
-    // Resume satellite movement if not hovering
-    if (!window.SatelliteMovementState.isHovering) {
-        const satellites = document.querySelectorAll('.satellite');
-        satellites.forEach(sat => {
-            sat.classList.remove('orbital-paused');
-        });
-    }
-    
-}
 
 // About Page Functions
 function openAboutPage(clickedSatellite) {
@@ -865,7 +744,6 @@ document.addEventListener('keydown', (event) => {
         const aboutOverlay = document.getElementById('about-overlay');
         const portfolioOverlay = document.getElementById('portfolio-overlay');
         const treesOverlay = document.getElementById('trees-overlay');
-        
         if (adventuresOverlay && adventuresOverlay.classList.contains('active')) {
             closeAdventuresPage();
         } else if (aboutOverlay && aboutOverlay.classList.contains('active')) {

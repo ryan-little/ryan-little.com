@@ -22,7 +22,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Check DeviceInfo availability
     if (typeof DeviceInfo === 'undefined') {
+        console.warn('DeviceInfo not available, using fallback detection');
     } else {
+        console.log('DeviceInfo loaded successfully');
     }
     
     // Initialize device-specific optimizations if available
@@ -33,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Desktop version
         initDesktopOptimizations();
     } else {
+        console.warn('No device-specific optimizations available');
     }
     
     // Website initialized successfully
@@ -41,6 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Add error handling for script loading
 window.addEventListener('error', function(e) {
     if (e.target.tagName === 'SCRIPT') {
+        console.error('Script loading error:', e.target.src, e.error);
     }
 });
 

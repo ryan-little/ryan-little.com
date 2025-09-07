@@ -17,6 +17,8 @@ class ContentManager {
             this.contentData = await response.json();
             this.isInitialized = true;
         } catch (error) {
+            console.error('Failed to load content data:', error);
+            this.isInitialized = false;
         }
     }
 

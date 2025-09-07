@@ -471,6 +471,7 @@ function handleMobileNavigation(target) {
     } else if (target === 'adventures') {
         openAdventuresPageMobile();
     } else {
+        console.warn('Unknown navigation target:', target);
     }
 }
 
@@ -578,31 +579,7 @@ function closeTreesPageMobile() {
     }
 }
 
-// Contact Page Mobile Functions
-function openContactPageMobile() {
-    
-    // Show the contact overlay
-    const contactOverlay = document.getElementById('contact-overlay');
-    if (contactOverlay) {
-        contactOverlay.classList.add('active');
-        
-        // Prevent body scroll
-        document.body.style.overflow = 'hidden';
-        
-    }
-}
 
-function closeContactPageMobile() {
-    
-    const contactOverlay = document.getElementById('contact-overlay');
-    if (contactOverlay) {
-        contactOverlay.classList.remove('active');
-        
-        // Restore body scroll
-        document.body.style.overflow = '';
-        
-    }
-}
 
 // Add click handlers for mobile link items
 function initMobileNavigation() {
@@ -623,14 +600,11 @@ function initMobileNavigation() {
     // Handle escape key to close any active page
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
-            const contactOverlay = document.getElementById('contact-overlay');
             const aboutOverlay = document.getElementById('about-overlay');
             const portfolioOverlay = document.getElementById('portfolio-overlay');
             const treesOverlay = document.getElementById('trees-overlay');
             
-            if (contactOverlay && contactOverlay.classList.contains('active')) {
-                closeContactPageMobile();
-            } else if (aboutOverlay && aboutOverlay.classList.contains('active')) {
+            if (aboutOverlay && aboutOverlay.classList.contains('active')) {
                 closeAboutPageMobile();
             } else if (portfolioOverlay && portfolioOverlay.classList.contains('active')) {
                 closePortfolioPageMobile();

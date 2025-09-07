@@ -19,6 +19,7 @@ class TemplateEngine {
             }
             return this.contentData;
         } catch (error) {
+            console.error('Failed to load content for templates:', error);
             return null;
         }
     }
