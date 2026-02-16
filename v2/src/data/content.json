@@ -1,0 +1,393 @@
+{
+  "adventures": {
+    "title": "Adventures",
+    "subtitle": "Exploring the world, one adventure at a time.",
+    "countriesVisited": 12,
+    "nationalParksVisited": 22,
+    "panels": [
+      {
+        "id": "big-bend",
+        "title": "Big Bend National Park",
+        "location": "Texas, USA",
+        "date": "2023",
+        "description": "Desert hiking and stargazing in one of America's most remote national parks.",
+        "tags": ["Hiking", "Stargazing", "Desert"],
+        "image": {
+          "webp": "assets/images_webp/bigbendnp_fullshot.webp",
+          "fallback": "assets/images/bigbendnp_fullshot.JPG",
+          "alt": "Big Bend National Park"
+        }
+      },
+      {
+        "id": "ireland/northern-ireland",
+        "title": "Ireland/Northern Ireland",
+        "location": "Ireland, Northern Ireland",
+        "date": "2018",
+        "description": "Exploring the rich history and landscapes of Ireland and Northern Ireland.",
+        "tags": ["Culture", "History", "Landscapes"],
+        "image": {
+          "webp": "assets/images_webp/giantscauseway_fullshot.webp",
+          "fallback": "assets/images/giantscauseway_fullshot.JPG",
+          "alt": "Giant's Causeway"
+        }
+      },
+      {
+        "id": "sequoia",
+        "title": "Sequoia National Park",
+        "location": "California, USA",
+        "date": "2023",
+        "description": "Standing in awe of the world's largest tree by volume - General Sherman.",
+        "tags": ["Giant Trees", "Forest", "National Park"],
+        "image": {
+          "webp": "assets/images_webp/generalshermanpic.webp",
+          "fallback": "assets/images/generalshermanpic.heif",
+          "alt": "General Sherman Tree"
+        }
+      },
+      {
+        "id": "redwood",
+        "title": "Redwood National Park",
+        "location": "California, USA",
+        "date": "2023",
+        "description": "Hiking through ancient redwood forests to see the world's tallest trees.",
+        "tags": ["Redwoods", "Hiking", "Ancient"],
+        "image": {
+          "webp": "assets/images_webp/hyperionpic.webp",
+          "fallback": "assets/images/hyperionpic.JPG",
+          "alt": "Hyperion Tree"
+        }
+      },
+      {
+        "id": "white-mountains",
+        "title": "White Mountains",
+        "location": "California, USA",
+        "date": "2023",
+        "description": "Visiting the ancient bristlecone pines, some of the oldest living organisms on Earth.",
+        "tags": ["Ancient Trees", "High Altitude", "Desert"],
+        "image": {
+          "webp": "assets/images_webp/methuselahpic.webp",
+          "fallback": "assets/images/methuselahpic.JPG",
+          "alt": "Methuselah Tree"
+        }
+      },
+      {
+        "id": "japan",
+        "title": "Japan",
+        "location": "Tokyo, Kyoto, Osaka, Nara, Hiroshima, Hakone, Yokohama",
+        "date": "2025",
+        "description": "Exploring the vibrant culture and cuisine of Japan.",
+        "tags": ["Culture", "Food", "Japan"],
+        "image": {
+          "webp": "assets/images_webp/osaka_headshot.webp",
+          "fallback": "assets/images/osaka_headshot.JPG",
+          "alt": "Ryan Little in Osaka, Japan"
+        }
+      },
+      {
+        "id": "spain-portugal",
+        "title": "Spain & Portugal",
+        "location": "Lisbon, Porto,Madrid, Seville, Granada, Valencia, Barcelona",
+        "date": "2023",
+        "description": "Exploring the rich culture, architecture, and cuisine of the Iberian Peninsula.",
+        "tags": ["Culture", "Architecture", "Food", "History"],
+        "image": {
+          "webp": "assets/images_webp/spain_portugal.webp",
+          "fallback": "assets/images/spain_portugal.jpg",
+          "alt": "Spain and Portugal Adventure"
+        }
+      },
+      {
+        "id": "rocky-mountain",
+        "title": "Rocky Mountain National Park",
+        "location": "Colorado, USA",
+        "date": "2023",
+        "description": "Hiking through alpine landscapes and experiencing the beauty of the Rocky Mountains.",
+        "tags": ["Hiking", "Mountains", "Alpine", "Wildlife"],
+        "image": {
+          "webp": "assets/images_webp/rocky_mountain.webp",
+          "fallback": "assets/images/rocky_mountain.jpg",
+          "alt": "Rocky Mountain National Park"
+        }
+      },
+      {
+        "id": "glacier-yellowstone-teton",
+        "title": "Glacier, Yellowstone & Grand Teton",
+        "location": "Wyoming and Montana, USA",
+        "date": "2021",
+        "description": "Exploring America's first national park, the stunning Teton Range, and the beautiful Glacier National Park.",
+        "tags": ["Geysers", "Wildlife", "Mountains", "National Parks"],
+        "image": {
+          "webp": "assets/images_webp/yellowstone_teton.webp",
+          "fallback": "assets/images/yellowstone_teton.jpg",
+          "alt": "Yellowstone and Grand Teton National Parks"
+        }
+      },
+      {
+        "id": "pinnacles",
+        "title": "Pinnacles National Park",
+        "location": "California, USA",
+        "date": "2021",
+        "description": "Hiking through unique volcanic rock formations and talus caves.",
+        "tags": ["Hiking", "Volcanic", "Caves", "Geology"],
+        "image": {
+          "webp": "assets/images_webp/pinnacles.webp",
+          "fallback": "assets/images/pinnacles.jpg",
+          "alt": "Pinnacles National Park"
+        }
+      },
+      {
+        "id": "europe-2018",
+        "title": "European Adventure",
+        "location": "France, Netherlands, Germany, Czechia",
+        "date": "2018",
+        "description": "Exploring the historic cities and cultures of Western Europe.",
+        "tags": ["Culture", "History", "Architecture", "Travel"],
+        "image": {
+          "webp": "assets/images_webp/europe_2018.webp",
+          "fallback": "assets/images/europe_2018.jpg",
+          "alt": "European Adventure 2018"
+        }
+      },
+      {
+        "id": "hawaii",
+        "title": "Hawaii",
+        "location": "Lahaina, Hawaii",
+        "date": "2016",
+        "description": "Experiencing the tropical paradise and volcanic landscapes of Hawaii.",
+        "tags": ["Tropical", "Volcanic", "Beaches", "Island"],
+        "image": {
+          "webp": "assets/images_webp/hawaii.webp",
+          "fallback": "assets/images/hawaii.jpg",
+          "alt": "Hawaii Adventure"
+        }
+      },
+      {
+        "id": "whats-next",
+        "title": "What's Next?",
+        "location": "The World Awaits",
+        "date": "2025+",
+        "description": "Always planning the next adventure.",
+        "tags": ["Planning", "Future", "Exploration"],
+        "isPlaceholder": true
+      }
+    ]
+  },
+  "portfolio": {
+    "title": "Portfolio",
+    "subtitle": "Showcasing my expertise in geospatial analysis and custom development solutions.",
+    "sections": [
+      {
+        "id": "gis-projects",
+        "title": "GIS Projects",
+        "icon": "fas fa-map",
+        "items": [
+          {
+            "title": "Temporal NDVI Study of Man-Made Forests",
+            "description": "Comprehensive term poster project investigating China's Great Green Wall program to track land use changes, assess new forest health, and analyze weather changes in the Gobi Desert from 2000 to 2022. Employed custom R code to process Landsat imagery into NDVI data from key research zones to derive forest growth areas and relative health of the forests.",
+            "image": {
+              "webp": "assets/images_webp/gisresearchprojectposter.webp",
+              "fallback": "assets/images/gisresearchprojectposter.JPG",
+              "alt": "Temporal NDVI Study Research Project Poster",
+              "caption": "Temporal NDVI Study - China's Great Green Wall Program"
+            },
+            "additionalImages": [
+              {
+                "webp": "assets/images_webp/temporalndvistudyofmanmadeforests.webp",
+                "fallback": "assets/images/temporalndvistudyofmanmadeforests.png",
+                "alt": "Temporal NDVI Study of Man-Made Forests Analysis",
+                "caption": "Detailed analysis of forest growth patterns and NDVI changes over time"
+              }
+            ]
+          },
+          {
+            "title": "Santa Barbara Wildfire Analysis",
+            "description": "Used Python to run a supervised classification of Landsat imagery of the Santa Barbara area across 2007, 2008, and 2009 to study the effects of the Jesusita and Gap fires on local vegetation and analyze rates of regrowth. Mapped results using QGIS and associated Landsat imagery bands.",
+            "image": {
+              "webp": "assets/images_webp/santabarbarawildfireanalysis.webp",
+              "fallback": "assets/images/santabarbarawildfireanalysis.png",
+              "alt": "Santa Barbara Wildfire Analysis",
+              "caption": "Wildfire impact analysis and vegetation regrowth patterns"
+            },
+            "additionalImages": [
+              {
+                "webp": "assets/images_webp/santabarbarafalsecolor.webp",
+                "fallback": "assets/images/santabarbarafalsecolor.png",
+                "alt": "Santa Barbara False Color Analysis",
+                "caption": "False color composite analysis of the Santa Barbara area"
+              }
+            ]
+          },
+          {
+            "title": "Study of Native California Bird Habitat Area Being Lost to Wildfire",
+            "description": "Compiled a decade by decade analysis of wildfire damage to the habitats of the California Condor and Great Gray Owl. Took the CalFIRE historic fire database back to 1900 and color-coded each fire area by decade and clipped the results to the boundaries of the known habitats of both birds of study."
+          },
+          {
+            "title": "Agricultural Land Classification",
+            "description": "Supervised classification analysis of farmland areas using remote sensing techniques to identify and map agricultural land use patterns and crop distribution.",
+            "image": {
+              "webp": "assets/images_webp/classifyingfarmland.webp",
+              "fallback": "assets/images/classifyingfarmland.png",
+              "alt": "Agricultural Land Classification Analysis",
+              "caption": "Farmland classification and agricultural land use mapping"
+            }
+          }
+        ]
+      },
+      {
+        "id": "web-development",
+        "title": "Development",
+        "icon": "fas fa-laptop-code",
+        "items": [
+          {
+            "title": "DGA Transcriber",
+            "description": "Comprehensive Python-based transcription tool with 490+ functions that saves the company $15,000 annually. Built for a Little Hammer Labs customer, featuring open source AI model integration, advanced audio processing, and automated transcription workflows to streamline document creation and data processing.",
+            "image": {
+              "webp": "assets/images_webp/dgatranscribericon.webp",
+              "alt": "DGA Transcriber Logo",
+              "caption": "DGA Transcriber - Custom transcription solution"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "trees": {
+    "title": "Trees I've Visited",
+    "subtitle": "Exploring the world's most remarkable trees and their incredible stories.",
+    "items": [
+      {
+        "id": "general-sherman",
+        "title": "General Sherman - Giant Sequoia",
+        "description": "The largest tree on Earth by volume, found in California's Sequoia National Park",
+        "image": {
+          "webp": "assets/images_webp/generalshermanpic.webp",
+          "fallback": "assets/images/generalshermanpic.heif",
+          "alt": "General Sherman Tree - Largest Tree on Earth",
+          "caption": "General Sherman Tree - Sequoia National Park"
+        },
+        "stats": {
+          "title": "World's Largest Tree Statistics:",
+          "items": [
+            "Height: 275 feet (83.8 meters)",
+            "Volume: 52,508 cubic feet (1,487 cubic meters)",
+            "Base Diameter: 36.5 feet (11.1 meters)",
+            "Age: Approximately 2,200 years old",
+            "Weight: Estimated 2.7 million pounds (1,244 metric tons)"
+          ]
+        }
+      },
+      {
+        "id": "hyperion",
+        "title": "Hyperion - Coastal Redwood",
+        "description": "The tallest tree in the world, located in Redwood National Park, California",
+        "image": {
+          "webp": "assets/images_webp/hyperionpic.webp",
+          "fallback": "assets/images/hyperionpic.JPG",
+          "alt": "Hyperion Tree - Tallest Tree on Earth",
+          "caption": "Hyperion Tree - Tallest Tree on Earth"
+        },
+        "stats": {
+          "title": "World's Tallest Tree Statistics:",
+          "items": [
+            "Height: 380.3 feet (115.92 meters)",
+            "Species: Sequoia sempervirens (Coastal Redwood)",
+            "Age: Estimated 600-800 years old",
+            "Location: Redwood National Park, California",
+            "Discovery: Found in 2006 by naturalists Chris Atkins and Michael Taylor"
+          ]
+        }
+      },
+      {
+        "id": "methuselah",
+        "title": "Methuselah - Ancient Bristlecone Pine",
+        "description": "One of the oldest known living trees on Earth, located in the White Mountains of California",
+        "image": {
+          "webp": "assets/images_webp/methuselahpic.webp",
+          "fallback": "assets/images/methuselahpic.JPG",
+          "alt": "Methuselah Tree - One of the Oldest Trees on Earth",
+          "caption": "Methuselah Tree - Ancient Bristlecone Pine"
+        },
+        "stats": {
+          "title": "World's Oldest Tree Statistics:",
+          "items": [
+            "Age: 4,854 years old (as of 2024)",
+            "Species: Pinus longaeva (Great Basin Bristlecone Pine)",
+            "Height: Approximately 50 feet (15 meters)",
+            "Location: White Mountains, Inyo County, California",
+            "Discovery: Core sampled in 1957 by Edmund Schulman"
+          ]
+        }
+      }
+    ]
+  },
+  "about": {
+    "title": "About Me",
+    "subtitle": "Exploring the intersection of geography, technology, and nature.",
+    "headshot": {
+      "webp": "assets/images_webp/bigbendnp_headshot.webp",
+      "fallback": "assets/images/bigbendnp_headshot.JPG",
+      "alt": "Ryan Little at Big Bend National Park",
+      "caption": "Exploring Big Bend National Park"
+    },
+    "sections": [
+      {
+        "id": "education",
+        "title": "Education",
+        "icon": "fas fa-graduation-cap",
+        "content": [
+          "Bachelor of Arts in Geography - University of California, Santa Barbara (2018-2022)",
+          "Emphasis in GIS with concentration in Air Photos and Remote Sensing"
+        ],
+        "image": {
+          "webp": "assets/images_webp/geography_graduation.webp",
+          "fallback": "assets/images/geography_graduation.heif",
+          "alt": "Ryan Little at Geography Graduation",
+          "caption": "Geography Graduation - UC Santa Barbara"
+        }
+      },
+      {
+        "id": "professional",
+        "title": "Professional",
+        "icon": "fas fa-briefcase",
+        "content": [
+          "Geospatial Analyst - Leading quality control and workflow improvements",
+          "Four years of experience in map creation, spatial analysis, and geodatabase editing with expertise in GIS, Remote Sensing, and Spatial Analysis"
+        ],
+        "image": {
+          "webp": "assets/images_webp/wateringreenland.webp",
+          "fallback": "assets/images/wateringreenland.png",
+          "alt": "Greenland Water Analysis",
+          "caption": "Remote sensing analysis of water features and hydrological patterns"
+        }
+      },
+      {
+        "id": "passion",
+        "title": "Passion",
+        "icon": "fas fa-mountain",
+        "content": [
+          "Hiking, Soccer & Outdoor Adventures - Exploring the great outdoors and diverse cultures",
+          "Interests include hiking, soccer, spending time outside and with friends, playing games, web development, server administration, building computers, and traveling"
+        ]
+      },
+      {
+        "id": "skills",
+        "title": "Skills",
+        "icon": "fas fa-tools",
+        "content": [
+          "Programming: Python, R and RStudio, SQL, Mosel, HTML & CSS, JavaScript",
+          "GIS Tools: ArcGIS Pro, ArcMap, ArcGIS Online, QGIS, Microsoft Office Suite",
+          "GIS Proficiencies: Remote Sensing, Spatial Databases, Spatial Analysis, Data Visualization, Quality Control/Assurance"
+        ]
+      },
+      {
+        "id": "technology",
+        "title": "Technology",
+        "icon": "fas fa-code",
+        "content": [
+          "Custom Solutions & AI Integration - Building computers and innovative systems",
+          "Co-founder of Little Hammer Labs, delivering fully custom internal solutions and exploring AI integration into daily workflows"
+        ]
+      }
+    ]
+  }
+}

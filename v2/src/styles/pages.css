@@ -1,0 +1,528 @@
+.page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+    position: relative;
+}
+
+.page-satellite {
+    width: 200px;
+    height: auto;
+    opacity: 0.85;
+    pointer-events: none;
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.4));
+    animation: satelliteFadeIn 0.6s ease-out 0.3s both;
+    margin-bottom: 0.75rem;
+}
+
+/* Skip the CSS fade-in when the 3D sprite already animated to this position */
+.page-satellite.transition-placed {
+    animation: none;
+    opacity: 0.85;
+}
+
+@keyframes satelliteFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 0.85;
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 600px) {
+    .page-satellite {
+        width: 140px;
+    }
+}
+
+.back-button {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--color-text-muted);
+    font-family: var(--font-primary);
+    font-size: 0.85rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: color var(--transition-fast), border-color var(--transition-fast);
+    margin-bottom: 2rem;
+}
+
+.back-button:hover {
+    color: var(--color-text);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.back-button .arrow {
+    margin-right: 0.25rem;
+}
+
+.back-button:hover .arrow {
+    display: inline-block;
+    animation: arrowBounce 0.6s ease-in-out infinite;
+}
+
+@keyframes arrowBounce {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-4px); }
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    animation: headerSlideIn 0.6s ease-out;
+}
+
+@keyframes headerSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.page-header h2 {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.page-header p {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+}
+
+/* About page */
+.headshot-container {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.headshot-container img {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    animation: headshotReveal 0.8s ease-out 0.3s both;
+}
+
+@keyframes headshotReveal {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.image-caption {
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    font-style: italic;
+    text-align: center;
+}
+
+.sections-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+}
+
+.section-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 1.25rem;
+    opacity: 0;
+    animation: cardFadeIn 0.5s ease-out forwards;
+    transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.section-card:hover {
+    border-color: rgba(232, 168, 73, 0.2);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.section-header i {
+    color: var(--color-accent);
+    font-size: 1.1rem;
+}
+
+.section-header h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.section-content p {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 0.4rem;
+}
+
+.section-image {
+    width: 100%;
+    border-radius: 8px;
+    margin-top: 0.75rem;
+}
+
+/* Portfolio page */
+.portfolio-section {
+    margin-bottom: 2.5rem;
+}
+
+.portfolio-section .section-header {
+    margin-bottom: 1.25rem;
+}
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+}
+
+.portfolio-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 1.25rem;
+    opacity: 0;
+    animation: cardFadeIn 0.5s ease-out forwards;
+    transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.portfolio-card:hover {
+    border-color: rgba(232, 168, 73, 0.2);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.portfolio-card h4 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.portfolio-card p {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.portfolio-image {
+    width: 100%;
+    border-radius: 8px;
+    margin-top: 0.75rem;
+}
+
+.portfolio-logo {
+    max-width: 180px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0.75rem;
+}
+
+/* Adventures page */
+.adventure-counters {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 2.5rem;
+}
+
+.counter {
+    text-align: center;
+}
+
+.counter-number {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-accent);
+}
+
+.counter-label {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+}
+
+.adventures-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+}
+
+.adventure-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    overflow: hidden;
+    opacity: 0;
+    animation: cardFadeIn 0.5s ease-out forwards;
+    transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.adventure-card:hover {
+    border-color: rgba(232, 168, 73, 0.2);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.adventure-card.placeholder {
+    border-style: dashed;
+    opacity: 0.5;
+}
+
+.adventure-image {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    object-position: center;
+}
+
+.adventure-info {
+    padding: 1rem 1.25rem 1.25rem;
+    text-align: center;
+}
+
+.adventure-info h4 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+}
+
+.adventure-location {
+    color: var(--color-accent);
+    font-size: 0.85rem;
+    margin-bottom: 0.1rem;
+}
+
+.adventure-date {
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    margin-bottom: 0.4rem;
+}
+
+.adventure-info > p:last-of-type {
+    color: var(--color-text-muted);
+    font-size: 0.88rem;
+    line-height: 1.5;
+    text-align: left;
+}
+
+.adventure-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.6rem;
+    justify-content: center;
+}
+
+.tag {
+    background: rgba(232, 168, 73, 0.12);
+    color: var(--color-accent);
+    font-size: 0.72rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+}
+
+/* Trees page - warm showcase style, not clinical */
+.trees-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+}
+
+.tree-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    overflow: hidden;
+    opacity: 0;
+    animation: cardFadeIn 0.5s ease-out forwards;
+    transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.tree-card:hover {
+    border-color: rgba(232, 168, 73, 0.2);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.tree-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: center;
+}
+
+.tree-info {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.tree-info h4 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--color-accent);
+}
+
+.tree-info > p {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.tree-stats {
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    text-align: center;
+}
+
+.tree-stats h5 {
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--color-text-muted);
+}
+
+.tree-stats ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.tree-stats li {
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    padding: 0.2rem 0.6rem;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 4px;
+}
+
+/* Card entrance animation */
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Card stagger delays */
+.sections-grid > :nth-child(1), .portfolio-grid > :nth-child(1), .adventures-grid > :nth-child(1), .trees-grid > :nth-child(1) { animation-delay: 0.1s; }
+.sections-grid > :nth-child(2), .portfolio-grid > :nth-child(2), .adventures-grid > :nth-child(2), .trees-grid > :nth-child(2) { animation-delay: 0.18s; }
+.sections-grid > :nth-child(3), .portfolio-grid > :nth-child(3), .adventures-grid > :nth-child(3), .trees-grid > :nth-child(3) { animation-delay: 0.26s; }
+.sections-grid > :nth-child(4), .portfolio-grid > :nth-child(4), .adventures-grid > :nth-child(4), .trees-grid > :nth-child(4) { animation-delay: 0.34s; }
+.sections-grid > :nth-child(5), .portfolio-grid > :nth-child(5), .adventures-grid > :nth-child(5), .trees-grid > :nth-child(5) { animation-delay: 0.42s; }
+.sections-grid > :nth-child(6), .portfolio-grid > :nth-child(6), .adventures-grid > :nth-child(6), .trees-grid > :nth-child(6) { animation-delay: 0.5s; }
+.sections-grid > :nth-child(7), .portfolio-grid > :nth-child(7), .adventures-grid > :nth-child(7), .trees-grid > :nth-child(7) { animation-delay: 0.58s; }
+.sections-grid > :nth-child(8), .portfolio-grid > :nth-child(8), .adventures-grid > :nth-child(8), .trees-grid > :nth-child(8) { animation-delay: 0.66s; }
+.sections-grid > :nth-child(9), .portfolio-grid > :nth-child(9), .adventures-grid > :nth-child(9), .trees-grid > :nth-child(9) { animation-delay: 0.74s; }
+.sections-grid > :nth-child(10), .portfolio-grid > :nth-child(10), .adventures-grid > :nth-child(10), .trees-grid > :nth-child(10) { animation-delay: 0.82s; }
+.sections-grid > :nth-child(11), .portfolio-grid > :nth-child(11), .adventures-grid > :nth-child(11), .trees-grid > :nth-child(11) { animation-delay: 0.9s; }
+.sections-grid > :nth-child(12), .portfolio-grid > :nth-child(12), .adventures-grid > :nth-child(12), .trees-grid > :nth-child(12) { animation-delay: 0.98s; }
+
+/* Enlargeable images */
+.enlargeable {
+    cursor: pointer;
+    transition: opacity var(--transition-fast);
+}
+
+.enlargeable:hover {
+    opacity: 0.85;
+}
+
+.enlarge-hint {
+    opacity: 0.6;
+    font-size: 0.75rem;
+}
+
+/* Lightbox */
+.lightbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    background: rgba(0, 0, 0, 0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    animation: lightboxFadeIn 0.3s ease-out forwards;
+}
+
+.lightbox-overlay.visible {
+    opacity: 1;
+}
+
+.lightbox-overlay.closing {
+    animation: lightboxFadeOut 0.25s ease-in forwards;
+}
+
+.lightbox-image {
+    max-width: 92vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+@keyframes lightboxFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes lightboxFadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .page {
+        padding: 1.5rem 1rem 3rem;
+    }
+
+    .sections-grid,
+    .adventures-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .adventure-counters {
+        gap: 2rem;
+    }
+
+    .counter-number {
+        font-size: 2rem;
+    }
+}

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Ryan Little</title>
+    <script>
+        // GitHub Pages SPA redirect: store the path and redirect to index
+        var path = window.location.pathname.replace(/^\//, '').replace(/\/$/, '');
+        if (path && ['about', 'portfolio', 'adventures', 'trees'].includes(path)) {
+            sessionStorage.setItem('spa-redirect', path);
+        }
+        window.location.replace('/');
+    </script>
+</head>
+<body></body>
+</html>

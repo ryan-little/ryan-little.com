@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ryan Little - Geospatial Analyst</title>
+    <meta name="description" content="Ryan Little - Geospatial Analyst with expertise in GIS, Remote Sensing, and Spatial Analysis.">
+    <meta name="theme-color" content="#0a0a1a">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Three.js canvas renders here -->
+    <div id="scene-container"></div>
+
+    <!-- HTML overlay for labels, UI, pages -->
+    <div id="ui-overlay">
+        <div id="hero-text">
+            <h1 class="hero-title">Ryan Little</h1>
+            <p class="hero-subtitle">Geospatial Analyst</p>
+        </div>
+        <div id="social-links">
+            <a href="https://linkedin.com/in/rpdlittle" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/ryan-little" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="mailto:ryan@ryanpdlittle.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            <a href="https://littlehammerlabs.com" target="_blank" rel="noopener" aria-label="Little Hammer Labs"><img src="/images/lhlhammer_transback.webp" alt="Little Hammer Labs" class="social-icon-image"></a>
+        </div>
+    </div>
+
+    <!-- Page content container (populated by router) -->
+    <div id="page-container" class="hidden"></div>
+
+    <!-- Game UI overlay -->
+    <div id="game-overlay" class="hidden"></div>
+
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>
