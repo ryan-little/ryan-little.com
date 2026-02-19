@@ -9,7 +9,10 @@ export default defineConfig({
     outDir: 'dist',
     assetsInlineLimit: 4096,
     rollupOptions: {
-      input: resolve(__dirname, 'index.html'),
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        earth: resolve(__dirname, 'earth/index.html'),
+      },
       output: {
         manualChunks: {
           threejs: ['three'],
