@@ -19,12 +19,7 @@
         "location": "Lahaina, Maui, Hawaii",
         "date": "October 2016",
         "description": "Parasailing over Lahaina's crystal-clear waters and watching the sunrise from the summit of Haleakalā — a dormant volcanic crater soaring over 10,000 feet above sea level.",
-        "tags": ["Tropical", "Volcanic", "Parasailing", "Island"],
-        "image": {
-          "webp": "assets/images_webp/hawaii.webp",
-          "fallback": "assets/images/hawaii.jpg",
-          "alt": "Hawaii: Maui"
-        }
+        "tags": ["Tropical", "Volcanic", "Parasailing", "Island"]
       },
       {
         "id": "catalina-island",
@@ -103,12 +98,7 @@
         "location": "Wyoming & Montana, USA",
         "date": "July 2021",
         "description": "Watching Old Faithful erupt at Yellowstone, camping beneath the jagged peaks of the Grand Teton, and exploring the frontier towns of Billings and Bozeman.",
-        "tags": ["Geysers", "Wildlife", "Mountains", "National Parks"],
-        "image": {
-          "webp": "assets/images_webp/yellowstone_teton.webp",
-          "fallback": "assets/images/yellowstone_teton.jpg",
-          "alt": "Yellowstone and Grand Teton National Parks"
-        }
+        "tags": ["Geysers", "Wildlife", "Mountains", "National Parks"]
       },
       {
         "id": "lake-tahoe",
@@ -153,12 +143,7 @@
         "location": "Colorado, USA",
         "date": "February 2023",
         "description": "Snowshoeing through Rocky Mountain's quiet winter wilderness, returning for the spring thaw as alpine meadows open up, and taking in the sweeping summer peaks above 12,000 feet.",
-        "tags": ["Hiking", "Mountains", "Snow", "National Parks"],
-        "image": {
-          "webp": "assets/images_webp/rocky_mountain.webp",
-          "fallback": "assets/images/rocky_mountain.jpg",
-          "alt": "Rocky Mountain National Park"
-        }
+        "tags": ["Hiking", "Mountains", "Snow", "National Parks"]
       },
       {
         "id": "spain-portugal",
@@ -166,12 +151,7 @@
         "location": "Alhambra, Seville, Sintra, Lisbon, Porto",
         "date": "November 2023",
         "description": "The Alhambra's intricate Moorish fortress at dusk, Seville's towering cathedral, the fairy-tale palaces of Sintra, Lisbon's trams and tiled facades, and Porto's scenic riverfront wine culture.",
-        "tags": ["Culture", "Architecture", "History", "Europe"],
-        "image": {
-          "webp": "assets/images_webp/spain_portugal.webp",
-          "fallback": "assets/images/spain_portugal.jpg",
-          "alt": "Spain and Portugal Adventure"
-        }
+        "tags": ["Culture", "Architecture", "History", "Europe"]
       },
       {
         "id": "southwest-parks",
