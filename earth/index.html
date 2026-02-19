@@ -13,6 +13,19 @@
         html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
         #scene-container { position: fixed; inset: 0; }
         #scene-container canvas { display: block; }
+        .city-label {
+            position: absolute;
+            transform: translate(-50%, -150%);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 8px;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            pointer-events: none;
+            user-select: none;
+            white-space: nowrap;
+            text-shadow: 0 0 3px rgba(0, 0, 0, 1), 0 0 6px rgba(0, 0, 0, 0.7);
+        }
     </style>
 </head>
 <body>

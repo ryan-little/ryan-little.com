@@ -4,8 +4,10 @@ import { getSunDirection } from './lighting.js';
 
 let earthMesh = null;
 let atmosphereMesh = null;
+let elapsed = 0;
 const EARTH_RADIUS = 1;
 const ROTATION_SPEED = (2 * Math.PI) / 90;
+const CLOUD_DRIFT_PERIOD = 10800; // 3 hours for one full cloud revolution relative to surface
 
 // Use object-space normals so terminator is fixed to Earth's surface
 const vertexShader = `
@@ -23,13 +25,19 @@ const fragmentShader = `
     uniform sampler2D nightTexture;
     uniform sampler2D cloudTexture;
     uniform vec3 sunDirection;
+    uniform float time;
+    uniform float cloudOffset;
     varying vec2 vUv;
     varying vec3 vNormalLocal;
 
     void main() {
+        // RepeatWrapping lets the GPU bilinear-filter across the wrap boundary,
+        // hiding the seam without a hard mod() cut
+        vec2 cloudUv = vec2(vUv.x + cloudOffset, vUv.y);
+
         vec4 dayColor = texture2D(dayTexture, vUv);
         vec4 nightColor = texture2D(nightTexture, vUv);
-        float clouds = texture2D(cloudTexture, vUv).r;
+        float clouds = texture2D(cloudTexture, cloudUv).r;
 
         float intensity = dot(vNormalLocal, normalize(sunDirection));
         // Wide soft transition to emulate Earth's atmospheric penumbra
@@ -44,11 +52,32 @@ const fragmentShader = `
         float cloudAlpha = pow(clouds, 1.5) * 0.7 * blend;
         dayLit = mix(dayLit, vec4(1.0, 1.0, 1.0, 1.0), cloudAlpha);
 
-        // Night side: city lights + faint moonlit continent shapes from day texture
-        vec4 moonlit = dayColor * 0.15;
-        vec4 nightLit = nightColor * (1.4 - pow(clouds, 1.5) * 0.6) + moonlit;
+        // Cloud shadows: per-fragment tangent-space parallax onto day surface.
+        // Build east/north tangent vectors, guarding against degenerate zero at poles.
+        vec3 rawEast = vec3(vNormalLocal.z, 0.0, -vNormalLocal.x);
+        vec3 east = normalize(mix(rawEast, vec3(1.0, 0.0, 0.0),
+                                  smoothstep(0.98, 1.0, abs(vNormalLocal.y))));
+        vec3 north = normalize(cross(vNormalLocal, east));
+        vec3 sunN = normalize(sunDirection);
+        vec3 tangentSun = sunN - dot(sunN, vNormalLocal) * vNormalLocal;
+        float shadowDU =  dot(tangentSun, east)  * 0.015;
+        float shadowDV = -dot(tangentSun, north) * 0.015;
+        // RepeatWrapping handles U wrap naturally; clamp V at poles
+        vec2 shadowUv = vec2(cloudUv.x + shadowDU, clamp(cloudUv.y + shadowDV, 0.0, 1.0));
+        float shadowCloud = texture2D(cloudTexture, shadowUv).r;
+        float shadowAlpha = pow(shadowCloud, 1.5) * 0.5 * blend;
+        dayLit = mix(dayLit, dayLit * 0.6, shadowAlpha);
 
-        gl_FragColor = mix(nightLit, dayLit, blend);
+        // Night side: city lights with subtle pulse + faint moonlit continents
+        float pulse = 0.92 + 0.08 * sin(time * 0.35);
+        vec4 moonlit = dayColor * 0.15;
+        vec4 nightLit = nightColor * (1.4 - pow(clouds, 1.5) * 0.6) * pulse + moonlit;
+
+        // Terminator glow — thin warm orange sunrise/sunset band
+        float terminatorGlow = exp(-pow((intensity - 0.04) / 0.07, 2.0)) * 0.38;
+        vec4 glowColor = vec4(1.0, 0.42, 0.12, 0.0) * terminatorGlow;
+
+        gl_FragColor = mix(nightLit, dayLit, blend) + glowColor;
     }
 `;
 
@@ -61,7 +90,7 @@ function updateSunUniform() {
     earthMesh.material.uniforms.sunDirection.value.set(sun.x, sun.y, sun.z);
 }
 
-export async function createEarth() {
+export async function createEarth({ cloudUrl = '/textures/earth-clouds.webp', realTimeRotation = false } = {}) {
     const scene = getScene();
     const isMobile = window.innerWidth < 768;
     const segments = isMobile ? 32 : 64;
@@ -72,20 +101,33 @@ export async function createEarth() {
     let material;
 
     try {
-        const [dayTexture, nightTexture, cloudTexture] = await Promise.all([
+        const [dayTexture, nightTexture] = await Promise.all([
             new Promise((resolve, reject) => {
                 textureLoader.load('/textures/earth-day.webp', resolve, undefined, reject);
             }),
             new Promise((resolve, reject) => {
                 textureLoader.load('/textures/earth-night.webp', resolve, undefined, reject);
             }),
-            new Promise((resolve, reject) => {
-                textureLoader.load('/textures/earth-clouds.webp', resolve, undefined, reject);
-            }),
         ]);
+
+        // Cloud texture loads independently — if it fails, no clouds (null → transparent texture)
+        const cloudTexture = await new Promise((resolve) => {
+            textureLoader.load(cloudUrl, resolve, undefined, () => {
+                console.warn(`Cloud texture failed (${cloudUrl}), rendering without clouds`);
+                resolve(null);
+            });
+        });
 
         dayTexture.colorSpace = THREE.SRGBColorSpace;
         nightTexture.colorSpace = THREE.SRGBColorSpace;
+        if (cloudTexture) cloudTexture.wrapS = THREE.RepeatWrapping;
+
+        // If all cloud sources failed, use a transparent 1×1 texture (no clouds rendered)
+        const resolvedCloud = cloudTexture ?? (() => {
+            const t = new THREE.DataTexture(new Uint8Array([0, 0, 0, 0]), 1, 1);
+            t.needsUpdate = true;
+            return t;
+        })();
 
         material = new THREE.ShaderMaterial({
             vertexShader,
@@ -93,8 +135,10 @@ export async function createEarth() {
             uniforms: {
                 dayTexture: { value: dayTexture },
                 nightTexture: { value: nightTexture },
-                cloudTexture: { value: cloudTexture },
+                cloudTexture: { value: resolvedCloud },
                 sunDirection: { value: new THREE.Vector3() },
+                time: { value: 0.0 },
+                cloudOffset: { value: 0.0 },
             },
         });
     } catch (err) {
@@ -117,8 +161,33 @@ export async function createEarth() {
 
     onUpdate((delta) => {
         if (earthMesh) {
-            earthMesh.rotation.y += ROTATION_SPEED * delta;
-            if (earthMesh.material.uniforms) updateSunUniform();
+            if (realTimeRotation) {
+                // Set rotation to match actual UTC time so clouds/terrain align geographically.
+                // At UTC noon (43200s), rotation.y = 0 → PM faces sun (+X). Increases eastward.
+                const now = new Date();
+                const utcSeconds = now.getUTCHours() * 3600 + now.getUTCMinutes() * 60 +
+                    now.getUTCSeconds() + now.getUTCMilliseconds() / 1000;
+                earthMesh.rotation.y = (utcSeconds / 86400 - 0.5) * 2 * Math.PI;
+            } else {
+                earthMesh.rotation.y += ROTATION_SPEED * delta;
+            }
+            if (earthMesh.material.uniforms) {
+                updateSunUniform();
+                elapsed += delta;
+                earthMesh.material.uniforms.time.value = elapsed;
+                earthMesh.material.uniforms.cloudOffset.value =
+                    (elapsed % CLOUD_DRIFT_PERIOD) / CLOUD_DRIFT_PERIOD;
+            }
+            // Convert sun from Earth object-space to world-space for atmosphere
+            if (atmosphereMesh) {
+                const sun = getSunDirection();
+                const ry  = earthMesh.rotation.y;
+                atmosphereMesh.material.uniforms.sunWorldDir.value.set(
+                    sun.x * Math.cos(ry) + sun.z * Math.sin(ry),
+                    sun.y,
+                   -sun.x * Math.sin(ry) + sun.z * Math.cos(ry)
+                );
+            }
         }
     });
 
@@ -130,23 +199,45 @@ function createAtmosphere() {
     const material = new THREE.ShaderMaterial({
         vertexShader: `
             varying vec3 vNormal;
+            varying vec3 vWorldNormal;
             void main() {
                 vNormal = normalize(normalMatrix * normal);
+                // Atmosphere mesh has no rotation so local = world normal
+                vWorldNormal = normalize(normal);
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
             }
         `,
         fragmentShader: `
+            uniform vec3 sunWorldDir;
             varying vec3 vNormal;
+            varying vec3 vWorldNormal;
             void main() {
-                float intensity = pow(0.7 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 2.0);
-                // Warm blue-white atmosphere glow
-                gl_FragColor = vec4(0.4, 0.65, 1.0, 1.0) * intensity * 1.1;
+                float limb = pow(0.7 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 2.0);
+
+                // How much is this point on the atmosphere facing the sun?
+                float sunAlign  = dot(vWorldNormal, normalize(sunWorldDir));
+                float dayFactor = smoothstep(-0.2, 0.2, sunAlign);
+
+                // Narrow bell curve at terminator — only tint the actual rim
+                float termBell  = exp(-sunAlign * sunAlign / 0.02);
+                float rimOnly   = smoothstep(0.25, 0.42, limb); // restrict to edge
+
+                vec3 dayColor   = vec3(0.4, 0.65, 1.0);   // blue-white
+                vec3 termColor  = vec3(1.0, 0.55, 0.2);   // soft peach-orange
+
+                vec3 atmosColor = dayColor * max(dayFactor, 0.35);
+                atmosColor = mix(atmosColor, termColor, termBell * 0.22 * rimOnly);
+
+                gl_FragColor = vec4(atmosColor, 1.0) * limb * 1.1;
             }
         `,
         blending: THREE.AdditiveBlending,
         side: THREE.BackSide,
         transparent: true,
         depthWrite: false,
+        uniforms: {
+            sunWorldDir: { value: new THREE.Vector3(1, 0, 0) },
+        },
     });
 
     return new THREE.Mesh(geometry, material);
@@ -154,3 +245,11 @@ function createAtmosphere() {
 
 export function getEarth() { return earthMesh; }
 export function getEarthRadius() { return EARTH_RADIUS; }
+
+export function refreshCloudTexture(url) {
+    if (!earthMesh?.material?.uniforms?.cloudTexture) return;
+    new THREE.TextureLoader().load(url + '?t=' + Date.now(), (texture) => {
+        earthMesh.material.uniforms.cloudTexture.value.dispose();
+        earthMesh.material.uniforms.cloudTexture.value = texture;
+    });
+}
