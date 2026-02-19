@@ -10,6 +10,11 @@ export default defineConfig({
     assetsInlineLimit: 4096,
     rollupOptions: {
       input: resolve(__dirname, 'index.html'),
+      output: {
+        manualChunks: {
+          threejs: ['three'],
+        },
+      },
     },
   },
   server: {
