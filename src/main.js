@@ -49,6 +49,16 @@ async function init() {
         navigateTo(pageId);
     });
 
+    // Mobile nav button handlers — same router flow as satellite clicks, no animation
+    document.querySelectorAll('.mobile-nav-item').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const route = btn.dataset.route;
+            if (!route) return;
+            // lastClickedSatellite is null here, so transitionToPage gets null (no zoom animation)
+            navigateTo(route);
+        });
+    });
+
     console.log('v2 initialized');
 }
 
