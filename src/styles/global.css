@@ -98,7 +98,7 @@ html, body {
     margin-top: 1.5rem;
     pointer-events: auto;
     background: rgba(0, 0, 0, 0.35);
-    padding: 0.45rem 1.2rem 0.75rem;
+    padding: 0.2rem 1.2rem 1.0rem;
     border-radius: 2rem;
     backdrop-filter: blur(4px);
     /* Fade the pill in after all links have popped up (last link finishes at ~2.8s) */
@@ -205,17 +205,13 @@ html, body {
 
 /* Image icons sized to match FA icon visual weight */
 #social-links a:nth-child(5) .social-icon-image {
-    width: 1.5rem;
-    height: 1.5rem;
-}
-
-#social-links a:nth-child(6) .social-icon-image {
-    width: 1.4rem;
+    width: auto;
     height: 1.4rem;
 }
 
-#social-links a:nth-child(6) {
-    margin-left: -0.4rem;
+#social-links a:nth-child(6) .social-icon-image {
+    width: 1.25rem;
+    height: 1.25rem;
 }
 
 #page-container {
