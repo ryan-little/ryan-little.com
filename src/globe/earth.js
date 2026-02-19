@@ -68,9 +68,9 @@ const fragmentShader = `
         float shadowAlpha = pow(shadowCloud, 2.0) * 0.5 * blend;
         dayLit = mix(dayLit, dayLit * 0.4, shadowAlpha);
 
-        // Night side: city lights fade toward terminator, invisible in deep night
+        // Night side: city lights fully visible in deep night, fade near terminator
         float pulse = 0.92 + 0.08 * sin(time * 0.35);
-        float nightVisibility = smoothstep(-0.5, 0.0, intensity) * (1.0 - smoothstep(-0.2, 0.15, intensity));
+        float nightVisibility = 1.0 - smoothstep(-0.2, 0.15, intensity);
         vec4 moonlit = dayColor * 0.15;
         vec4 nightLit = nightColor * (2.0 - pow(clouds, 1.5) * 0.86) * pulse * nightVisibility + moonlit;
 
