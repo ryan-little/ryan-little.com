@@ -203,20 +203,15 @@ html, body {
     filter: brightness(1.2);
 }
 
-/* Image icons are visually smaller than FA icons at the same em size */
+/* Image icons sized to match FA icon visual weight */
 #social-links a:nth-child(5) .social-icon-image {
     width: 1.5rem;
     height: 1.5rem;
-    transform: scale(1.3);
-}
-
-#social-links a:nth-child(5):hover .social-icon-image {
-    transform: scale(1.69);
 }
 
 #social-links a:nth-child(6) .social-icon-image {
-    width: 1.65rem;
-    height: 1.65rem;
+    width: 1.3rem;
+    height: 1.3rem;
 }
 
 #page-container {
