@@ -9,10 +9,13 @@ export async function createGalaxies() {
     const scene = getScene();
     const loader = new THREE.TextureLoader();
 
-    // Load all textures
-    const textures = await Promise.all(
+    // Load all textures — use allSettled so a missing file doesn't crash the whole site
+    const results = await Promise.allSettled(
         GALAXY_TEXTURES.map(path => loader.loadAsync(path))
     );
+    const textures = results
+        .filter(r => r.status === 'fulfilled')
+        .map(r => r.value);
 
     const sprites = [];
 

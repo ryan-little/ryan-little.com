@@ -131,6 +131,16 @@ export function createStarfield() {
         twinkleIndices.push(Math.floor(Math.random() * STAR_COUNT));
     }
 
+    // Capture base positions for twinkling stars so drift doesn't accumulate
+    const posAttrInit = geometry.getAttribute('position');
+    const twinkleBasePositions = new Float32Array(twinkleIndices.length * 3);
+    for (let i = 0; i < twinkleIndices.length; i++) {
+        const idx = twinkleIndices[i];
+        twinkleBasePositions[i * 3]     = posAttrInit.array[idx * 3];
+        twinkleBasePositions[i * 3 + 1] = posAttrInit.array[idx * 3 + 1];
+        twinkleBasePositions[i * 3 + 2] = posAttrInit.array[idx * 3 + 2];
+    }
+
     onUpdate((delta) => {
         // Slow rotation so stars drift
         stars.rotation.y += delta * 0.003;
@@ -140,14 +150,15 @@ export function createStarfield() {
         const sizeAttr = geometry.getAttribute('size');
         const posAttr = geometry.getAttribute('position');
 
-        for (const idx of twinkleIndices) {
+        for (let i = 0; i < twinkleIndices.length; i++) {
+            const idx = twinkleIndices[i];
             // Twinkling size variation
             sizeAttr.array[idx] = (Math.sin(time * (2 + idx % 3)) * 0.5 + 1.0) * baseSizes[idx];
 
-            // Independent subtle drift for more visual variety
-            posAttr.array[idx * 3] += Math.sin(time * 0.5 + idx) * delta * 0.015;
-            posAttr.array[idx * 3 + 1] += Math.cos(time * 0.7 + idx) * delta * 0.015;
-            posAttr.array[idx * 3 + 2] += Math.sin(time * 0.3 + idx * 0.1) * delta * 0.01;
+            // Independent subtle drift — computed from base position to prevent accumulation
+            posAttr.array[idx * 3]     = twinkleBasePositions[i * 3]     + Math.sin(time * 0.5 + idx) * 0.5;
+            posAttr.array[idx * 3 + 1] = twinkleBasePositions[i * 3 + 1] + Math.cos(time * 0.7 + idx) * 0.5;
+            posAttr.array[idx * 3 + 2] = twinkleBasePositions[i * 3 + 2] + Math.sin(time * 0.3 + idx * 0.1) * 0.3;
         }
 
         sizeAttr.needsUpdate = true;

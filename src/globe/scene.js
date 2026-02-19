@@ -77,7 +77,7 @@ export function removeUpdate(callback) {
     if (idx !== -1) updateCallbacks.splice(idx, 1);
 }
 
-export function animateCamera(targetPos, duration = 1000, easing = 'easeInOut') {
+export function animateCamera(targetPos, duration = 1000) {
     return new Promise((resolve) => {
         const startPos = camera.position.clone();
         const startTime = performance.now();

@@ -1,7 +1,7 @@
 {
   "adventures": {
     "title": "Adventures",
-    "subtitle": "Exploring the world, one adventure at a time.",
+    "subtitle": "National parks, ancient cities, and places that take some effort to reach.",
     "countriesVisited": 12,
     "nationalParksVisited": 22,
     "panels": [
@@ -86,7 +86,7 @@
         "title": "Washington D.C.",
         "location": "Washington, D.C.",
         "date": "October 2020",
-        "description": "The National Mall in fall color, tours of the Capitol, world-class Smithsonian museums, and the iconic cherry blossoms lining the Tidal Basin near the Lincoln Memorial.",
+        "description": "The National Mall in fall color, tours of the Capitol, world-class Smithsonian museums, and the Tidal Basin reflecting the Lincoln Memorial.",
         "tags": ["History", "Culture", "Museums", "National Mall"]
       },
       {
@@ -115,7 +115,7 @@
         "title": "Lake Tahoe",
         "location": "California/Nevada, USA",
         "date": "March 2022",
-        "description": "Snow-capped peaks reflected in the impossibly blue waters of Lake Tahoe, with sweeping alpine lake vistas and a summer visit to catch a spectacular drone light show over the water.",
+        "description": "Snow-capped peaks reflected in the impossibly blue waters of Lake Tahoe, with sweeping winter alpine vistas and a return trip for a spectacular drone light show over the water.",
         "tags": ["Mountains", "Lake", "Snow", "Scenic"]
       },
       {
@@ -220,7 +220,7 @@
   },
   "portfolio": {
     "title": "Portfolio",
-    "subtitle": "Showcasing my expertise in geospatial analysis and custom development solutions.",
+    "subtitle": "GIS research, tools, and projects I've built.",
     "sections": [
       {
         "id": "gis-projects",
@@ -295,15 +295,18 @@
           },
           {
             "title": "ryan-little.com",
-            "description": "This site. A space-themed personal portfolio built with vanilla JavaScript and Three.js — real-time 3D Earth with a custom day/night/cloud GLSL shader, four orbiting navigation satellites, a procedural starfield with a Milky Way band, and a shooting star minigame."
+            "description": "This site. A space-themed personal portfolio built with vanilla JavaScript and Three.js — real-time 3D Earth with a custom day/night/cloud GLSL shader, four orbiting navigation satellites, a procedural starfield with a Milky Way band, and a shooting star minigame.",
+            "link": "https://ryan-little.com"
           },
           {
             "title": "PicSplitter",
-            "description": "A Python command-line tool that splits large images into a configurable grid of tiles. Useful in GIS workflows where oversized imagery needs to be broken into smaller chunks for processing in ArcGIS or QGIS."
+            "description": "A Python command-line tool that splits large images into a configurable grid of tiles. Useful in GIS workflows where oversized imagery needs to be broken into smaller chunks for processing in ArcGIS or QGIS.",
+            "link": "https://github.com/ryan-little/PicSplitter"
           },
           {
             "title": "Primal Chase",
-            "description": "A browser-based game built with vanilla JavaScript. Available at primalchase.com."
+            "description": "A browser-based survival game built with vanilla JavaScript. You play as a hunted predator managing heat, fatigue, thirst, and hunger across a day/night cycle — outrunning hunters who never stop. No framework, no library. Available at primalchase.com.",
+            "link": "https://primalchase.com"
           }
         ]
       }
@@ -425,7 +428,7 @@
         "content": [
           "In 2025 I co-founded Little Hammer Labs with a lifelong friend, where I serve as CTO. We build custom AI-powered tools for clients in forensic architecture and property management.",
           "Our main product takes voice notes recorded during on-site inspections, transcribes them with a locally run Whisper model, runs the output through a custom domain-specific dictionary, and delivers formatted reports ready to hand to the client.",
-          "Managing local LLM infrastructure and a full development stack from scratch has been the most clarifying work I've done."
+          "Managing local LLM infrastructure and a full development stack from scratch has been the most formative work I've done."
         ],
         "image": {
           "webp": "assets/images_webp/lhl-logo.webp",
@@ -438,9 +441,9 @@
         "title": "Skills",
         "icon": "fas fa-tools",
         "content": [
-          "Programming: Python, R and RStudio, SQL, Mosel, HTML & CSS, JavaScript",
-          "GIS Tools: ArcGIS Pro, ArcMap, ArcGIS Online, QGIS, Microsoft Office Suite",
-          "Proficiencies: Remote Sensing, Spatial Databases, Spatial Analysis, Data Visualization, Quality Control & Assurance"
+          "Languages: Python, R, SQL, JavaScript, HTML & CSS",
+          "GIS Tools: ArcGIS Pro, ArcMap, ArcGIS Online, QGIS",
+          "Specializations: Remote Sensing, Spatial Analysis, Spatial Databases, Data Visualization, Quality Control"
         ]
       },
       {
@@ -449,7 +452,8 @@
         "icon": "fas fa-mountain",
         "content": [
           "Avid hiker and traveler — 12 countries and counting, with a strong preference for national parks and places that require some effort to reach.",
-          "Also into soccer, building computers, server tinkering, and web development."
+          "Also into soccer, building computers, server tinkering, and web development.",
+          "Open to geospatial analyst opportunities — reach out via LinkedIn or email."
         ]
       }
     ]

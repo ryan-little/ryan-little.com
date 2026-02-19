@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { getScene, getCamera, onUpdate } from '../globe/scene.js';
+import { getCurrentRoute } from '../pages/router.js';
 
 const POOL_SIZE = 60;
 const pool = [];
@@ -57,7 +58,9 @@ export async function initShootingStars() {
     onUpdate((delta) => {
         bgTimer -= delta;
         if (bgTimer <= 0) {
-            spawnStar('background');
+            if (!getCurrentRoute()) {  // only spawn on globe screen
+                spawnStar('background');
+            }
             bgTimer = Math.random() * 8 + 4;
         }
     });

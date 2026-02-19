@@ -34,7 +34,7 @@ export function navigateTo(route) {
 export function navigateBack() {
     if (!currentRoute) return;
     currentRoute = null;
-    history.pushState({ route: null }, '', '/');
+    history.replaceState({ route: null }, '', '/');
     onBackCallback({ fromPopState: false });
 }
 

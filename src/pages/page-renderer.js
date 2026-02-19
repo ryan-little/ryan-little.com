@@ -1,6 +1,13 @@
 import contentData from '../data/content.json';
 import { navigateBack } from './router.js';
 
+function esc(str) {
+    if (!str) return '';
+    const el = document.createElement('span');
+    el.textContent = String(str);
+    return el.innerHTML;
+}
+
 // Remap v1 asset paths to v2 public paths
 function img(path) {
     if (!path) return '';
@@ -65,7 +72,7 @@ export function renderPage(route, satelliteId = null) {
 function openLightbox(src, alt) {
     const overlay = document.createElement('div');
     overlay.className = 'lightbox-overlay';
-    overlay.innerHTML = `<img src="${src}" alt="${alt}" class="lightbox-image">`;
+    overlay.innerHTML = `<img src="${esc(src)}" alt="${esc(alt)}" class="lightbox-image">`;
     overlay.addEventListener('click', () => {
         overlay.classList.add('closing');
         overlay.addEventListener('animationend', () => overlay.remove());
@@ -102,14 +109,14 @@ function renderAbout(data, satelliteImg) {
             </button>
             <div class="page-header">
                 ${satelliteImg ? `<img src="${satelliteImg}" alt="Satellite" class="page-satellite">` : ''}
-                <h2>${data.title}</h2>
-                <p>${data.subtitle}</p>
+                <h2>${esc(data.title)}</h2>
+                <p>${esc(data.subtitle)}</p>
             </div>
             <div class="page-content">
                 ${data.headshot ? `
                     <div class="headshot-container">
-                        <img src="${img(data.headshot.webp)}" alt="${data.headshot.alt}" loading="lazy">
-                        <p class="image-caption">${data.headshot.caption}</p>
+                        <img src="${img(data.headshot.webp)}" alt="${esc(data.headshot.alt)}" loading="lazy">
+                        <p class="image-caption">${esc(data.headshot.caption)}</p>
                     </div>
                 ` : ''}
                 <div class="sections-grid">
@@ -117,15 +124,16 @@ function renderAbout(data, satelliteImg) {
                         <div class="section-card">
                             <div class="section-header">
                                 <i class="${section.icon}"></i>
-                                <h3>${section.title}</h3>
+                                <h3>${esc(section.title)}</h3>
                             </div>
                             <div class="section-content">
-                                ${section.content.map(line => `<p>${line}</p>`).join('')}
+                                ${section.content.map(line => `<p>${esc(line)}</p>`).join('')}
                             </div>
                             ${section.image ? `
-                                <img src="${img(section.image.webp)}" alt="${section.image.alt}" loading="lazy" class="section-image${section.image.alt?.includes('Logo') ? ' portfolio-logo' : ''}">
-                                ${section.image.caption ? `<p class="image-caption">${section.image.caption}</p>` : ''}
+                                <img src="${img(section.image.webp)}" alt="${esc(section.image.alt)}" loading="lazy" class="section-image${section.image.alt?.includes('Logo') ? ' portfolio-logo' : ''}">
+                                ${section.image.caption ? `<p class="image-caption">${esc(section.image.caption)}</p>` : ''}
                             ` : ''}
+                            ${section.link ? `<a href="${esc(section.link)}" target="_blank" rel="noopener" class="portfolio-link">View Project →</a>` : ''}
                         </div>
                     `).join('')}
                 </div>
@@ -142,28 +150,29 @@ function renderPortfolio(data, satelliteImg) {
             </button>
             <div class="page-header">
                 ${satelliteImg ? `<img src="${satelliteImg}" alt="Satellite" class="page-satellite">` : ''}
-                <h2>${data.title}</h2>
-                <p>${data.subtitle}</p>
+                <h2>${esc(data.title)}</h2>
+                <p>${esc(data.subtitle)}</p>
             </div>
             <div class="page-content">
                 ${data.sections.map(section => `
                     <div class="portfolio-section">
                         <div class="section-header">
                             <i class="${section.icon}"></i>
-                            <h3>${section.title}</h3>
+                            <h3>${esc(section.title)}</h3>
                         </div>
                         <div class="portfolio-grid">
                             ${section.items.map(item => `
                                 <div class="portfolio-card">
-                                    <h4>${item.title}</h4>
-                                    <p>${item.description}</p>
+                                    <h4>${esc(item.title)}</h4>
+                                    <p>${esc(item.description)}</p>
+                                    ${item.link ? `<a href="${esc(item.link)}" target="_blank" rel="noopener" class="portfolio-link">View Project →</a>` : ''}
                                     ${item.image ? `
-                                        <img src="${img(item.image.webp)}" alt="${item.image.alt}" loading="lazy" class="portfolio-image${item.image.alt?.includes('Logo') ? ' portfolio-logo' : ''}">
-                                        ${item.image.caption ? `<p class="image-caption">${item.image.caption}</p>` : ''}
+                                        <img src="${img(item.image.webp)}" alt="${esc(item.image.alt)}" loading="lazy" class="portfolio-image${item.image.alt?.includes('Logo') ? ' portfolio-logo' : ''}">
+                                        ${item.image.caption ? `<p class="image-caption">${esc(item.image.caption)}</p>` : ''}
                                     ` : ''}
                                     ${(item.additionalImages || []).map(ai => `
-                                        <img src="${img(ai.webp)}" alt="${ai.alt}" loading="lazy" class="portfolio-image enlargeable">
-                                        ${ai.caption ? `<p class="image-caption">${ai.caption} <span class="enlarge-hint">(click to enlarge)</span></p>` : ''}
+                                        <img src="${img(ai.webp)}" alt="${esc(ai.alt)}" loading="lazy" class="portfolio-image enlargeable">
+                                        ${ai.caption ? `<p class="image-caption">${esc(ai.caption)} <span class="enlarge-hint">(click to enlarge)</span></p>` : ''}
                                     `).join('')}
                                 </div>
                             `).join('')}
@@ -183,16 +192,16 @@ function renderAdventures(data, satelliteImg) {
             </button>
             <div class="page-header">
                 ${satelliteImg ? `<img src="${satelliteImg}" alt="Satellite" class="page-satellite">` : ''}
-                <h2>${data.title}</h2>
-                <p>${data.subtitle}</p>
+                <h2>${esc(data.title)}</h2>
+                <p>${esc(data.subtitle)}</p>
             </div>
             <div class="adventure-counters">
                 <div class="counter">
-                    <span class="counter-number">${data.countriesVisited}</span>
+                    <span class="counter-number">${esc(data.countriesVisited)}</span>
                     <span class="counter-label">Countries</span>
                 </div>
                 <div class="counter">
-                    <span class="counter-number">${data.nationalParksVisited}</span>
+                    <span class="counter-number">${esc(data.nationalParksVisited)}</span>
                     <span class="counter-label">National Parks</span>
                 </div>
             </div>
@@ -201,16 +210,21 @@ function renderAdventures(data, satelliteImg) {
                     ${data.panels.map(panel => `
                         <div class="adventure-card${panel.isPlaceholder ? ' placeholder' : ''}">
                             ${panel.image ? `
-                                <img src="${img(panel.image.webp)}" alt="${panel.image.alt}" loading="lazy" class="adventure-image" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                                <img src="${img(panel.image.webp)}" alt="${esc(panel.image.alt)}" loading="lazy" class="adventure-image" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
                                 <div class="adventure-image-placeholder" style="display:none"><i class="fas fa-camera"></i><span>Photo coming soon</span></div>
                             ` : (!panel.isPlaceholder ? `
                                 <div class="adventure-image-placeholder"><i class="fas fa-camera"></i><span>Photo coming soon</span></div>
                             ` : '')}
                             <div class="adventure-info">
-                                <h4>${panel.title}</h4>
-                                <p class="adventure-location">${panel.location}</p>
-                                <p class="adventure-date">${panel.date}</p>
-                                <p>${panel.description}</p>
+                                <h4>${esc(panel.title)}</h4>
+                                <p class="adventure-location">${esc(panel.location)}</p>
+                                <p class="adventure-date">${esc(panel.date)}</p>
+                                <p>${esc(panel.description)}</p>
+                                ${panel.tags && panel.tags.length ? `
+                                    <div class="adventure-tags">
+                                        ${panel.tags.map(tag => `<span class="tag">${esc(tag)}</span>`).join('')}
+                                    </div>
+                                ` : ''}
                             </div>
                         </div>
                     `).join('')}
@@ -228,8 +242,8 @@ function renderTrees(data, satelliteImg) {
             </button>
             <div class="page-header">
                 ${satelliteImg ? `<img src="${satelliteImg}" alt="Satellite" class="page-satellite">` : ''}
-                <h2>${data.title}</h2>
-                <p>${data.subtitle}</p>
+                <h2>${esc(data.title)}</h2>
+                <p>${esc(data.subtitle)}</p>
             </div>
             <div class="page-content">
                 <div class="trees-grid">
@@ -252,17 +266,17 @@ function renderTrees(data, satelliteImg) {
                         return `
                         <div class="tree-card">
                             ${tree.image ? `
-                                <img src="${img(tree.image.webp)}" alt="${tree.image.alt}" loading="lazy" class="tree-image"${styleAttr}>
-                                ${tree.image.caption ? `<p class="image-caption">${tree.image.caption}</p>` : ''}
+                                <img src="${img(tree.image.webp)}" alt="${esc(tree.image.alt)}" loading="lazy" class="tree-image"${styleAttr}>
+                                ${tree.image.caption ? `<p class="image-caption">${esc(tree.image.caption)}</p>` : ''}
                             ` : ''}
                             <div class="tree-info">
-                                <h4>${tree.title}</h4>
-                                <p>${tree.description}</p>
+                                <h4>${esc(tree.title)}</h4>
+                                <p>${esc(tree.description)}</p>
                                 ${tree.stats ? `
                                     <div class="tree-stats">
-                                        <h5>${tree.stats.title}</h5>
+                                        <h5>${esc(tree.stats.title)}</h5>
                                         <ul>
-                                            ${stats.map(stat => `<li>${stat}</li>`).join('')}
+                                            ${stats.map(stat => `<li>${esc(stat)}</li>`).join('')}
                                         </ul>
                                     </div>
                                 ` : ''}

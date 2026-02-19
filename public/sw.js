@@ -1,5 +1,4 @@
 const CACHE_NAME = 'ryan-little-v2-2';
-const SPA_ROUTES = ['/adventures', '/portfolio', '/trees', '/about'];
 
 const PRECACHE_URLS = [
     '/',
@@ -36,14 +35,15 @@ self.addEventListener('fetch', event => {
     if (event.request.method !== 'GET') return;
     if (!event.request.url.startsWith(self.location.origin)) return;
 
-    const url = new URL(event.request.url);
-
-    if (event.request.mode === 'navigate' && SPA_ROUTES.includes(url.pathname)) {
+    // Network-first for navigation so index.html is always fresh after a deploy
+    if (event.request.mode === 'navigate') {
         event.respondWith(
-            caches.match('/index.html').then(r => r || fetch('/index.html'))
+            fetch(event.request).catch(() => caches.match('/index.html'))
         );
         return;
     }
+
+    const url = new URL(event.request.url);
 
     // Don't cache content images — they're not hashed and can change without a URL change
     if (url.pathname.startsWith('/images/')) {
