@@ -53,3 +53,10 @@ async function init() {
 }
 
 init();
+
+// Assemble email href at runtime to avoid scraper exposure
+const emailLink = document.querySelector('[data-email-user]');
+if (emailLink) {
+    const addr = emailLink.dataset.emailUser + '@' + emailLink.dataset.emailDomain;
+    emailLink.href = 'mailto:' + addr;
+}
