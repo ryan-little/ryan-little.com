@@ -2,7 +2,6 @@ const CACHE_NAME = 'ryan-little-v2-2';
 
 const PRECACHE_URLS = [
     '/',
-    '/index.html',
     '/manifest.json',
     '/textures/earth-day.webp',
     '/textures/earth-night.webp',

@@ -10,6 +10,17 @@ import { renderPage } from './pages/page-renderer.js';
 import { initShootingStars } from './game/shooting-star.js';
 import { initMinigame } from './game/minigame.js';
 
+function showWebGLError() {
+    document.body.innerHTML = `
+        <div style="background:#0a0a1a;color:#e0d8d0;font-family:Inter,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;text-align:center;padding:2rem;">
+            <div>
+                <h1 style="color:#e8a849;margin-bottom:1rem;">Ryan Little</h1>
+                <p>Your browser doesn't support WebGL, which this site requires.</p>
+                <p style="margin-top:1rem;"><a href="https://linkedin.com/in/rpdlittle" style="color:#e8a849;">LinkedIn</a> · <a href="https://github.com/ryan-little" style="color:#e8a849;">GitHub</a></p>
+            </div>
+        </div>`;
+}
+
 async function init() {
     const container = document.getElementById('scene-container');
     if (!container) {
@@ -17,7 +28,13 @@ async function init() {
         return;
     }
 
-    initScene(container);
+    try {
+        initScene(container);
+    } catch (err) {
+        console.error('WebGL init failed:', err);
+        showWebGLError();
+        return;
+    }
     createStarfield();
     await createGalaxies();
     await createEarth();
@@ -59,7 +76,7 @@ async function init() {
         });
     });
 
-    console.log('v2 initialized');
+
 }
 
 init();

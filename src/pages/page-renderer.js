@@ -105,7 +105,7 @@ function renderAbout(data, satelliteImg) {
     const sectionCard = s => `
         <div class="section-card">
             <div class="section-header">
-                <i class="${s.icon}"></i>
+                <i class="${esc(s.icon)}"></i>
                 <h3>${esc(s.title)}</h3>
             </div>
             <div class="section-content">
@@ -161,7 +161,7 @@ function renderPortfolio(data, satelliteImg) {
                 ${data.sections.map(section => `
                     <div class="portfolio-section">
                         <div class="section-header">
-                            <i class="${section.icon}"></i>
+                            <i class="${esc(section.icon)}"></i>
                             <h3>${esc(section.title)}</h3>
                         </div>
                         <div class="portfolio-grid">
