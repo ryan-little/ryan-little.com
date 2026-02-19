@@ -25,7 +25,6 @@ const fragmentShader = `
     uniform sampler2D nightTexture;
     uniform sampler2D cloudTexture;
     uniform vec3 sunDirection;
-    uniform float time;
     uniform float cloudOffset;
     varying vec2 vUv;
     varying vec3 vNormalLocal;
@@ -69,10 +68,9 @@ const fragmentShader = `
         dayLit = mix(dayLit, dayLit * 0.4, shadowAlpha);
 
         // Night side: city lights fully visible in deep night, fade near terminator
-        float pulse = 0.92 + 0.08 * sin(time * 0.35);
         float nightVisibility = 1.0 - smoothstep(-0.2, 0.15, intensity);
         vec4 moonlit = dayColor * 0.15;
-        vec4 nightLit = nightColor * (2.0 - pow(clouds, 1.5) * 0.86) * pulse * nightVisibility + moonlit;
+        vec4 nightLit = nightColor * (2.0 - pow(clouds, 1.5) * 0.86) * nightVisibility + moonlit;
 
         gl_FragColor = mix(nightLit, dayLit, blend);
     }
@@ -134,7 +132,6 @@ export async function createEarth({ cloudUrl = '/textures/earth-clouds.webp', re
                 nightTexture: { value: nightTexture },
                 cloudTexture: { value: resolvedCloud },
                 sunDirection: { value: new THREE.Vector3() },
-                time: { value: 0.0 },
                 cloudOffset: { value: 0.0 },
             },
         });
@@ -171,7 +168,6 @@ export async function createEarth({ cloudUrl = '/textures/earth-clouds.webp', re
             if (earthMesh.material.uniforms) {
                 updateSunUniform();
                 elapsed += delta;
-                earthMesh.material.uniforms.time.value = elapsed;
                 earthMesh.material.uniforms.cloudOffset.value =
                     (elapsed % CLOUD_DRIFT_PERIOD) / CLOUD_DRIFT_PERIOD;
             }
@@ -239,6 +235,8 @@ export function getEarthRadius() { return EARTH_RADIUS; }
 export function refreshCloudTexture(url) {
     if (!earthMesh?.material?.uniforms?.cloudTexture) return;
     new THREE.TextureLoader().load(url + '?t=' + Date.now(), (texture) => {
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.needsUpdate = true;
         earthMesh.material.uniforms.cloudTexture.value.dispose();
         earthMesh.material.uniforms.cloudTexture.value = texture;
     });

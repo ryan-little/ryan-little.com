@@ -97,6 +97,8 @@ function setupControls(canvas) {
         scheduleResume();
     }, { passive: true });
 
+    let lastPinchDist = null;
+
     canvas.addEventListener('touchend', (e) => {
         if (e.touches.length < 2) lastPinchDist = null;
         scheduleResume();
@@ -109,7 +111,6 @@ function setupControls(canvas) {
     }, { passive: false });
 
     // Pinch to zoom
-    let lastPinchDist = null;
     canvas.addEventListener('touchstart', (e) => {
         if (e.touches.length === 2) {
             lastPinchDist = Math.hypot(
