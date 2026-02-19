@@ -165,6 +165,8 @@ export function createCityLabels(container, getR) {
     });
 
     const worldPos = new THREE.Vector3();
+    const camDir   = new THREE.Vector3();
+    const ndc      = new THREE.Vector3();
 
     onUpdate(() => {
         const earth = getEarth();
@@ -177,7 +179,7 @@ export function createCityLabels(container, getR) {
         const ry      = earth.rotation.y;
         const cosRY   = Math.cos(ry);
         const sinRY   = Math.sin(ry);
-        const camDir  = camera.position.clone().normalize();
+        camDir.copy(camera.position).normalize();
 
         // Dots rotate with Earth and fade in with zoom like labels
         dots.rotation.y = ry;
@@ -205,7 +207,7 @@ export function createCityLabels(container, getR) {
                 continue;
             }
 
-            const ndc = worldPos.clone().project(camera);
+            ndc.copy(worldPos).project(camera);
             el.style.display  = 'block';
             el.style.opacity  = labelAlpha;
             el.style.left     = ((ndc.x + 1) / 2 * w) + 'px';

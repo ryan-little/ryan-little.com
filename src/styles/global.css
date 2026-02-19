@@ -40,6 +40,7 @@ html, body {
 
 #scene-container canvas {
     display: block;
+    touch-action: none;
 }
 
 #ui-overlay {
