@@ -211,12 +211,14 @@ html, body {
     height: 1.2rem;
 }
 
-/* Scale up hammer visually without affecting layout */
-#social-links a:nth-child(5) .social-icon-image {
+/* Scale up image icons visually without affecting layout */
+#social-links a:nth-child(5) .social-icon-image,
+#social-links a:nth-child(6) .social-icon-image {
     transform: scale(1.35);
 }
 
-#social-links a:nth-child(5):hover .social-icon-image {
+#social-links a:nth-child(5):hover .social-icon-image,
+#social-links a:nth-child(6):hover .social-icon-image {
     transform: scale(1.76);
 }
 
