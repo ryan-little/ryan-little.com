@@ -45,7 +45,7 @@ const fragmentShader = `
         dayLit = mix(dayLit, vec4(1.0, 1.0, 1.0, 1.0), cloudAlpha);
 
         // Night side: city lights + faint moonlit continent shapes from day texture
-        vec4 moonlit = dayColor * 0.18;
+        vec4 moonlit = dayColor * 0.15;
         vec4 nightLit = nightColor * (1.4 - pow(clouds, 1.5) * 0.6) + moonlit;
 
         gl_FragColor = mix(nightLit, dayLit, blend);
