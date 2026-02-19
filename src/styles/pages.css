@@ -107,31 +107,43 @@
     grid-row: span 2;
 }
 
+/* Desktop: Skills + Outside wrapper mirrors the span-2 of item 3 */
+.about-page .sections-grid > .skills-outside-combined {
+    grid-row: span 2;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.about-page .skills-outside-combined .section-card:nth-child(1) { animation-delay: 0.34s; }
+.about-page .skills-outside-combined .section-card:nth-child(2) { animation-delay: 0.42s; }
+
 @media (max-width: 600px) {
     .about-page .sections-grid > :nth-child(3) {
         grid-row: span 1;
     }
 
-    /* Merge Skills + Outside of Work into a single visual pane */
-    .about-page .sections-grid {
-        row-gap: 0;
+    .about-page .sections-grid > .skills-outside-combined {
+        grid-row: span 1;
+        gap: 0;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 10px;
+        overflow: hidden;
+        opacity: 0;
+        animation: cardFadeIn 0.5s ease-out 0.34s forwards;
     }
 
-    .about-page .sections-grid > .section-card {
-        margin-bottom: 1.25rem;
+    .about-page .skills-outside-combined .section-card {
+        background: transparent;
+        border: none;
+        border-radius: 0;
+        animation: none;
+        opacity: 1;
     }
 
-    .about-page .sections-grid > :nth-child(4) {
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-        border-bottom: none;
-        margin-bottom: 0;
-    }
-
-    .about-page .sections-grid > :nth-child(5) {
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-        border-top: 1px solid rgba(255, 255, 255, 0.04);
+    .about-page .skills-outside-combined .section-card + .section-card {
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
     }
 }
 

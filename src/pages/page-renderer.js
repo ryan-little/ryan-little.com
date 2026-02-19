@@ -102,6 +102,22 @@ function animateCounters() {
 }
 
 function renderAbout(data, satelliteImg) {
+    const sectionCard = s => `
+        <div class="section-card">
+            <div class="section-header">
+                <i class="${s.icon}"></i>
+                <h3>${esc(s.title)}</h3>
+            </div>
+            <div class="section-content">
+                ${s.content.map(line => `<p>${esc(line)}</p>`).join('')}
+            </div>
+            ${s.image ? `
+                <img src="${img(s.image.webp)}" alt="${esc(s.image.alt)}" loading="lazy" class="section-image${s.image.alt?.includes('Logo') ? ' portfolio-logo' : ''}">
+                ${s.image.caption ? `<p class="image-caption">${esc(s.image.caption)}</p>` : ''}
+            ` : ''}
+            ${s.link ? `<a href="${esc(s.link)}" target="_blank" rel="noopener" class="portfolio-link">View Project →</a>` : ''}
+        </div>
+    `;
     return `
         <div class="page about-page">
             <button class="back-button">
@@ -120,22 +136,10 @@ function renderAbout(data, satelliteImg) {
                     </div>
                 ` : ''}
                 <div class="sections-grid">
-                    ${data.sections.map(section => `
-                        <div class="section-card">
-                            <div class="section-header">
-                                <i class="${section.icon}"></i>
-                                <h3>${esc(section.title)}</h3>
-                            </div>
-                            <div class="section-content">
-                                ${section.content.map(line => `<p>${esc(line)}</p>`).join('')}
-                            </div>
-                            ${section.image ? `
-                                <img src="${img(section.image.webp)}" alt="${esc(section.image.alt)}" loading="lazy" class="section-image${section.image.alt?.includes('Logo') ? ' portfolio-logo' : ''}">
-                                ${section.image.caption ? `<p class="image-caption">${esc(section.image.caption)}</p>` : ''}
-                            ` : ''}
-                            ${section.link ? `<a href="${esc(section.link)}" target="_blank" rel="noopener" class="portfolio-link">View Project →</a>` : ''}
-                        </div>
-                    `).join('')}
+                    ${data.sections.slice(0, 3).map(sectionCard).join('')}
+                    <div class="skills-outside-combined">
+                        ${data.sections.slice(3).map(sectionCard).join('')}
+                    </div>
                 </div>
             </div>
         </div>
@@ -220,11 +224,6 @@ function renderAdventures(data, satelliteImg) {
                                 <p class="adventure-location">${esc(panel.location)}</p>
                                 <p class="adventure-date">${esc(panel.date)}</p>
                                 <p>${esc(panel.description)}</p>
-                                ${panel.tags && panel.tags.length ? `
-                                    <div class="adventure-tags">
-                                        ${panel.tags.map(tag => `<span class="tag">${esc(tag)}</span>`).join('')}
-                                    </div>
-                                ` : ''}
                             </div>
                         </div>
                     `).join('')}
@@ -274,7 +273,6 @@ function renderTrees(data, satelliteImg) {
                                 <p>${esc(tree.description)}</p>
                                 ${tree.stats ? `
                                     <div class="tree-stats">
-                                        <h5>${esc(tree.stats.title)}</h5>
                                         <ul>
                                             ${stats.map(stat => `<li>${esc(stat)}</li>`).join('')}
                                         </ul>
