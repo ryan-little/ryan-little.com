@@ -36,7 +36,7 @@ const fragmentShader = `
         float blend = smoothstep(-0.25, 0.25, intensity);
 
         // Screen blend white light into day texture for self-illuminated look
-        float innerBrightness = 0.18 * min(max(intensity, 0.0) * 3.0, 1.0);
+        float innerBrightness = 0.12 * min(max(intensity, 0.0) * 3.0, 1.0);
         vec4 innerLight = vec4(innerBrightness);
         vec4 dayLit = vec4(1.0) - (vec4(1.0) - dayColor) * (vec4(1.0) - innerLight);
 
@@ -139,7 +139,7 @@ function createAtmosphere() {
             void main() {
                 float intensity = pow(0.7 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 2.0);
                 // Warm blue-white atmosphere glow
-                gl_FragColor = vec4(0.4, 0.65, 1.0, 1.0) * intensity * 1.3;
+                gl_FragColor = vec4(0.4, 0.65, 1.0, 1.0) * intensity * 1.1;
             }
         `,
         blending: THREE.AdditiveBlending,
