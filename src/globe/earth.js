@@ -65,19 +65,16 @@ const fragmentShader = `
         // RepeatWrapping handles U wrap naturally; clamp V at poles
         vec2 shadowUv = vec2(cloudUv.x + shadowDU, clamp(cloudUv.y + shadowDV, 0.0, 1.0));
         float shadowCloud = texture2D(cloudTexture, shadowUv).r;
-        float shadowAlpha = pow(shadowCloud, 1.5) * 0.5 * blend;
-        dayLit = mix(dayLit, dayLit * 0.6, shadowAlpha);
+        float shadowAlpha = pow(shadowCloud, 2.0) * 0.5 * blend;
+        dayLit = mix(dayLit, dayLit * 0.4, shadowAlpha);
 
-        // Night side: city lights with subtle pulse + faint moonlit continents
+        // Night side: city lights fade toward terminator, invisible in deep night
         float pulse = 0.92 + 0.08 * sin(time * 0.35);
+        float nightVisibility = smoothstep(-0.5, 0.0, intensity) * (1.0 - smoothstep(-0.2, 0.15, intensity));
         vec4 moonlit = dayColor * 0.15;
-        vec4 nightLit = nightColor * (1.4 - pow(clouds, 1.5) * 0.6) * pulse + moonlit;
+        vec4 nightLit = nightColor * (2.0 - pow(clouds, 1.5) * 0.86) * pulse * nightVisibility + moonlit;
 
-        // Terminator glow — thin warm orange sunrise/sunset band
-        float terminatorGlow = exp(-pow((intensity - 0.04) / 0.07, 2.0)) * 0.38;
-        vec4 glowColor = vec4(1.0, 0.42, 0.12, 0.0) * terminatorGlow;
-
-        gl_FragColor = mix(nightLit, dayLit, blend) + glowColor;
+        gl_FragColor = mix(nightLit, dayLit, blend);
     }
 `;
 
@@ -218,15 +215,8 @@ function createAtmosphere() {
                 float sunAlign  = dot(vWorldNormal, normalize(sunWorldDir));
                 float dayFactor = smoothstep(-0.2, 0.2, sunAlign);
 
-                // Narrow bell curve at terminator — only tint the actual rim
-                float termBell  = exp(-sunAlign * sunAlign / 0.02);
-                float rimOnly   = smoothstep(0.25, 0.42, limb); // restrict to edge
-
                 vec3 dayColor   = vec3(0.4, 0.65, 1.0);   // blue-white
-                vec3 termColor  = vec3(1.0, 0.55, 0.2);   // soft peach-orange
-
                 vec3 atmosColor = dayColor * max(dayFactor, 0.35);
-                atmosColor = mix(atmosColor, termColor, termBell * 0.22 * rimOnly);
 
                 gl_FragColor = vec4(atmosColor, 1.0) * limb * 1.1;
             }

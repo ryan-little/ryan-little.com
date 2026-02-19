@@ -162,9 +162,9 @@ async function init() {
 
     requestWakeLock();
 
-    // Refresh live clouds every 3 hours to match matteason's update cadence
-    const THREE_HOURS = 3 * 60 * 60 * 1000;
-    setInterval(() => refreshCloudTexture(LIVE_CLOUD_URL), THREE_HOURS);
+    // Refresh live clouds every 2 hours to match matteason's update cadence
+    const TWO_HOURS = 2 * 60 * 60 * 1000;
+    setInterval(() => refreshCloudTexture(LIVE_CLOUD_URL), TWO_HOURS);
 
     setupControls(getRenderer().domElement);
 

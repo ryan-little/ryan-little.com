@@ -179,13 +179,12 @@ export function createCityLabels(container, getR) {
         const sinRY   = Math.sin(ry);
         const camDir  = camera.position.clone().normalize();
 
-        // Dots rotate with Earth
+        // Dots rotate with Earth and fade in with zoom like labels
         dots.rotation.y = ry;
-
-        // Label opacity based on zoom
         const labelAlpha = Math.max(0, Math.min(1,
             (LABEL_SHOW_R - r) / (LABEL_SHOW_R - LABEL_FULL_R)
         ));
+        dotMat.opacity = labelAlpha * 0.55;
 
         for (const { el, localPos } of entries) {
             if (labelAlpha <= 0) {
@@ -200,8 +199,8 @@ export function createCityLabels(container, getR) {
                -localPos.x * sinRY + localPos.z * cosRY
             );
 
-            // Hide if on the far side of the globe
-            if (worldPos.dot(camDir) < 0.15) {
+            // Hide if behind the Earth's horizon (threshold = 1/R, exact silhouette cone)
+            if (worldPos.dot(camDir) < 1 / r) {
                 el.style.display = 'none';
                 continue;
             }
