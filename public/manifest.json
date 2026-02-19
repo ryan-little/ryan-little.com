@@ -8,6 +8,7 @@
   "theme_color": "#0a0a1a",
   "orientation": "portrait-primary",
   "icons": [
+    { "src": "/images/earthsprite.png",  "sizes": "1024x1024", "type": "image/png",  "purpose": "any maskable" },
     { "src": "/images/earthsprite.webp", "sizes": "1024x1024", "type": "image/webp", "purpose": "any" }
   ],
   "categories": ["portfolio", "personal", "geospatial"],

@@ -11,7 +11,7 @@ let starTexture = null;
 export async function initShootingStars() {
     starTexture = await new Promise((resolve) => {
         textureLoader.load('/shootingstar.webp', resolve, undefined, () => {
-            textureLoader.load('/shootingstar.png', resolve);
+            textureLoader.load('/shootingstar.png', resolve, undefined, () => resolve(null));
         });
     });
 

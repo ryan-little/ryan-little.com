@@ -4,7 +4,7 @@ export const scoring = {
     score: 0,
     combo: 0,
     lastCatchTime: 0,
-    highScore: parseInt(localStorage.getItem(STORAGE_KEY) || '0', 10),
+    highScore: (() => { try { return parseInt(localStorage.getItem(STORAGE_KEY) || '0', 10); } catch { return 0; } })(),
 
     reset() {
         this.score = 0;

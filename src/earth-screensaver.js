@@ -80,6 +80,7 @@ function setupControls(canvas) {
 
     // Touch
     canvas.addEventListener('touchstart', (e) => {
+        if (e.touches.length !== 1) return;
         const t = e.touches[0];
         lastX = t.clientX;
         lastY = t.clientY;
@@ -122,6 +123,7 @@ function setupControls(canvas) {
 
     canvas.addEventListener('touchmove', (e) => {
         if (e.touches.length === 2 && lastPinchDist !== null) {
+            e.preventDefault();
             const dist = Math.hypot(
                 e.touches[0].clientX - e.touches[1].clientX,
                 e.touches[0].clientY - e.touches[1].clientY
@@ -129,7 +131,7 @@ function setupControls(canvas) {
             R = Math.max(R_MIN, Math.min(R_MAX, R * (lastPinchDist / dist)));
             lastPinchDist = dist;
         }
-    }, { passive: true });
+    }, { passive: false });
 }
 
 async function requestWakeLock() {

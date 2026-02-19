@@ -35,6 +35,8 @@ export function createMoon() {
 
     // Ecliptic pole: Z-axis — sun lives in XY plane (solar-time world space), so ecliptic pole = Z
     const eclipticPole = new THREE.Vector3(0, 0, 1);
+    const sunWorld = new THREE.Vector3();
+    const moonDir = new THREE.Vector3();
 
     onUpdate(() => {
         const earth = getEarth();
@@ -43,7 +45,7 @@ export function createMoon() {
         // Sun direction: object-space → world-space (rotate by Earth's current rotation.y)
         const s = getSunDirection();
         const ry = earth.rotation.y;
-        const sunWorld = new THREE.Vector3(
+        sunWorld.set(
             s.x * Math.cos(ry) + s.z * Math.sin(ry),
             s.y,
             -s.x * Math.sin(ry) + s.z * Math.cos(ry)
@@ -55,8 +57,8 @@ export function createMoon() {
         // Moon direction: rotate sun direction by phase angle around ecliptic pole
         // phase=0 → new moon (near sun), phase=π → full moon (opposite sun)
         const phase = getMoonPhase();
-        const moonDir = sunWorld.clone().applyAxisAngle(eclipticPole, phase);
-        moonMesh.position.copy(moonDir.multiplyScalar(MOON_DISTANCE));
+        moonDir.copy(sunWorld).applyAxisAngle(eclipticPole, phase);
+        moonMesh.position.copy(moonDir).multiplyScalar(MOON_DISTANCE);
     });
 
     return moonMesh;

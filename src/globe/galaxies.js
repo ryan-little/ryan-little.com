@@ -24,8 +24,10 @@ export async function createGalaxies() {
     const placements = [];
     const count = 18;
 
+    if (textures.length === 0) return sprites;
+
     for (let i = 0; i < count; i++) {
-        const texIndex = i % GALAXY_COUNT;
+        const texIndex = i % textures.length;
 
         // Random position on sphere using uniform distribution
         const theta = Math.random() * 2 * Math.PI;
