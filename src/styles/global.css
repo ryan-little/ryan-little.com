@@ -203,8 +203,9 @@ html, body {
     filter: brightness(1.2);
 }
 
-/* LHL hammer is visually smaller than FA icons at the same size */
-#social-links a:nth-child(5) .social-icon-image {
+/* Image icons are visually smaller than FA icons at the same em size */
+#social-links a:nth-child(5) .social-icon-image,
+#social-links a:nth-child(6) .social-icon-image {
     width: 1.65rem;
     height: 1.65rem;
 }
