@@ -286,12 +286,24 @@
         "items": [
           {
             "title": "DGA Transcriber",
-            "description": "Comprehensive Python-based transcription tool with 490+ functions that saves the company $15,000 annually. Built for a Little Hammer Labs customer, featuring open source AI model integration, advanced audio processing, and automated transcription workflows to streamline document creation and data processing.",
+            "description": "A field transcription pipeline built for Diehl Group Architects via Little Hammer Labs. Architects record voice notes during on-site inspections; the tool transcribes them using a locally-run Whisper model — no cloud, no data sent off-site — then processes the output through a custom architecture vocabulary to correct domain terminology before generating formatted reports. Replaces approximately $15,000 per year in commercial transcription services.",
             "image": {
               "webp": "assets/images_webp/dgatranscribericon.webp",
               "alt": "DGA Transcriber Logo",
-              "caption": "DGA Transcriber - Custom transcription solution"
+              "caption": "DGA Transcriber - Built for Diehl Group Architects"
             }
+          },
+          {
+            "title": "ryan-little.com",
+            "description": "This site. A space-themed personal portfolio built with vanilla JavaScript and Three.js — real-time 3D Earth with a custom day/night/cloud GLSL shader, four orbiting navigation satellites, a procedural starfield with a Milky Way band, and a shooting star minigame."
+          },
+          {
+            "title": "PicSplitter",
+            "description": "A Python command-line tool that splits large images into a configurable grid of tiles. Useful in GIS workflows where oversized imagery needs to be broken into smaller chunks for processing in ArcGIS or QGIS."
+          },
+          {
+            "title": "Primal Chase",
+            "description": "A browser-based game built with vanilla JavaScript. Available at primalchase.com."
           }
         ]
       }
@@ -396,8 +408,8 @@
         "title": "Professional",
         "icon": "fas fa-briefcase",
         "content": [
-          "Quality Control Geospatial Analyst at CACI, Inc., supporting geospatial production on government defense contracts — remote, from San Diego.",
-          "My work centers on validating spatial data across multi-source geodatabases, resolving conflation discrepancies, and reviewing final deliverables before they reach the client. I also run a mentorship group and weekly team gathering to keep collaboration and morale strong across a distributed team."
+          "Geospatial Analyst at CACI, supporting production on government defense contracts — remote, from San Diego.",
+          "My role focuses on improving production workflows and working directly with technicians to raise output quality and efficiency. I also organize a weekly team gathering and mentorship group to keep collaboration strong across a distributed team."
         ],
         "image": {
           "webp": "assets/images_webp/wateringreenland.webp",

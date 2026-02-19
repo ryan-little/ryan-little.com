@@ -68,33 +68,44 @@ export async function createEarth() {
     const geometry = new THREE.SphereGeometry(EARTH_RADIUS, segments, segments);
     const textureLoader = new THREE.TextureLoader();
 
-    const [dayTexture, nightTexture, cloudTexture] = await Promise.all([
-        new Promise((resolve, reject) => {
-            textureLoader.load('/textures/earth-day.webp', resolve, undefined, reject);
-        }),
-        new Promise((resolve, reject) => {
-            textureLoader.load('/textures/earth-night.webp', resolve, undefined, reject);
-        }),
-        new Promise((resolve, reject) => {
-            textureLoader.load('/textures/earth-clouds.webp', resolve, undefined, reject);
-        }),
-    ]);
+    let material;
 
-    dayTexture.colorSpace = THREE.SRGBColorSpace;
-    nightTexture.colorSpace = THREE.SRGBColorSpace;
+    try {
+        const [dayTexture, nightTexture, cloudTexture] = await Promise.all([
+            new Promise((resolve, reject) => {
+                textureLoader.load('/textures/earth-day.webp', resolve, undefined, reject);
+            }),
+            new Promise((resolve, reject) => {
+                textureLoader.load('/textures/earth-night.webp', resolve, undefined, reject);
+            }),
+            new Promise((resolve, reject) => {
+                textureLoader.load('/textures/earth-clouds.webp', resolve, undefined, reject);
+            }),
+        ]);
 
-    const uniforms = {
-        dayTexture: { value: dayTexture },
-        nightTexture: { value: nightTexture },
-        cloudTexture: { value: cloudTexture },
-        sunDirection: { value: new THREE.Vector3() },
-    };
+        dayTexture.colorSpace = THREE.SRGBColorSpace;
+        nightTexture.colorSpace = THREE.SRGBColorSpace;
 
-    const material = new THREE.ShaderMaterial({
-        vertexShader,
-        fragmentShader,
-        uniforms,
-    });
+        material = new THREE.ShaderMaterial({
+            vertexShader,
+            fragmentShader,
+            uniforms: {
+                dayTexture: { value: dayTexture },
+                nightTexture: { value: nightTexture },
+                cloudTexture: { value: cloudTexture },
+                sunDirection: { value: new THREE.Vector3() },
+            },
+        });
+    } catch (err) {
+        console.warn('Earth textures failed to load, using fallback sprite:', err);
+        // Fallback: flat earthsprite texture so globe still renders
+        const fallbackTexture = await new Promise((resolve) => {
+            textureLoader.load('/images/earthsprite.webp', resolve, undefined, () => resolve(null));
+        });
+        material = fallbackTexture
+            ? new THREE.MeshBasicMaterial({ map: fallbackTexture })
+            : new THREE.MeshBasicMaterial({ color: 0x1a4a8a });
+    }
 
     earthMesh = new THREE.Mesh(geometry, material);
     earthMesh.rotation.y = 0;
@@ -103,11 +114,10 @@ export async function createEarth() {
     atmosphereMesh = createAtmosphere();
     scene.add(atmosphereMesh);
 
-    // Update every frame: rotation + sun in object space
     onUpdate((delta) => {
         if (earthMesh) {
             earthMesh.rotation.y += ROTATION_SPEED * delta;
-            updateSunUniform();
+            if (earthMesh.material.uniforms) updateSunUniform();
         }
     });
 

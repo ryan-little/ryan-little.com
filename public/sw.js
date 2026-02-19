@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ryan-little-v2-1';
+const CACHE_NAME = 'ryan-little-v2-2';
 const SPA_ROUTES = ['/adventures', '/portfolio', '/trees', '/about'];
 
 const PRECACHE_URLS = [
@@ -42,6 +42,12 @@ self.addEventListener('fetch', event => {
         event.respondWith(
             caches.match('/index.html').then(r => r || fetch('/index.html'))
         );
+        return;
+    }
+
+    // Don't cache content images — they're not hashed and can change without a URL change
+    if (url.pathname.startsWith('/images/')) {
+        event.respondWith(fetch(event.request));
         return;
     }
 
