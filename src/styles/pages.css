@@ -99,6 +99,20 @@
 }
 
 /* About page */
+.about-page .sections-grid {
+    grid-template-columns: 1fr 1fr;
+}
+
+.about-page .sections-grid > :nth-child(3) {
+    grid-row: span 2;
+}
+
+@media (max-width: 600px) {
+    .about-page .sections-grid > :nth-child(3) {
+        grid-row: span 1;
+    }
+}
+
 .headshot-container {
     text-align: center;
     margin-bottom: 2rem;
@@ -290,6 +304,9 @@
 .adventure-card.placeholder {
     border-style: dashed;
     opacity: 0.5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .adventure-image {
@@ -297,6 +314,29 @@
     aspect-ratio: 3 / 2;
     object-fit: cover;
     object-position: center;
+}
+
+.adventure-image-placeholder {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.15);
+}
+
+.adventure-image-placeholder i {
+    font-size: 1.6rem;
+}
+
+.adventure-image-placeholder span {
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
 }
 
 .adventure-info {
@@ -327,6 +367,10 @@
     font-size: 0.88rem;
     line-height: 1.5;
     text-align: left;
+}
+
+.adventure-card.placeholder .adventure-info > p:last-of-type {
+    text-align: center;
 }
 
 .adventure-tags {
@@ -449,6 +493,14 @@
 .sections-grid > :nth-child(10), .portfolio-grid > :nth-child(10), .adventures-grid > :nth-child(10), .trees-grid > :nth-child(10) { animation-delay: 0.82s; }
 .sections-grid > :nth-child(11), .portfolio-grid > :nth-child(11), .adventures-grid > :nth-child(11), .trees-grid > :nth-child(11) { animation-delay: 0.9s; }
 .sections-grid > :nth-child(12), .portfolio-grid > :nth-child(12), .adventures-grid > :nth-child(12), .trees-grid > :nth-child(12) { animation-delay: 0.98s; }
+.sections-grid > :nth-child(13), .portfolio-grid > :nth-child(13), .adventures-grid > :nth-child(13), .trees-grid > :nth-child(13) { animation-delay: 1.06s; }
+.sections-grid > :nth-child(14), .portfolio-grid > :nth-child(14), .adventures-grid > :nth-child(14), .trees-grid > :nth-child(14) { animation-delay: 1.14s; }
+.sections-grid > :nth-child(15), .portfolio-grid > :nth-child(15), .adventures-grid > :nth-child(15), .trees-grid > :nth-child(15) { animation-delay: 1.22s; }
+.sections-grid > :nth-child(16), .portfolio-grid > :nth-child(16), .adventures-grid > :nth-child(16), .trees-grid > :nth-child(16) { animation-delay: 1.3s; }
+.sections-grid > :nth-child(17), .portfolio-grid > :nth-child(17), .adventures-grid > :nth-child(17), .trees-grid > :nth-child(17) { animation-delay: 1.38s; }
+.sections-grid > :nth-child(18), .portfolio-grid > :nth-child(18), .adventures-grid > :nth-child(18), .trees-grid > :nth-child(18) { animation-delay: 1.46s; }
+.sections-grid > :nth-child(19), .portfolio-grid > :nth-child(19), .adventures-grid > :nth-child(19), .trees-grid > :nth-child(19) { animation-delay: 1.54s; }
+.sections-grid > :nth-child(20), .portfolio-grid > :nth-child(20), .adventures-grid > :nth-child(20), .trees-grid > :nth-child(20) { animation-delay: 1.62s; }
 
 /* Enlargeable images */
 .enlargeable {

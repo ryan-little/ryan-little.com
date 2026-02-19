@@ -123,7 +123,7 @@ function renderAbout(data, satelliteImg) {
                                 ${section.content.map(line => `<p>${line}</p>`).join('')}
                             </div>
                             ${section.image ? `
-                                <img src="${img(section.image.webp)}" alt="${section.image.alt}" loading="lazy" class="section-image">
+                                <img src="${img(section.image.webp)}" alt="${section.image.alt}" loading="lazy" class="section-image${section.image.alt?.includes('Logo') ? ' portfolio-logo' : ''}">
                                 ${section.image.caption ? `<p class="image-caption">${section.image.caption}</p>` : ''}
                             ` : ''}
                         </div>
@@ -201,18 +201,16 @@ function renderAdventures(data, satelliteImg) {
                     ${data.panels.map(panel => `
                         <div class="adventure-card${panel.isPlaceholder ? ' placeholder' : ''}">
                             ${panel.image ? `
-                                <img src="${img(panel.image.webp)}" alt="${panel.image.alt}" loading="lazy" class="adventure-image">
-                            ` : ''}
+                                <img src="${img(panel.image.webp)}" alt="${panel.image.alt}" loading="lazy" class="adventure-image" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                                <div class="adventure-image-placeholder" style="display:none"><i class="fas fa-camera"></i><span>Photo coming soon</span></div>
+                            ` : (!panel.isPlaceholder ? `
+                                <div class="adventure-image-placeholder"><i class="fas fa-camera"></i><span>Photo coming soon</span></div>
+                            ` : '')}
                             <div class="adventure-info">
                                 <h4>${panel.title}</h4>
                                 <p class="adventure-location">${panel.location}</p>
                                 <p class="adventure-date">${panel.date}</p>
                                 <p>${panel.description}</p>
-                                ${panel.tags ? `
-                                    <div class="adventure-tags">
-                                        ${panel.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                                    </div>
-                                ` : ''}
                             </div>
                         </div>
                     `).join('')}

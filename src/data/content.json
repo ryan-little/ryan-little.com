@@ -6,115 +6,103 @@
     "nationalParksVisited": 22,
     "panels": [
       {
-        "id": "big-bend",
-        "title": "Big Bend National Park",
-        "location": "Texas, USA",
-        "date": "2023",
-        "description": "Desert hiking and stargazing in one of America's most remote national parks.",
-        "tags": ["Hiking", "Stargazing", "Desert"],
+        "id": "grand-europe-tour",
+        "title": "Grand Europe Tour",
+        "location": "France, Germany, Italy",
+        "date": "July 2013",
+        "description": "A sweeping first look at Europe — the Eiffel Tower and Louvre in Paris, the Gothic cathedral of Cologne, the art and history of Berlin, and the ancient grandeur of the Colosseum in Rome.",
+        "tags": ["Culture", "History", "Architecture", "Europe"]
+      },
+      {
+        "id": "hawaii-maui",
+        "title": "Hawaii: Maui",
+        "location": "Lahaina, Maui, Hawaii",
+        "date": "October 2016",
+        "description": "Parasailing over Lahaina's crystal-clear waters and watching the sunrise from the summit of Haleakalā — a dormant volcanic crater soaring over 10,000 feet above sea level.",
+        "tags": ["Tropical", "Volcanic", "Parasailing", "Island"],
         "image": {
-          "webp": "assets/images_webp/bigbendnp_fullshot.webp",
-          "fallback": "assets/images/bigbendnp_fullshot.JPG",
-          "alt": "Big Bend National Park"
+          "webp": "assets/images_webp/hawaii.webp",
+          "fallback": "assets/images/hawaii.jpg",
+          "alt": "Hawaii: Maui"
         }
       },
       {
-        "id": "ireland/northern-ireland",
-        "title": "Ireland/Northern Ireland",
-        "location": "Ireland, Northern Ireland",
-        "date": "2018",
-        "description": "Exploring the rich history and landscapes of Ireland and Northern Ireland.",
-        "tags": ["Culture", "History", "Landscapes"],
+        "id": "catalina-island",
+        "title": "Catalina Island",
+        "location": "Avalon, California",
+        "date": "August 2017",
+        "description": "Snorkeling through crystal-clear kelp forests, camping on the island's rugged coastal shores, and exploring the unique landscape of California's island gem off the coast of Los Angeles.",
+        "tags": ["Snorkeling", "Camping", "Island", "Coastal"]
+      },
+      {
+        "id": "europe-ireland-central",
+        "title": "Europe: Ireland & Central Europe",
+        "location": "Dublin, Amsterdam, Berlin, Prague, Munich",
+        "date": "June 2018",
+        "description": "Dublin's historic pubs and cobblestone lanes, Amsterdam's iconic canals, Berlin's East Side Gallery, Prague's fairytale old town, Munich's Marienplatz — and the dramatic basalt columns of Giant's Causeway in Northern Ireland.",
+        "tags": ["Culture", "History", "Architecture", "Europe"],
         "image": {
           "webp": "assets/images_webp/giantscauseway_fullshot.webp",
           "fallback": "assets/images/giantscauseway_fullshot.JPG",
-          "alt": "Giant's Causeway"
+          "alt": "Giant's Causeway, Northern Ireland"
         }
       },
       {
-        "id": "sequoia",
-        "title": "Sequoia National Park",
+        "id": "disneyland-holiday",
+        "title": "Disneyland Holiday",
+        "location": "Anaheim, California",
+        "date": "December 2018",
+        "description": "Disneyland dressed for the holidays — festive park decorations, classic rides, and Sleeping Beauty's castle lit up for Christmas.",
+        "tags": ["Theme Park", "Holiday", "Family"]
+      },
+      {
+        "id": "sequoia-kings-canyon",
+        "title": "Sequoia & Kings Canyon",
         "location": "California, USA",
-        "date": "2023",
-        "description": "Standing in awe of the world's largest tree by volume - General Sherman.",
-        "tags": ["Giant Trees", "Forest", "National Park"],
+        "date": "July 2020",
+        "description": "Standing beneath General Sherman — the world's largest tree by volume — exploring the ancient Grant Grove, and hiking deep into the High Sierra backcountry.",
+        "tags": ["Giant Trees", "Hiking", "National Parks", "Forest"],
         "image": {
           "webp": "assets/images_webp/generalshermanpic.webp",
           "fallback": "assets/images/generalshermanpic.heif",
-          "alt": "General Sherman Tree"
+          "alt": "General Sherman Tree, Sequoia National Park"
         }
       },
       {
         "id": "redwood",
         "title": "Redwood National Park",
-        "location": "California, USA",
-        "date": "2023",
-        "description": "Hiking through ancient redwood forests to see the world's tallest trees.",
-        "tags": ["Redwoods", "Hiking", "Ancient"],
+        "location": "Northern California, USA",
+        "date": "August 2020",
+        "description": "Wandering through ancient old-growth groves, hiking coastal trails above the Pacific, and camping along wild river corridors in the world's tallest forest.",
+        "tags": ["Redwoods", "Hiking", "Camping", "Coastal"],
         "image": {
           "webp": "assets/images_webp/hyperionpic.webp",
           "fallback": "assets/images/hyperionpic.JPG",
-          "alt": "Hyperion Tree"
+          "alt": "Hyperion Tree, Redwood National Park"
         }
       },
       {
-        "id": "white-mountains",
-        "title": "White Mountains",
-        "location": "California, USA",
-        "date": "2023",
-        "description": "Visiting the ancient bristlecone pines, some of the oldest living organisms on Earth.",
-        "tags": ["Ancient Trees", "High Altitude", "Desert"],
-        "image": {
-          "webp": "assets/images_webp/methuselahpic.webp",
-          "fallback": "assets/images/methuselahpic.JPG",
-          "alt": "Methuselah Tree"
-        }
+        "id": "washington-dc",
+        "title": "Washington D.C.",
+        "location": "Washington, D.C.",
+        "date": "October 2020",
+        "description": "The National Mall in fall color, tours of the Capitol, world-class Smithsonian museums, and the iconic cherry blossoms lining the Tidal Basin near the Lincoln Memorial.",
+        "tags": ["History", "Culture", "Museums", "National Mall"]
       },
       {
-        "id": "japan",
-        "title": "Japan",
-        "location": "Tokyo, Kyoto, Osaka, Nara, Hiroshima, Hakone, Yokohama",
-        "date": "2025",
-        "description": "Exploring the vibrant culture and cuisine of Japan.",
-        "tags": ["Culture", "Food", "Japan"],
-        "image": {
-          "webp": "assets/images_webp/osaka_headshot.webp",
-          "fallback": "assets/images/osaka_headshot.JPG",
-          "alt": "Ryan Little in Osaka, Japan"
-        }
+        "id": "utah-arizona-loop",
+        "title": "Utah & Arizona Loop",
+        "location": "Utah & Arizona, USA",
+        "date": "June 2021",
+        "description": "Standing on the rim of the Grand Canyon, scrambling through Arches National Park's iconic sandstone fins, and exploring the red rock adventure hub of Moab.",
+        "tags": ["Hiking", "National Parks", "Desert", "Southwest"]
       },
       {
-        "id": "spain-portugal",
-        "title": "Spain & Portugal",
-        "location": "Lisbon, Porto,Madrid, Seville, Granada, Valencia, Barcelona",
-        "date": "2023",
-        "description": "Exploring the rich culture, architecture, and cuisine of the Iberian Peninsula.",
-        "tags": ["Culture", "Architecture", "Food", "History"],
-        "image": {
-          "webp": "assets/images_webp/spain_portugal.webp",
-          "fallback": "assets/images/spain_portugal.jpg",
-          "alt": "Spain and Portugal Adventure"
-        }
-      },
-      {
-        "id": "rocky-mountain",
-        "title": "Rocky Mountain National Park",
-        "location": "Colorado, USA",
-        "date": "2023",
-        "description": "Hiking through alpine landscapes and experiencing the beauty of the Rocky Mountains.",
-        "tags": ["Hiking", "Mountains", "Alpine", "Wildlife"],
-        "image": {
-          "webp": "assets/images_webp/rocky_mountain.webp",
-          "fallback": "assets/images/rocky_mountain.jpg",
-          "alt": "Rocky Mountain National Park"
-        }
-      },
-      {
-        "id": "glacier-yellowstone-teton",
-        "title": "Glacier, Yellowstone & Grand Teton",
-        "location": "Wyoming and Montana, USA",
-        "date": "2021",
-        "description": "Exploring America's first national park, the stunning Teton Range, and the beautiful Glacier National Park.",
+        "id": "northern-rockies",
+        "title": "Northern Rockies: Wyoming & Montana",
+        "location": "Wyoming & Montana, USA",
+        "date": "July 2021",
+        "description": "Watching Old Faithful erupt at Yellowstone, camping beneath the jagged peaks of the Grand Teton, and exploring the frontier towns of Billings and Bozeman.",
         "tags": ["Geysers", "Wildlife", "Mountains", "National Parks"],
         "image": {
           "webp": "assets/images_webp/yellowstone_teton.webp",
@@ -123,49 +111,107 @@
         }
       },
       {
-        "id": "pinnacles",
-        "title": "Pinnacles National Park",
+        "id": "lake-tahoe",
+        "title": "Lake Tahoe",
+        "location": "California/Nevada, USA",
+        "date": "March 2022",
+        "description": "Snow-capped peaks reflected in the impossibly blue waters of Lake Tahoe, with sweeping alpine lake vistas and a summer visit to catch a spectacular drone light show over the water.",
+        "tags": ["Mountains", "Lake", "Snow", "Scenic"]
+      },
+      {
+        "id": "chicago",
+        "title": "Chicago",
+        "location": "Chicago, Illinois",
+        "date": "May 2022",
+        "description": "Cloud Gate's mirrored reflection of the Chicago skyline in Millennium Park, the Gothic architecture of the University of Chicago campus, and the bold urban grid of one of America's great cities.",
+        "tags": ["Architecture", "Culture", "City", "Art"]
+      },
+      {
+        "id": "high-sierra-loop",
+        "title": "High Sierra Loop",
         "location": "California, USA",
-        "date": "2021",
-        "description": "Hiking through unique volcanic rock formations and talus caves.",
-        "tags": ["Hiking", "Volcanic", "Caves", "Geology"],
+        "date": "June 2022",
+        "description": "Summiting Half Dome in Yosemite, returning to Sequoia & Kings Canyon, and venturing into the White Mountains to walk among the ancient bristlecone pines — some of the oldest living organisms on Earth.",
+        "tags": ["Hiking", "National Parks", "Mountains", "Giant Trees"],
         "image": {
-          "webp": "assets/images_webp/pinnacles.webp",
-          "fallback": "assets/images/pinnacles.jpg",
-          "alt": "Pinnacles National Park"
+          "webp": "assets/images_webp/methuselahpic.webp",
+          "fallback": "assets/images/methuselahpic.JPG",
+          "alt": "Ancient Bristlecone Pine, White Mountains"
         }
       },
       {
-        "id": "europe-2018",
-        "title": "European Adventure",
-        "location": "France, Netherlands, Germany, Czechia",
-        "date": "2018",
-        "description": "Exploring the historic cities and cultures of Western Europe.",
-        "tags": ["Culture", "History", "Architecture", "Travel"],
+        "id": "new-york-city",
+        "title": "New York City",
+        "location": "New York, USA",
+        "date": "November 2022",
+        "description": "Manhattan's iconic skyline from the High Line and the Empire State Building, a fall walk through Central Park's changing leaves, and the electric energy of the city's classic landmarks.",
+        "tags": ["City", "Culture", "Skyline", "Urban"]
+      },
+      {
+        "id": "rocky-mountain",
+        "title": "Rocky Mountain National Park",
+        "location": "Colorado, USA",
+        "date": "February 2023",
+        "description": "Snowshoeing through Rocky Mountain's quiet winter wilderness, returning for the spring thaw as alpine meadows open up, and taking in the sweeping summer peaks above 12,000 feet.",
+        "tags": ["Hiking", "Mountains", "Snow", "National Parks"],
         "image": {
-          "webp": "assets/images_webp/europe_2018.webp",
-          "fallback": "assets/images/europe_2018.jpg",
-          "alt": "European Adventure 2018"
+          "webp": "assets/images_webp/rocky_mountain.webp",
+          "fallback": "assets/images/rocky_mountain.jpg",
+          "alt": "Rocky Mountain National Park"
         }
       },
       {
-        "id": "hawaii",
-        "title": "Hawaii",
-        "location": "Lahaina, Hawaii",
-        "date": "2016",
-        "description": "Experiencing the tropical paradise and volcanic landscapes of Hawaii.",
-        "tags": ["Tropical", "Volcanic", "Beaches", "Island"],
+        "id": "spain-portugal",
+        "title": "Europe: Spain & Portugal",
+        "location": "Alhambra, Seville, Sintra, Lisbon, Porto",
+        "date": "November 2023",
+        "description": "The Alhambra's intricate Moorish fortress at dusk, Seville's towering cathedral, the fairy-tale palaces of Sintra, Lisbon's trams and tiled facades, and Porto's scenic riverfront wine culture.",
+        "tags": ["Culture", "Architecture", "History", "Europe"],
         "image": {
-          "webp": "assets/images_webp/hawaii.webp",
-          "fallback": "assets/images/hawaii.jpg",
-          "alt": "Hawaii Adventure"
+          "webp": "assets/images_webp/spain_portugal.webp",
+          "fallback": "assets/images/spain_portugal.jpg",
+          "alt": "Spain and Portugal Adventure"
         }
+      },
+      {
+        "id": "southwest-parks",
+        "title": "Southwest Parks Mega-Trip",
+        "location": "Arizona, New Mexico, Texas, USA",
+        "date": "April 2025",
+        "description": "Saguaro's forests of towering cacti at golden hour, White Sands' blinding gypsum dunes, Carlsbad Caverns' vast underground chambers, Guadalupe Mountains' limestone ridge, and Big Bend's rugged desert canyons and dark skies.",
+        "tags": ["National Parks", "Desert", "Southwest", "Road Trip"],
+        "image": {
+          "webp": "assets/images_webp/bigbendnp_fullshot.webp",
+          "fallback": "assets/images/bigbendnp_fullshot.JPG",
+          "alt": "Big Bend National Park, Southwest Parks Mega-Trip"
+        }
+      },
+      {
+        "id": "japan",
+        "title": "Japan: Deep Dive",
+        "location": "Tokyo, Kyoto, Hiroshima, Nara",
+        "date": "June 2025",
+        "description": "Tokyo's electric energy and neon-lit neighborhoods, Kyoto's ancient Shinto shrines tucked in forested hillsides, the haunting and profound Hiroshima Peace Memorial, and Nara's sacred freely-roaming deer.",
+        "tags": ["Culture", "History", "Temples", "Japan"],
+        "image": {
+          "webp": "assets/images_webp/osaka_headshot.webp",
+          "fallback": "assets/images/osaka_headshot.JPG",
+          "alt": "Japan: Deep Dive"
+        }
+      },
+      {
+        "id": "mexico-cultural-history",
+        "title": "Mexico: Cultural History",
+        "location": "San Andrés Cholula & Texmelucan, Mexico",
+        "date": "September 2025",
+        "description": "Exploring the ancient pyramid buried beneath the Great Pyramid of Cholula and the layered colonial history of San Andrés, followed by a horseback ride through the mountain valleys around Texmelucan.",
+        "tags": ["Culture", "History", "Archaeology", "Mexico"]
       },
       {
         "id": "whats-next",
         "title": "What's Next?",
         "location": "The World Awaits",
-        "date": "2025+",
+        "date": "2026+",
         "description": "Always planning the next adventure.",
         "tags": ["Planning", "Future", "Exploration"],
         "isPlaceholder": true
@@ -266,7 +312,7 @@
           "caption": "General Sherman Tree - Sequoia National Park"
         },
         "stats": {
-          "title": "World's Largest Tree Statistics:",
+          "title": "World's Largest Tree Statistics",
           "items": [
             "Height: 275 feet (83.8 meters)",
             "Volume: 52,508 cubic feet (1,487 cubic meters)",
@@ -287,7 +333,7 @@
           "caption": "Hyperion Tree - Tallest Tree on Earth"
         },
         "stats": {
-          "title": "World's Tallest Tree Statistics:",
+          "title": "World's Tallest Tree Statistics",
           "items": [
             "Height: 380.3 feet (115.92 meters)",
             "Species: Sequoia sempervirens (Coastal Redwood)",
@@ -308,7 +354,7 @@
           "caption": "Methuselah Tree - Ancient Bristlecone Pine"
         },
         "stats": {
-          "title": "World's Oldest Tree Statistics:",
+          "title": "World's Oldest Tree Statistics",
           "items": [
             "Age: 4,854 years old (as of 2024)",
             "Species: Pinus longaeva (Great Basin Bristlecone Pine)",
@@ -322,27 +368,27 @@
   },
   "about": {
     "title": "About Me",
-    "subtitle": "Exploring the intersection of geography, technology, and nature.",
+    "subtitle": "Geospatial analyst, tool builder, and avid explorer — based in San Diego.",
     "headshot": {
       "webp": "assets/images_webp/bigbendnp_headshot.webp",
       "fallback": "assets/images/bigbendnp_headshot.JPG",
       "alt": "Ryan Little at Big Bend National Park",
-      "caption": "Exploring Big Bend National Park"
+      "caption": "Big Bend National Park"
     },
     "sections": [
       {
-        "id": "education",
-        "title": "Education",
-        "icon": "fas fa-graduation-cap",
+        "id": "background",
+        "title": "Background",
+        "icon": "fas fa-compass",
         "content": [
-          "Bachelor of Arts in Geography - University of California, Santa Barbara (2018-2022)",
-          "Emphasis in GIS with concentration in Air Photos and Remote Sensing"
+          "Geography has been part of how I read the world since growing up in San Diego — desert to the east, mountains to the north, ocean to the west.",
+          "I studied it at UC Santa Barbara, earning a B.A. in Geography with an emphasis in GIS and Remote Sensing. Strong coursework including a three-quarter Remote Sensing sequence and a graduate-level course in Optimization Methods in Geographic Problems, finishing with a 3.5 major GPA."
         ],
         "image": {
           "webp": "assets/images_webp/geography_graduation.webp",
           "fallback": "assets/images/geography_graduation.heif",
           "alt": "Ryan Little at Geography Graduation",
-          "caption": "Geography Graduation - UC Santa Barbara"
+          "caption": "Geography Graduation — UC Santa Barbara"
         }
       },
       {
@@ -350,24 +396,30 @@
         "title": "Professional",
         "icon": "fas fa-briefcase",
         "content": [
-          "Geospatial Analyst - Leading quality control and workflow improvements",
-          "Four years of experience in map creation, spatial analysis, and geodatabase editing with expertise in GIS, Remote Sensing, and Spatial Analysis"
+          "Quality Control Geospatial Analyst at CACI, Inc., supporting geospatial production on government defense contracts — remote, from San Diego.",
+          "My work centers on validating spatial data across multi-source geodatabases, resolving conflation discrepancies, and reviewing final deliverables before they reach the client. I also run a mentorship group and weekly team gathering to keep collaboration and morale strong across a distributed team."
         ],
         "image": {
           "webp": "assets/images_webp/wateringreenland.webp",
           "fallback": "assets/images/wateringreenland.png",
           "alt": "Greenland Water Analysis",
-          "caption": "Remote sensing analysis of water features and hydrological patterns"
+          "caption": "Remote sensing analysis — water feature mapping"
         }
       },
       {
-        "id": "passion",
-        "title": "Passion",
-        "icon": "fas fa-mountain",
+        "id": "building",
+        "title": "Building",
+        "icon": "fas fa-hammer",
         "content": [
-          "Hiking, Soccer & Outdoor Adventures - Exploring the great outdoors and diverse cultures",
-          "Interests include hiking, soccer, spending time outside and with friends, playing games, web development, server administration, building computers, and traveling"
-        ]
+          "In 2025 I co-founded Little Hammer Labs with a lifelong friend, where I serve as CTO. We build custom AI-powered tools for clients in forensic architecture and property management.",
+          "Our main product takes voice notes recorded during on-site inspections, transcribes them with a locally run Whisper model, runs the output through a custom domain-specific dictionary, and delivers formatted reports ready to hand to the client.",
+          "Managing local LLM infrastructure and a full development stack from scratch has been the most clarifying work I've done."
+        ],
+        "image": {
+          "webp": "assets/images_webp/lhl-logo.webp",
+          "alt": "Little Hammer Labs Logo",
+          "caption": "Little Hammer Labs"
+        }
       },
       {
         "id": "skills",
@@ -376,16 +428,16 @@
         "content": [
           "Programming: Python, R and RStudio, SQL, Mosel, HTML & CSS, JavaScript",
           "GIS Tools: ArcGIS Pro, ArcMap, ArcGIS Online, QGIS, Microsoft Office Suite",
-          "GIS Proficiencies: Remote Sensing, Spatial Databases, Spatial Analysis, Data Visualization, Quality Control/Assurance"
+          "Proficiencies: Remote Sensing, Spatial Databases, Spatial Analysis, Data Visualization, Quality Control & Assurance"
         ]
       },
       {
-        "id": "technology",
-        "title": "Technology",
-        "icon": "fas fa-code",
+        "id": "outside",
+        "title": "Outside of Work",
+        "icon": "fas fa-mountain",
         "content": [
-          "Custom Solutions & AI Integration - Building computers and innovative systems",
-          "Co-founder of Little Hammer Labs, delivering fully custom internal solutions and exploring AI integration into daily workflows"
+          "Avid hiker and traveler — 12 countries and counting, with a strong preference for national parks and places that require some effort to reach.",
+          "Also into soccer, building computers, server tinkering, and web development."
         ]
       }
     ]

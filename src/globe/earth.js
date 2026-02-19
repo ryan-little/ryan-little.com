@@ -21,6 +21,7 @@ const vertexShader = `
 const fragmentShader = `
     uniform sampler2D dayTexture;
     uniform sampler2D nightTexture;
+    uniform sampler2D cloudTexture;
     uniform vec3 sunDirection;
     varying vec2 vUv;
     varying vec3 vNormalLocal;
@@ -28,14 +29,23 @@ const fragmentShader = `
     void main() {
         vec4 dayColor = texture2D(dayTexture, vUv);
         vec4 nightColor = texture2D(nightTexture, vUv);
+        float clouds = texture2D(cloudTexture, vUv).r;
 
         float intensity = dot(vNormalLocal, normalize(sunDirection));
-        float blend = smoothstep(-0.15, 0.2, intensity);
+        // Wide soft transition to emulate Earth's atmospheric penumbra
+        float blend = smoothstep(-0.25, 0.25, intensity);
 
-        // Brighter day side: 0.5 ambient + up to 1.3 direct = max 1.8x
-        vec4 dayLit = dayColor * (0.5 + 1.3 * max(intensity, 0.0));
-        // Boost night side city lights
-        vec4 nightLit = nightColor * 1.4 * (1.0 - blend);
+        // Screen blend white light into day texture for self-illuminated look
+        float innerBrightness = 0.18 * min(max(intensity, 0.0) * 3.0, 1.0);
+        vec4 innerLight = vec4(innerBrightness);
+        vec4 dayLit = vec4(1.0) - (vec4(1.0) - dayColor) * (vec4(1.0) - innerLight);
+
+        // pow() makes thin clouds fade out, only thick formations stay visible
+        float cloudAlpha = pow(clouds, 1.5) * 0.7 * blend;
+        dayLit = mix(dayLit, vec4(1.0, 1.0, 1.0, 1.0), cloudAlpha);
+
+        // Night side: clouds subtly dim city lights underneath
+        vec4 nightLit = nightColor * (1.4 - pow(clouds, 1.5) * 0.6);
 
         gl_FragColor = mix(nightLit, dayLit, blend);
     }
@@ -58,12 +68,15 @@ export async function createEarth() {
     const geometry = new THREE.SphereGeometry(EARTH_RADIUS, segments, segments);
     const textureLoader = new THREE.TextureLoader();
 
-    const [dayTexture, nightTexture] = await Promise.all([
+    const [dayTexture, nightTexture, cloudTexture] = await Promise.all([
         new Promise((resolve, reject) => {
-            textureLoader.load('/textures/earth-day.jpg', resolve, undefined, reject);
+            textureLoader.load('/textures/earth-day.webp', resolve, undefined, reject);
         }),
         new Promise((resolve, reject) => {
-            textureLoader.load('/textures/earth-night.jpg', resolve, undefined, reject);
+            textureLoader.load('/textures/earth-night.webp', resolve, undefined, reject);
+        }),
+        new Promise((resolve, reject) => {
+            textureLoader.load('/textures/earth-clouds.webp', resolve, undefined, reject);
         }),
     ]);
 
@@ -73,6 +86,7 @@ export async function createEarth() {
     const uniforms = {
         dayTexture: { value: dayTexture },
         nightTexture: { value: nightTexture },
+        cloudTexture: { value: cloudTexture },
         sunDirection: { value: new THREE.Vector3() },
     };
 
