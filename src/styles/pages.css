@@ -111,6 +111,28 @@
     .about-page .sections-grid > :nth-child(3) {
         grid-row: span 1;
     }
+
+    /* Merge Skills + Outside of Work into a single visual pane */
+    .about-page .sections-grid {
+        row-gap: 0;
+    }
+
+    .about-page .sections-grid > .section-card {
+        margin-bottom: 1.25rem;
+    }
+
+    .about-page .sections-grid > :nth-child(4) {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+
+    .about-page .sections-grid > :nth-child(5) {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.04);
+    }
 }
 
 .headshot-container {
