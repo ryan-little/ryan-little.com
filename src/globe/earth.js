@@ -167,9 +167,11 @@ export async function createEarth({ cloudUrl = '/textures/earth-clouds.webp', re
             }
             if (earthMesh.material.uniforms) {
                 updateSunUniform();
-                elapsed += delta;
-                earthMesh.material.uniforms.cloudOffset.value =
-                    (elapsed % CLOUD_DRIFT_PERIOD) / CLOUD_DRIFT_PERIOD;
+                if (!realTimeRotation) {
+                    elapsed += delta;
+                    earthMesh.material.uniforms.cloudOffset.value =
+                        (elapsed % CLOUD_DRIFT_PERIOD) / CLOUD_DRIFT_PERIOD;
+                }
             }
             // Convert sun from Earth object-space to world-space for atmosphere
             if (atmosphereMesh) {
