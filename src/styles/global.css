@@ -161,6 +161,7 @@ html, body {
 #social-links a:nth-child(4) { animation-delay: 1.8s; }
 #social-links a:nth-child(5) { animation-delay: 2.0s; }
 #social-links a:nth-child(6) { animation-delay: 2.2s; }
+#social-links a:nth-child(7) { animation-delay: 2.4s; }
 
 @keyframes linkFadeIn {
     from {
@@ -206,20 +207,20 @@ html, body {
 }
 
 /* Image icons sized to match FA icon visual weight */
-#social-links a:nth-child(5) .social-icon-image,
-#social-links a:nth-child(6) .social-icon-image {
+#social-links a:nth-child(6) .social-icon-image,
+#social-links a:nth-child(7) .social-icon-image {
     width: 1.2rem;
     height: 1.2rem;
 }
 
 /* Scale up image icons visually without affecting layout */
-#social-links a:nth-child(5) .social-icon-image,
-#social-links a:nth-child(6) .social-icon-image {
+#social-links a:nth-child(6) .social-icon-image,
+#social-links a:nth-child(7) .social-icon-image {
     transform: scale(1.35);
 }
 
-#social-links a:nth-child(5):hover .social-icon-image,
-#social-links a:nth-child(6):hover .social-icon-image {
+#social-links a:nth-child(6):hover .social-icon-image,
+#social-links a:nth-child(7):hover .social-icon-image {
     transform: scale(1.76);
 }
 
