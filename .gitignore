@@ -116,3 +116,6 @@ archive/
 
 # OS generated files
 Icon?
+
+# Vite cache
+.vite/
