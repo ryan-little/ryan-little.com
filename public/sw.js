@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ryan-little-v2-2';
+const CACHE_NAME = 'ryan-little-v2-3';
 
 const PRECACHE_URLS = [
     '/',
@@ -11,7 +11,6 @@ const PRECACHE_URLS = [
     '/satellites/satellite3.webp',
     '/satellites/satellite4.webp',
     '/images/bigbendnp_headshot.webp',
-    '/images/lhlhammer_transback.webp',
 ];
 
 self.addEventListener('install', event => {
