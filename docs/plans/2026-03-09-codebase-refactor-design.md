@@ -34,13 +34,14 @@
 
 - **`createSatellites()`**: convert sequential `for...of await` to `Promise.all` for all 5 satellite textures
 - **`main.js init()`**: run `createGalaxies()` and `createEarth()` in parallel via `Promise.all`
-- **`earth.js`**: include cloud texture in the initial `Promise.all` with day/night textures
+- **`earth.js`**: include cloud texture in the initial `Promise.all` with day/night textures (use `Promise.allSettled` so a cloud load failure doesn't reject the whole batch — cloud failures are currently silently swallowed, preserve that behavior)
 
 ### Cache `getSunDirection()`
 
-- Call once in `earth.js`, cache result, refresh on 60-second interval
-- Pass cached value to both `updateSunUniform()` and atmosphere rotation
-- Eliminates 2× `new Date()` per frame
+- Cache the raw `getSunDirection()` result in `earth.js`, refresh on 60-second interval
+- Pass cached value to `updateSunUniform()` for the day/night shader uniform
+- Atmosphere rotation still applies `earthMesh.rotation.y` transform each frame (rotation changes per-frame, so the world-space conversion must remain in the render loop)
+- Eliminates 2× `new Date()` + trig per frame; frame-dependent transforms preserved
 
 ### Galaxy drift → group rotation
 
@@ -50,8 +51,9 @@
 ### Starfield twinkling → vertex shader
 
 - Add `uniform float uTime` to vertex shader
-- Compute twinkling size variation in shader: `gl_PointSize = size * (0.7 + 0.3 * sin(uTime * freq + vertexIndex))`
-- Remove CPU-side buffer writes (1,000 stars × 60fps) and position drift
+- Move size twinkling to shader: `gl_PointSize = size * (0.7 + 0.3 * sin(uTime * freq + vertexIndex))`
+- **Preserve position drift** in shader via per-vertex offset attributes (drift is a deliberate visual effect visible on /earth)
+- Eliminates CPU-side buffer writes (1,000 stars × 60fps) and full GPU buffer upload per frame
 - Biggest per-frame CPU cost reduction
 
 ### Minigame UI optimization
@@ -72,11 +74,11 @@
 
 ## Section 3: Code Quality & Consistency
 
-### Standardize mobile breakpoint
+### Named mobile breakpoint constants
 
-- Define `const MOBILE_BREAKPOINT = 600` in `src/constants.js`
-- Update JS checks in `satellites.js` and `earth.js` from `< 768` to `<= 600`
-- Matches CSS `@media (max-width: 600px)`
+- Define `const MOBILE_BREAKPOINT_3D = 768` and `const MOBILE_BREAKPOINT_LAYOUT = 600` in `src/constants.js`
+- Replace magic `768` in `satellites.js` and `earth.js` with `MOBILE_BREAKPOINT_3D`
+- Note: JS uses 768px for 3D quality (geometry, sprite size) while CSS uses 600px for layout — these serve different purposes and both values are intentional. The fix is naming them, not changing them.
 
 ### Fix lightbox HTML injection
 
@@ -85,7 +87,8 @@
 
 ### Scope `animateCounters()`
 
-- Change `document.querySelectorAll('.counter-number')` to `container.querySelectorAll('.counter-number')`
+- In `page-renderer.js`, the `animateCounters()` function at line 85 uses `document.querySelectorAll('.counter-number')`
+- Change to `container.querySelectorAll('.counter-number')` where `container` is the `#page-container` element passed into `renderPage()`
 
 ### Add `isPaused` guard to mousemove
 
@@ -105,9 +108,11 @@
 
 ### Remove cross-domain coupling
 
-- Remove `satellites.js → minigame.js` import
-- Have `main.js` call `pauseSatelliteInteraction()` on game start, `resumeSatelliteInteraction()` on game end
-- Uses existing pause mechanism — globe modules stay independent of game modules
+- Remove `satellites.js → minigame.js` import (the `getGameState()` call)
+- Add new exports from `satellite-interaction.js`: `pauseSatelliteClicks()` and `resumeSatelliteClicks()`
+- These use the existing `isPaused` mechanism internally
+- `main.js` wires game lifecycle: calls `pauseSatelliteClicks()` on game start callback, `resumeSatelliteClicks()` on game end callback
+- Existing `pauseSatellites()` / `resumeSatellites()` exports (used by transitions) remain unchanged
 
 ### Anti-crawler protection
 
@@ -158,6 +163,8 @@
    - Blog satellite opens ryanpdlittle.com in new tab
    - Minigame: click shooting star → countdown → gameplay → scoring → end
    - `/earth` screensaver: moon, city labels, drag/zoom, auto-drift
+   - `/earth` starfield: twinkling stars still have subtle position drift (verify shader migration preserved it)
+   - `/earth` on mobile: atmosphere and starfield render correctly at mobile quality
    - Mobile nav: all 5 buttons work
    - Resume/email links function (assembled at runtime)
    - Resume PDF not in page source HTML
