@@ -26,8 +26,17 @@ export async function initShootingStars() {
         const sprite = new THREE.Sprite(material);
         sprite.scale.set(0.4, 0.2, 1);
         sprite.visible = false;
+        sprite.userData = {};
         scene.add(sprite);
         pool.push(sprite);
+    }
+
+    // Pre-allocate Vector3 pairs to avoid GC during gameplay
+    for (let i = 0; i < POOL_SIZE; i++) {
+        pool[i].userData = {
+            _start: new THREE.Vector3(),
+            _end: new THREE.Vector3(),
+        };
     }
 
     // Update active stars each frame
@@ -106,14 +115,18 @@ export function spawnStar(type = 'background') {
     }
 
     const sz = (Math.random() - 0.5) * 2 - 1; // slight z variation
-    const start = new THREE.Vector3(sx, sy, sz);
-    const end = new THREE.Vector3(ex, ey, sz);
+    const startVec = star.userData._start;
+    const endVec = star.userData._end;
+    startVec.set(sx, sy, sz);
+    endVec.set(ex, ey, sz);
 
-    star.position.copy(start);
+    star.position.copy(startVec);
     star.userData = {
+        _start: startVec,  // preserve pre-allocated refs
+        _end: endVec,
         type,
-        start: start.clone(),
-        end,
+        start: startVec,   // used by lerp in update loop
+        end: endVec,
         progress: 0,
         duration: type === 'minigame' ? (Math.random() * 3 + 5) : (Math.random() * 3 + 4),
         // minigame: 5-8s (easier to catch), background: 4-7s (leisurely)
@@ -138,7 +151,10 @@ export function spawnStar(type = 'background') {
 function recycleStar(star) {
     star.visible = false;
     star.material.opacity = 0;
-    star.userData = {};
+    // Preserve pre-allocated Vector3 refs — only clear game state
+    const _start = star.userData._start;
+    const _end = star.userData._end;
+    star.userData = { _start, _end };
 }
 
 export function getActiveStars() { return activeStars; }
