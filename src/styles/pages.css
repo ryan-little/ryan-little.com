@@ -233,6 +233,14 @@
     margin-top: 0.75rem;
 }
 
+.section-image.portfolio-logo {
+    width: 50%;
+    max-width: 160px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 /* Portfolio page */
 .portfolio-section {
     margin-bottom: 2.5rem;
