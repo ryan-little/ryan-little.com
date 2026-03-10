@@ -10,12 +10,16 @@ let state = 'idle';
 let gameTimer = 0;
 let spawnTimer = 0;
 let visibilityPaused = false;
+let _onGameStart = null;
+let _onGameEnd = null;
 
 const overlay = () => document.getElementById('game-overlay');
 
 export function getGameState() { return state; }
 
-export function initMinigame() {
+export function initMinigame({ onGameStart, onGameEnd } = {}) {
+    _onGameStart = onGameStart;
+    _onGameEnd = onGameEnd;
     // Page Visibility API - pause/resume
     document.addEventListener('visibilitychange', () => {
         visibilityPaused = document.hidden;
@@ -61,6 +65,7 @@ export function initMinigame() {
 function startGame() {
     if (state !== 'idle') return;
     state = 'countdown';
+    if (_onGameStart) _onGameStart();
     scoring.reset();
     document.body.classList.add('game-active');
     showGameUI();
@@ -117,6 +122,7 @@ function update(delta) {
 
 function endGame() {
     state = 'ending';
+    if (_onGameEnd) _onGameEnd();
     clearAllStars();
     const isNewHighScore = scoring.saveHighScore();
     showEndScreen(isNewHighScore);

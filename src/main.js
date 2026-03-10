@@ -3,7 +3,7 @@ import { initScene } from './globe/scene.js';
 import { createEarth } from './globe/earth.js';
 import { createStarfield } from './globe/starfield.js';
 import { createGalaxies } from './globe/galaxies.js';
-import { createSatellites, initSatelliteInteraction } from './globe/satellites.js';
+import { createSatellites, initSatelliteInteraction, pauseSatelliteClicks, resumeSatelliteClicks } from './globe/satellites.js';
 import { initRouter, navigateTo } from './pages/router.js';
 import { transitionToPage, transitionToGlobe } from './pages/transition.js';
 import { renderPage } from './pages/page-renderer.js';
@@ -40,7 +40,10 @@ async function init() {
     await createEarth();
     await createSatellites();
     await initShootingStars();
-    initMinigame();
+    initMinigame({
+        onGameStart: () => pauseSatelliteClicks(),
+        onGameEnd: () => resumeSatelliteClicks(),
+    });
 
     // Store last clicked satellite for zoom transitions
     let lastClickedSatellite = null;
