@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { getScene, onUpdate } from './scene.js';
 import { getSunDirection } from './lighting.js';
+import { MOBILE_BREAKPOINT_3D } from '../constants.js';
 
 let earthMesh = null;
 let atmosphereMesh = null;
@@ -89,7 +90,7 @@ function updateSunUniform() {
 
 export async function createEarth({ cloudUrl = '/textures/earth-clouds.webp', realTimeRotation = false } = {}) {
     const scene = getScene();
-    const isMobile = window.innerWidth < 768;
+    const isMobile = window.innerWidth < MOBILE_BREAKPOINT_3D;
     const segments = isMobile ? 32 : 64;
 
     const geometry = new THREE.SphereGeometry(EARTH_RADIUS, segments, segments);
@@ -152,7 +153,7 @@ export async function createEarth({ cloudUrl = '/textures/earth-clouds.webp', re
     earthMesh.rotation.y = 0;
     scene.add(earthMesh);
 
-    atmosphereMesh = createAtmosphere();
+    atmosphereMesh = createAtmosphere(segments);
     scene.add(atmosphereMesh);
 
     updateSunCache();
@@ -194,8 +195,8 @@ export async function createEarth({ cloudUrl = '/textures/earth-clouds.webp', re
     return earthMesh;
 }
 
-function createAtmosphere() {
-    const geometry = new THREE.SphereGeometry(EARTH_RADIUS * 1.02, 64, 64);
+function createAtmosphere(segments = 64) {
+    const geometry = new THREE.SphereGeometry(EARTH_RADIUS * 1.02, segments, segments);
     const material = new THREE.ShaderMaterial({
         vertexShader: `
             varying vec3 vNormal;
