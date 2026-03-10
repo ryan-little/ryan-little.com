@@ -101,3 +101,11 @@ if (emailLink) {
     const addr = emailLink.dataset.emailUser + '@' + emailLink.dataset.emailDomain;
     emailLink.href = 'mailto:' + addr;
 }
+
+// Assemble resume href at runtime to avoid crawler indexing
+const resumeLink = document.querySelector('[data-resume-path]');
+if (resumeLink) {
+    const path = resumeLink.dataset.resumePath + resumeLink.dataset.resumeExt;
+    resumeLink.href = path;
+    resumeLink.download = 'Ryan-Little-Resume.pdf';
+}

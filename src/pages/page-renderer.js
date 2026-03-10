@@ -56,6 +56,13 @@ export function renderPage(route, satelliteId = null) {
         btn.addEventListener('click', () => navigateBack());
     });
 
+    // Assemble resume link at runtime (anti-crawler)
+    container.querySelectorAll('[data-resume-link]').forEach(link => {
+        link.href = link.dataset.resumeLink;
+        link.target = '_blank';
+        link.rel = 'noopener';
+    });
+
     // Animate counters
     animateCounters(container);
 
@@ -135,7 +142,7 @@ function renderAbout(data, satelliteImg) {
                 <p>${esc(data.subtitle)}</p>
                 ${data.resumeLink ? `
                     <div class="about-resume">
-                        <a href="${esc(data.resumeLink)}" target="_blank" rel="noopener" class="resume-link">
+                        <a data-resume-link="${esc(data.resumeLink)}" class="resume-link">
                             <i class="fas fa-file-alt"></i> View Resume
                         </a>
                     </div>
