@@ -6,6 +6,12 @@ let earthMesh = null;
 let atmosphereMesh = null;
 let elapsed = 0;
 const EARTH_RADIUS = 1;
+let cachedSunDir = null;
+let sunCacheInterval = null;
+
+function updateSunCache() {
+    cachedSunDir = getSunDirection();
+}
 const ROTATION_SPEED = (2 * Math.PI) / 90;
 const CLOUD_DRIFT_PERIOD = 10800; // 3 hours for one full cloud revolution relative to surface
 
@@ -77,12 +83,8 @@ const fragmentShader = `
 `;
 
 function updateSunUniform() {
-    if (!earthMesh) return;
-    // getSunDirection already returns in the mesh's object space
-    // (PM at +X, 90°E at -Z), so no quaternion transform needed.
-    // The terminator stays geographically correct regardless of mesh rotation.
-    const sun = getSunDirection();
-    earthMesh.material.uniforms.sunDirection.value.set(sun.x, sun.y, sun.z);
+    if (!earthMesh || !cachedSunDir) return;
+    earthMesh.material.uniforms.sunDirection.value.set(cachedSunDir.x, cachedSunDir.y, cachedSunDir.z);
 }
 
 export async function createEarth({ cloudUrl = '/textures/earth-clouds.webp', realTimeRotation = false } = {}) {
@@ -153,6 +155,9 @@ export async function createEarth({ cloudUrl = '/textures/earth-clouds.webp', re
     atmosphereMesh = createAtmosphere();
     scene.add(atmosphereMesh);
 
+    updateSunCache();
+    sunCacheInterval = setInterval(updateSunCache, 60000); // refresh every 60s
+
     onUpdate((delta) => {
         if (earthMesh) {
             if (realTimeRotation) {
@@ -174,9 +179,9 @@ export async function createEarth({ cloudUrl = '/textures/earth-clouds.webp', re
                 }
             }
             // Convert sun from Earth object-space to world-space for atmosphere
-            if (atmosphereMesh) {
-                const sun = getSunDirection();
-                const ry  = earthMesh.rotation.y;
+            if (atmosphereMesh && cachedSunDir) {
+                const sun = cachedSunDir; // cached, not recalculated
+                const ry = earthMesh.rotation.y;
                 atmosphereMesh.material.uniforms.sunWorldDir.value.set(
                     sun.x * Math.cos(ry) + sun.z * Math.sin(ry),
                     sun.y,
