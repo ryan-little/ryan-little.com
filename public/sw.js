@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ryan-little-v2-3';
+const CACHE_NAME = 'ryan-little-v2-4';
 
 const PRECACHE_URLS = [
     '/',
@@ -10,6 +10,7 @@ const PRECACHE_URLS = [
     '/satellites/satellite2.webp',
     '/satellites/satellite3.webp',
     '/satellites/satellite4.webp',
+    '/satellites/satellite5.webp',
     '/images/bigbendnp_headshot.webp',
 ];
 
