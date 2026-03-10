@@ -133,7 +133,7 @@ export function spawnStar(type = 'background') {
         caught: false,
     };
 
-    const direction = end.clone().sub(start);
+    const direction = endVec.clone().sub(startVec);
     const angle = Math.atan2(direction.y, direction.x);
     star.material.rotation = angle;
 
