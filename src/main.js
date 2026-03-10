@@ -36,8 +36,7 @@ async function init() {
         return;
     }
     createStarfield();
-    await createGalaxies();
-    await createEarth();
+    await Promise.all([createGalaxies(), createEarth()]);
     await createSatellites();
     await initShootingStars();
     initMinigame({
