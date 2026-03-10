@@ -57,7 +57,7 @@ export function renderPage(route, satelliteId = null) {
     });
 
     // Animate counters
-    animateCounters();
+    animateCounters(container);
 
     // Enlargeable image lightbox
     container.querySelectorAll('.enlargeable').forEach(img => {
@@ -87,8 +87,8 @@ function openLightbox(src, alt) {
     requestAnimationFrame(() => overlay.classList.add('visible'));
 }
 
-function animateCounters() {
-    const counters = document.querySelectorAll('.counter-number');
+function animateCounters(container) {
+    const counters = container.querySelectorAll('.counter-number');
     counters.forEach(counter => {
         const target = parseInt(counter.textContent, 10);
         if (isNaN(target)) return;
