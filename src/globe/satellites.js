@@ -7,9 +7,10 @@ const ORBIT_SPEED = 0.25; // Same speed for all - prevents grouping
 
 const SATELLITE_CONFIG = [
     { id: 'about', label: 'About', texture: '/satellites/satellite1.webp', orbitRadius: 2.1, orbitTilt: 0.2, phase: 0 },
-    { id: 'portfolio', label: 'Portfolio', texture: '/satellites/satellite2.webp', orbitRadius: 2.3, orbitTilt: -0.15, phase: Math.PI / 2 },
-    { id: 'trees', label: 'Trees', texture: '/satellites/satellite3.webp', orbitRadius: 2.5, orbitTilt: 0.1, phase: Math.PI },
-    { id: 'adventures', label: 'Adventures', texture: '/satellites/satellite4.webp', orbitRadius: 2.2, orbitTilt: -0.25, phase: (3 * Math.PI) / 2 },
+    { id: 'portfolio', label: 'Portfolio', texture: '/satellites/satellite2.webp', orbitRadius: 2.3, orbitTilt: -0.15, phase: (2 * Math.PI) / 5 },
+    { id: 'trees', label: 'Trees', texture: '/satellites/satellite3.webp', orbitRadius: 2.5, orbitTilt: 0.1, phase: (4 * Math.PI) / 5 },
+    { id: 'adventures', label: 'Adventures', texture: '/satellites/satellite4.webp', orbitRadius: 2.2, orbitTilt: -0.25, phase: (6 * Math.PI) / 5 },
+    { id: 'blog', label: 'Blog', texture: '/satellites/satellite5.webp', orbitRadius: 2.4, orbitTilt: 0.18, phase: (8 * Math.PI) / 5 },
 ];
 
 const MAX_CONFIGURED_RADIUS = Math.max(...SATELLITE_CONFIG.map(c => c.orbitRadius));

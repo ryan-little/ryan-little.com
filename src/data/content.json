@@ -275,28 +275,55 @@
         "icon": "fas fa-laptop-code",
         "items": [
           {
-            "title": "DGA Transcriber",
-            "description": "A field transcription pipeline built for Diehl Group Architects via Little Hammer Labs. Architects record voice notes during on-site inspections; the tool transcribes them using a locally-run Whisper model — no cloud, no data sent off-site — then processes the output through a custom architecture vocabulary to correct domain terminology before generating formatted reports. Replaces approximately $15,000 per year in commercial transcription services.",
+            "title": "Little Hammer Labs",
+            "description": "Co-founded in 2025 with a lifelong friend. We build custom AI-powered tools for clients in forensic architecture and property management. I serve as CTO, managing local LLM infrastructure and a full development stack from scratch.",
+            "link": "https://littlehammerlabs.com",
             "image": {
-              "webp": "assets/images_webp/dgatranscribericon.webp",
-              "alt": "DGA Transcriber Logo",
-              "caption": "DGA Transcriber - Built for Diehl Group Architects"
+              "webp": "assets/images_webp/lhl-logo.webp",
+              "alt": "Little Hammer Labs Logo",
+              "caption": "Little Hammer Labs"
+            },
+            "subItems": [
+              {
+                "title": "DGA Transcriber",
+                "description": "Field transcription pipeline built for Diehl Group Architects. Voice notes recorded during on-site inspections are transcribed using a locally-run Whisper model — no cloud, no data sent off-site — then processed through a custom architecture vocabulary to correct domain terminology before generating formatted reports. Replaces ~$15K/year in commercial transcription services.",
+                "image": {
+                  "webp": "assets/images_webp/dgatranscribericon.webp",
+                  "alt": "DGA Transcriber Logo"
+                }
+              }
+            ]
+          },
+          {
+            "title": "Primal Chase",
+            "description": "A browser-based survival game built with vanilla JavaScript. Play as a hunted predator managing heat, fatigue, thirst, and hunger across a day/night cycle — outrunning hunters who never stop. No framework, no library.",
+            "link": "https://primalchase.com",
+            "image": {
+              "webp": "assets/images_webp/jaguar.webp",
+              "alt": "Primal Chase Logo",
+              "caption": "Primal Chase"
             }
           },
           {
-            "title": "ryan-little.com",
-            "description": "This site. A space-themed personal portfolio built with vanilla JavaScript and Three.js — real-time 3D Earth with a custom day/night/cloud GLSL shader, four orbiting navigation satellites, a procedural starfield with a Milky Way band, and a shooting star minigame.",
-            "link": "https://ryan-little.com"
+            "title": "Personal Sites",
+            "paired": true,
+            "sites": [
+              {
+                "title": "ryan-little.com",
+                "description": "Space-themed portfolio — Three.js 3D Earth, orbiting satellites, shooting star minigame.",
+                "link": "https://ryan-little.com"
+              },
+              {
+                "title": "ryanpdlittle.com",
+                "description": "Blog and learning log — GIS, web dev, game design, updated Tuesday/Friday.",
+                "link": "https://ryanpdlittle.com"
+              }
+            ]
           },
           {
             "title": "PicSplitter",
             "description": "A Python command-line tool that splits large images into a configurable grid of tiles. Useful in GIS workflows where oversized imagery needs to be broken into smaller chunks for processing in ArcGIS or QGIS.",
             "link": "https://github.com/ryan-little/PicSplitter"
-          },
-          {
-            "title": "Primal Chase",
-            "description": "A browser-based survival game built with vanilla JavaScript. You play as a hunted predator managing heat, fatigue, thirst, and hunger across a day/night cycle — outrunning hunters who never stop. No framework, no library. Available at primalchase.com.",
-            "link": "https://primalchase.com"
           }
         ]
       }
@@ -446,6 +473,7 @@
           "Open to geospatial analyst opportunities — reach out via LinkedIn or email."
         ]
       }
-    ]
+    ],
+    "resumeLink": "/ryan-little-resume.pdf"
   }
 }

@@ -127,6 +127,13 @@ function renderAbout(data, satelliteImg) {
                 ${satelliteImg ? `<img src="${satelliteImg}" alt="Satellite" class="page-satellite">` : ''}
                 <h2>${esc(data.title)}</h2>
                 <p>${esc(data.subtitle)}</p>
+                ${data.resumeLink ? `
+                    <div class="about-resume">
+                        <a href="${esc(data.resumeLink)}" target="_blank" rel="noopener" class="resume-link">
+                            <i class="fas fa-file-alt"></i> View Resume
+                        </a>
+                    </div>
+                ` : ''}
             </div>
             <div class="page-content">
                 ${data.headshot ? `
@@ -165,15 +172,46 @@ function renderPortfolio(data, satelliteImg) {
                             <h3>${esc(section.title)}</h3>
                         </div>
                         <div class="portfolio-grid">
-                            ${section.items.map(item => `
-                                <div class="portfolio-card">
+                            ${section.items.map(item => item.paired ? `
+                                <div class="portfolio-card portfolio-paired">
                                     <h4>${esc(item.title)}</h4>
-                                    <p>${esc(item.description)}</p>
-                                    ${item.link ? `<a href="${esc(item.link)}" target="_blank" rel="noopener" class="portfolio-link">View Project →</a>` : ''}
-                                    ${item.image ? `
-                                        <img src="${img(item.image.webp)}" alt="${esc(item.image.alt)}" loading="lazy" class="portfolio-image${item.image.alt?.includes('Logo') ? ' portfolio-logo' : ''}">
-                                        ${item.image.caption ? `<p class="image-caption">${esc(item.image.caption)}</p>` : ''}
-                                    ` : ''}
+                                    <div class="paired-sites">
+                                        ${item.sites.map(site => `
+                                            <div class="paired-site">
+                                                <h5>${esc(site.title)}</h5>
+                                                <p>${esc(site.description)}</p>
+                                                ${site.link ? `<a href="${esc(site.link)}" target="_blank" rel="noopener" class="portfolio-link">Visit →</a>` : ''}
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            ` : `
+                                <div class="portfolio-card${item.subItems ? ' has-sub-items' : ''}${item.image?.alt?.includes('Logo') ? ' has-logo' : ''}">
+                                    ${item.image?.alt?.includes('Logo') ? `
+                                        <img src="${img(item.image.webp)}" alt="${esc(item.image.alt)}" loading="lazy" class="portfolio-logo">
+                                        <div class="portfolio-card-body">
+                                            <h4>${esc(item.title)}</h4>
+                                            <p>${esc(item.description)}</p>
+                                            ${item.link ? `<a href="${esc(item.link)}" target="_blank" rel="noopener" class="portfolio-link">View Project →</a>` : ''}
+                                        </div>
+                                    ` : `
+                                        <h4>${esc(item.title)}</h4>
+                                        <p>${esc(item.description)}</p>
+                                        ${item.link ? `<a href="${esc(item.link)}" target="_blank" rel="noopener" class="portfolio-link">View Project →</a>` : ''}
+                                        ${item.image ? `
+                                            <img src="${img(item.image.webp)}" alt="${esc(item.image.alt)}" loading="lazy" class="portfolio-image">
+                                            ${item.image.caption ? `<p class="image-caption">${esc(item.image.caption)}</p>` : ''}
+                                        ` : ''}
+                                    `}
+                                    ${(item.subItems || []).map(sub => `
+                                        <div class="portfolio-sub-item">
+                                            ${sub.image ? `<img src="${img(sub.image.webp)}" alt="${esc(sub.image.alt)}" loading="lazy" class="portfolio-sub-icon">` : ''}
+                                            <div class="portfolio-sub-content">
+                                                <h5>${esc(sub.title)}</h5>
+                                                <p>${esc(sub.description)}</p>
+                                            </div>
+                                        </div>
+                                    `).join('')}
                                     ${(item.additionalImages || []).map(ai => `
                                         <img src="${img(ai.webp)}" alt="${esc(ai.alt)}" loading="lazy" class="portfolio-image enlargeable">
                                         ${ai.caption ? `<p class="image-caption">${esc(ai.caption)} <span class="enlarge-hint">(click to enlarge)</span></p>` : ''}
@@ -286,3 +324,4 @@ function renderTrees(data, satelliteImg) {
         </div>
     `;
 }
+

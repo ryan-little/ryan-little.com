@@ -282,12 +282,135 @@
     margin-top: 0.75rem;
 }
 
+.portfolio-card.has-logo {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.portfolio-card.has-logo h4 {
+    text-align: left;
+}
+
 .portfolio-logo {
-    max-width: 180px;
+    width: 120px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    object-fit: contain;
+}
+
+.portfolio-card-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.portfolio-card.has-logo .portfolio-sub-item {
+    flex-basis: 100%;
+}
+
+.portfolio-link {
+    display: inline-block;
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--color-text-muted);
+    font-family: var(--font-primary);
+    font-size: 0.85rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 0.75rem;
+    transition: all var(--transition-fast);
+}
+
+.portfolio-link:hover {
+    color: var(--color-text);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.portfolio-card > .portfolio-link,
+.portfolio-card-body > .portfolio-link {
     display: block;
+    text-align: center;
+    width: fit-content;
     margin-left: auto;
     margin-right: auto;
+}
+
+.portfolio-card-body > .portfolio-link {
+    margin-left: 0;
+}
+
+.paired-sites {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
     margin-top: 0.75rem;
+}
+
+.paired-site {
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+}
+
+.paired-site h5 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+    text-align: center;
+}
+
+.paired-site p {
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+.paired-site .portfolio-link {
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    display: block;
+    text-align: center;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 480px) {
+    .paired-sites {
+        grid-template-columns: 1fr;
+    }
+}
+
+.portfolio-sub-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.portfolio-sub-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.portfolio-sub-content h5 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+}
+
+.portfolio-sub-content p {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    line-height: 1.55;
 }
 
 /* Adventures page */
@@ -611,4 +734,37 @@
     .counter-number {
         font-size: 2rem;
     }
+}
+
+/* ── About Page Resume Link ── */
+
+.about-resume {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.resume-link {
+    display: inline-block;
+    color: #b0a8a0;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border: 1px solid rgba(176, 168, 160, 0.2);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.resume-link:hover {
+    color: #e8a849;
+    border-color: rgba(232, 168, 73, 0.4);
+}
+
+.resume-link i {
+    margin-right: 0.5rem;
+}
+
+
+.blog-link-card i {
+    font-size: 1rem;
 }

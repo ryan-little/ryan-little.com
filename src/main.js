@@ -59,8 +59,17 @@ async function init() {
         },
     });
 
+    // External links for satellites that don't have in-app pages
+    const EXTERNAL_SATELLITES = {
+        blog: 'https://ryanpdlittle.com',
+    };
+
     // Connect satellite clicks to router
     initSatelliteInteraction((pageId, satellite) => {
+        if (EXTERNAL_SATELLITES[pageId]) {
+            window.open(EXTERNAL_SATELLITES[pageId], '_blank', 'noopener');
+            return;
+        }
         lastClickedSatellite = satellite;
         lastClickedSatelliteId = pageId;
         navigateTo(pageId);
@@ -71,7 +80,10 @@ async function init() {
         btn.addEventListener('click', () => {
             const route = btn.dataset.route;
             if (!route) return;
-            // lastClickedSatellite is null here, so transitionToPage gets null (no zoom animation)
+            if (EXTERNAL_SATELLITES[route]) {
+                window.open(EXTERNAL_SATELLITES[route], '_blank', 'noopener');
+                return;
+            }
             navigateTo(route);
         });
     });
