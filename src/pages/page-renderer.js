@@ -72,7 +72,13 @@ export function renderPage(route, satelliteId = null) {
 function openLightbox(src, alt) {
     const overlay = document.createElement('div');
     overlay.className = 'lightbox-overlay';
-    overlay.innerHTML = `<img src="${esc(src)}" alt="${esc(alt)}" class="lightbox-image">`;
+
+    const img = document.createElement('img');
+    img.src = src;    // setAttribute handles encoding correctly — no esc() needed
+    img.alt = alt;
+    img.className = 'lightbox-image';
+    overlay.appendChild(img);
+
     overlay.addEventListener('click', () => {
         overlay.classList.add('closing');
         overlay.addEventListener('animationend', () => overlay.remove());
