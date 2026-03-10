@@ -133,10 +133,18 @@ function endGame() {
     }, 2500);
 }
 
+let timerEl = null;
+let scoreEl = null;
+let lastDisplayedTime = null;
+
 function showGameUI() {
     const el = overlay();
     el.classList.remove('hidden');
     el.style.pointerEvents = 'auto';
+    el.innerHTML = '<div class="game-timer"></div><div class="game-score"></div>';
+    timerEl = el.querySelector('.game-timer');
+    scoreEl = el.querySelector('.game-score');
+    lastDisplayedTime = null;
 }
 
 function hideGameUI() {
@@ -144,16 +152,20 @@ function hideGameUI() {
     el.classList.add('hidden');
     el.style.pointerEvents = '';
     el.innerHTML = '';
+    timerEl = null;
+    scoreEl = null;
+    lastDisplayedTime = null;
 }
 
 function updateGameUI() {
-    const el = overlay();
+    if (!timerEl || !scoreEl) return;
     const timeLeft = Math.max(0, Math.ceil(gameTimer));
-    const warning = timeLeft <= 5 ? ' warning' : '';
-    el.innerHTML = `
-        <div class="game-timer${warning}">${timeLeft}</div>
-        <div class="game-score">Score: ${scoring.score}</div>
-    `;
+    if (timeLeft !== lastDisplayedTime) {
+        lastDisplayedTime = timeLeft;
+        timerEl.textContent = timeLeft;
+        timerEl.className = timeLeft <= 5 ? 'game-timer warning' : 'game-timer';
+    }
+    scoreEl.textContent = `Score: ${scoring.score}`;
 }
 
 function updateScoreDisplay() {
