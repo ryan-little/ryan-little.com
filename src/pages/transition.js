@@ -63,6 +63,7 @@ export async function transitionToPage(satellite) {
         // so we start at 450ms for smooth crossfade overlap.
         const PAGE_SHOW_DELAY = 450;
         setTimeout(() => {
+            pageContainer.scrollTop = 0;
             pageContainer.classList.remove('hidden');
             pageContainer.style.display = '';
             requestAnimationFrame(() => {
@@ -79,6 +80,7 @@ export async function transitionToPage(satellite) {
 
     // For URL navigation (no satellite), show page immediately after exit
     if (!satellite) {
+        pageContainer.scrollTop = 0;
         pageContainer.classList.remove('hidden');
         pageContainer.style.display = '';
         requestAnimationFrame(() => {

@@ -124,8 +124,7 @@ function endGame() {
     state = 'ending';
     if (_onGameEnd) _onGameEnd();
     clearAllStars();
-    const isNewHighScore = scoring.saveHighScore();
-    showEndScreen(isNewHighScore);
+    showEndScreen();
 
     setTimeout(() => {
         state = 'cooldown';
@@ -175,13 +174,12 @@ function updateScoreDisplay() {
     }
 }
 
-function showEndScreen(isNewHighScore) {
+function showEndScreen() {
     const el = overlay();
     el.innerHTML = `
         <div class="game-end">
             <div class="game-end-score">${scoring.score}</div>
-            <div class="game-end-label">${isNewHighScore ? 'New High Score!' : 'Final Score'}</div>
-            ${!isNewHighScore && scoring.highScore > 0 ? `<div class="game-end-highscore">Best: ${scoring.highScore}</div>` : ''}
+            <div class="game-end-label">Nice!</div>
         </div>
     `;
 }

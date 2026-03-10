@@ -128,7 +128,7 @@ function renderAbout(data, satelliteImg) {
                 <img src="${img(s.image.webp)}" alt="${esc(s.image.alt)}" loading="lazy" class="section-image${s.image.alt?.includes('Logo') ? ' portfolio-logo' : ''}">
                 ${s.image.caption ? `<p class="image-caption">${esc(s.image.caption)}</p>` : ''}
             ` : ''}
-            ${s.link ? `<a href="${esc(s.link)}" target="_blank" rel="noopener" class="portfolio-link">View Project →</a>` : ''}
+            ${s.link ? `<a href="${esc(s.link)}" target="_blank" rel="noopener" class="portfolio-link">Visit →</a>` : ''}
         </div>
     `;
     return `
@@ -193,7 +193,10 @@ function renderPortfolio(data, satelliteImg) {
                                             <div class="paired-site">
                                                 <h5>${esc(site.title)}</h5>
                                                 <p>${esc(site.description)}</p>
-                                                ${site.link ? `<a href="${esc(site.link)}" target="_blank" rel="noopener" class="portfolio-link">Visit →</a>` : ''}
+                                                <div class="portfolio-links">
+                                                    ${site.link ? `<a href="${esc(site.link)}" target="_blank" rel="noopener" class="portfolio-link">Visit →</a>` : ''}
+                                                    ${site.github ? `<a href="${esc(site.github)}" target="_blank" rel="noopener" class="portfolio-link github-link"><i class="fab fa-github"></i> GitHub</a>` : ''}
+                                                </div>
                                             </div>
                                         `).join('')}
                                     </div>
@@ -205,12 +208,18 @@ function renderPortfolio(data, satelliteImg) {
                                         <div class="portfolio-card-body">
                                             <h4>${esc(item.title)}</h4>
                                             <p>${esc(item.description)}</p>
-                                            ${item.link ? `<a href="${esc(item.link)}" target="_blank" rel="noopener" class="portfolio-link">View Project →</a>` : ''}
+                                            <div class="portfolio-links">
+                                                ${item.link ? `<a href="${esc(item.link)}" target="_blank" rel="noopener" class="portfolio-link">Visit →</a>` : ''}
+                                                ${item.github ? `<a href="${esc(item.github)}" target="_blank" rel="noopener" class="portfolio-link github-link"><i class="fab fa-github"></i> GitHub</a>` : ''}
+                                            </div>
                                         </div>
                                     ` : `
                                         <h4>${esc(item.title)}</h4>
                                         <p>${esc(item.description)}</p>
-                                        ${item.link ? `<a href="${esc(item.link)}" target="_blank" rel="noopener" class="portfolio-link">View Project →</a>` : ''}
+                                        <div class="portfolio-links">
+                                            ${item.link ? `<a href="${esc(item.link)}" target="_blank" rel="noopener" class="portfolio-link">Visit →</a>` : ''}
+                                            ${item.github ? `<a href="${esc(item.github)}" target="_blank" rel="noopener" class="portfolio-link github-link"><i class="fab fa-github"></i> GitHub</a>` : ''}
+                                        </div>
                                         ${item.image ? `
                                             <img src="${img(item.image.webp)}" alt="${esc(item.image.alt)}" loading="lazy" class="portfolio-image">
                                             ${item.image.caption ? `<p class="image-caption">${esc(item.image.caption)}</p>` : ''}

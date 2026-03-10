@@ -1,6 +1,6 @@
 import './styles/global.css';
 import { initScene } from './globe/scene.js';
-import { createEarth } from './globe/earth.js';
+import { createEarth, refreshCloudTexture } from './globe/earth.js';
 import { createStarfield } from './globe/starfield.js';
 import { createGalaxies } from './globe/galaxies.js';
 import { createSatellites, initSatelliteInteraction, pauseSatelliteClicks, resumeSatelliteClicks } from './globe/satellites.js';
@@ -36,7 +36,9 @@ async function init() {
         return;
     }
     createStarfield();
-    await Promise.all([createGalaxies(), createEarth()]);
+    const LIVE_CLOUD_URL = 'https://clouds.matteason.co.uk/images/4096x2048/clouds.jpg';
+    await Promise.all([createGalaxies(), createEarth({ cloudUrl: LIVE_CLOUD_URL })]);
+    setInterval(() => refreshCloudTexture(LIVE_CLOUD_URL), 2 * 60 * 60 * 1000);
     await createSatellites();
     await initShootingStars();
     initMinigame({

@@ -1,11 +1,10 @@
-const CACHE_NAME = 'ryan-little-v2-4';
+const CACHE_NAME = 'ryan-little-v2-5';
 
 const PRECACHE_URLS = [
     '/',
     '/manifest.json',
     '/textures/earth-day.webp',
     '/textures/earth-night.webp',
-    '/textures/earth-clouds.webp',
     '/satellites/satellite1.webp',
     '/satellites/satellite2.webp',
     '/satellites/satellite3.webp',
