@@ -11,7 +11,10 @@
         "location": "France, Germany, Italy",
         "date": "July 2013",
         "description": "A sweeping first look at Europe — the Eiffel Tower and Louvre in Paris, the Gothic cathedral of Cologne, the art and history of Berlin, and the ancient grandeur of the Colosseum in Rome.",
-        "tags": ["Culture", "History", "Architecture", "Europe"]
+        "image": {
+          "webp": "assets/images_webp/colosseum_rome.webp",
+          "alt": "The Colosseum, Rome"
+        }
       },
       {
         "id": "hawaii-maui",
@@ -19,15 +22,10 @@
         "location": "Lahaina, Maui, Hawaii",
         "date": "October 2016",
         "description": "Parasailing over Lahaina's crystal-clear waters and watching the sunrise from the summit of Haleakalā — a dormant volcanic crater soaring over 10,000 feet above sea level.",
-        "tags": ["Tropical", "Volcanic", "Parasailing", "Island"]
-      },
-      {
-        "id": "catalina-island",
-        "title": "Catalina Island",
-        "location": "Avalon, California",
-        "date": "August 2017",
-        "description": "Snorkeling through crystal-clear kelp forests, camping on the island's rugged coastal shores, and exploring the unique landscape of California's island gem off the coast of Los Angeles.",
-        "tags": ["Snorkeling", "Camping", "Island", "Coastal"]
+        "image": {
+          "webp": "assets/images_webp/maui_coastline.webp",
+          "alt": "Maui coastline, Hawaii"
+        }
       },
       {
         "id": "europe-ireland-central",
@@ -35,7 +33,6 @@
         "location": "Dublin, Amsterdam, Berlin, Prague, Munich",
         "date": "June 2018",
         "description": "Dublin's historic pubs and cobblestone lanes, Amsterdam's iconic canals, Berlin's East Side Gallery, Prague's fairytale old town, Munich's Marienplatz — and the dramatic basalt columns of Giant's Causeway in Northern Ireland.",
-        "tags": ["Culture", "History", "Architecture", "Europe"],
         "image": {
           "webp": "assets/images_webp/giantscauseway_fullshot.webp",
           "fallback": "assets/images/giantscauseway_fullshot.JPG",
@@ -43,20 +40,11 @@
         }
       },
       {
-        "id": "disneyland-holiday",
-        "title": "Disneyland Holiday",
-        "location": "Anaheim, California",
-        "date": "December 2018",
-        "description": "Disneyland dressed for the holidays — festive park decorations, classic rides, and Sleeping Beauty's castle lit up for Christmas.",
-        "tags": ["Theme Park", "Holiday", "Family"]
-      },
-      {
         "id": "sequoia-kings-canyon",
         "title": "Sequoia & Kings Canyon",
         "location": "California, USA",
         "date": "July 2020",
         "description": "Standing beneath General Sherman — the world's largest tree by volume — exploring the ancient Grant Grove, and hiking deep into the High Sierra backcountry.",
-        "tags": ["Giant Trees", "Hiking", "National Parks", "Forest"],
         "image": {
           "webp": "assets/images_webp/generalshermanpic.webp",
           "fallback": "assets/images/generalshermanpic.heif",
@@ -69,7 +57,6 @@
         "location": "Northern California, USA",
         "date": "August 2020",
         "description": "Wandering through ancient old-growth groves, hiking coastal trails above the Pacific, and camping along wild river corridors in the world's tallest forest.",
-        "tags": ["Redwoods", "Hiking", "Camping", "Coastal"],
         "image": {
           "webp": "assets/images_webp/hyperionpic.webp",
           "fallback": "assets/images/hyperionpic.JPG",
@@ -81,24 +68,33 @@
         "title": "Washington D.C.",
         "location": "Washington, D.C.",
         "date": "October 2020",
-        "description": "The National Mall in fall color, tours of the Capitol, world-class Smithsonian museums, and the Tidal Basin reflecting the Lincoln Memorial.",
-        "tags": ["History", "Culture", "Museums", "National Mall"]
+        "description": "The National Mall in fall color, the Capitol steps with friends, world-class Smithsonian museums, and the weight of American history around every corner.",
+        "image": {
+          "webp": "assets/images_webp/washington_dc_capitol.webp",
+          "alt": "Group photo at the U.S. Capitol"
+        }
       },
       {
         "id": "utah-arizona-loop",
         "title": "Utah & Arizona Loop",
         "location": "Utah & Arizona, USA",
         "date": "June 2021",
-        "description": "Standing on the rim of the Grand Canyon, scrambling through Arches National Park's iconic sandstone fins, and exploring the red rock adventure hub of Moab.",
-        "tags": ["Hiking", "National Parks", "Desert", "Southwest"]
+        "description": "Standing beneath Corona Arch outside Moab, scrambling through Arches National Park's iconic sandstone fins, and standing on the rim of the Grand Canyon.",
+        "image": {
+          "webp": "assets/images_webp/utah_corona_arch.webp",
+          "alt": "Corona Arch, Moab, Utah"
+        }
       },
       {
         "id": "northern-rockies",
-        "title": "Northern Rockies: Wyoming & Montana",
+        "title": "Yellowstone & Grand Teton",
         "location": "Wyoming & Montana, USA",
         "date": "July 2021",
-        "description": "Watching Old Faithful erupt at Yellowstone, camping beneath the jagged peaks of the Grand Teton, and exploring the frontier towns of Billings and Bozeman.",
-        "tags": ["Geysers", "Wildlife", "Mountains", "National Parks"]
+        "description": "Watching Old Faithful erupt, standing above the thundering Lower Falls in Yellowstone's Grand Canyon, and camping beneath the jagged peaks of the Grand Teton.",
+        "image": {
+          "webp": "assets/images_webp/yellowstone_lower_falls.webp",
+          "alt": "Lower Falls, Yellowstone National Park"
+        }
       },
       {
         "id": "lake-tahoe",
@@ -106,15 +102,21 @@
         "location": "California/Nevada, USA",
         "date": "March 2022",
         "description": "Snow-capped peaks reflected in the impossibly blue waters of Lake Tahoe, with sweeping winter alpine vistas and a return trip for a spectacular drone light show over the water.",
-        "tags": ["Mountains", "Lake", "Snow", "Scenic"]
+        "image": {
+          "webp": "assets/images_webp/lake_tahoe_panoramic.webp",
+          "alt": "Lake Tahoe panoramic view"
+        }
       },
       {
         "id": "chicago",
         "title": "Chicago",
         "location": "Chicago, Illinois",
-        "date": "May 2022",
-        "description": "Cloud Gate's mirrored reflection of the Chicago skyline in Millennium Park, the Gothic architecture of the University of Chicago campus, and the bold urban grid of one of America's great cities.",
-        "tags": ["Architecture", "Culture", "City", "Art"]
+        "date": "November 2024",
+        "description": "Cloud Gate's mirrored reflection of the Chicago skyline in Millennium Park, deep-dish pizza pilgrimages, and the bold urban grid of one of America's great cities.",
+        "image": {
+          "webp": "assets/images_webp/chicago_cloud_gate.webp",
+          "alt": "Cloud Gate, Millennium Park, Chicago"
+        }
       },
       {
         "id": "high-sierra-loop",
@@ -122,7 +124,6 @@
         "location": "California, USA",
         "date": "June 2022",
         "description": "Summiting Half Dome in Yosemite, returning to Sequoia & Kings Canyon, and venturing into the White Mountains to walk among the ancient bristlecone pines — some of the oldest living organisms on Earth.",
-        "tags": ["Hiking", "National Parks", "Mountains", "Giant Trees"],
         "image": {
           "webp": "assets/images_webp/methuselahpic.webp",
           "fallback": "assets/images/methuselahpic.JPG",
@@ -134,24 +135,33 @@
         "title": "New York City",
         "location": "New York, USA",
         "date": "November 2022",
-        "description": "Manhattan's iconic skyline from the High Line and the Empire State Building, a fall walk through Central Park's changing leaves, and the electric energy of the city's classic landmarks.",
-        "tags": ["City", "Culture", "Skyline", "Urban"]
+        "description": "Manhattan's iconic skyline from the waterfront, a fall walk through Central Park's changing leaves, and the electric energy of the city's classic landmarks.",
+        "image": {
+          "webp": "assets/images_webp/nyc_skyline.webp",
+          "alt": "Manhattan skyline from the waterfront"
+        }
       },
       {
         "id": "rocky-mountain",
         "title": "Rocky Mountain National Park",
         "location": "Colorado, USA",
         "date": "February 2023",
-        "description": "Snowshoeing through Rocky Mountain's quiet winter wilderness, returning for the spring thaw as alpine meadows open up, and taking in the sweeping summer peaks above 12,000 feet.",
-        "tags": ["Hiking", "Mountains", "Snow", "National Parks"]
+        "description": "Snowshoeing through Rocky Mountain's quiet winter wilderness, summiting above the treeline, and taking in the sweeping peaks above 12,000 feet.",
+        "image": {
+          "webp": "assets/images_webp/rocky_mountain_summit.webp",
+          "alt": "Summit above treeline, Rocky Mountain National Park"
+        }
       },
       {
         "id": "spain-portugal",
         "title": "Europe: Spain & Portugal",
         "location": "Alhambra, Seville, Sintra, Lisbon, Porto",
         "date": "November 2023",
-        "description": "The Alhambra's intricate Moorish fortress at dusk, Seville's towering cathedral, the fairy-tale palaces of Sintra, Lisbon's trams and tiled facades, and Porto's scenic riverfront wine culture.",
-        "tags": ["Culture", "Architecture", "History", "Europe"]
+        "description": "The Alhambra's intricate Moorish fortress at dusk, Seville's grand Plaza de España, the fairy-tale palaces of Sintra, Lisbon's trams and tiled facades, and Porto's scenic riverfront wine culture.",
+        "image": {
+          "webp": "assets/images_webp/seville_plaza_de_espana.webp",
+          "alt": "Plaza de España, Seville"
+        }
       },
       {
         "id": "southwest-parks",
@@ -159,7 +169,6 @@
         "location": "Arizona, New Mexico, Texas, USA",
         "date": "April 2025",
         "description": "Saguaro's forests of towering cacti at golden hour, White Sands' blinding gypsum dunes, Carlsbad Caverns' vast underground chambers, Guadalupe Mountains' limestone ridge, and Big Bend's rugged desert canyons and dark skies.",
-        "tags": ["National Parks", "Desert", "Southwest", "Road Trip"],
         "image": {
           "webp": "assets/images_webp/bigbendnp_fullshot.webp",
           "fallback": "assets/images/bigbendnp_fullshot.JPG",
@@ -172,7 +181,6 @@
         "location": "Tokyo, Kyoto, Hiroshima, Nara",
         "date": "June 2025",
         "description": "Tokyo's electric energy and neon-lit neighborhoods, Kyoto's ancient Shinto shrines tucked in forested hillsides, the haunting and profound Hiroshima Peace Memorial, and Nara's sacred freely-roaming deer.",
-        "tags": ["Culture", "History", "Temples", "Japan"],
         "image": {
           "webp": "assets/images_webp/osaka_headshot.webp",
           "fallback": "assets/images/osaka_headshot.JPG",
@@ -185,7 +193,10 @@
         "location": "San Andrés Cholula & Texmelucan, Mexico",
         "date": "September 2025",
         "description": "Exploring the ancient pyramid buried beneath the Great Pyramid of Cholula and the layered colonial history of San Andrés, followed by a horseback ride through the mountain valleys around Texmelucan.",
-        "tags": ["Culture", "History", "Archaeology", "Mexico"]
+        "image": {
+          "webp": "assets/images_webp/mexico_horseback.webp",
+          "alt": "Horseback riding in Texmelucan, Mexico"
+        }
       },
       {
         "id": "whats-next",
@@ -193,7 +204,6 @@
         "location": "The World Awaits",
         "date": "2026+",
         "description": "Always planning the next adventure.",
-        "tags": ["Planning", "Future", "Exploration"],
         "isPlaceholder": true
       }
     ]
