@@ -17,14 +17,15 @@ export async function createGalaxies() {
         .filter(r => r.status === 'fulfilled')
         .map(r => r.value);
 
-    const sprites = [];
+    const galaxyGroup = new THREE.Group();
+    scene.add(galaxyGroup);
 
     // Place 15-20 galaxy sprites scattered across the sky sphere
     // Use each texture 2-3 times at different positions/sizes/rotations
     const placements = [];
     const count = 18;
 
-    if (textures.length === 0) return sprites;
+    if (textures.length === 0) return galaxyGroup;
 
     for (let i = 0; i < count; i++) {
         const texIndex = i % textures.length;
@@ -79,28 +80,13 @@ export async function createGalaxies() {
         // Render order: above stars (default 0) but below Earth and satellites
         sprite.renderOrder = 1;
 
-        scene.add(sprite);
-        sprites.push(sprite);
+        galaxyGroup.add(sprite);
     }
 
-    // Slow drift matching starfield rotation
     onUpdate((delta) => {
-        for (const sprite of sprites) {
-            // Rotate position around Y axis matching star drift
-            const x = sprite.position.x;
-            const z = sprite.position.z;
-            const angle = delta * 0.003;
-            sprite.position.x = x * Math.cos(angle) - z * Math.sin(angle);
-            sprite.position.z = x * Math.sin(angle) + z * Math.cos(angle);
-
-            // Tiny X rotation drift
-            const y = sprite.position.y;
-            const z2 = sprite.position.z;
-            const angle2 = delta * 0.001;
-            sprite.position.y = y * Math.cos(angle2) - z2 * Math.sin(angle2);
-            sprite.position.z = y * Math.sin(angle2) + z2 * Math.cos(angle2);
-        }
+        galaxyGroup.rotation.y += delta * 0.003;
+        galaxyGroup.rotation.x += delta * 0.001;
     });
 
-    return sprites;
+    return galaxyGroup;
 }

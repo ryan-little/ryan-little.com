@@ -1,11 +1,18 @@
 import * as THREE from 'three';
 import { getScene, onUpdate } from './scene.js';
 import { getSunDirection } from './lighting.js';
+import { MOBILE_BREAKPOINT_3D } from '../constants.js';
 
 let earthMesh = null;
 let atmosphereMesh = null;
 let elapsed = 0;
 const EARTH_RADIUS = 1;
+let cachedSunDir = null;
+let sunCacheInterval = null;
+
+function updateSunCache() {
+    cachedSunDir = getSunDirection();
+}
 const ROTATION_SPEED = (2 * Math.PI) / 90;
 const CLOUD_DRIFT_PERIOD = 10800; // 3 hours for one full cloud revolution relative to surface
 
@@ -77,17 +84,13 @@ const fragmentShader = `
 `;
 
 function updateSunUniform() {
-    if (!earthMesh) return;
-    // getSunDirection already returns in the mesh's object space
-    // (PM at +X, 90°E at -Z), so no quaternion transform needed.
-    // The terminator stays geographically correct regardless of mesh rotation.
-    const sun = getSunDirection();
-    earthMesh.material.uniforms.sunDirection.value.set(sun.x, sun.y, sun.z);
+    if (!earthMesh || !cachedSunDir) return;
+    earthMesh.material.uniforms.sunDirection.value.set(cachedSunDir.x, cachedSunDir.y, cachedSunDir.z);
 }
 
 export async function createEarth({ cloudUrl = '/textures/earth-clouds.webp', realTimeRotation = false } = {}) {
     const scene = getScene();
-    const isMobile = window.innerWidth < 768;
+    const isMobile = window.innerWidth < MOBILE_BREAKPOINT_3D;
     const segments = isMobile ? 32 : 64;
 
     const geometry = new THREE.SphereGeometry(EARTH_RADIUS, segments, segments);
@@ -96,22 +99,28 @@ export async function createEarth({ cloudUrl = '/textures/earth-clouds.webp', re
     let material;
 
     try {
-        const [dayTexture, nightTexture] = await Promise.all([
+        const results = await Promise.allSettled([
             new Promise((resolve, reject) => {
                 textureLoader.load('/textures/earth-day.webp', resolve, undefined, reject);
             }),
             new Promise((resolve, reject) => {
                 textureLoader.load('/textures/earth-night.webp', resolve, undefined, reject);
             }),
+            new Promise((resolve) => {
+                textureLoader.load(cloudUrl, resolve, undefined, () => {
+                    console.warn(`Cloud texture failed (${cloudUrl}), rendering without clouds`);
+                    resolve(null);
+                });
+            }),
         ]);
 
-        // Cloud texture loads independently — if it fails, no clouds (null → transparent texture)
-        const cloudTexture = await new Promise((resolve) => {
-            textureLoader.load(cloudUrl, resolve, undefined, () => {
-                console.warn(`Cloud texture failed (${cloudUrl}), rendering without clouds`);
-                resolve(null);
-            });
-        });
+        // Day and night are required — if either failed, throw to trigger fallback
+        if (results[0].status === 'rejected') throw results[0].reason;
+        if (results[1].status === 'rejected') throw results[1].reason;
+
+        const dayTexture = results[0].value;
+        const nightTexture = results[1].value;
+        const cloudTexture = results[2].status === 'fulfilled' ? results[2].value : null;
 
         dayTexture.colorSpace = THREE.SRGBColorSpace;
         nightTexture.colorSpace = THREE.SRGBColorSpace;
@@ -150,8 +159,11 @@ export async function createEarth({ cloudUrl = '/textures/earth-clouds.webp', re
     earthMesh.rotation.y = 0;
     scene.add(earthMesh);
 
-    atmosphereMesh = createAtmosphere();
+    atmosphereMesh = createAtmosphere(segments);
     scene.add(atmosphereMesh);
+
+    updateSunCache();
+    sunCacheInterval = setInterval(updateSunCache, 60000); // refresh every 60s
 
     onUpdate((delta) => {
         if (earthMesh) {
@@ -174,9 +186,9 @@ export async function createEarth({ cloudUrl = '/textures/earth-clouds.webp', re
                 }
             }
             // Convert sun from Earth object-space to world-space for atmosphere
-            if (atmosphereMesh) {
-                const sun = getSunDirection();
-                const ry  = earthMesh.rotation.y;
+            if (atmosphereMesh && cachedSunDir) {
+                const sun = cachedSunDir; // cached, not recalculated
+                const ry = earthMesh.rotation.y;
                 atmosphereMesh.material.uniforms.sunWorldDir.value.set(
                     sun.x * Math.cos(ry) + sun.z * Math.sin(ry),
                     sun.y,
@@ -189,8 +201,8 @@ export async function createEarth({ cloudUrl = '/textures/earth-clouds.webp', re
     return earthMesh;
 }
 
-function createAtmosphere() {
-    const geometry = new THREE.SphereGeometry(EARTH_RADIUS * 1.02, 64, 64);
+function createAtmosphere(segments = 64) {
+    const geometry = new THREE.SphereGeometry(EARTH_RADIUS * 1.02, segments, segments);
     const material = new THREE.ShaderMaterial({
         vertexShader: `
             varying vec3 vNormal;

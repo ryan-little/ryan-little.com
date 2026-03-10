@@ -1,9 +1,9 @@
 import './styles/global.css';
 import { initScene } from './globe/scene.js';
-import { createEarth } from './globe/earth.js';
+import { createEarth, refreshCloudTexture } from './globe/earth.js';
 import { createStarfield } from './globe/starfield.js';
 import { createGalaxies } from './globe/galaxies.js';
-import { createSatellites, initSatelliteInteraction } from './globe/satellites.js';
+import { createSatellites, initSatelliteInteraction, pauseSatelliteClicks, resumeSatelliteClicks } from './globe/satellites.js';
 import { initRouter, navigateTo } from './pages/router.js';
 import { transitionToPage, transitionToGlobe } from './pages/transition.js';
 import { renderPage } from './pages/page-renderer.js';
@@ -36,11 +36,15 @@ async function init() {
         return;
     }
     createStarfield();
-    await createGalaxies();
-    await createEarth();
+    const LIVE_CLOUD_URL = 'https://clouds.matteason.co.uk/images/4096x2048/clouds.jpg';
+    await Promise.all([createGalaxies(), createEarth({ cloudUrl: LIVE_CLOUD_URL })]);
+    setInterval(() => refreshCloudTexture(LIVE_CLOUD_URL), 2 * 60 * 60 * 1000);
     await createSatellites();
     await initShootingStars();
-    initMinigame();
+    initMinigame({
+        onGameStart: () => pauseSatelliteClicks(),
+        onGameEnd: () => resumeSatelliteClicks(),
+    });
 
     // Store last clicked satellite for zoom transitions
     let lastClickedSatellite = null;
@@ -98,4 +102,12 @@ const emailLink = document.querySelector('[data-email-user]');
 if (emailLink) {
     const addr = emailLink.dataset.emailUser + '@' + emailLink.dataset.emailDomain;
     emailLink.href = 'mailto:' + addr;
+}
+
+// Assemble resume href at runtime to avoid crawler indexing
+const resumeLink = document.querySelector('[data-resume-path]');
+if (resumeLink) {
+    const path = resumeLink.dataset.resumePath + resumeLink.dataset.resumeExt;
+    resumeLink.href = path;
+    resumeLink.download = 'Ryan-Little-Resume.pdf';
 }

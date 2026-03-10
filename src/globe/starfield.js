@@ -89,21 +89,67 @@ export function createStarfield() {
         baseSizes[i] = Math.pow(Math.random(), 2) * 1.7 + 0.3;
     }
 
+    // Select 1000 random stars to twinkle
+    const twinkleIndices = [];
+    for (let i = 0; i < 1000; i++) {
+        twinkleIndices.push(Math.floor(Math.random() * STAR_COUNT));
+    }
+
+    // Per-vertex twinkling parameters
+    const twinkleSpeed = new Float32Array(STAR_COUNT);
+    const twinklePhase = new Float32Array(STAR_COUNT);
+    const driftPhase = new Float32Array(STAR_COUNT);
+
+    // Use a Set for O(1) lookup — twinkleIndices contains random star indices, not sequential
+    const twinkleSet = new Set(twinkleIndices);
+
+    for (let i = 0; i < STAR_COUNT; i++) {
+        if (twinkleSet.has(i)) {
+            twinkleSpeed[i] = 2 + (i % 3); // matches original: (2 + idx % 3)
+            twinklePhase[i] = 1.0;          // flag: this star twinkles
+            driftPhase[i] = i * 1.0;        // unique per star (matches original `idx` usage)
+        } else {
+            twinkleSpeed[i] = 0.0;
+            twinklePhase[i] = 0.0;
+            driftPhase[i] = 0.0;
+        }
+    }
+
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
     geometry.setAttribute('size', new THREE.BufferAttribute(new Float32Array(baseSizes), 1));
+    geometry.setAttribute('twinkleSpeed', new THREE.BufferAttribute(twinkleSpeed, 1));
+    geometry.setAttribute('twinklePhase', new THREE.BufferAttribute(twinklePhase, 1));
+    geometry.setAttribute('driftPhase', new THREE.BufferAttribute(driftPhase, 1));
 
-    // Custom ShaderMaterial to support per-vertex sizes
+    // Custom ShaderMaterial with GPU-side twinkling
     const material = new THREE.ShaderMaterial({
-        uniforms: {},
+        uniforms: {
+            uTime: { value: 0.0 },
+        },
         vertexShader: `
             attribute float size;
+            attribute float twinkleSpeed;
+            attribute float twinklePhase;
+            attribute float driftPhase;
+            uniform float uTime;
             varying vec3 vColor;
             void main() {
                 vColor = color;
-                vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-                gl_PointSize = size;
+                // Apply subtle position drift for twinkling stars (preserves visual effect on /earth)
+                vec3 pos = position;
+                if (twinklePhase > 0.5) {
+                    pos.x += sin(uTime * 0.5 + driftPhase) * 0.5;
+                    pos.y += cos(uTime * 0.7 + driftPhase) * 0.5;
+                    pos.z += sin(uTime * 0.3 + driftPhase * 0.1) * 0.3;
+                }
+                vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+                // Size twinkling: matches original (sin * 0.5 + 1.0)
+                float twinkle = twinklePhase > 0.5
+                    ? (sin(uTime * twinkleSpeed) * 0.5 + 1.0)
+                    : 1.0;
+                gl_PointSize = size * twinkle;
                 gl_Position = projectionMatrix * mvPosition;
             }
         `,
@@ -119,50 +165,19 @@ export function createStarfield() {
         transparent: true,
         depthTest: true,
         depthWrite: false,
-        vertexColors: true,
+        vertexColors: true,  // REQUIRED — enables the `color` attribute used by vColor
     });
 
     const stars = new THREE.Points(geometry, material);
     scene.add(stars);
-
-    // More twinkling stars for liveliness
-    const twinkleIndices = [];
-    for (let i = 0; i < 1000; i++) {
-        twinkleIndices.push(Math.floor(Math.random() * STAR_COUNT));
-    }
-
-    // Capture base positions for twinkling stars so drift doesn't accumulate
-    const posAttrInit = geometry.getAttribute('position');
-    const twinkleBasePositions = new Float32Array(twinkleIndices.length * 3);
-    for (let i = 0; i < twinkleIndices.length; i++) {
-        const idx = twinkleIndices[i];
-        twinkleBasePositions[i * 3]     = posAttrInit.array[idx * 3];
-        twinkleBasePositions[i * 3 + 1] = posAttrInit.array[idx * 3 + 1];
-        twinkleBasePositions[i * 3 + 2] = posAttrInit.array[idx * 3 + 2];
-    }
 
     onUpdate((delta) => {
         // Slow rotation so stars drift
         stars.rotation.y += delta * 0.003;
         stars.rotation.x += delta * 0.001;
 
-        const time = performance.now() * 0.001;
-        const sizeAttr = geometry.getAttribute('size');
-        const posAttr = geometry.getAttribute('position');
-
-        for (let i = 0; i < twinkleIndices.length; i++) {
-            const idx = twinkleIndices[i];
-            // Twinkling size variation
-            sizeAttr.array[idx] = (Math.sin(time * (2 + idx % 3)) * 0.5 + 1.0) * baseSizes[idx];
-
-            // Independent subtle drift — computed from base position to prevent accumulation
-            posAttr.array[idx * 3]     = twinkleBasePositions[i * 3]     + Math.sin(time * 0.5 + idx) * 0.5;
-            posAttr.array[idx * 3 + 1] = twinkleBasePositions[i * 3 + 1] + Math.cos(time * 0.7 + idx) * 0.5;
-            posAttr.array[idx * 3 + 2] = twinkleBasePositions[i * 3 + 2] + Math.sin(time * 0.3 + idx * 0.1) * 0.3;
-        }
-
-        sizeAttr.needsUpdate = true;
-        posAttr.needsUpdate = true;
+        // Update time uniform — shader handles twinkling + drift
+        material.uniforms.uTime.value = performance.now() * 0.001;
     });
 
     return stars;

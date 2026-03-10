@@ -56,8 +56,15 @@ export function renderPage(route, satelliteId = null) {
         btn.addEventListener('click', () => navigateBack());
     });
 
+    // Assemble resume link at runtime (anti-crawler)
+    container.querySelectorAll('[data-resume-link]').forEach(link => {
+        link.href = link.dataset.resumeLink;
+        link.target = '_blank';
+        link.rel = 'noopener';
+    });
+
     // Animate counters
-    animateCounters();
+    animateCounters(container);
 
     // Enlargeable image lightbox
     container.querySelectorAll('.enlargeable').forEach(img => {
@@ -72,7 +79,13 @@ export function renderPage(route, satelliteId = null) {
 function openLightbox(src, alt) {
     const overlay = document.createElement('div');
     overlay.className = 'lightbox-overlay';
-    overlay.innerHTML = `<img src="${esc(src)}" alt="${esc(alt)}" class="lightbox-image">`;
+
+    const img = document.createElement('img');
+    img.src = src;    // setAttribute handles encoding correctly — no esc() needed
+    img.alt = alt;
+    img.className = 'lightbox-image';
+    overlay.appendChild(img);
+
     overlay.addEventListener('click', () => {
         overlay.classList.add('closing');
         overlay.addEventListener('animationend', () => overlay.remove());
@@ -81,8 +94,8 @@ function openLightbox(src, alt) {
     requestAnimationFrame(() => overlay.classList.add('visible'));
 }
 
-function animateCounters() {
-    const counters = document.querySelectorAll('.counter-number');
+function animateCounters(container) {
+    const counters = container.querySelectorAll('.counter-number');
     counters.forEach(counter => {
         const target = parseInt(counter.textContent, 10);
         if (isNaN(target)) return;
@@ -115,7 +128,7 @@ function renderAbout(data, satelliteImg) {
                 <img src="${img(s.image.webp)}" alt="${esc(s.image.alt)}" loading="lazy" class="section-image${s.image.alt?.includes('Logo') ? ' portfolio-logo' : ''}">
                 ${s.image.caption ? `<p class="image-caption">${esc(s.image.caption)}</p>` : ''}
             ` : ''}
-            ${s.link ? `<a href="${esc(s.link)}" target="_blank" rel="noopener" class="portfolio-link">View Project →</a>` : ''}
+            ${s.link ? `<a href="${esc(s.link)}" target="_blank" rel="noopener" class="portfolio-link">Visit →</a>` : ''}
         </div>
     `;
     return `
@@ -129,7 +142,7 @@ function renderAbout(data, satelliteImg) {
                 <p>${esc(data.subtitle)}</p>
                 ${data.resumeLink ? `
                     <div class="about-resume">
-                        <a href="${esc(data.resumeLink)}" target="_blank" rel="noopener" class="resume-link">
+                        <a data-resume-link="${esc(data.resumeLink)}" class="resume-link">
                             <i class="fas fa-file-alt"></i> View Resume
                         </a>
                     </div>
@@ -180,7 +193,10 @@ function renderPortfolio(data, satelliteImg) {
                                             <div class="paired-site">
                                                 <h5>${esc(site.title)}</h5>
                                                 <p>${esc(site.description)}</p>
-                                                ${site.link ? `<a href="${esc(site.link)}" target="_blank" rel="noopener" class="portfolio-link">Visit →</a>` : ''}
+                                                <div class="portfolio-links">
+                                                    ${site.link ? `<a href="${esc(site.link)}" target="_blank" rel="noopener" class="portfolio-link">Visit →</a>` : ''}
+                                                    ${site.github ? `<a href="${esc(site.github)}" target="_blank" rel="noopener" class="portfolio-link github-link"><i class="fab fa-github"></i> GitHub</a>` : ''}
+                                                </div>
                                             </div>
                                         `).join('')}
                                     </div>
@@ -192,12 +208,18 @@ function renderPortfolio(data, satelliteImg) {
                                         <div class="portfolio-card-body">
                                             <h4>${esc(item.title)}</h4>
                                             <p>${esc(item.description)}</p>
-                                            ${item.link ? `<a href="${esc(item.link)}" target="_blank" rel="noopener" class="portfolio-link">View Project →</a>` : ''}
+                                            <div class="portfolio-links">
+                                                ${item.link ? `<a href="${esc(item.link)}" target="_blank" rel="noopener" class="portfolio-link">Visit →</a>` : ''}
+                                                ${item.github ? `<a href="${esc(item.github)}" target="_blank" rel="noopener" class="portfolio-link github-link"><i class="fab fa-github"></i> GitHub</a>` : ''}
+                                            </div>
                                         </div>
                                     ` : `
                                         <h4>${esc(item.title)}</h4>
                                         <p>${esc(item.description)}</p>
-                                        ${item.link ? `<a href="${esc(item.link)}" target="_blank" rel="noopener" class="portfolio-link">View Project →</a>` : ''}
+                                        <div class="portfolio-links">
+                                            ${item.link ? `<a href="${esc(item.link)}" target="_blank" rel="noopener" class="portfolio-link">Visit →</a>` : ''}
+                                            ${item.github ? `<a href="${esc(item.github)}" target="_blank" rel="noopener" class="portfolio-link github-link"><i class="fab fa-github"></i> GitHub</a>` : ''}
+                                        </div>
                                         ${item.image ? `
                                             <img src="${img(item.image.webp)}" alt="${esc(item.image.alt)}" loading="lazy" class="portfolio-image">
                                             ${item.image.caption ? `<p class="image-caption">${esc(item.image.caption)}</p>` : ''}

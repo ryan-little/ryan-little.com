@@ -1,4 +1,4 @@
-import { animateSatelliteExit, fadeInSatellites } from '../globe/satellites.js';
+import { animateSatelliteExit, fadeInSatellites, SATELLITE_EXIT_DURATION } from '../globe/satellites.js';
 
 const TRANSITION_DURATION = 400;
 
@@ -58,8 +58,12 @@ export async function transitionToPage(satellite) {
     // The sprite fades out in its last 20% (0.56-0.7s), so we start the page
     // fade-in at ~0.45s, giving a smooth overlap.
     if (satellite) {
-        const PAGE_SHOW_DELAY = 450; // ms — start page fade-in before sprite finishes
+        // Start page fade-in before sprite exit finishes.
+        // Sprite fades out in last 20% of SATELLITE_EXIT_DURATION (0.56s-0.7s),
+        // so we start at 450ms for smooth crossfade overlap.
+        const PAGE_SHOW_DELAY = 450;
         setTimeout(() => {
+            pageContainer.scrollTop = 0;
             pageContainer.classList.remove('hidden');
             pageContainer.style.display = '';
             requestAnimationFrame(() => {
@@ -76,6 +80,7 @@ export async function transitionToPage(satellite) {
 
     // For URL navigation (no satellite), show page immediately after exit
     if (!satellite) {
+        pageContainer.scrollTop = 0;
         pageContainer.classList.remove('hidden');
         pageContainer.style.display = '';
         requestAnimationFrame(() => {

@@ -10,12 +10,16 @@ let state = 'idle';
 let gameTimer = 0;
 let spawnTimer = 0;
 let visibilityPaused = false;
+let _onGameStart = null;
+let _onGameEnd = null;
 
 const overlay = () => document.getElementById('game-overlay');
 
 export function getGameState() { return state; }
 
-export function initMinigame() {
+export function initMinigame({ onGameStart, onGameEnd } = {}) {
+    _onGameStart = onGameStart;
+    _onGameEnd = onGameEnd;
     // Page Visibility API - pause/resume
     document.addEventListener('visibilitychange', () => {
         visibilityPaused = document.hidden;
@@ -61,6 +65,7 @@ export function initMinigame() {
 function startGame() {
     if (state !== 'idle') return;
     state = 'countdown';
+    if (_onGameStart) _onGameStart();
     scoring.reset();
     document.body.classList.add('game-active');
     showGameUI();
@@ -117,9 +122,9 @@ function update(delta) {
 
 function endGame() {
     state = 'ending';
+    if (_onGameEnd) _onGameEnd();
     clearAllStars();
-    const isNewHighScore = scoring.saveHighScore();
-    showEndScreen(isNewHighScore);
+    showEndScreen();
 
     setTimeout(() => {
         state = 'cooldown';
@@ -127,10 +132,18 @@ function endGame() {
     }, 2500);
 }
 
+let timerEl = null;
+let scoreEl = null;
+let lastDisplayedTime = null;
+
 function showGameUI() {
     const el = overlay();
     el.classList.remove('hidden');
     el.style.pointerEvents = 'auto';
+    el.innerHTML = '<div class="game-timer"></div><div class="game-score"></div>';
+    timerEl = el.querySelector('.game-timer');
+    scoreEl = el.querySelector('.game-score');
+    lastDisplayedTime = null;
 }
 
 function hideGameUI() {
@@ -138,16 +151,20 @@ function hideGameUI() {
     el.classList.add('hidden');
     el.style.pointerEvents = '';
     el.innerHTML = '';
+    timerEl = null;
+    scoreEl = null;
+    lastDisplayedTime = null;
 }
 
 function updateGameUI() {
-    const el = overlay();
+    if (!timerEl || !scoreEl) return;
     const timeLeft = Math.max(0, Math.ceil(gameTimer));
-    const warning = timeLeft <= 5 ? ' warning' : '';
-    el.innerHTML = `
-        <div class="game-timer${warning}">${timeLeft}</div>
-        <div class="game-score">Score: ${scoring.score}</div>
-    `;
+    if (timeLeft !== lastDisplayedTime) {
+        lastDisplayedTime = timeLeft;
+        timerEl.textContent = timeLeft;
+        timerEl.className = timeLeft <= 5 ? 'game-timer warning' : 'game-timer';
+    }
+    scoreEl.textContent = `Score: ${scoring.score}`;
 }
 
 function updateScoreDisplay() {
@@ -157,13 +174,12 @@ function updateScoreDisplay() {
     }
 }
 
-function showEndScreen(isNewHighScore) {
+function showEndScreen() {
     const el = overlay();
     el.innerHTML = `
         <div class="game-end">
             <div class="game-end-score">${scoring.score}</div>
-            <div class="game-end-label">${isNewHighScore ? 'New High Score!' : 'Final Score'}</div>
-            ${!isNewHighScore && scoring.highScore > 0 ? `<div class="game-end-highscore">Best: ${scoring.highScore}</div>` : ''}
+            <div class="game-end-label">Nice!</div>
         </div>
     `;
 }

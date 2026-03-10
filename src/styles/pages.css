@@ -233,6 +233,14 @@
     margin-top: 0.75rem;
 }
 
+.section-image.portfolio-logo {
+    width: 50%;
+    max-width: 160px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 /* Portfolio page */
 .portfolio-section {
     margin-bottom: 2.5rem;
@@ -309,6 +317,13 @@
     flex-basis: 100%;
 }
 
+.portfolio-links {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    flex-wrap: wrap;
+}
+
 .portfolio-link {
     display: inline-block;
     background: none;
@@ -320,7 +335,6 @@
     border-radius: 6px;
     cursor: pointer;
     text-decoration: none;
-    margin-top: 0.75rem;
     transition: all var(--transition-fast);
 }
 
@@ -329,17 +343,13 @@
     border-color: rgba(255, 255, 255, 0.3);
 }
 
-.portfolio-card > .portfolio-link,
-.portfolio-card-body > .portfolio-link {
-    display: block;
-    text-align: center;
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
+.portfolio-card > .portfolio-links,
+.portfolio-card-body > .portfolio-links {
+    justify-content: center;
 }
 
-.portfolio-card-body > .portfolio-link {
-    margin-left: 0;
+.portfolio-card-body > .portfolio-links {
+    justify-content: flex-start;
 }
 
 .paired-sites {
@@ -368,14 +378,13 @@
     line-height: 1.5;
 }
 
+.paired-site .portfolio-links {
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+
 .paired-site .portfolio-link {
     font-size: 0.8rem;
-    margin-top: 0.5rem;
-    display: block;
-    text-align: center;
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 @media (max-width: 480px) {
@@ -528,22 +537,6 @@
 
 .adventure-card.placeholder .adventure-info > p:last-of-type {
     text-align: center;
-}
-
-.adventure-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-    margin-top: 0.6rem;
-    justify-content: center;
-}
-
-.tag {
-    background: rgba(232, 168, 73, 0.12);
-    color: var(--color-accent);
-    font-size: 0.72rem;
-    padding: 0.15rem 0.5rem;
-    border-radius: 9999px;
 }
 
 /* Trees page - warm showcase style, not clinical */
@@ -765,6 +758,3 @@
 }
 
 
-.blog-link-card i {
-    font-size: 1rem;
-}

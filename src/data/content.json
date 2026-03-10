@@ -298,6 +298,7 @@
             "title": "Primal Chase",
             "description": "A browser-based survival game built with vanilla JavaScript. Play as a hunted predator managing heat, fatigue, thirst, and hunger across a day/night cycle — outrunning hunters who never stop. No framework, no library.",
             "link": "https://primalchase.com",
+            "github": "https://github.com/ryan-little/primal-chase",
             "image": {
               "webp": "assets/images_webp/jaguar.webp",
               "alt": "Primal Chase Logo",
@@ -310,20 +311,21 @@
             "sites": [
               {
                 "title": "ryan-little.com",
-                "description": "Space-themed portfolio — Three.js 3D Earth, orbiting satellites, shooting star minigame.",
-                "link": "https://ryan-little.com"
+                "description": "Interactive portfolio built around a 3D Earth with real-time sun lighting, live cloud imagery, and a hand-painted starfield. Satellites orbit the globe as navigation, and there's a hidden shooting star minigame. Built from scratch with Three.js and vanilla JS — no framework.",
+                "github": "https://github.com/ryan-little/ryan-little.com"
               },
               {
                 "title": "ryanpdlittle.com",
-                "description": "Blog and learning log — GIS, web dev, game design, updated Tuesday/Friday.",
-                "link": "https://ryanpdlittle.com"
+                "description": "Blog and learning log covering GIS projects, web development, and game design. Static site on GitHub Pages, updated Tuesday/Friday.",
+                "link": "https://ryanpdlittle.com",
+                "github": "https://github.com/ryan-little/ryanpdlittle.com"
               }
             ]
           },
           {
             "title": "PicSplitter",
             "description": "A Python command-line tool that splits large images into a configurable grid of tiles. Useful in GIS workflows where oversized imagery needs to be broken into smaller chunks for processing in ArcGIS or QGIS.",
-            "link": "https://github.com/ryan-little/PicSplitter"
+            "github": "https://github.com/ryan-little/PicSplitter"
           }
         ]
       }
