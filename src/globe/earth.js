@@ -99,22 +99,28 @@ export async function createEarth({ cloudUrl = '/textures/earth-clouds.webp', re
     let material;
 
     try {
-        const [dayTexture, nightTexture] = await Promise.all([
+        const results = await Promise.allSettled([
             new Promise((resolve, reject) => {
                 textureLoader.load('/textures/earth-day.webp', resolve, undefined, reject);
             }),
             new Promise((resolve, reject) => {
                 textureLoader.load('/textures/earth-night.webp', resolve, undefined, reject);
             }),
+            new Promise((resolve) => {
+                textureLoader.load(cloudUrl, resolve, undefined, () => {
+                    console.warn(`Cloud texture failed (${cloudUrl}), rendering without clouds`);
+                    resolve(null);
+                });
+            }),
         ]);
 
-        // Cloud texture loads independently — if it fails, no clouds (null → transparent texture)
-        const cloudTexture = await new Promise((resolve) => {
-            textureLoader.load(cloudUrl, resolve, undefined, () => {
-                console.warn(`Cloud texture failed (${cloudUrl}), rendering without clouds`);
-                resolve(null);
-            });
-        });
+        // Day and night are required — if either failed, throw to trigger fallback
+        if (results[0].status === 'rejected') throw results[0].reason;
+        if (results[1].status === 'rejected') throw results[1].reason;
+
+        const dayTexture = results[0].value;
+        const nightTexture = results[1].value;
+        const cloudTexture = results[2].status === 'fulfilled' ? results[2].value : null;
 
         dayTexture.colorSpace = THREE.SRGBColorSpace;
         nightTexture.colorSpace = THREE.SRGBColorSpace;
