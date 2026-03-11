@@ -56,11 +56,20 @@ export function renderPage(route, satelliteId = null) {
         btn.addEventListener('click', () => navigateBack());
     });
 
-    // Assemble resume link at runtime (anti-crawler)
+    // Resume: blob download — no href ever points to the file
     container.querySelectorAll('[data-resume-link]').forEach(link => {
-        link.href = link.dataset.resumeLink;
-        link.target = '_blank';
-        link.rel = 'noopener';
+        link.style.cursor = 'pointer';
+        link.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const res = await fetch(link.dataset.resumeLink);
+            const blob = await res.blob();
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Ryan-Little-Resume.pdf';
+            a.click();
+            URL.revokeObjectURL(url);
+        });
     });
 
     // Animate counters

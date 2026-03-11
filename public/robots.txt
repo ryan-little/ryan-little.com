@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /ryan-little-resume.pdf
+Disallow: /dl-r7x9k2.pdf
 
 Sitemap: https://ryan-little.com/sitemap.xml

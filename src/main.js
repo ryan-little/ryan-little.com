@@ -104,10 +104,20 @@ if (emailLink) {
     emailLink.href = 'mailto:' + addr;
 }
 
-// Assemble resume href at runtime to avoid crawler indexing
+// Resume: blob download — no href ever points to the file
 const resumeLink = document.querySelector('[data-resume-path]');
 if (resumeLink) {
-    const path = resumeLink.dataset.resumePath + resumeLink.dataset.resumeExt;
-    resumeLink.href = path;
-    resumeLink.download = 'Ryan-Little-Resume.pdf';
+    resumeLink.style.cursor = 'pointer';
+    resumeLink.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const path = resumeLink.dataset.resumePath + resumeLink.dataset.resumeExt;
+        const res = await fetch(path);
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Ryan-Little-Resume.pdf';
+        a.click();
+        URL.revokeObjectURL(url);
+    });
 }
