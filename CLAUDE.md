@@ -60,11 +60,6 @@ docs/plans/            # Historical design + implementation plans (read-only ref
 
 The Three.js scene is the UI — satellites are the nav items. See ARCHITECTURE.md for component breakdown, data flow, and key patterns.
 
-See the knowledge hub for deeper reference:
-- `knowledge-hub: projects/ryan-little-com/architecture.md`
-- `knowledge-hub: projects/ryan-little-com/decisions.md`
-- `knowledge-hub: projects/ryan-little-com/three-js-patterns.md`
-
 ## Conventions
 
 See CONVENTIONS.md.
