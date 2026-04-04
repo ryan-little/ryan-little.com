@@ -41,6 +41,22 @@ export function initScene(container) {
     }
     animate();
 
+    // Pause render loop when tab is hidden to save CPU/GPU
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            if (animationId !== null) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+                clock.stop();
+            }
+        } else {
+            if (animationId === null) {
+                clock.start();
+                animate();
+            }
+        }
+    });
+
     return { scene, camera, renderer, clock };
 }
 

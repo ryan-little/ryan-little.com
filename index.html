@@ -6,6 +6,9 @@
     <title>Ryan Little — Geospatial Analyst | Developer | San Diego, CA</title>
     <meta name="description" content="Geospatial Analyst and Developer in San Diego specializing in remote sensing, spatial analysis, GIS, and web development. UCSB grad, CACI analyst.">
     <meta name="theme-color" content="#0a0a1a">
+    <!-- CSP: 'unsafe-inline' in script-src is required for the inline service worker
+         registration script (lines ~139-145) and the JSON-LD structured data block.
+         Refactoring these out is non-trivial and risks breaking SW registration timing. -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' https://clouds.matteason.co.uk data: blob:; connect-src 'self' https://clouds.matteason.co.uk;">
 
     <!-- SEO -->
@@ -38,9 +41,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/solid.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css" integrity="sha384-bGIKHDMAvn+yR8S/yTRi+6S++WqBdA+TaJ1nOZf079H6r492oh7V6uAqq739oSZC" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/solid.min.css" integrity="sha384-o96F2rFLAgwGpsvjLInkYtEFanaHuHeDtH47SxRhOsBCB2GOvUZke4yVjULPMFnv" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css" integrity="sha384-2ExAXhxetFPlyL5ZypKQbz0ZrD6S0xW1jF2n+bGda67tIfsjcfHQy3FkuA1IjuxK" crossorigin="anonymous" referrerpolicy="no-referrer">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -93,8 +96,8 @@
         <div id="social-links">
             <a href="https://linkedin.com/in/rpdlittle" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
             <a href="https://github.com/ryan-little" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
-            <a data-email-user="ryan" data-email-domain="ryanpdlittle.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
-            <a data-resume-path="/dl-r7x9k2" data-resume-ext=".pdf" aria-label="Resume"><i class="fas fa-file-alt"></i></a>
+            <a href="javascript:void(0)" data-email-user="ryan" data-email-domain="ryanpdlittle.com" aria-label="Email" role="link"><i class="fas fa-envelope"></i></a>
+            <a href="javascript:void(0)" data-resume-path="/dl-r7x9k2" data-resume-ext=".pdf" aria-label="Resume" role="link"><i class="fas fa-file-alt"></i></a>
         </div>
         <!-- Mobile navigation (CSS shows only on ≤600px) -->
         <nav id="mobile-nav" aria-label="Site navigation">
