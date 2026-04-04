@@ -7,8 +7,8 @@ export function getSunDirection() {
     const dayOfYear = getDayOfYear(now);
     const utcHours = now.getUTCHours() + now.getUTCMinutes() / 60;
 
-    // Solar declination (simplified)
-    const declination = -23.44 * Math.cos((2 * Math.PI / 365) * (dayOfYear + 10));
+    // Solar declination — improved approximation accounting for orbital eccentricity
+    const declination = -23.44 * Math.cos((2 * Math.PI / 365.25) * (dayOfYear + 10));
     const declinationRad = (declination * Math.PI) / 180;
 
     // Hour angle: sun is at longitude = (12 - utcHours) * 15 degrees

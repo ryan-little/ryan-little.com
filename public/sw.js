@@ -10,7 +10,7 @@ const PRECACHE_URLS = [
     '/satellites/satellite3.webp',
     '/satellites/satellite4.webp',
     '/satellites/satellite5.webp',
-    '/images/bigbendnp_headshot.webp',
+    '/shootingstar.webp',
 ];
 
 self.addEventListener('install', event => {
@@ -28,6 +28,17 @@ self.addEventListener('activate', event => {
         ).then(() => self.clients.claim())
     );
 });
+
+// Limit runtime cache size to prevent unbounded growth
+const MAX_RUNTIME_ENTRIES = 80;
+async function trimCache(cacheName, maxEntries) {
+    const cache = await caches.open(cacheName);
+    const keys = await cache.keys();
+    if (keys.length > maxEntries) {
+        await cache.delete(keys[0]);
+        return trimCache(cacheName, maxEntries);
+    }
+}
 
 self.addEventListener('fetch', event => {
     if (event.request.method !== 'GET') return;
@@ -55,7 +66,10 @@ self.addEventListener('fetch', event => {
             return fetch(event.request).then(response => {
                 if (!response || response.status !== 200 || response.type !== 'basic') return response;
                 const clone = response.clone();
-                caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+                caches.open(CACHE_NAME).then(cache => {
+                    cache.put(event.request, clone);
+                    trimCache(CACHE_NAME, MAX_RUNTIME_ENTRIES);
+                });
                 return response;
             });
         })

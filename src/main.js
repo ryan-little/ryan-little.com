@@ -9,6 +9,7 @@ import { transitionToPage, transitionToGlobe } from './pages/transition.js';
 import { renderPage } from './pages/page-renderer.js';
 import { initShootingStars } from './game/shooting-star.js';
 import { initMinigame } from './game/minigame.js';
+import { CLOUD_TEXTURE_URL } from './constants.js';
 
 function showWebGLError() {
     document.body.innerHTML = `
@@ -36,9 +37,8 @@ async function init() {
         return;
     }
     createStarfield();
-    const LIVE_CLOUD_URL = 'https://clouds.matteason.co.uk/images/4096x2048/clouds.jpg';
-    await Promise.all([createGalaxies(), createEarth({ cloudUrl: LIVE_CLOUD_URL })]);
-    setInterval(() => refreshCloudTexture(LIVE_CLOUD_URL), 2 * 60 * 60 * 1000);
+    await Promise.all([createGalaxies(), createEarth({ cloudUrl: CLOUD_TEXTURE_URL })]);
+    setInterval(() => refreshCloudTexture(CLOUD_TEXTURE_URL), 2 * 60 * 60 * 1000);
     await createSatellites();
     await initShootingStars();
     initMinigame({
@@ -92,32 +92,62 @@ async function init() {
         });
     });
 
-
+    // Hide loading spinner
+    const spinner = document.getElementById('loading-spinner');
+    if (spinner) {
+        spinner.classList.add('hidden');
+        spinner.addEventListener('transitionend', () => spinner.remove(), { once: true });
+    }
 }
 
-init();
-
-// Assemble email href at runtime to avoid scraper exposure
-const emailLink = document.querySelector('[data-email-user]');
-if (emailLink) {
-    const addr = emailLink.dataset.emailUser + '@' + emailLink.dataset.emailDomain;
-    emailLink.href = 'mailto:' + addr;
+function showInitError() {
+    const spinner = document.getElementById('loading-spinner');
+    if (spinner) spinner.remove();
+    document.body.innerHTML = `
+        <div style="background:#0a0a1a;color:#e0d8d0;font-family:Inter,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;text-align:center;padding:2rem;">
+            <div>
+                <h1 style="color:#e8a849;margin-bottom:1rem;">Ryan Little</h1>
+                <p>Something went wrong loading the site. Please try refreshing.</p>
+                <p style="margin-top:1rem;"><a href="https://linkedin.com/in/rpdlittle" style="color:#e8a849;">LinkedIn</a> · <a href="https://github.com/ryan-little" style="color:#e8a849;">GitHub</a></p>
+            </div>
+        </div>`;
 }
 
-// Resume: blob download — no href ever points to the file
-const resumeLink = document.querySelector('[data-resume-path]');
-if (resumeLink) {
-    resumeLink.style.cursor = 'pointer';
-    resumeLink.addEventListener('click', async (e) => {
-        e.preventDefault();
-        const path = resumeLink.dataset.resumePath + resumeLink.dataset.resumeExt;
-        const res = await fetch(path);
-        const blob = await res.blob();
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'Ryan-Little-Resume.pdf';
-        a.click();
-        URL.revokeObjectURL(url);
-    });
+init().catch((err) => {
+    console.error('Init failed:', err);
+    showInitError();
+});
+
+// Setup hero link handlers after DOM is ready
+function setupHeroLinks() {
+    // Assemble email href at runtime to avoid scraper exposure
+    const emailLink = document.querySelector('[data-email-user]');
+    if (emailLink) {
+        const addr = emailLink.dataset.emailUser + '@' + emailLink.dataset.emailDomain;
+        emailLink.href = 'mailto:' + addr;
+    }
+
+    // Resume: blob download — no href ever points to the file
+    const resumeLink = document.querySelector('[data-resume-path]');
+    if (resumeLink) {
+        resumeLink.style.cursor = 'pointer';
+        resumeLink.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const path = resumeLink.dataset.resumePath + resumeLink.dataset.resumeExt;
+            const res = await fetch(path);
+            const blob = await res.blob();
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Ryan-Little-Resume.pdf';
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+    }
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupHeroLinks);
+} else {
+    setupHeroLinks();
 }

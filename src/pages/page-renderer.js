@@ -75,6 +75,15 @@ export function renderPage(route, satelliteId = null) {
     // Animate counters
     animateCounters(container);
 
+    // Adventure image error fallback (replaces inline onerror for CSP compatibility)
+    container.querySelectorAll('.adventure-image').forEach(imgEl => {
+        imgEl.addEventListener('error', () => {
+            imgEl.style.display = 'none';
+            const placeholder = imgEl.nextElementSibling;
+            if (placeholder) placeholder.style.display = 'flex';
+        }, { once: true });
+    });
+
     // Enlargeable image lightbox
     container.querySelectorAll('.enlargeable').forEach(img => {
         img.style.cursor = 'pointer';
@@ -283,7 +292,7 @@ function renderAdventures(data, satelliteImg) {
                     ${data.panels.map(panel => `
                         <div class="adventure-card${panel.isPlaceholder ? ' placeholder' : ''}">
                             ${panel.image ? `
-                                <img src="${img(panel.image.webp)}" alt="${esc(panel.image.alt)}" loading="lazy" class="adventure-image" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                                <img src="${img(panel.image.webp)}" alt="${esc(panel.image.alt)}" loading="lazy" class="adventure-image">
                                 <div class="adventure-image-placeholder" style="display:none"><i class="fas fa-camera"></i><span>Photo coming soon</span></div>
                             ` : (!panel.isPlaceholder ? `
                                 <div class="adventure-image-placeholder"><i class="fas fa-camera"></i><span>Photo coming soon</span></div>

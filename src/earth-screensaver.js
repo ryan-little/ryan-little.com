@@ -3,8 +3,7 @@ import { createEarth, refreshCloudTexture } from './globe/earth.js';
 import { createStarfield } from './globe/starfield.js';
 import { createMoon } from './globe/moon.js';
 import { createCityLabels } from './globe/cities.js';
-
-const LIVE_CLOUD_URL = 'https://clouds.matteason.co.uk/images/4096x2048/clouds.jpg';
+import { CLOUD_TEXTURE_URL } from './constants.js';
 const DRIFT_PERIOD = 240;  // seconds per full horizontal orbit
 const IDLE_TIMEOUT = 10000; // ms before auto-drift resumes after interaction
 
@@ -159,7 +158,7 @@ async function init() {
     getCamera().position.set(0, 0, R);
 
     createStarfield();
-    await createEarth({ cloudUrl: LIVE_CLOUD_URL, realTimeRotation: true });
+    await createEarth({ cloudUrl: CLOUD_TEXTURE_URL, realTimeRotation: true });
     createMoon();
     createCityLabels(container, () => R);
 
@@ -167,7 +166,7 @@ async function init() {
 
     // Refresh live clouds every 2 hours to match matteason's update cadence
     const TWO_HOURS = 2 * 60 * 60 * 1000;
-    setInterval(() => refreshCloudTexture(LIVE_CLOUD_URL), TWO_HOURS);
+    setInterval(() => refreshCloudTexture(CLOUD_TEXTURE_URL), TWO_HOURS);
 
     setupControls(getRenderer().domElement);
 

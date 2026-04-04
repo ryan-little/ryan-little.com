@@ -23,7 +23,8 @@ export function initSatelliteInteraction(onSatelliteClick) {
         pointer.y = -(y / window.innerHeight) * 2 + 1;
 
         raycaster.setFromCamera(pointer, camera);
-        raycaster.params.Sprite = { threshold: 0.3 };
+        const threshold = window.innerWidth < 768 ? 0.5 : 0.3;
+        raycaster.params.Sprite = { threshold };
         const intersects = raycaster.intersectObjects(satellites);
 
         if (intersects.length > 0) {

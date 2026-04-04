@@ -191,7 +191,8 @@ function showComboPopup(x, y, combo) {
     popup.textContent = `x${combo}!`;
     popup.style.left = `${x}px`;
     popup.style.top = `${y}px`;
-    document.body.appendChild(popup);
+    const target = overlay() || document.body;
+    target.appendChild(popup);
     popup.addEventListener('animationend', () => popup.remove());
 }
 

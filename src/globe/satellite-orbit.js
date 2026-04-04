@@ -1,3 +1,6 @@
+// TODO: This module is a God module (468 lines, 6+ animation state machines).
+// Consider splitting into satellite-config.js, satellite-animation.js, and
+// satellite-rendering.js when next making significant changes here.
 import * as THREE from 'three';
 import { getScene, getCamera, onUpdate } from './scene.js';
 import { getEarthRadius } from './earth.js';
@@ -33,14 +36,6 @@ export const satState = {
     returnedIndex: -1,
     onClickCallback: null,
 };
-
-export function pauseSatellites() {
-    satState.isPaused = true;
-}
-
-export function resumeSatellites() {
-    satState.isPaused = false;
-}
 
 export async function createSatellites() {
     const scene = getScene();

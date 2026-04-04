@@ -89,12 +89,6 @@
     margin-top: 0.5rem;
 }
 
-.game-end-highscore {
-    font-size: 1rem;
-    color: var(--color-text-muted);
-    margin-top: 0.5rem;
-}
-
 .game-combo {
     position: fixed;
     font-size: 1.3rem;

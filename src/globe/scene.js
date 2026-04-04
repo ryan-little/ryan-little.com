@@ -6,9 +6,6 @@ const clock = new THREE.Clock();
 
 const updateCallbacks = [];
 
-const DEFAULT_CAMERA_POS = new THREE.Vector3(0, 0, 5);
-let cameraAnimation = null;
-
 export function initScene(container) {
     scene = new THREE.Scene();
 
@@ -39,23 +36,6 @@ export function initScene(container) {
         animationId = requestAnimationFrame(animate);
         const delta = Math.min(clock.getDelta(), 0.1);
 
-        // Update camera animation if active
-        if (cameraAnimation) {
-            const { startPos, targetPos, duration, startTime, resolve } = cameraAnimation;
-            const elapsed = performance.now() - startTime;
-            let t = Math.min(elapsed / duration, 1);
-            // Ease in-out cubic
-            t = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
-            camera.position.lerpVectors(startPos, targetPos, t);
-
-            if (elapsed >= duration) {
-                camera.position.copy(targetPos);
-                cameraAnimation = null;
-                resolve();
-            }
-        }
-
         for (const cb of updateCallbacks) cb(delta);
         renderer.render(scene, camera);
     }
@@ -72,24 +52,3 @@ export function onUpdate(callback) {
     updateCallbacks.push(callback);
 }
 
-export function removeUpdate(callback) {
-    const idx = updateCallbacks.indexOf(callback);
-    if (idx !== -1) updateCallbacks.splice(idx, 1);
-}
-
-export function animateCamera(targetPos, duration = 1000) {
-    return new Promise((resolve) => {
-        const startPos = camera.position.clone();
-        const startTime = performance.now();
-
-        cameraAnimation = {
-            startPos,
-            targetPos: targetPos.clone(),
-            duration,
-            startTime,
-            resolve,
-        };
-    });
-}
-
-export function getDefaultCameraPos() { return DEFAULT_CAMERA_POS.clone(); }

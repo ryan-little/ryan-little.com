@@ -30,28 +30,32 @@ export async function createGalaxies() {
     for (let i = 0; i < count; i++) {
         const texIndex = i % textures.length;
 
-        // Random position on sphere using uniform distribution
-        const theta = Math.random() * 2 * Math.PI;
-        const phi = Math.acos(2 * Math.random() - 1);
-        const r = GALAXY_SPHERE_RADIUS;
+        // Try multiple random positions to find one that isn't too close to others
+        let x, y, z;
+        let placed = false;
+        for (let attempt = 0; attempt < 10; attempt++) {
+            const theta = Math.random() * 2 * Math.PI;
+            const phi = Math.acos(2 * Math.random() - 1);
+            const r = GALAXY_SPHERE_RADIUS;
 
-        const x = r * Math.sin(phi) * Math.cos(theta);
-        const y = r * Math.sin(phi) * Math.sin(theta);
-        const z = r * Math.cos(phi);
+            x = r * Math.sin(phi) * Math.cos(theta);
+            y = r * Math.sin(phi) * Math.sin(theta);
+            z = r * Math.cos(phi);
 
-        // Check minimum distance from other placements to avoid clustering
-        let tooClose = false;
-        for (const p of placements) {
-            const dx = x - p.x, dy = y - p.y, dz = z - p.z;
-            if (Math.sqrt(dx * dx + dy * dy + dz * dz) < 120) {
-                tooClose = true;
+            let tooClose = false;
+            for (const p of placements) {
+                const dx = x - p.x, dy = y - p.y, dz = z - p.z;
+                if (Math.sqrt(dx * dx + dy * dy + dz * dz) < 120) {
+                    tooClose = true;
+                    break;
+                }
+            }
+            if (!tooClose) {
+                placed = true;
                 break;
             }
         }
-        if (tooClose) {
-            // Skip this one, try to place fewer rather than cluster
-            continue;
-        }
+        if (!placed) continue; // Skip if no valid position found after retries
 
         placements.push({ x, y, z });
 
@@ -83,9 +87,10 @@ export async function createGalaxies() {
         galaxyGroup.add(sprite);
     }
 
+    // Slightly slower rotation than starfield for depth parallax
     onUpdate((delta) => {
-        galaxyGroup.rotation.y += delta * 0.003;
-        galaxyGroup.rotation.x += delta * 0.001;
+        galaxyGroup.rotation.y += delta * 0.002;
+        galaxyGroup.rotation.x += delta * 0.0006;
     });
 
     return galaxyGroup;

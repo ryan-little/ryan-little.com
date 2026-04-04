@@ -10,6 +10,9 @@ const EARTH_RADIUS = 1;
 let cachedSunDir = null;
 let sunCacheInterval = null;
 
+// Reuse a single TextureLoader instance (RL-H12)
+const sharedTextureLoader = new THREE.TextureLoader();
+
 function updateSunCache() {
     cachedSunDir = getSunDirection();
 }
@@ -94,20 +97,18 @@ export async function createEarth({ cloudUrl = '/textures/earth-clouds.webp', re
     const segments = isMobile ? 32 : 64;
 
     const geometry = new THREE.SphereGeometry(EARTH_RADIUS, segments, segments);
-    const textureLoader = new THREE.TextureLoader();
-
     let material;
 
     try {
         const results = await Promise.allSettled([
             new Promise((resolve, reject) => {
-                textureLoader.load('/textures/earth-day.webp', resolve, undefined, reject);
+                sharedTextureLoader.load('/textures/earth-day.webp', resolve, undefined, reject);
             }),
             new Promise((resolve, reject) => {
-                textureLoader.load('/textures/earth-night.webp', resolve, undefined, reject);
+                sharedTextureLoader.load('/textures/earth-night.webp', resolve, undefined, reject);
             }),
             new Promise((resolve) => {
-                textureLoader.load(cloudUrl, resolve, undefined, () => {
+                sharedTextureLoader.load(cloudUrl, resolve, undefined, () => {
                     console.warn(`Cloud texture failed (${cloudUrl}), rendering without clouds`);
                     resolve(null);
                 });
@@ -148,7 +149,7 @@ export async function createEarth({ cloudUrl = '/textures/earth-clouds.webp', re
         console.warn('Earth textures failed to load, using fallback sprite:', err);
         // Fallback: flat earthsprite texture so globe still renders
         const fallbackTexture = await new Promise((resolve) => {
-            textureLoader.load('/images/earthsprite.webp', resolve, undefined, () => resolve(null));
+            sharedTextureLoader.load('/images/earthsprite.webp', resolve, undefined, () => resolve(null));
         });
         material = fallbackTexture
             ? new THREE.MeshBasicMaterial({ map: fallbackTexture })
@@ -248,10 +249,11 @@ export function getEarthRadius() { return EARTH_RADIUS; }
 
 export function refreshCloudTexture(url) {
     if (!earthMesh?.material?.uniforms?.cloudTexture) return;
-    new THREE.TextureLoader().load(url + '?t=' + Date.now(), (texture) => {
+    sharedTextureLoader.load(url + '?t=' + Date.now(), (texture) => {
         texture.wrapS = THREE.RepeatWrapping;
         texture.needsUpdate = true;
-        earthMesh.material.uniforms.cloudTexture.value.dispose();
+        const oldTexture = earthMesh.material.uniforms.cloudTexture.value;
         earthMesh.material.uniforms.cloudTexture.value = texture;
+        if (oldTexture) oldTexture.dispose();
     });
 }

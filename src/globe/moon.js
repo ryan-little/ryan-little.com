@@ -33,8 +33,11 @@ export function createMoon() {
     const earthshine = new THREE.AmbientLight(0x111210, 1.0);
     scene.add(earthshine);
 
-    // Ecliptic pole: Z-axis — sun lives in XY plane (solar-time world space), so ecliptic pole = Z
-    const eclipticPole = new THREE.Vector3(0, 0, 1);
+    // Ecliptic pole: tilted ~23.4 degrees from the Y-axis toward Z.
+    // The sun's annual declination sweeps ±23.44° in Y, so the ecliptic plane
+    // is tilted relative to the equatorial XZ plane.
+    const eclipticTilt = 23.44 * Math.PI / 180;
+    const eclipticPole = new THREE.Vector3(0, Math.cos(eclipticTilt), Math.sin(eclipticTilt)).normalize();
     const sunWorld = new THREE.Vector3();
     const moonDir = new THREE.Vector3();
 

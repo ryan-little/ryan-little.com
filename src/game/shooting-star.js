@@ -10,9 +10,7 @@ let starTexture = null;
 
 export async function initShootingStars() {
     starTexture = await new Promise((resolve) => {
-        textureLoader.load('/shootingstar.webp', resolve, undefined, () => {
-            textureLoader.load('/shootingstar.png', resolve, undefined, () => resolve(null));
-        });
+        textureLoader.load('/shootingstar.webp', resolve, undefined, () => resolve(null));
     });
 
     const scene = getScene();
@@ -174,7 +172,8 @@ export function checkStarHit(clientX, clientY) {
     pointer.y = -(clientY / window.innerHeight) * 2 + 1;
 
     raycaster.setFromCamera(pointer, camera);
-    raycaster.params.Sprite = { threshold: 0.8 };
+    const threshold = window.innerWidth < 768 ? 1.2 : 0.8;
+    raycaster.params.Sprite = { threshold };
 
     const visibleStars = activeStars.filter(s => s.visible && !s.userData.caught);
     const intersects = raycaster.intersectObjects(visibleStars);
