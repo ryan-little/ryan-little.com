@@ -358,9 +358,6 @@ html, body {
         gap: 0.75rem;
         margin-top: 1.5rem;
         width: 100%;
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        border-radius: 14px;
     }
 
     .mobile-nav-item {
@@ -372,6 +369,8 @@ html, body {
         width: clamp(180px, 55vw, 220px);
         padding: 0.7rem 1rem;
         background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
         border: 1px solid rgba(255, 255, 255, 0.18);
         border-radius: 14px;
         text-decoration: none;
