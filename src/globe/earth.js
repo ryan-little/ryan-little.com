@@ -164,6 +164,7 @@ export async function createEarth({ cloudUrl = '/textures/earth-clouds.webp', re
     scene.add(atmosphereMesh);
 
     updateSunCache();
+    if (sunCacheInterval) clearInterval(sunCacheInterval);
     sunCacheInterval = setInterval(updateSunCache, 60000); // refresh every 60s
 
     onUpdate((delta) => {

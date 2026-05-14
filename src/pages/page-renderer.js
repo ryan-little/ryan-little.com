@@ -331,11 +331,16 @@ function renderTrees(data, satelliteImg) {
                         if (isPortrait) styleProps.push('aspect-ratio: 3 / 4');
                         const styleAttr = styleProps.length ? ` style="${styleProps.join('; ')}"` : '';
 
-                        // Auto-compute Methuselah's age from current year
+                        // Auto-compute Methuselah's age from base year encoded in the stat string
                         const stats = tree.stats ? tree.stats.items.map(stat => {
-                            if (tree.id === 'methuselah' && stat.includes('4,854 years old')) {
-                                const currentAge = 4854 + (new Date().getFullYear() - 2024);
-                                return `Age: ${currentAge.toLocaleString()} years old`;
+                            if (tree.id === 'methuselah' && stat.startsWith('Age:')) {
+                                const match = stat.match(/(\d[\d,]+) years old.*\(as of (\d{4})\)/);
+                                if (match) {
+                                    const baseAge = parseInt(match[1].replace(/,/g, ''), 10);
+                                    const baseYear = parseInt(match[2], 10);
+                                    const currentAge = baseAge + (new Date().getFullYear() - baseYear);
+                                    return `Age: ${currentAge.toLocaleString()} years old`;
+                                }
                             }
                             return stat;
                         }) : [];

@@ -11,12 +11,12 @@ import { initShootingStars } from './game/shooting-star.js';
 import { initMinigame } from './game/minigame.js';
 import { CLOUD_TEXTURE_URL } from './constants.js';
 
-function showWebGLError() {
+function showFatalError(message) {
     document.body.innerHTML = `
         <div style="background:#0a0a1a;color:#e0d8d0;font-family:Inter,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;text-align:center;padding:2rem;">
             <div>
                 <h1 style="color:#e8a849;margin-bottom:1rem;">Ryan Little</h1>
-                <p>Your browser doesn't support WebGL, which this site requires.</p>
+                <p>${message}</p>
                 <p style="margin-top:1rem;"><a href="https://linkedin.com/in/rpdlittle" style="color:#e8a849;">LinkedIn</a> · <a href="https://github.com/ryan-little" style="color:#e8a849;">GitHub</a></p>
             </div>
         </div>`;
@@ -33,12 +33,12 @@ async function init() {
         initScene(container);
     } catch (err) {
         console.error('WebGL init failed:', err);
-        showWebGLError();
+        showFatalError("Your browser doesn't support WebGL, which this site requires.");
         return;
     }
     createStarfield();
     await Promise.all([createGalaxies(), createEarth({ cloudUrl: CLOUD_TEXTURE_URL })]);
-    setInterval(() => refreshCloudTexture(CLOUD_TEXTURE_URL), 2 * 60 * 60 * 1000);
+    const _cloudRefreshInterval = setInterval(() => refreshCloudTexture(CLOUD_TEXTURE_URL), 2 * 60 * 60 * 1000);
     await createSatellites();
     await initShootingStars();
     initMinigame({
@@ -100,22 +100,11 @@ async function init() {
     }
 }
 
-function showInitError() {
-    const spinner = document.getElementById('loading-spinner');
-    if (spinner) spinner.remove();
-    document.body.innerHTML = `
-        <div style="background:#0a0a1a;color:#e0d8d0;font-family:Inter,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;text-align:center;padding:2rem;">
-            <div>
-                <h1 style="color:#e8a849;margin-bottom:1rem;">Ryan Little</h1>
-                <p>Something went wrong loading the site. Please try refreshing.</p>
-                <p style="margin-top:1rem;"><a href="https://linkedin.com/in/rpdlittle" style="color:#e8a849;">LinkedIn</a> · <a href="https://github.com/ryan-little" style="color:#e8a849;">GitHub</a></p>
-            </div>
-        </div>`;
-}
-
 init().catch((err) => {
     console.error('Init failed:', err);
-    showInitError();
+    const spinner = document.getElementById('loading-spinner');
+    if (spinner) spinner.remove();
+    showFatalError('Something went wrong loading the site. Please try refreshing.');
 });
 
 // Setup hero link handlers after DOM is ready

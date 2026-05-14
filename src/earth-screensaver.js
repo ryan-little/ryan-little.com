@@ -166,7 +166,7 @@ async function init() {
 
     // Refresh live clouds every 2 hours to match matteason's update cadence
     const TWO_HOURS = 2 * 60 * 60 * 1000;
-    setInterval(() => refreshCloudTexture(CLOUD_TEXTURE_URL), TWO_HOURS);
+    const _cloudRefreshInterval = setInterval(() => refreshCloudTexture(CLOUD_TEXTURE_URL), TWO_HOURS);
 
     setupControls(getRenderer().domElement);
 
