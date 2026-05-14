@@ -12,9 +12,11 @@ export function initRouter({ onNavigate, onBack }) {
         const route = event.state?.route || null;
         if (route && VALID_ROUTES.includes(route)) {
             currentRoute = route;
+            document.documentElement.classList.add('page-open');
             onNavigateCallback(route, { fromPopState: true });
         } else {
             currentRoute = null;
+            document.documentElement.classList.remove('page-open');
             onBackCallback({ fromPopState: true });
         }
     });
@@ -28,6 +30,7 @@ export function navigateTo(route) {
 
     currentRoute = route;
     history.pushState({ route }, '', `/${route}`);
+    document.documentElement.classList.add('page-open');
     onNavigateCallback(route, { fromPopState: false });
 }
 
@@ -35,6 +38,7 @@ export function navigateBack() {
     if (!currentRoute) return;
     currentRoute = null;
     history.replaceState({ route: null }, '', '/');
+    document.documentElement.classList.remove('page-open');
     onBackCallback({ fromPopState: false });
 }
 
@@ -46,6 +50,7 @@ function checkDeepLink() {
         sessionStorage.removeItem('spa-redirect');
         if (VALID_ROUTES.includes(redirectPath)) {
             currentRoute = redirectPath;
+            document.documentElement.classList.add('page-open');
             history.replaceState({ route: redirectPath }, '', `/${redirectPath}`);
             onNavigateCallback(redirectPath, { fromPopState: false });
             return;
@@ -55,6 +60,7 @@ function checkDeepLink() {
     const path = window.location.pathname.replace(/^\//, '').replace(/\/$/, '');
     if (path && VALID_ROUTES.includes(path)) {
         currentRoute = path;
+        document.documentElement.classList.add('page-open');
         history.replaceState({ route: path }, '', `/${path}`);
         onNavigateCallback(path, { fromPopState: false });
     }

@@ -75,6 +75,12 @@ html, body {
     -webkit-font-smoothing: antialiased;
 }
 
+html.page-open,
+html.page-open body {
+    overflow-y: auto;
+    height: auto;
+}
+
 #scene-container {
     position: fixed;
     top: 0;
@@ -259,6 +265,13 @@ html, body {
     z-index: 20;
     overflow-y: auto;
     background: rgba(0, 0, 0, 0.82);
+}
+
+html.page-open #page-container {
+    position: absolute;
+    height: auto;
+    min-height: 100vh;
+    overflow-y: visible;
 }
 
 #page-container.hidden {
