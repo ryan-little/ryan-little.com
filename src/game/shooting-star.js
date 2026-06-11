@@ -175,8 +175,7 @@ export function checkStarHit(clientX, clientY) {
     const threshold = window.innerWidth < 768 ? 1.2 : 0.8;
     raycaster.params.Sprite = { threshold };
 
-    const visibleStars = activeStars.filter(s => s.visible && !s.userData.caught);
-    const intersects = raycaster.intersectObjects(visibleStars);
+    const intersects = raycaster.intersectObjects(activeStars);
 
     if (intersects.length > 0) {
         const hit = intersects[0].object;
