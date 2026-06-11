@@ -11,14 +11,16 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     assetsInlineLimit: 4096,
-    rollupOptions: {
+    rolldownOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
         earth: resolve(__dirname, 'earth/index.html'),
       },
       output: {
-        manualChunks: {
-          threejs: ['three'],
+        codeSplitting: {
+          groups: [
+            { name: 'threejs', test: /node_modules[\\/]three[\\/]/ },
+          ],
         },
       },
     },

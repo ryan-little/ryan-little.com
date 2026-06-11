@@ -1,5 +1,6 @@
 import contentData from '../data/content.json';
 import { navigateBack } from './router.js';
+import { downloadResume } from '../download.js';
 
 function esc(str) {
     if (!str) return '';
@@ -56,19 +57,11 @@ export function renderPage(route, satelliteId = null) {
         btn.addEventListener('click', () => navigateBack());
     });
 
-    // Resume: blob download — no href ever points to the file
     container.querySelectorAll('[data-resume-link]').forEach(link => {
         link.style.cursor = 'pointer';
-        link.addEventListener('click', async (e) => {
+        link.addEventListener('click', (e) => {
             e.preventDefault();
-            const res = await fetch(link.dataset.resumeLink);
-            const blob = await res.blob();
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Ryan-Little-Resume.pdf';
-            a.click();
-            URL.revokeObjectURL(url);
+            downloadResume(link.dataset.resumeLink);
         });
     });
 
@@ -160,7 +153,7 @@ function renderAbout(data, satelliteImg) {
                 <p>${esc(data.subtitle)}</p>
                 ${data.resumeLink ? `
                     <div class="about-resume">
-                        <a data-resume-link="${esc(data.resumeLink)}" class="resume-link">
+                        <a data-resume-link="${data.resumeLink}" class="resume-link">
                             <i class="fas fa-file-alt"></i> View Resume
                         </a>
                     </div>
