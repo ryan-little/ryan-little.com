@@ -1,11 +1,11 @@
 # ryan-little.com
 
-Space-themed personal portfolio. 3D Earth globe with orbiting satellite navigation and a shooting star minigame. Vite 7 + vanilla JS/CSS + Three.js r182, deployed to GitHub Pages.
+Space-themed personal portfolio. 3D Earth globe with orbiting satellite navigation and a shooting star minigame. Vite 8 + vanilla JS/CSS + Three.js r184, deployed to GitHub Pages.
 
 ## Stack
 
-- **Build:** Vite 7, vanilla ES modules, no framework
-- **3D:** Three.js r182
+- **Build:** Vite 8 (Rolldown), vanilla ES modules, no framework. Three.js is code-split behind a dynamic import (`src/scene-boot.js`) — initial blocking JS ~11KB gzip
+- **3D:** Three.js r184
 - **Styles:** CSS Grid + custom properties
 - **Hosting:** GitHub Pages (static build from `dist/`)
 - **Fonts:** Inter (Google Fonts), Font Awesome 6.4
@@ -23,7 +23,9 @@ npm run preview  # Preview production build locally
 
 ```
 src/
-  main.js              # Entry point; tracks lastClickedSatellite for return transition
+  main.js              # Entry point; router/nav/hero boot immediately; tracks lastClickedSatellite
+  scene-boot.js        # All Three.js bootstrap, loaded via dynamic import() from main.js
+  download.js          # Shared resume blob-download helper
   constants.js         # Shared constants
   globe/               # Three.js 3D scene
     scene.js           # Renderer, camera, render loop, onUpdate(), animateCamera()

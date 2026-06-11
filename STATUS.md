@@ -22,6 +22,7 @@ Fully deployed and stable. Three.js globe, SPA router, satellite transitions, sh
 - Removed redundant `.filter()` allocation in `checkStarHit` (`shooting-star.js`) — pool invariant guarantees active stars are visible/uncaught
 - Removed incorrect `esc()` on `data-resume-link` attribute value (read via `.dataset`, not rendered)
 - Deps: three 0.182 → 0.184 (+1.6KB gzipped), vite → 8.0.16
+- **Repositioning**: hero subtitle and all head metadata (title, meta/OG/Twitter descriptions, schema.org jobTitle) now say "Geospatial Analyst" only — Developer identity removed "for now" per Ryan; content.json body mentions of web development left as-is
 
 ## Recent Work (2026-05-14)
 

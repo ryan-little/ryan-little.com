@@ -6,12 +6,15 @@ The Three.js scene is the entire UI. The 3D Earth globe and its orbiting satelli
 
 ```
 Browser
-  └── Vite 7 (dev/build)
-       └── main.js (entry)
-            ├── globe/   — Three.js scene (Earth, satellites, starfield, galaxies, lighting)
-            ├── game/    — Shooting star minigame (state machine, object pool, scoring)
-            └── pages/   — SPA router, transitions, content renderer
+  └── Vite 8 / Rolldown (dev/build)
+       └── main.js (entry — router, mobile nav, page rendering, hero links; ~11KB gzip initial)
+            ├── pages/          — SPA router, transitions, content renderer
+            └── scene-boot.js   — dynamic import(); all Three.js bootstrap (~131KB three chunk, async)
+                 ├── globe/     — Three.js scene (Earth, satellites, starfield, galaxies, lighting)
+                 └── game/      — Shooting star minigame (state machine, object pool, scoring)
 ```
+
+Until `scene-boot.js` finishes loading, navigation uses DOM-only fallbacks (`showPageNow`/`hidePageNow` in main.js) so deep links render immediately; once booted, `sceneApi` gates the full satellite transitions.
 
 ## Components
 
@@ -44,7 +47,7 @@ State machine: `idle → countdown → active → ending → cooldown`
 
 ## Data Flow
 
-1. `main.js` initializes scene, registers all `onUpdate()` callbacks
+1. `main.js` boots the router immediately, then dynamically imports `scene-boot.js`, which initializes the scene and registers all `onUpdate()` callbacks
 2. User clicks satellite → `satellites.js` fires route via `router.js`
 3. `router.js` updates History API, calls `transition.js`
 4. `transition.js` measures target DOM position, animates satellite exit, fades other satellites
