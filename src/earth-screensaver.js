@@ -1,9 +1,14 @@
 import { initScene, getCamera, getRenderer, onUpdate } from './globe/scene.js';
-import { createEarth, refreshCloudTexture } from './globe/earth.js';
+import { createEarth, refreshCloudTexture, setCloudsVisible, setAtmosphereVisible, setDayNightVisible } from './globe/earth.js';
 import { createStarfield } from './globe/starfield.js';
-import { createMoon } from './globe/moon.js';
-import { createCityLabels } from './globe/cities.js';
-import { CLOUD_TEXTURE_URL } from './constants.js';
+import { createMoon, setMoonVisible } from './globe/moon.js';
+import { createSun, setSunVisible } from './globe/sun.js';
+import { createGraticule, setGraticuleVisible } from './globe/graticule.js';
+import { createCityLabels, setCitiesVisible } from './globe/cities.js';
+import { createBorders, setBordersVisible } from './globe/borders.js';
+import { createLegend } from './globe/legend.js';
+import { scheduleCloudRefresh } from './cloud-schedule.js';
+import { CLOUD_TEXTURE_URL, CLOUD_TEXTURE_URL_HQ } from './constants.js';
 const DRIFT_PERIOD = 240;  // seconds per full horizontal orbit
 const IDLE_TIMEOUT = 10000; // ms before auto-drift resumes after interaction
 
@@ -157,16 +162,38 @@ async function init() {
 
     getCamera().position.set(0, 0, R);
 
+    // Use the 8192×4096 textures when the GPU can hold them; otherwise fall back
+    // to 4096×2048 so mobile GPUs (often capped at 4096) don't render a blank globe.
+    const hq = getRenderer().capabilities.maxTextureSize >= 8192;
+    const cloudUrl = hq ? CLOUD_TEXTURE_URL_HQ : CLOUD_TEXTURE_URL;
+    const dayUrl = hq ? '/textures/earth-day-8k.webp' : '/textures/earth-day.webp';
+    const nightUrl = hq ? '/textures/earth-night-8k.webp' : '/textures/earth-night.webp';
+
     createStarfield();
-    await createEarth({ cloudUrl: CLOUD_TEXTURE_URL, realTimeRotation: true });
+    await createEarth({ cloudUrl, dayUrl, nightUrl, realTimeRotation: true, brightness: 1.18, atmosphereIntensity: 2.4 });
     createMoon();
+    createSun();
+    createGraticule(container, () => R);
     createCityLabels(container, () => R);
+    createBorders();
+
+    // Layer legend — toggle visibility of each scene element. Defaults below
+    // are overridden by anything the visitor previously saved.
+    createLegend(container, [
+        { key: 'clouds',      label: 'Clouds',      enabled: true,  apply: setCloudsVisible },
+        { key: 'borders',     label: 'Borders',     enabled: true,  apply: setBordersVisible },
+        { key: 'cities',      label: 'City Labels', enabled: true,  apply: setCitiesVisible },
+        { key: 'graticule',   label: 'Graticule',   enabled: false, apply: setGraticuleVisible },
+        { key: 'daynight',    label: 'Day / Night', enabled: true,  apply: setDayNightVisible },
+        { key: 'atmosphere',  label: 'Atmosphere',  enabled: true,  apply: setAtmosphereVisible },
+        { key: 'sun',         label: 'Sun',         enabled: true,  apply: setSunVisible },
+        { key: 'moon',        label: 'Moon',        enabled: true,  apply: setMoonVisible },
+    ]);
 
     requestWakeLock();
 
-    // Refresh live clouds every 2 hours to match matteason's update cadence
-    const TWO_HOURS = 2 * 60 * 60 * 1000;
-    const _cloudRefreshInterval = setInterval(() => refreshCloudTexture(CLOUD_TEXTURE_URL), TWO_HOURS);
+    // Refresh live clouds aligned to matteason's 3-hourly cadence
+    scheduleCloudRefresh(() => refreshCloudTexture(cloudUrl));
 
     setupControls(getRenderer().domElement);
 

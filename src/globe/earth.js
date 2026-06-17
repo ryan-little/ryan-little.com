@@ -36,6 +36,9 @@ const fragmentShader = `
     uniform sampler2D cloudTexture;
     uniform vec3 sunDirection;
     uniform float cloudOffset;
+    uniform float cloudOpacity;
+    uniform float brightness;
+    uniform float dayNight;
     varying vec2 vUv;
     varying vec3 vNormalLocal;
 
@@ -51,6 +54,8 @@ const fragmentShader = `
         float intensity = dot(vNormalLocal, normalize(sunDirection));
         // Wide soft transition to emulate Earth's atmospheric penumbra
         float blend = smoothstep(-0.25, 0.25, intensity);
+        // dayNight=0 forces full daylight everywhere (no terminator / night side)
+        blend = mix(1.0, blend, dayNight);
 
         // Screen blend white light into day texture for self-illuminated look
         float innerBrightness = 0.12 * min(max(intensity, 0.0) * 3.0, 1.0);
@@ -58,7 +63,7 @@ const fragmentShader = `
         vec4 dayLit = vec4(1.0) - (vec4(1.0) - dayColor) * (vec4(1.0) - innerLight);
 
         // pow() makes thin clouds fade out, only thick formations stay visible
-        float cloudAlpha = pow(clouds, 1.5) * 0.7 * blend;
+        float cloudAlpha = pow(clouds, 1.5) * 0.7 * blend * cloudOpacity;
         dayLit = mix(dayLit, vec4(1.0, 1.0, 1.0, 1.0), cloudAlpha);
 
         // Cloud shadows: per-fragment tangent-space parallax onto day surface.
@@ -74,15 +79,16 @@ const fragmentShader = `
         // RepeatWrapping handles U wrap naturally; clamp V at poles
         vec2 shadowUv = vec2(cloudUv.x + shadowDU, clamp(cloudUv.y + shadowDV, 0.0, 1.0));
         float shadowCloud = texture2D(cloudTexture, shadowUv).r;
-        float shadowAlpha = pow(shadowCloud, 2.0) * 0.5 * blend;
+        float shadowAlpha = pow(shadowCloud, 2.0) * 0.5 * blend * cloudOpacity;
         dayLit = mix(dayLit, dayLit * 0.4, shadowAlpha);
 
         // Night side: city lights fully visible in deep night, fade near terminator
         float nightVisibility = 1.0 - smoothstep(-0.2, 0.15, intensity);
         vec4 moonlit = dayColor * 0.15;
-        vec4 nightLit = nightColor * (2.0 - pow(clouds, 1.5) * 0.86) * nightVisibility + moonlit;
+        vec4 nightLit = nightColor * (2.0 - pow(clouds, 1.5) * 0.86 * cloudOpacity) * nightVisibility + moonlit;
 
         gl_FragColor = mix(nightLit, dayLit, blend);
+        gl_FragColor.rgb *= brightness;
     }
 `;
 
@@ -91,7 +97,14 @@ function updateSunUniform() {
     earthMesh.material.uniforms.sunDirection.value.set(cachedSunDir.x, cachedSunDir.y, cachedSunDir.z);
 }
 
-export async function createEarth({ cloudUrl = '/textures/earth-clouds.webp', realTimeRotation = false } = {}) {
+export async function createEarth({
+    cloudUrl = '/textures/earth-clouds.webp',
+    dayUrl = '/textures/earth-day.webp',
+    nightUrl = '/textures/earth-night.webp',
+    realTimeRotation = false,
+    brightness = 1.0,
+    atmosphereIntensity = 1.1,
+} = {}) {
     const scene = getScene();
     const isMobile = window.innerWidth < MOBILE_BREAKPOINT_3D;
     const segments = isMobile ? 32 : 64;
@@ -102,10 +115,10 @@ export async function createEarth({ cloudUrl = '/textures/earth-clouds.webp', re
     try {
         const results = await Promise.allSettled([
             new Promise((resolve, reject) => {
-                sharedTextureLoader.load('/textures/earth-day.webp', resolve, undefined, reject);
+                sharedTextureLoader.load(dayUrl, resolve, undefined, reject);
             }),
             new Promise((resolve, reject) => {
-                sharedTextureLoader.load('/textures/earth-night.webp', resolve, undefined, reject);
+                sharedTextureLoader.load(nightUrl, resolve, undefined, reject);
             }),
             new Promise((resolve) => {
                 sharedTextureLoader.load(cloudUrl, resolve, undefined, () => {
@@ -143,6 +156,9 @@ export async function createEarth({ cloudUrl = '/textures/earth-clouds.webp', re
                 cloudTexture: { value: resolvedCloud },
                 sunDirection: { value: new THREE.Vector3() },
                 cloudOffset: { value: 0.0 },
+                cloudOpacity: { value: 1.0 },
+                brightness: { value: brightness },
+                dayNight: { value: 1.0 },
             },
         });
     } catch (err) {
@@ -160,7 +176,7 @@ export async function createEarth({ cloudUrl = '/textures/earth-clouds.webp', re
     earthMesh.rotation.y = 0;
     scene.add(earthMesh);
 
-    atmosphereMesh = createAtmosphere(segments);
+    atmosphereMesh = createAtmosphere(segments, atmosphereIntensity);
     scene.add(atmosphereMesh);
 
     updateSunCache();
@@ -203,7 +219,7 @@ export async function createEarth({ cloudUrl = '/textures/earth-clouds.webp', re
     return earthMesh;
 }
 
-function createAtmosphere(segments = 64) {
+function createAtmosphere(segments = 64, intensity = 1.1) {
     const geometry = new THREE.SphereGeometry(EARTH_RADIUS * 1.02, segments, segments);
     const material = new THREE.ShaderMaterial({
         vertexShader: `
@@ -218,6 +234,7 @@ function createAtmosphere(segments = 64) {
         `,
         fragmentShader: `
             uniform vec3 sunWorldDir;
+            uniform float atmIntensity;
             varying vec3 vNormal;
             varying vec3 vWorldNormal;
             void main() {
@@ -230,7 +247,8 @@ function createAtmosphere(segments = 64) {
                 vec3 dayColor   = vec3(0.4, 0.65, 1.0);   // blue-white
                 vec3 atmosColor = dayColor * max(dayFactor, 0.35);
 
-                gl_FragColor = vec4(atmosColor, 1.0) * limb * 1.1;
+                // intensity is raised on /earth (no bloom) so the rim still reads.
+                gl_FragColor = vec4(atmosColor, 1.0) * limb * atmIntensity;
             }
         `,
         blending: THREE.AdditiveBlending,
@@ -239,6 +257,7 @@ function createAtmosphere(segments = 64) {
         depthWrite: false,
         uniforms: {
             sunWorldDir: { value: new THREE.Vector3(1, 0, 0) },
+            atmIntensity: { value: intensity },
         },
     });
 
@@ -247,6 +266,22 @@ function createAtmosphere(segments = 64) {
 
 export function getEarth() { return earthMesh; }
 export function getEarthRadius() { return EARTH_RADIUS; }
+
+export function setCloudsVisible(visible) {
+    if (earthMesh?.material?.uniforms?.cloudOpacity) {
+        earthMesh.material.uniforms.cloudOpacity.value = visible ? 1.0 : 0.0;
+    }
+}
+
+export function setAtmosphereVisible(visible) {
+    if (atmosphereMesh) atmosphereMesh.visible = visible;
+}
+
+export function setDayNightVisible(visible) {
+    if (earthMesh?.material?.uniforms?.dayNight) {
+        earthMesh.material.uniforms.dayNight.value = visible ? 1.0 : 0.0;
+    }
+}
 
 export function refreshCloudTexture(url) {
     if (!earthMesh?.material?.uniforms?.cloudTexture) return;

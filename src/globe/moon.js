@@ -9,20 +9,34 @@ const SYNODIC_PERIOD = 29.53059; // days
 const MOON_DISTANCE = 50;
 const MOON_RADIUS = 0.75;
 
+// Moon surface map: Solar System Scope (CC-BY 4.0, solarsystemscope.com/textures)
+const moonTextureLoader = new THREE.TextureLoader();
+
+let moonMesh = null;
+
 function getMoonPhase() {
     const d = (Date.now() - Date.UTC(2000, 0, 1, 12)) / 86400000;
     return (((d - NEW_MOON_J2000) % SYNODIC_PERIOD) / SYNODIC_PERIOD) * 2 * Math.PI;
 }
 
+export function setMoonVisible(visible) {
+    if (moonMesh) moonMesh.visible = visible;
+}
+
 export function createMoon() {
     const scene = getScene();
 
-    const geometry = new THREE.SphereGeometry(MOON_RADIUS, 32, 32);
+    const geometry = new THREE.SphereGeometry(MOON_RADIUS, 48, 48);
     const material = new THREE.MeshPhongMaterial({
-        color: 0xc8c8c0,
-        shininess: 3,
+        color: 0xffffff,
+        shininess: 2,
     });
-    const moonMesh = new THREE.Mesh(geometry, material);
+    moonTextureLoader.load('/textures/moon.webp', (tex) => {
+        tex.colorSpace = THREE.SRGBColorSpace;
+        material.map = tex;
+        material.needsUpdate = true;
+    });
+    moonMesh = new THREE.Mesh(geometry, material);
     scene.add(moonMesh);
 
     // Directional light from the sun — only affects Phong/Lambert materials (i.e. the moon)

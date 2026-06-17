@@ -26,6 +26,141 @@
             white-space: nowrap;
             text-shadow: 0 0 3px rgba(0, 0, 0, 1), 0 0 6px rgba(0, 0, 0, 0.7);
         }
+
+        /* ── Graticule labels ─────────────────────────────────────── */
+        .graticule-label {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            font-family: 'Inter', sans-serif;
+            font-size: 8px;
+            letter-spacing: 0.08em;
+            pointer-events: none;
+            user-select: none;
+            white-space: nowrap;
+            text-shadow: 0 0 3px rgba(0, 0, 0, 1), 0 0 5px rgba(0, 0, 0, 0.8);
+        }
+        .graticule-label.lon,
+        .graticule-label.lat   { color: rgba(150, 200, 235, 0.7); }
+        .graticule-label.eq    { color: rgba(170, 220, 255, 0.95); font-weight: 600; letter-spacing: 0.12em; }
+        .graticule-label.named { color: rgba(235, 190, 130, 0.9); text-transform: uppercase; letter-spacing: 0.1em; }
+
+        /* ── Layer legend ─────────────────────────────────────────── */
+        /* Container is zero-size & click-through so it never blocks the globe;
+           only the handle and body capture pointer events. */
+        .layer-legend {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            width: 0;
+            height: 0;
+            font-family: 'Inter', sans-serif;
+            color: rgba(255, 255, 255, 0.85);
+            user-select: none;
+            pointer-events: none;
+        }
+        /* Handle — the only thing visible until hover/tap. */
+        .legend-handle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 1;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 3px;
+            background: rgba(10, 14, 22, 0.45);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border: 1px solid rgba(120, 170, 220, 0.18);
+            border-radius: 8px;
+            cursor: pointer;
+            opacity: 0.4;
+            transition: opacity 0.3s ease;
+            pointer-events: auto;
+        }
+        .legend-handle:hover { opacity: 0.85; }
+        .legend-handle span {
+            display: block;
+            width: 15px;
+            height: 2px;
+            border-radius: 2px;
+            background: rgba(180, 210, 240, 0.9);
+        }
+        /* Body — hidden until the handle/body is hovered or pinned open via tap. */
+        .legend-body {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 2;
+            min-width: 138px;
+            background: rgba(10, 14, 22, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(120, 170, 220, 0.18);
+            border-radius: 10px;
+            padding: 11px 13px 12px;
+            opacity: 0;
+            transform: translateY(-4px);
+            pointer-events: none;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+        .legend-handle:hover ~ .legend-body,
+        .legend-body:hover,
+        .layer-legend.open .legend-body {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .legend-title {
+            font-size: 10px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.55);
+        }
+        .legend-list {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        .legend-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            padding: 2px 0;
+        }
+        .legend-row input {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 13px; height: 13px;
+            margin: 0;
+            border: 1px solid rgba(150, 190, 230, 0.5);
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.04);
+            cursor: pointer;
+            position: relative;
+            flex: none;
+        }
+        .legend-row input:checked {
+            background: rgba(108, 192, 255, 0.85);
+            border-color: rgba(108, 192, 255, 0.9);
+        }
+        .legend-row input:checked::after {
+            content: '';
+            position: absolute;
+            left: 4px; top: 1px;
+            width: 3px; height: 7px;
+            border: solid #0a0e16;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
     </style>
 </head>
 <body>

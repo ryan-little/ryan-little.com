@@ -8,6 +8,7 @@ import { createSatellites, initSatelliteInteraction, pauseSatelliteClicks, resum
 import { getCurrentRoute } from './pages/router.js';
 import { initShootingStars } from './game/shooting-star.js';
 import { initMinigame } from './game/minigame.js';
+import { scheduleCloudRefresh } from './cloud-schedule.js';
 import { CLOUD_TEXTURE_URL } from './constants.js';
 
 export { transitionToPage, transitionToGlobe } from './pages/transition.js';
@@ -19,7 +20,7 @@ export function startRenderer(container) {
 export async function populateScene({ onSatelliteClick }) {
     createStarfield();
     await Promise.all([createGalaxies(), createEarth({ cloudUrl: CLOUD_TEXTURE_URL })]);
-    const _cloudRefreshInterval = setInterval(() => refreshCloudTexture(CLOUD_TEXTURE_URL), 2 * 60 * 60 * 1000);
+    scheduleCloudRefresh(() => refreshCloudTexture(CLOUD_TEXTURE_URL));
     await createSatellites();
     await initShootingStars();
     initMinigame({
