@@ -1,13 +1,28 @@
 # Status
 
 **Phase:** Stable — maintenance only
-**Last updated:** 2026-06-11
+**Last updated:** 2026-06-17
 **Live:** https://ryan-little.com
 **Repo:** ryan-little/ryan-little.com
 
 ## Current State
 
-Fully deployed and stable. Three.js globe, SPA router, satellite transitions, shooting star minigame, and all 4 content pages live. Full audit done 2026-04-04 (48 issues fixed). Initial blocking JS ~11.4KB gzipped after the 2026-06-11 code-split; Three.js chunk (~131KB gzipped) loads async behind the spinner.
+Fully deployed and stable. Three.js globe, SPA router, satellite transitions, shooting star minigame, and all 4 content pages live. Full audit done 2026-04-04 (48 issues fixed). Initial blocking JS ~11.4KB gzipped after the 2026-06-11 code-split; Three.js chunk (~131KB gzipped) loads async behind the spinner. Separate `/earth` ambient screensaver page (real-time-rotation globe, own Vite entry) — expanded 2026-06-17.
+
+## Recent Work (2026-06-17)
+
+Major feature pass on the **`/earth` ambient screensaver** (separate entry; homepage globe left visually unchanged — all `/earth`-only effects are gated behind `createEarth` options):
+
+- **Visible sun** (`globe/sun.js`) — billboard locked to the live subsolar point, ray-test limb occlusion so the Earth eclipses it on the night side
+- **Moon texture** — real lunar surface map (`moon.webp`, Solar System Scope CC-BY 4.0); was a flat gray sphere
+- **Geographic graticule** (`globe/graticule.js`) — 15° lat/long lines, equator/prime-meridian highlighted, named circles (tropics ±23.44°, polar ±66.56°); degree + name labels, horizon-culled
+- **Country borders** (`globe/borders.js`) — white Natural Earth 110m outlines pre-flattened to `public/data/borders.json` (47KB gzip), single LineSegments draw call
+- **Layer legend** (`globe/legend.js`) — hover-revealed panel toggling clouds, borders, cities, graticule, day/night, atmosphere, sun, moon; state persisted to localStorage
+- **8192×4096 day/night/cloud textures** on capable GPUs (gated by `renderer.capabilities.maxTextureSize >= 8192`), 4096 fallback for mobile; `earth-day-8k.webp` / `earth-night-8k.webp` bundled, HQ clouds (`CLOUD_TEXTURE_URL_HQ`) fetched live
+- Round glowing city markers (replaced white squares, shrunk to 0.012); +18% earth brightness + boosted atmosphere rim — both `/earth`-only uniforms
+- **Cloud refresh aligned to matteason's true 3h cadence** (`cloud-schedule.js`, synoptic UTC hours + 25min margin) — applied to homepage globe too
+- Tried and **removed during iteration**: bloom post-processing (too bright), ISS live tracker (read oddly), earthquakes (USGS) + wildfires (NASA EONET) data layers — settled on a clean borders-only data overlay
+- New modules: `sun.js`, `graticule.js`, `legend.js`, `borders.js`, `geo.js`, `cloud-schedule.js`. Merged `earth-enhancements` → main, deployed live.
 
 ## Recent Work (2026-06-11)
 
