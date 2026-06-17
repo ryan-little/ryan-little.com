@@ -112,6 +112,25 @@ const CITIES = [
     { name: 'Melbourne',      lat: -37.81, lon:  144.96 },
 ];
 
+// Soft round dot texture so city markers render as glowing points, not squares.
+function makeDotTexture() {
+    const size = 64;
+    const canvas = document.createElement('canvas');
+    canvas.width = canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    const g = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+    g.addColorStop(0.0, 'rgba(255, 255, 255, 1)');
+    g.addColorStop(0.35, 'rgba(190, 228, 255, 0.85)');
+    g.addColorStop(1.0, 'rgba(120, 180, 240, 0)');
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+    ctx.fill();
+    const tex = new THREE.CanvasTexture(canvas);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    return tex;
+}
+
 // Convert geographic coords to Earth mesh local-space unit vector.
 // Convention: PM (0°E) at +X, 90°E at -Z  (matches earth.js shader).
 function latLonToLocal(lat, lon) {
@@ -127,6 +146,12 @@ function latLonToLocal(lat, lon) {
 // Labels fade in when camera is closer than this radius
 const LABEL_SHOW_R  = 3.0;
 const LABEL_FULL_R  = 2.3;
+
+let citiesEnabled = true;
+
+export function setCitiesVisible(visible) {
+    citiesEnabled = visible;
+}
 
 export function createCityLabels(container, getR) {
     const scene = getScene();
@@ -144,12 +169,14 @@ export function createCityLabels(container, getR) {
     dotGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
     const dotMat = new THREE.PointsMaterial({
+        map: makeDotTexture(),
         color: 0xffffff,
-        size: 0.009,
+        size: 0.012,
         sizeAttenuation: true,
         transparent: true,
-        opacity: 0.55,
+        opacity: 0.7,
         depthWrite: false,
+        blending: THREE.AdditiveBlending,
     });
 
     const dots = new THREE.Points(dotGeo, dotMat);
@@ -183,9 +210,10 @@ export function createCityLabels(container, getR) {
 
         // Dots rotate with Earth and fade in with zoom like labels
         dots.rotation.y = ry;
-        const labelAlpha = Math.max(0, Math.min(1,
+        const labelAlpha = !citiesEnabled ? 0 : Math.max(0, Math.min(1,
             (LABEL_SHOW_R - r) / (LABEL_SHOW_R - LABEL_FULL_R)
         ));
+        dots.visible = citiesEnabled;
         dotMat.opacity = labelAlpha * 0.55;
 
         for (const { el, localPos } of entries) {
