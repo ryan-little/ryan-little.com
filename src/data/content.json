@@ -212,6 +212,20 @@
         "icon": "fas fa-map",
         "items": [
           {
+            "title": "California Wildfire StoryMap",
+            "description": "An interactive StoryMap on how California's wildfires have grown in size and number since 2000, where they concentrate, and how the state's official Fire Hazard Severity Zones compare against where fires have actually burned. Built around five maps (a county choropleth, a proportional symbol map, perimeters classed by size, a dissolved burn footprint, and the state hazard zones), working from statewide totals down to the record 2020 season.",
+            "link": "https://storymaps.arcgis.com/stories/c628097e913a4fd4b97159e3c6d26c25",
+            "image": {
+              "webp": "assets/images_webp/californiawildfirestorymap.webp",
+              "alt": "California Wildfires Since 2000 StoryMap",
+              "caption": "California Wildfires Since 2000, an ArcGIS StoryMap"
+            }
+          },
+          {
+            "title": "Wildfire Structure Risk Tool",
+            "description": "An ArcGIS Pro Python toolbox that scores individual structures as low, medium, or high wildfire risk from terrain and fuels. Slope is derived from a DEM, LANDFIRE fuel types are reclassified to hazard scores through a custom lookup, and each structure is rated on the worst fuel found inside California's 100-foot defensible space radius. Written with arcpy against a custom module, and tested on the mountain town of Idyllwild."
+          },
+          {
             "title": "Temporal NDVI Study of Man-Made Forests",
             "description": "Comprehensive term poster project investigating China's Great Green Wall program to track land use changes, assess new forest health, and analyze weather changes in the Gobi Desert from 2000 to 2022. Employed custom R code to process Landsat imagery into NDVI data from key research zones to derive forest growth areas and relative health of the forests.",
             "image": {
@@ -264,26 +278,6 @@
         "icon": "fas fa-laptop-code",
         "items": [
           {
-            "title": "Little Hammer Labs",
-            "description": "Co-founded in 2025 with a lifelong friend. We build custom AI-powered tools for clients in forensic architecture and property management. I serve as CTO, managing local LLM infrastructure and a full development stack from scratch.",
-            "link": "https://littlehammerlabs.com",
-            "image": {
-              "webp": "assets/images_webp/lhl-logo.webp",
-              "alt": "Little Hammer Labs Logo",
-              "caption": "Little Hammer Labs"
-            },
-            "subItems": [
-              {
-                "title": "DGA Transcriber",
-                "description": "Field transcription pipeline built for Diehl Group Architects. Voice notes recorded during on-site inspections are transcribed using a locally-run Whisper model — no cloud, no data sent off-site — then processed through a custom architecture vocabulary to correct domain terminology before generating formatted reports. Replaces ~$15K/year in commercial transcription services.",
-                "image": {
-                  "webp": "assets/images_webp/dgatranscribericon.webp",
-                  "alt": "DGA Transcriber Logo"
-                }
-              }
-            ]
-          },
-          {
             "title": "Primal Chase",
             "description": "A browser-based survival game built with vanilla JavaScript. Play as a hunted predator managing heat, fatigue, thirst, and hunger across a day/night cycle — outrunning hunters who never stop. No framework, no library.",
             "link": "https://primalchase.com",
@@ -295,19 +289,21 @@
             }
           },
           {
-            "title": "Personal Sites",
+            "title": "ryan-little.com",
+            "description": "Interactive portfolio built around a 3D Earth with real-time sun lighting, live cloud imagery, and a hand-painted starfield. Satellites orbit the globe as navigation, and there's a hidden shooting star minigame. Built from scratch with Three.js and vanilla JS — no framework.",
+            "github": "https://github.com/ryan-little/ryan-little.com"
+          },
+          {
+            "title": "Writing",
             "paired": true,
             "sites": [
               {
-                "title": "ryan-little.com",
-                "description": "Interactive portfolio built around a 3D Earth with real-time sun lighting, live cloud imagery, and a hand-painted starfield. Satellites orbit the globe as navigation, and there's a hidden shooting star minigame. Built from scratch with Three.js and vanilla JS — no framework.",
-                "github": "https://github.com/ryan-little/ryan-little.com"
+                "title": "Pyrogeography",
+                "description": "A wildfire publication, one fire at a time: the history, the terrain, and what the record actually says, serialized with original maps built for each piece. In preparation, launching with the first fire."
               },
               {
-                "title": "ryanpdlittle.com",
-                "description": "Blog and learning log covering GIS projects, web development, and game design. Static site on GitHub Pages, updated Tuesday/Friday.",
-                "link": "https://ryanpdlittle.com",
-                "github": "https://github.com/ryan-little/ryanpdlittle.com"
+                "title": "Summit Register",
+                "description": "Trail reports from Southern California and the Sierra: routes, conditions, GPS data, and what a peak is actually like to climb. In preparation, carrying over the reports currently published on ryanpdlittle.com."
               }
             ]
           },
@@ -424,19 +420,14 @@
         }
       },
       {
-        "id": "building",
-        "title": "Building",
-        "icon": "fas fa-hammer",
+        "id": "education",
+        "title": "Currently Studying",
+        "icon": "fas fa-graduation-cap",
         "content": [
-          "In 2025 I co-founded Little Hammer Labs with a lifelong friend, where I serve as CTO. We build custom AI-powered tools for clients in forensic architecture and property management.",
-          "Our main product takes voice notes recorded during on-site inspections, transcribes them with a locally run Whisper model, runs the output through a custom domain-specific dictionary, and delivers formatted reports ready to hand to the client.",
-          "Managing local LLM infrastructure and a full development stack from scratch has been the most formative work I've done."
-        ],
-        "image": {
-          "webp": "assets/images_webp/lhl-logo.webp",
-          "alt": "Little Hammer Labs Logo",
-          "caption": "Little Hammer Labs"
-        }
+          "Working toward a Graduate Certificate in Spatial Data Science at Penn State, through the World Campus while working full time.",
+          "Coursework so far has covered GIS programming and automation with Python and arcpy, and cartography and visualization, both of which produced wildfire projects listed in my portfolio.",
+          "All fifteen credits carry into Penn State's M.S. in Spatial Data Science, which I plan to continue into once the certificate confers."
+        ]
       },
       {
         "id": "skills",

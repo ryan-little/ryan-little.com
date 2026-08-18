@@ -1,13 +1,24 @@
 # Status
 
 **Phase:** Stable — maintenance only
-**Last updated:** 2026-06-17
+**Last updated:** 2026-08-17
 **Live:** https://ryan-little.com
 **Repo:** ryan-little/ryan-little.com
 
 ## Current State
 
 Fully deployed and stable. Three.js globe, SPA router, satellite transitions, shooting star minigame, and all 4 content pages live. Full audit done 2026-04-04 (48 issues fixed). Initial blocking JS ~11.4KB gzipped after the 2026-06-11 code-split; Three.js chunk (~131KB gzipped) loads async behind the spinner. Separate `/earth` ambient screensaver page (real-time-rotation globe, own Vite entry) — expanded 2026-06-17.
+
+## Recent Work (2026-08-17)
+
+Content refresh audited against The Atlas, plus a CI bump. No code changes — `content.json` and `index.html` metadata only.
+
+- **Added two Penn State portfolio pieces** at the top of the GIS section: the published **California Wildfires Since 2000 StoryMap** (link + cover image, captured headless from the live page at 1600x890 WebP) and the **Wildfire Structure Risk Tool** (GEOG 485 final: arcpy toolbox, DEM slope + LANDFIRE fuel reclass, 100 ft defensible space radius, Idyllwild test area). The risk tool has no image — its ArcGIS Pro outputs live on the Windows machine
+- **Removed Little Hammer Labs entirely** — the portfolio card and its DGA Transcriber sub-item, the About page "Building" card, and the schema.org person description in `index.html`. LHL was archived in the vault 2026-08-12 as dormant. `lhl-logo.webp`, `dgatranscribericon.webp` and `lhlhammer_transback.webp` are now orphaned in `public/images/`
+- **About: "Building" → "Currently Studying"** (graduation-cap icon) — Penn State Graduate Certificate in Spatial Data Science, the two finished courses, and the credits carrying into the M.S. Kept as the third card so the `sections.slice(0, 3)` grid layout holds. No grades, no course numbers, per Ryan
+- **Development section restructured:** the "Personal Sites" paired card became a **"Writing"** paired card holding **Pyrogeography** and **Summit Register**, both described as in preparation with no outbound links (neither publication is public yet). `ryan-little.com` split out as its own item; `ryanpdlittle.com` no longer appears as a portfolio entry, though the Blog nav link still points there since it's still publishing weekly
+- **CI:** `deploy.yml` off Node 20 and deprecated action majors (checkout@v6, setup-node@v7 on Node 22, configure-pages@v6, upload-pages-artifact@v5, deploy-pages@v5)
+- Adventures page left untouched — Ryan is considering removing it, so the missing 2026 trips (Zion, the World Cup weekend, Whitney) and the 12 countries / 22 national parks counters were deliberately not updated. The vault's Travel History recount gets 9 and 9
 
 ## Recent Work (2026-06-17)
 
@@ -52,8 +63,11 @@ Major feature pass on the **`/earth` ambient screensaver** (separate entry; home
 - Content polish (audited 2026-06-11 — all 33 referenced images exist on disk; spain_portugal/rocky_mountain "missing images" item was stale):
   - `rocky-mountain` description is the thinnest entry — no named trail/summit/landmark
   - `japan` entry uses `osaka_headshot.webp` but Osaka isn't in its location list ("Tokyo, Kyoto, Hiroshima, Nara")
-  - `lhlhammer_transback.webp` is orphaned in public/images/ (unreferenced)
+  - `lhlhammer_transback.webp`, `lhl-logo.webp` and `dgatranscribericon.webp` are orphaned in public/images/ (unreferenced since the 2026-08-17 LHL removal)
   - About page: `wateringreenland.webp` captioned as professional remote-sensing work — could read as CACI-specific
+- **Adventures page: decision pending.** Ryan is considering removing it (2026-08-17). Until that's settled it stays as-is, stale: no 2026 trips, and counters claiming 12 countries / 22 national parks the vault can't support
+- **Wildfire Structure Risk Tool needs a map image.** Everything else in the GIS section has one. A risk-scored structure export from ArcGIS Pro would do it; the project files are on the Windows machine
+- **Writing card links.** Pyrogeography and Summit Register are named without links because neither is public. Add `link` fields once they launch (`pyrogeography.substack.com` is reserved; Summit Register's URL is unset)
 
 ## Someday / Maybe
 
