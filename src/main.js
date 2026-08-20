@@ -4,8 +4,9 @@ import { renderPage } from './pages/page-renderer.js';
 import { downloadResume } from './download.js';
 
 // External links for satellites that don't have in-app pages
+// 'blog' temporarily removed (2026-08-20) alongside its satellite — restore both together.
 const EXTERNAL_SATELLITES = {
-    blog: 'https://ryanpdlittle.com',
+    // blog: 'https://ryanpdlittle.com',
 };
 
 // Set once the dynamically imported Three.js scene has fully booted.

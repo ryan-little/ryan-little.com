@@ -167,10 +167,7 @@ function renderAbout(data, satelliteImg) {
                     </div>
                 ` : ''}
                 <div class="sections-grid">
-                    ${data.sections.slice(0, 3).map(sectionCard).join('')}
-                    <div class="skills-outside-combined">
-                        ${data.sections.slice(3).map(sectionCard).join('')}
-                    </div>
+                    ${data.sections.map(sectionCard).join('')}
                 </div>
             </div>
         </div>
@@ -231,10 +228,6 @@ function renderPortfolio(data, satelliteImg) {
                                             ${item.link ? `<a href="${esc(item.link)}" target="_blank" rel="noopener" class="portfolio-link">Visit →</a>` : ''}
                                             ${item.github ? `<a href="${esc(item.github)}" target="_blank" rel="noopener" class="portfolio-link github-link"><i class="fab fa-github"></i> GitHub</a>` : ''}
                                         </div>
-                                        ${item.image ? `
-                                            <img src="${img(item.image.webp)}" alt="${esc(item.image.alt)}" loading="lazy" class="portfolio-image">
-                                            ${item.image.caption ? `<p class="image-caption">${esc(item.image.caption)}</p>` : ''}
-                                        ` : ''}
                                     `}
                                     ${(item.subItems || []).map(sub => `
                                         <div class="portfolio-sub-item">
@@ -245,10 +238,22 @@ function renderPortfolio(data, satelliteImg) {
                                             </div>
                                         </div>
                                     `).join('')}
-                                    ${(item.additionalImages || []).map(ai => `
-                                        <img src="${img(ai.webp)}" alt="${esc(ai.alt)}" loading="lazy" class="portfolio-image enlargeable">
-                                        ${ai.caption ? `<p class="image-caption">${esc(ai.caption)} <span class="enlarge-hint">(click to enlarge)</span></p>` : ''}
-                                    `).join('')}
+                                    ${((item.image && !item.image.alt?.includes('Logo')) || item.additionalImages) ? `
+                                        <div class="portfolio-image-gallery${(((item.image && !item.image.alt?.includes('Logo')) ? 1 : 0) + (item.additionalImages?.length || 0)) > 1 ? ' multi' : ''}">
+                                            ${item.image && !item.image.alt?.includes('Logo') ? `
+                                                <div class="portfolio-image-item">
+                                                    <img src="${img(item.image.webp)}" alt="${esc(item.image.alt)}" loading="lazy" class="portfolio-image enlargeable">
+                                                    ${item.image.caption ? `<p class="image-caption">${esc(item.image.caption)} <span class="enlarge-hint">(click to enlarge)</span></p>` : ''}
+                                                </div>
+                                            ` : ''}
+                                            ${(item.additionalImages || []).map(ai => `
+                                                <div class="portfolio-image-item">
+                                                    <img src="${img(ai.webp)}" alt="${esc(ai.alt)}" loading="lazy" class="portfolio-image enlargeable">
+                                                    ${ai.caption ? `<p class="image-caption">${esc(ai.caption)} <span class="enlarge-hint">(click to enlarge)</span></p>` : ''}
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    ` : ''}
                                 </div>
                             `).join('')}
                         </div>

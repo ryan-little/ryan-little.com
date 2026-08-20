@@ -1,10 +1,11 @@
-const VALID_ROUTES = ['about', 'portfolio', 'adventures', 'trees'];
+// 'adventures' temporarily removed (2026-08-20) — no satellite points to it right now.
+// Restore alongside the satellite-orbit.js SATELLITE_CONFIG entry.
+const VALID_ROUTES = ['about', 'portfolio', 'trees'];
 
 const ROUTE_TITLES = {
-    about:      'About Me — Ryan Little',
-    portfolio:  'Portfolio — Ryan Little',
-    adventures: 'Adventures — Ryan Little',
-    trees:      'Trees I\'ve Visited — Ryan Little',
+    about:      'About Me | Ryan Little',
+    portfolio:  'Portfolio | Ryan Little',
+    trees:      'Trees I\'ve Visited | Ryan Little',
 };
 
 const HOME_TITLE = document.title;

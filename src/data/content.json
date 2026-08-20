@@ -10,7 +10,7 @@
         "title": "Grand Europe Tour",
         "location": "France, Germany, Italy",
         "date": "July 2013",
-        "description": "A sweeping first look at Europe — the Eiffel Tower and Louvre in Paris, the Gothic cathedral of Cologne, the art and history of Berlin, and the ancient grandeur of the Colosseum in Rome.",
+        "description": "First look at Europe: the Eiffel Tower and the Louvre in Paris, the Gothic cathedral at Cologne, Berlin, and the Colosseum in Rome.",
         "image": {
           "webp": "assets/images_webp/colosseum_rome.webp",
           "alt": "The Colosseum, Rome"
@@ -21,7 +21,7 @@
         "title": "Hawaii: Maui",
         "location": "Lahaina, Maui, Hawaii",
         "date": "October 2016",
-        "description": "Parasailing over Lahaina's crystal-clear waters and watching the sunrise from the summit of Haleakalā — a dormant volcanic crater soaring over 10,000 feet above sea level.",
+        "description": "Parasailing off Lahaina and watching the sunrise from the summit of Haleakalā, a dormant volcano just over 10,000 feet.",
         "image": {
           "webp": "assets/images_webp/maui_coastline.webp",
           "alt": "Maui coastline, Hawaii"
@@ -32,7 +32,7 @@
         "title": "Europe: Ireland & Central Europe",
         "location": "Dublin, Amsterdam, Berlin, Prague, Munich",
         "date": "June 2018",
-        "description": "Dublin's historic pubs and cobblestone lanes, Amsterdam's iconic canals, Berlin's East Side Gallery, Prague's fairytale old town, Munich's Marienplatz — and the dramatic basalt columns of Giant's Causeway in Northern Ireland.",
+        "description": "Dublin's pubs and cobblestone lanes, Amsterdam's canals, Berlin's East Side Gallery, Prague's old town, Munich's Marienplatz, and the basalt columns of Giant's Causeway in Northern Ireland.",
         "image": {
           "webp": "assets/images_webp/giantscauseway_fullshot.webp",
           "alt": "Giant's Causeway, Northern Ireland"
@@ -43,7 +43,7 @@
         "title": "Sequoia & Kings Canyon",
         "location": "California, USA",
         "date": "July 2020",
-        "description": "Standing beneath General Sherman — the world's largest tree by volume — exploring the ancient Grant Grove, and hiking deep into the High Sierra backcountry.",
+        "description": "Standing under General Sherman, the largest tree on Earth by volume, walking Grant Grove, and hiking into the High Sierra backcountry.",
         "image": {
           "webp": "assets/images_webp/generalshermanpic.webp",
           "alt": "General Sherman Tree, Sequoia National Park"
@@ -54,7 +54,7 @@
         "title": "Redwood National Park",
         "location": "Northern California, USA",
         "date": "August 2020",
-        "description": "Wandering through ancient old-growth groves, hiking coastal trails above the Pacific, and camping along wild river corridors in the world's tallest forest.",
+        "description": "Old-growth groves, coastal trails above the Pacific, and camping along the river corridors in the tallest forest on Earth.",
         "image": {
           "webp": "assets/images_webp/hyperionpic.webp",
           "alt": "Hyperion Tree, Redwood National Park"
@@ -65,7 +65,7 @@
         "title": "Washington D.C.",
         "location": "Washington, D.C.",
         "date": "October 2020",
-        "description": "The National Mall in fall color, the Capitol steps with friends, world-class Smithsonian museums, and the weight of American history around every corner.",
+        "description": "The National Mall in fall color, the Capitol steps with friends, and as much of the Smithsonian as one trip allows.",
         "image": {
           "webp": "assets/images_webp/washington_dc_capitol.webp",
           "alt": "Group photo at the U.S. Capitol"
@@ -76,7 +76,7 @@
         "title": "Utah & Arizona Loop",
         "location": "Utah & Arizona, USA",
         "date": "June 2021",
-        "description": "Standing beneath Corona Arch outside Moab, scrambling through Arches National Park's iconic sandstone fins, and standing on the rim of the Grand Canyon.",
+        "description": "Corona Arch outside Moab, scrambling through the sandstone fins in Arches, and the rim of the Grand Canyon.",
         "image": {
           "webp": "assets/images_webp/utah_corona_arch.webp",
           "alt": "Corona Arch, Moab, Utah"
@@ -87,7 +87,7 @@
         "title": "Yellowstone & Grand Teton",
         "location": "Wyoming & Montana, USA",
         "date": "July 2021",
-        "description": "Watching Old Faithful erupt, standing above the thundering Lower Falls in Yellowstone's Grand Canyon, and camping beneath the jagged peaks of the Grand Teton.",
+        "description": "Old Faithful erupting, the Lower Falls in Yellowstone's Grand Canyon, and camping under the Tetons.",
         "image": {
           "webp": "assets/images_webp/yellowstone_lower_falls.webp",
           "alt": "Lower Falls, Yellowstone National Park"
@@ -98,7 +98,7 @@
         "title": "Lake Tahoe",
         "location": "California/Nevada, USA",
         "date": "March 2022",
-        "description": "Snow-capped peaks reflected in the impossibly blue waters of Lake Tahoe, with sweeping winter alpine vistas and a return trip for a spectacular drone light show over the water.",
+        "description": "Snow-capped peaks reflected in Lake Tahoe, and a return trip for a drone light show over the water.",
         "image": {
           "webp": "assets/images_webp/lake_tahoe_panoramic.webp",
           "alt": "Lake Tahoe panoramic view"
@@ -109,7 +109,7 @@
         "title": "Chicago",
         "location": "Chicago, Illinois",
         "date": "November 2024",
-        "description": "Cloud Gate's mirrored reflection of the Chicago skyline in Millennium Park, deep-dish pizza pilgrimages, and the bold urban grid of one of America's great cities.",
+        "description": "Cloud Gate mirroring the skyline in Millennium Park, and deep-dish pizza.",
         "image": {
           "webp": "assets/images_webp/chicago_cloud_gate.webp",
           "alt": "Cloud Gate, Millennium Park, Chicago"
@@ -120,7 +120,7 @@
         "title": "High Sierra Loop",
         "location": "California, USA",
         "date": "June 2022",
-        "description": "Summiting Half Dome in Yosemite, returning to Sequoia & Kings Canyon, and venturing into the White Mountains to walk among the ancient bristlecone pines — some of the oldest living organisms on Earth.",
+        "description": "Summiting Half Dome in Yosemite, back through Sequoia and Kings Canyon, and into the White Mountains to walk among bristlecone pines that are some of the oldest living things on Earth.",
         "image": {
           "webp": "assets/images_webp/methuselahpic.webp",
           "alt": "Ancient Bristlecone Pine, White Mountains"
@@ -131,7 +131,7 @@
         "title": "New York City",
         "location": "New York, USA",
         "date": "November 2022",
-        "description": "Manhattan's iconic skyline from the waterfront, a fall walk through Central Park's changing leaves, and the electric energy of the city's classic landmarks.",
+        "description": "The Manhattan skyline from the waterfront and Central Park in fall color.",
         "image": {
           "webp": "assets/images_webp/nyc_skyline.webp",
           "alt": "Manhattan skyline from the waterfront"
@@ -142,7 +142,7 @@
         "title": "Rocky Mountain National Park",
         "location": "Colorado, USA",
         "date": "February 2023",
-        "description": "Snowshoeing through Rocky Mountain's quiet winter wilderness, summiting above the treeline, and taking in the sweeping peaks above 12,000 feet.",
+        "description": "Snowshoeing Rocky Mountain in winter, climbing above treeline, and peaks over 12,000 feet.",
         "image": {
           "webp": "assets/images_webp/rocky_mountain_summit.webp",
           "alt": "Summit above treeline, Rocky Mountain National Park"
@@ -153,7 +153,7 @@
         "title": "Europe: Spain & Portugal",
         "location": "Alhambra, Seville, Sintra, Lisbon, Porto",
         "date": "November 2023",
-        "description": "The Alhambra's intricate Moorish fortress at dusk, Seville's grand Plaza de España, the fairy-tale palaces of Sintra, Lisbon's trams and tiled facades, and Porto's scenic riverfront wine culture.",
+        "description": "The Alhambra at dusk, the Plaza de España in Seville, the palaces of Sintra, Lisbon's trams and tiled facades, and the port houses along the river in Porto.",
         "image": {
           "webp": "assets/images_webp/seville_plaza_de_espana.webp",
           "alt": "Plaza de España, Seville"
@@ -164,7 +164,7 @@
         "title": "Southwest Parks Mega-Trip",
         "location": "Arizona, New Mexico, Texas, USA",
         "date": "April 2025",
-        "description": "Saguaro's forests of towering cacti at golden hour, White Sands' blinding gypsum dunes, Carlsbad Caverns' vast underground chambers, Guadalupe Mountains' limestone ridge, and Big Bend's rugged desert canyons and dark skies.",
+        "description": "Saguaro's cactus forests at golden hour, the gypsum dunes at White Sands, the chambers under Carlsbad Caverns, the limestone ridge of the Guadalupe Mountains, and Big Bend's desert canyons and dark skies.",
         "image": {
           "webp": "assets/images_webp/bigbendnp_fullshot.webp",
           "alt": "Big Bend National Park, Southwest Parks Mega-Trip"
@@ -175,7 +175,7 @@
         "title": "Japan: Deep Dive",
         "location": "Tokyo, Kyoto, Hiroshima, Nara",
         "date": "June 2025",
-        "description": "Tokyo's electric energy and neon-lit neighborhoods, Kyoto's ancient Shinto shrines tucked in forested hillsides, the haunting and profound Hiroshima Peace Memorial, and Nara's sacred freely-roaming deer.",
+        "description": "Tokyo's neon neighborhoods, Kyoto's shrines on forested hillsides, the Hiroshima Peace Memorial, and the deer that roam free in Nara.",
         "image": {
           "webp": "assets/images_webp/osaka_headshot.webp",
           "alt": "Japan: Deep Dive"
@@ -186,7 +186,7 @@
         "title": "Mexico: Cultural History",
         "location": "San Andrés Cholula & Texmelucan, Mexico",
         "date": "September 2025",
-        "description": "Exploring the ancient pyramid buried beneath the Great Pyramid of Cholula and the layered colonial history of San Andrés, followed by a horseback ride through the mountain valleys around Texmelucan.",
+        "description": "The tunnels bored through the Great Pyramid of Cholula and the church the Spanish built on top of it, then a horseback ride through the valleys around Texmelucan.",
         "image": {
           "webp": "assets/images_webp/mexico_horseback.webp",
           "alt": "Horseback riding in Texmelucan, Mexico"
@@ -223,11 +223,11 @@
           },
           {
             "title": "Wildfire Structure Risk Tool",
-            "description": "An ArcGIS Pro Python toolbox that scores individual structures as low, medium, or high wildfire risk from terrain and fuels. Slope is derived from a DEM, LANDFIRE fuel types are reclassified to hazard scores through a custom lookup, and each structure is rated on the worst fuel found inside California's 100-foot defensible space radius. Written with arcpy against a custom module, and tested on the mountain town of Idyllwild."
+            "description": "An ArcGIS Pro Python toolbox that scores individual structures as low, medium, or high wildfire risk from terrain and fuels. Slope is derived from a DEM, LANDFIRE fuel types are reclassified to hazard scores through a custom lookup, and each structure is rated on the worst fuel found inside California's 100-foot defensible space radius. Written in Python with arcpy and debugged against a study area in Idyllwild, a mountain town in the San Jacintos."
           },
           {
             "title": "Temporal NDVI Study of Man-Made Forests",
-            "description": "Comprehensive term poster project investigating China's Great Green Wall program to track land use changes, assess new forest health, and analyze weather changes in the Gobi Desert from 2000 to 2022. Employed custom R code to process Landsat imagery into NDVI data from key research zones to derive forest growth areas and relative health of the forests.",
+            "description": "Term research poster on China's Great Green Wall afforestation program, tracking land use change, the health of the new forest, and shifting weather patterns across the Gobi Desert from 2000 to 2022. Custom R code processed 22 years of Landsat imagery into per-zone NDVI to quantify forest growth and health directly.",
             "image": {
               "webp": "assets/images_webp/gisresearchprojectposter.webp",
               "alt": "Temporal NDVI Study Research Project Poster",
@@ -243,27 +243,65 @@
           },
           {
             "title": "Santa Barbara Wildfire Analysis",
-            "description": "Used Python to run a supervised classification of Landsat imagery of the Santa Barbara area across 2007, 2008, and 2009 to study the effects of the Jesusita and Gap fires on local vegetation and analyze rates of regrowth. Mapped results using QGIS and associated Landsat imagery bands.",
+            "description": "Two Landsat studies of the Santa Barbara area. The first is a five-class supervised land cover classification (water, burn scar, urban, vegetation, rock and sparse vegetation) built in QGIS with the Semi-Automatic Classification Plugin, running from Lake Cachuma down to Carpinteria, with an accuracy assessment at 86.5% overall and a kappa of 0.83. The second tracks the 2008 Gap and 2009 Jesusita burn scars in R, pulling mean NDVI out of each perimeter from 2007 through 2011 and comparing it against an unburned control site to measure how fast each one came back.",
             "image": {
               "webp": "assets/images_webp/santabarbarawildfireanalysis.webp",
-              "alt": "Santa Barbara Wildfire Analysis",
-              "caption": "Wildfire impact analysis and vegetation regrowth patterns"
+              "alt": "Land Classification of Santa Barbara",
+              "caption": "Five-class supervised land cover classification, Lake Cachuma to Carpinteria"
             },
             "additionalImages": [
               {
-                "webp": "assets/images_webp/santabarbarafalsecolor.webp",
-                "alt": "Santa Barbara False Color Analysis",
-                "caption": "False color composite analysis of the Santa Barbara area"
+                "webp": "assets/images_webp/santabarbarafireperimeters.webp",
+                "alt": "Gap and Jesusita Fire Perimeters, Santa Barbara",
+                "caption": "Gap Fire (red) and Jesusita Fire (blue) perimeters on a false color composite"
+              },
+              {
+                "webp": "assets/images_webp/gapfirendvi.webp",
+                "alt": "Gap Fire Mean NDVI vs Year",
+                "caption": "Gap Fire: mean NDVI drop and regrowth, 2007-2011"
+              },
+              {
+                "webp": "assets/images_webp/jesusitafirendvi.webp",
+                "alt": "Jesusita Fire Mean NDVI vs Year",
+                "caption": "Jesusita Fire: mean NDVI drop and regrowth, 2007-2011"
               }
             ]
           },
           {
-            "title": "Study of Native California Bird Habitat Area Being Lost to Wildfire",
-            "description": "Compiled a decade by decade analysis of wildfire damage to the habitats of the California Condor and Great Gray Owl. Took the CalFIRE historic fire database back to 1900 and color-coded each fire area by decade and clipped the results to the boundaries of the known habitats of both birds of study."
+            "title": "California Condor and Great Gray Owl Habitat Lost to Wildfire",
+            "description": "A decade-by-decade look at how much California Condor and Great Gray Owl habitat has burned. Classed the CAL FIRE historic perimeter record by decade back to 1898, then clipped it to each species' range as mapped by the California Department of Fish and Wildlife. Fire extent inside the owl's range grows decade over decade, and the last 40 years are by far the heaviest.",
+            "image": {
+              "webp": "assets/images_webp/greatgrayowlwildfiremap.webp",
+              "alt": "Wildfires in California's Great Gray Owl Range Since 1900",
+              "caption": "Great Gray Owl range vs. CAL FIRE perimeters by decade"
+            },
+            "additionalImages": [
+              {
+                "webp": "assets/images_webp/californiacondorwildfiremap.webp",
+                "alt": "Wildfires in the California Condor Range Since 1898",
+                "caption": "California Condor range vs. CAL FIRE perimeters by decade"
+              }
+            ]
+          },
+          {
+            "title": "GPS Field Collection and Density Analysis, UCSB Campus Sign Inventory",
+            "description": "Collected GPS waypoints in the field to inventory campus regulatory signage, feeding a merged class dataset of 151 classified sign locations. Converted the waypoints and track logs to features in ArcGIS Pro, then ran kernel density estimation across the forbidden, warning, and informational categories and set it against a Euclidean density surface for comparison.",
+            "image": {
+              "webp": "assets/images_webp/campussigndensitykernel.webp",
+              "alt": "UCSB Campus Sign Density - Kernel Density Estimation",
+              "caption": "Kernel density of campus regulatory signage from GPS field collection"
+            },
+            "additionalImages": [
+              {
+                "webp": "assets/images_webp/campussigndensityeuclidian.webp",
+                "alt": "UCSB Campus Sign Density - Euclidean Density Surface",
+                "caption": "Euclidean density surface, for comparison against the kernel estimate"
+              }
+            ]
           },
           {
             "title": "Agricultural Land Classification",
-            "description": "Supervised classification analysis of farmland areas using remote sensing techniques to identify and map agricultural land use patterns and crop distribution.",
+            "description": "Supervised classification of multispectral imagery over farmland, mapping agricultural land use and crop distribution.",
             "image": {
               "webp": "assets/images_webp/classifyingfarmland.webp",
               "alt": "Agricultural Land Classification Analysis",
@@ -279,7 +317,7 @@
         "items": [
           {
             "title": "Primal Chase",
-            "description": "A browser-based survival game built with vanilla JavaScript. Play as a hunted predator managing heat, fatigue, thirst, and hunger across a day/night cycle — outrunning hunters who never stop. No framework, no library.",
+            "description": "A browser-based survival game in vanilla JavaScript, no framework and no libraries. Play as a hunted predator managing heat, fatigue, thirst, and hunger across a day/night cycle while outrunning hunters that never stop.",
             "link": "https://primalchase.com",
             "github": "https://github.com/ryan-little/primal-chase",
             "image": {
@@ -290,7 +328,7 @@
           },
           {
             "title": "ryan-little.com",
-            "description": "Interactive portfolio built around a 3D Earth with real-time sun lighting, live cloud imagery, and a hand-painted starfield. Satellites orbit the globe as navigation, and there's a hidden shooting star minigame. Built from scratch with Three.js and vanilla JS — no framework.",
+            "description": "This site. A 3D Earth lit from the real sun position for the current UTC time, live cloud imagery on a three-hour refresh, and a 9,000-star field. The satellites in orbit are the navigation, and there's a hidden shooting star minigame. Three.js and vanilla JS, no framework.",
             "github": "https://github.com/ryan-little/ryan-little.com"
           },
           {
@@ -299,7 +337,7 @@
             "sites": [
               {
                 "title": "Pyrogeography",
-                "description": "A wildfire publication, one fire at a time: the history, the terrain, and what the record actually says, serialized with original maps built for each piece. In preparation, launching with the first fire."
+                "description": "A wildfire publication. Each post covers one fire: the history, the terrain, and what the record actually says, with an original map built for the piece. In preparation, launching with the first fire."
               },
               {
                 "title": "Summit Register",
@@ -309,7 +347,7 @@
           },
           {
             "title": "PicSplitter",
-            "description": "A Python command-line tool that splits large images into a configurable grid of tiles. Useful in GIS workflows where oversized imagery needs to be broken into smaller chunks for processing in ArcGIS or QGIS.",
+            "description": "A Python command-line tool that splits large images into a configurable grid of tiles. Written for GIS workflows where imagery is too large to process in one piece in ArcGIS or QGIS.",
             "github": "https://github.com/ryan-little/PicSplitter"
           }
         ]
@@ -318,7 +356,7 @@
   },
   "trees": {
     "title": "Trees I've Visited",
-    "subtitle": "Exploring the world's most remarkable trees and their incredible stories.",
+    "subtitle": "The largest, tallest, and oldest trees on Earth.",
     "items": [
       {
         "id": "general-sherman",
@@ -336,7 +374,7 @@
             "Volume: 52,508 cubic feet (1,487 cubic meters)",
             "Base Diameter: 36.5 feet (11.1 meters)",
             "Age: Approximately 2,200 years old",
-            "Weight: Estimated 2.7 million pounds (1,244 metric tons)"
+            "Weight: Estimated 2.7 million pounds (1,225 metric tons)"
           ]
         }
       },
@@ -384,7 +422,7 @@
   },
   "about": {
     "title": "About Me",
-    "subtitle": "Geospatial analyst, tool builder, and avid explorer — based in San Diego.",
+    "subtitle": "Geospatial analyst in San Diego. GIS production and quality control by day, wildfire mapping and Python tools the rest of the time.",
     "headshot": {
       "webp": "assets/images_webp/bigbendnp_headshot.webp",
       "alt": "Ryan Little at Big Bend National Park",
@@ -396,13 +434,13 @@
         "title": "Background",
         "icon": "fas fa-compass",
         "content": [
-          "Geography has been part of how I read the world since growing up in San Diego — desert to the east, mountains to the north, ocean to the west.",
-          "I studied it at UC Santa Barbara, earning a B.A. in Geography with an emphasis in GIS and Remote Sensing. Strong coursework including a three-quarter Remote Sensing sequence and a graduate-level course in Optimization Methods in Geographic Problems, finishing with a 3.5 major GPA."
+          "Geography has been part of how I read the world since growing up in San Diego, with desert to the east, mountains to the north, and ocean to the west.",
+          "I studied it at UC Santa Barbara, earning a B.A. in Geography with an emphasis in Geographic Information Science and a 3.5 major GPA. Strongest coursework: a three-quarter remote sensing sequence, air photo interpretation through Landsat, LiDAR, and MODIS in QGIS, finishing in R, plus a course on optimization methods for network and location-allocation problems."
         ],
         "image": {
           "webp": "assets/images_webp/geography_graduation.webp",
           "alt": "Ryan Little at Geography Graduation",
-          "caption": "Geography Graduation — UC Santa Barbara"
+          "caption": "Geography graduation, UC Santa Barbara"
         }
       },
       {
@@ -410,13 +448,13 @@
         "title": "Professional",
         "icon": "fas fa-briefcase",
         "content": [
-          "Geospatial Analyst at CACI, supporting production on government defense contracts — remote, from San Diego.",
-          "My role focuses on improving production workflows and working directly with technicians to raise output quality and efficiency. I also organize a weekly team gathering and mentorship group to keep collaboration strong across a distributed team."
+          "Quality control geospatial analyst at CACI, supporting a federal geospatial data program, remote from San Diego.",
+          "I run feature-level QC and validation on transportation, hydrography, structures, land cover, and geonames data in ArcGIS Pro, checking it against contract accuracy and attribution standards before it ships. I also give structured technical feedback and training to 20+ technicians, and run a recurring Q&A and mentorship group on ArcGIS Pro workflows and spec interpretation."
         ],
         "image": {
           "webp": "assets/images_webp/wateringreenland.webp",
           "alt": "Greenland Water Analysis",
-          "caption": "Remote sensing analysis — water feature mapping"
+          "caption": "Remote sensing analysis, water feature mapping in Greenland"
         }
       },
       {
@@ -425,8 +463,8 @@
         "icon": "fas fa-graduation-cap",
         "content": [
           "Working toward a Graduate Certificate in Spatial Data Science at Penn State, through the World Campus while working full time.",
-          "Coursework so far has covered GIS programming and automation with Python and arcpy, and cartography and visualization, both of which produced wildfire projects listed in my portfolio.",
-          "All fifteen credits carry into Penn State's M.S. in Spatial Data Science, which I plan to continue into once the certificate confers."
+          "Coursework so far has covered GIS programming and automation with Python and arcpy, and cartography and visualization. Both produced the wildfire projects in my portfolio.",
+          "All fifteen credits carry into Penn State's M.S. in Spatial Data Science, which I plan to start once the certificate confers."
         ]
       },
       {
@@ -435,7 +473,7 @@
         "icon": "fas fa-tools",
         "content": [
           "Languages: Python, R, SQL, JavaScript, HTML & CSS",
-          "GIS Tools: ArcGIS Pro, ArcMap, ArcGIS Online, QGIS",
+          "GIS Tools: ArcGIS Pro, ArcMap, ArcGIS Online, ArcGIS StoryMaps, QGIS",
           "Specializations: Remote Sensing, Spatial Analysis, Spatial Databases, Data Visualization, Quality Control"
         ]
       },
@@ -444,9 +482,9 @@
         "title": "Outside of Work",
         "icon": "fas fa-mountain",
         "content": [
-          "Avid hiker and traveler — 12 countries and counting, with a strong preference for national parks and places that require some effort to reach.",
+          "Hiker and traveler, 12 countries and counting, with a strong preference for national parks and places that take some effort to reach.",
           "Also into soccer, building computers, server tinkering, and web development.",
-          "Open to geospatial analyst opportunities — reach out via LinkedIn or email."
+          "Open to geospatial analyst opportunities. Reach out via LinkedIn or email."
         ]
       }
     ],

@@ -98,53 +98,14 @@
     font-size: 1rem;
 }
 
-/* About page */
-.about-page .sections-grid {
-    grid-template-columns: 1fr 1fr;
-}
-
-.about-page .sections-grid > :nth-child(3) {
-    grid-row: span 2;
-}
-
-/* Desktop: Skills + Outside wrapper mirrors the span-2 of item 3 */
-.about-page .sections-grid > .skills-outside-combined {
-    grid-row: span 2;
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-}
-
-.about-page .skills-outside-combined .section-card:nth-child(1) { animation-delay: 0.34s; }
-.about-page .skills-outside-combined .section-card:nth-child(2) { animation-delay: 0.42s; }
-
-@media (max-width: 600px) {
-    .about-page .sections-grid > :nth-child(3) {
-        grid-row: span 1;
-    }
-
-    .about-page .sections-grid > .skills-outside-combined {
-        grid-row: span 1;
-        gap: 0;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 10px;
-        overflow: hidden;
-        opacity: 0;
-        animation: cardFadeIn 0.5s ease-out 0.34s forwards;
-    }
-
-    .about-page .skills-outside-combined .section-card {
-        background: transparent;
-        border: none;
-        border-radius: 0;
-        animation: none;
-        opacity: 1;
-    }
-
-    .about-page .skills-outside-combined .section-card + .section-card {
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
-    }
+/* About page — plain grid, every section card the same weight. Each row's
+   cards stretch to equal height by default (grid's normal align-items:
+   stretch), so mismatched content length (e.g. a 3-paragraph card next to a
+   3-line one) no longer needs hand-tuned row spans to look balanced. The
+   trailing odd card (Outside of Work) spans the full row instead of leaving
+   an empty half-width gap beside it. */
+.about-page .sections-grid > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
 }
 
 .headshot-container {
@@ -288,6 +249,35 @@
     width: 100%;
     border-radius: 8px;
     margin-top: 0.75rem;
+}
+
+.portfolio-image-gallery {
+    display: grid;
+    /* 320px min caps this at 2 columns within the ~812px card body, so pairs
+       (condor/owl, kernel/Euclidean) sit side by side and larger sets (4 images)
+       wrap into clean rows instead of an odd column stranding one image alone. */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1rem;
+    margin-top: 0.75rem;
+}
+
+.portfolio-image-gallery .portfolio-image-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.portfolio-image-gallery .portfolio-image {
+    margin-top: 0;
+}
+
+/* Uniform tile height only when a card actually has multiple images to line up
+   side by side (condor/owl, kernel/Euclidean, the 4-image Santa Barbara set).
+   A single-image card (e.g. Agricultural Land Classification, a wide thin strip)
+   keeps its natural aspect ratio instead of getting letterboxed into a 4:3 box. */
+.portfolio-image-gallery.multi .portfolio-image {
+    aspect-ratio: 4 / 3;
+    object-fit: contain;
+    background: rgba(255, 255, 255, 0.03);
 }
 
 .portfolio-card.has-logo {
