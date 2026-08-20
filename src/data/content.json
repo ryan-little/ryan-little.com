@@ -2,8 +2,8 @@
   "adventures": {
     "title": "Adventures",
     "subtitle": "National parks, ancient cities, and places that take some effort to reach.",
-    "countriesVisited": 12,
-    "nationalParksVisited": 22,
+    "countriesVisited": 16,
+    "nationalParksVisited": 14,
     "panels": [
       {
         "id": "grand-europe-tour",
@@ -20,7 +20,7 @@
         "id": "hawaii-maui",
         "title": "Hawaii: Maui",
         "location": "Lahaina, Maui, Hawaii",
-        "date": "October 2016",
+        "date": "September 2016",
         "description": "Parasailing off Lahaina and watching the sunrise from the summit of Haleakalā, a dormant volcano just over 10,000 feet.",
         "image": {
           "webp": "assets/images_webp/maui_coastline.webp",
@@ -31,7 +31,7 @@
         "id": "europe-ireland-central",
         "title": "Europe: Ireland & Central Europe",
         "location": "Dublin, Amsterdam, Berlin, Prague, Munich",
-        "date": "June 2018",
+        "date": "June-July 2018",
         "description": "Dublin's pubs and cobblestone lanes, Amsterdam's canals, Berlin's East Side Gallery, Prague's old town, Munich's Marienplatz, and the basalt columns of Giant's Causeway in Northern Ireland.",
         "image": {
           "webp": "assets/images_webp/giantscauseway_fullshot.webp",
@@ -52,9 +52,9 @@
       {
         "id": "redwood",
         "title": "Redwood National Park",
-        "location": "Northern California, USA",
+        "location": "Northern California & Oregon Coast",
         "date": "August 2020",
-        "description": "Old-growth groves, coastal trails above the Pacific, and camping along the river corridors in the tallest forest on Earth.",
+        "description": "Old-growth groves, coastal trails above the Pacific, and camping along the river corridors in the tallest forest on Earth, then up the coast into Oregon and back down through San Francisco.",
         "image": {
           "webp": "assets/images_webp/hyperionpic.webp",
           "alt": "Hyperion Tree, Redwood National Park"
@@ -141,8 +141,8 @@
         "id": "rocky-mountain",
         "title": "Rocky Mountain National Park",
         "location": "Colorado, USA",
-        "date": "February 2023",
-        "description": "Snowshoeing Rocky Mountain in winter, climbing above treeline, and peaks over 12,000 feet.",
+        "date": "July 2023",
+        "description": "Climbing above treeline in Rocky Mountain, an afternoon storm rolling in over peaks above 12,000 feet.",
         "image": {
           "webp": "assets/images_webp/rocky_mountain_summit.webp",
           "alt": "Summit above treeline, Rocky Mountain National Park"
@@ -482,7 +482,7 @@
         "title": "Outside of Work",
         "icon": "fas fa-mountain",
         "content": [
-          "Hiker and traveler, 12 countries and counting, with a strong preference for national parks and places that take some effort to reach.",
+          "Hiker and traveler, 16 countries and counting, with a strong preference for national parks and places that take some effort to reach.",
           "Also into soccer, building computers, server tinkering, and web development.",
           "Open to geospatial analyst opportunities. Reach out via LinkedIn or email."
         ]
